@@ -6,8 +6,8 @@ OpenCDMS
 .. image:: https://img.shields.io/pypi/v/opencdms.svg
         :target: https://pypi.python.org/pypi/opencdms
 
-.. image:: https://img.shields.io/travis/opencdms/opencdms.svg
-        :target: https://travis-ci.com/opencdms/opencdms
+.. image:: https://img.shields.io/travis/opencdms/pyopencdms.svg
+        :target: https://travis-ci.com/opencdms/pyopencdms
 
 .. image:: https://readthedocs.org/projects/opencdms/badge/?version=latest
         :target: https://opencdms.readthedocs.io/en/latest/?badge=latest
