@@ -1,5 +1,5 @@
 ========
-opencdms
+OpenCDMS
 ========
 
 
@@ -27,7 +27,7 @@ OpenCDMS Python package
 * Documentation: https://opencdms.readthedocs.io.
 
 
-The OpenCDMS Process Library currently does not have any documentation, however it is being actively worked on between June 2020 and December 2020.
+The OpenCDMS Python Package currently does not have any documentation, however it is being actively worked on in 2020.
 
 Please use the :kbd:`Watch` button above to receive email updates.
 
