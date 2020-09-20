@@ -36,14 +36,12 @@ LOGGER = logging.getLogger(__name__)
 
 
 class Climsoft4(CDMSProvider):
-    """
-    
-    """
+    """"""
+
     pass
 
 
 class Climsoft5(CDMSProvider):
-    """
-    
-    """
+    """"""
+
     pass

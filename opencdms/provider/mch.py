@@ -36,7 +36,6 @@ LOGGER = logging.getLogger(__name__)
 
 
 class MCH(CDMSProvider):
-    """
-    
-    """
+    """"""
+
     pass

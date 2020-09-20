@@ -30,8 +30,8 @@
 """Top-level package for OpenCDMS"""
 
 __author__ = """OpenCDMS Project"""
-__email__ = 'info@opencdms.org'
-__version__ = '0.1.0'
+__email__ = "info@opencdms.org"
+__version__ = "0.1.0"
 
 
 from .provider.clide import Clide

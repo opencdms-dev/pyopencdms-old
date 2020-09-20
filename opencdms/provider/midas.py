@@ -48,71 +48,80 @@ LOGGER = logging.getLogger(__name__)
 #     midas-open_uk-daily-weather-obs_dv-201908_
 #     berkshire_00838_bracknell-beaufort-park_qcv-1_1991.csv
 
-DEFAULT_PATH = os.path.join('badc', 'ukmo-midas-open', 'data')
-DEFAULT_DATASET_VERSION = '201908'
+DEFAULT_PATH = os.path.join("badc", "ukmo-midas-open", "data")
+DEFAULT_DATASET_VERSION = "201908"
 DEFAULT_QC_VERSION = 1
 
 
 element_lookup = {
-    'wind_speed': {'hourly': 'uk-hourly-weather-obs'},
-    'wind_direction': {'hourly': 'uk-hourly-weather-obs'},
+    "wind_speed": {"hourly": "uk-hourly-weather-obs"},
+    "wind_direction": {"hourly": "uk-hourly-weather-obs"},
     # 'mean_wind_speed': {'hourly': 'uk-mean-wind-obs'},
     # 'mean_wind_dir': {'hourly': 'uk-mean-wind-obs'},
     # 'prcp_amt': {'hourly': 'uk-hourly-rain-obs'},
 }
-station_county_lookup = {838: 'berkshire',}
-station_filename_lookup = {838: '00838_bracknell-beaufort-park',}
-valid_dataset_versions = ['201901', '201908']
+station_county_lookup = {
+    838: "berkshire",
+}
+station_filename_lookup = {
+    838: "00838_bracknell-beaufort-park",
+}
+valid_dataset_versions = ["201901", "201908"]
 valid_qc_versions = [0, 1]
 
 
 class MidasOpen(CDMSProvider):
     """Provider for MIDAS Open data"""
+
     def __init__(self, connection_string, *args, **kwargs):
         self.connection_string = connection_string
 
     def obs(self, src_id, elements, period, qc_version=None, **kwargs):
         """Return observatons as Pandas DataFrame
 
-           Args:
-               src_id (int): The ID of the required station
-               elements (list): List of elements to return
-               period (str): Either 'hourly' or 'daily'
-               qc_version (int): 0 or 1
+        Args:
+            src_id (int): The ID of the required station
+            elements (list): List of elements to return
+            period (str): Either 'hourly' or 'daily'
+            qc_version (int): 0 or 1
 
-           Returns:
-               DataFrame: Pandas DataFrame containing onservations data
+        Returns:
+            DataFrame: Pandas DataFrame containing onservations data
 
         """
-        if 'year' not in kwargs.keys():
-            raise ValueError(
-                'NOTE: Currently you must supply a year, e.g. year=1991')
+        if "year" not in kwargs.keys():
+            raise ValueError("NOTE: Currently you must supply a year, e.g. year=1991")
 
-        year = kwargs['year']
-        
+        year = kwargs["year"]
+
         for element in elements:
             if element not in element_lookup:
-                raise ValueError(
-                    '"{}" element not recognised'.format(element))
-        
+                raise ValueError('"{}" element not recognised'.format(element))
+
         qc_version = DEFAULT_QC_VERSION if qc_version is None else qc_version
-        dataset_version = kwargs.get('dataset_version',
-            DEFAULT_DATASET_VERSION)
-        
+        dataset_version = kwargs.get("dataset_version", DEFAULT_DATASET_VERSION)
+
         if src_id not in station_county_lookup:
-            raise ValueError('Station ID not recognised')
-        
+            raise ValueError("Station ID not recognised")
+
         if period not in element_lookup[element]:
-            raise ValueError('"{} period not available for {} element'.format(
-                period, element))
-            
+            raise ValueError(
+                '"{} period not available for {} element'.format(period, element)
+            )
+
         if qc_version not in valid_qc_versions:
-            raise ValueError('qc_version must be one of: {}'.format(
-                ', '.join(map(str, valid_qc_versions))))
+            raise ValueError(
+                "qc_version must be one of: {}".format(
+                    ", ".join(map(str, valid_qc_versions))
+                )
+            )
 
         if dataset_version not in valid_dataset_versions:
-            raise ValueError('dataset_version must be one of: {}'.format(
-                ', '.join(valid_dataset_versions)))
+            raise ValueError(
+                "dataset_version must be one of: {}".format(
+                    ", ".join(valid_dataset_versions)
+                )
+            )
 
         station_county = station_county_lookup[src_id]
         station_filename = station_filename_lookup[src_id]
@@ -121,22 +130,24 @@ class MidasOpen(CDMSProvider):
         directory = os.path.join(
             DEFAULT_PATH,
             element_lookup[element][period],
-            'dataset-version-{}'.format(dataset_version),
+            "dataset-version-{}".format(dataset_version),
             station_county,
             station_filename,
-            'qc-version-{}'.format(qc_version),
+            "qc-version-{}".format(qc_version),
         )
 
-        filename = '_'.join([
-            'midas-open',
-            element_lookup[element][period],
-            'dv-{}'.format(dataset_version),
-            station_county,
-            station_filename,
-            'qcv-{}'.format(qc_version),
-            '{}.csv'.format(year),
-        ])
-        
+        filename = "_".join(
+            [
+                "midas-open",
+                element_lookup[element][period],
+                "dv-{}".format(dataset_version),
+                station_county,
+                station_filename,
+                "qcv-{}".format(qc_version),
+                "{}.csv".format(year),
+            ]
+        )
+
         filepath = os.path.join(self.connection_string, directory, filename)
 
-        return read_badc(filepath, usecols=['src_id', 'ob_time', *elements])
+        return read_badc(filepath, usecols=["src_id", "ob_time", *elements])

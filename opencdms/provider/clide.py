@@ -36,7 +36,6 @@ LOGGER = logging.getLogger(__name__)
 
 
 class Clide(CDMSProvider):
-    """
-    
-    """
+    """"""
+
     pass

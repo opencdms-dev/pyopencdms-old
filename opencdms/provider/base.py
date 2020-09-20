@@ -35,6 +35,7 @@ LOGGER = logging.getLogger(__name__)
 
 class CDMSProvider(ABC):
     """Generic CDMS Provider Abstract Base Class"""
+
     pass
     # @abstractmethod
     # def ...

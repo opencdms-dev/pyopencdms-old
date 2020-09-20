@@ -64,29 +64,30 @@ def read_badc(filepath, *args, **kwargs):
     df = None
     # Changing the default engine to 'python' in order to avoid warning
     # from Pandas when using skipfooter (which is not implemented in C)
-    kwargs.setdefault('engine', 'python')
-        
+    kwargs.setdefault("engine", "python")
+
     # Seek to the first line that contains actual data, then
     # pass the remaining data for Pandas to read
     with open(filepath) as file_buffer:
-       for line_data in file_buffer:
-           if line_data.strip() == 'data':
-               # In addition to any data rows already being skipped,
-               # also skip the final row which should contain "end data"
-               skip_footer = kwargs.get('skip_footer', 0) + 1
-               df = pd.read_csv(
-                   file_buffer, *args, skipfooter=skip_footer, **kwargs)
-           if df is not None:
-               # Pandas.read_csv seeks to EOF even with skipfooter
-               # Check the contents of the final line where "end data"
-               eof = file_buffer.tell()
-               # Depending on line endings, the final ten characters
-               # should be like "end data\r\n" or "\nend data\n"
-               file_buffer.seek(eof - len('end data') - 2)
-               if file_buffer.readline().strip() != 'end data':
-                   raise ParserError(
-                       'Invalid BADC file. Final line must be "end data"')
+        for line_data in file_buffer:
+            if line_data.strip() == "data":
+                # In addition to any data rows already being skipped,
+                # also skip the final row which should contain "end data"
+                skip_footer = kwargs.get("skip_footer", 0) + 1
+                df = pd.read_csv(file_buffer, *args, skipfooter=skip_footer, **kwargs)
+            if df is not None:
+                # Pandas.read_csv seeks to EOF even with skipfooter
+                # Check the contents of the final line where "end data"
+                eof = file_buffer.tell()
+                # Depending on line endings, the final ten characters
+                # should be like "end data\r\n" or "\nend data\n"
+                file_buffer.seek(eof - len("end data") - 2)
+                if file_buffer.readline().strip() != "end data":
+                    raise ParserError(
+                        'Invalid BADC file. Final line must be "end data"'
+                    )
     if df is None:
         raise ParserError(
-            'Invalid BADC file. Line prior to data section must be "data"')
+            'Invalid BADC file. Line prior to data section must be "data"'
+        )
     return df
