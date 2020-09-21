@@ -37,7 +37,7 @@ python3 -m venv opencdms-env
 pip3 install pandas
 
 # Add `opencdms` to the virtual environment's python path
-echo $HOME"/opencdms-dev/git/pyopencdms/" > lib/python3.7/site-packages/opencdms.pth
+echo $HOME"/opencdms-dev/git/pyopencdms/" > opencdms-env/lib/python3.7/site-packages/opencdms.pth
 
 ```
 
