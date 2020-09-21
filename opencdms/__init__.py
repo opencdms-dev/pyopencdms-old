@@ -29,10 +29,10 @@
 
 """Top-level package for OpenCDMS"""
 
+# flake8: noqa
 __author__ = """OpenCDMS Project"""
 __email__ = "info@opencdms.org"
 __version__ = "0.1.0"
-
 
 from .provider.clide import Clide
 from .provider.climsoft import Climsoft4, Climsoft5

@@ -6,8 +6,9 @@ import click
 @click.command()
 def main(args=None):
     """Console script for opencdms."""
-    click.echo("Replace this message by putting your code into " "opencdms.cli.main")
-    click.echo("See click documentation at https://click.palletsprojects.com/")
+    # See click documentation at https://click.palletsprojects.com/
+    click.echo("Replace this message by putting your code into "
+               "opencdms.cli.main")
     return 0
 
 

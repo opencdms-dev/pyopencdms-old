@@ -27,7 +27,7 @@
 #
 # =================================================================
 
-from abc import ABC, abstractmethod
+from abc import ABC
 import logging
 
 LOGGER = logging.getLogger(__name__)
@@ -35,7 +35,6 @@ LOGGER = logging.getLogger(__name__)
 
 class CDMSProvider(ABC):
     """Generic CDMS Provider Abstract Base Class"""
-
-    pass
     # @abstractmethod
     # def ...
+    pass

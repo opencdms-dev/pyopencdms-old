@@ -6,7 +6,7 @@ import pytest
 
 from click.testing import CliRunner
 
-from opencdms import opencdms
+# from opencdms import opencdms
 from opencdms import cli
 
 
