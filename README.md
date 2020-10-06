@@ -27,8 +27,9 @@ python3 -m venv opencdms-env
 # Activate the virtual environment (the leading `.` is equivalent to `source`)
 . opencdms-env/bin/activate
 
-# Manually add pandas dependency
-pip3 install pandas
+# Install dependencies used by `pyopencdms`
+pip3 install -r ~/work/opencdms-dev/git/pyopencdms/requirements.txt
+pip3 install -r ~/work/opencdms-dev/git/pyopencdms/requirements_dev.txt
 
 # Add `opencdms` to the virtual environment's python path
 echo $HOME"/work/opencdms-dev/git/pyopencdms/" > opencdms-env/lib/python3.7/site-packages/opencdms.pth
