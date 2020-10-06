@@ -130,7 +130,7 @@ windrose <- function(data, code='', name='', uni='m/s', maxnsc=8, fnum=4,
   title(paste(name,'windrose\n',startdate,'to',enddate))
   invisible(tab)
 
-  image_write(fig, path = "figureout.png", format = "png")
+  image_write(fig, path = NULL, format = "png")
   Sys.sleep(8)  ## DEV: pause so that plot can be seen before terminated
 
 }
