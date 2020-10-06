@@ -32,7 +32,9 @@ pip3 install -r ~/work/opencdms-dev/git/pyopencdms/requirements.txt
 pip3 install -r ~/work/opencdms-dev/git/pyopencdms/requirements_dev.txt
 
 # Add `opencdms` to the virtual environment's python path
-echo $HOME"/work/opencdms-dev/git/pyopencdms/" > opencdms-env/lib/python3.7/site-packages/opencdms.pth
+# If you used the system's `python3` to create the virtualenv then this will likely
+# be `python3.6` on Ubuntu 18.04 and `python3.7` on Ubunutu 20.04
+echo $HOME"/work/opencdms-dev/git/pyopencdms/" > opencdms-env/lib/python3.6/site-packages/opencdms.pth
 
 ```
 
