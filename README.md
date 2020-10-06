@@ -12,12 +12,9 @@ These instructions are for Debian/Ubuntu Linux. If you run into problems then
 please raise a [new issue](https://github.com/opencdms/pyopencdms/issues/new).
 
 ```
-# Navigate to a suitable home directory
-cd ~
-
-# Create a directory for the project
-mkdir opencdms-dev
-cd opencdms-dev
+# Create a directory for the project from user's home directory (~)
+mkdir -p ~/work/opencdms-dev
+cd ~/work/opencdms-dev
 
 # Create a directory for git repositories
 mkdir git
@@ -31,7 +28,7 @@ cd ..
 # Create a virtual environment for installing Python dependencies
 python3 -m venv opencdms-env
 
-# Activate the virtual environment
+# Activate the virtual environment (the leading `.` is equivalent to `source`)
 . opencdms-env/bin/activate
 
 # Manually add pandas dependency
