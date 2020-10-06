@@ -13,19 +13,15 @@ please raise a [new issue](https://github.com/opencdms/pyopencdms/issues/new).
 
 ```
 # Create a directory for the project from user's home directory (~)
-mkdir -p ~/work/opencdms-dev
-cd ~/work/opencdms-dev
-
-# Create a directory for git repositories
-mkdir git
-cd git
+mkdir -p ~/work/opencdms-dev/git
+cd ~/work/opencdms-dev/git
 
 # Clone pyopencdms and opencdms-test-data
 git clone https://github.com/opencdms/pyopencdms.git
 git clone https://github.com/opencdms/opencdms-test-data.git
-cd ..
 
 # Create a virtual environment for installing Python dependencies
+cd ~/work/opencdms-dev/
 python3 -m venv opencdms-env
 
 # Activate the virtual environment (the leading `.` is equivalent to `source`)
@@ -35,7 +31,7 @@ python3 -m venv opencdms-env
 pip3 install pandas
 
 # Add `opencdms` to the virtual environment's python path
-echo $HOME"/opencdms-dev/git/pyopencdms/" > opencdms-env/lib/python3.7/site-packages/opencdms.pth
+echo $HOME"/work/opencdms-dev/git/pyopencdms/" > opencdms-env/lib/python3.7/site-packages/opencdms.pth
 
 ```
 
