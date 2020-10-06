@@ -8,7 +8,8 @@ OpenCDMS
 
 ### Create a virtual environment for OpenCDMS development
 
-These instructions are for Debian/Ubuntu Linux. If you run into problems then
+These instructions are for Debian/Ubuntu Linux. At the time of writing
+(October 2020) only Ubuntu 18.04 is supported. If you run into problems then
 please raise a [new issue](https://github.com/opencdms/pyopencdms/issues/new).
 
 ```
