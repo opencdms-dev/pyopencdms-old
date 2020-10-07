@@ -17,9 +17,6 @@ windrose <- function(data, code='', name='', uni='m/s', maxnsc=8, fnum=4,
   fint=5, flab=2, col=rainbow(10,.5,.92,start=.33,end=.2), ang=3*pi/16,
   margin=c(0,0,4,0)) {
 
-  ob_time=as.POSIXct(data$ob_time,tz='UTC')  ## DEV: Convert to datetime
-  data=cbind(ob_time,data[,3:4])  ## DEV: Create required data frame
-
   #----------- compute frequencies by directions ---------------
   z <- range(data[,1]) #round date/time to just date:
   startdate <- as.Date(z[1]); enddate <- as.Date(z[2])
@@ -90,11 +87,6 @@ windrose <- function(data, code='', name='', uni='m/s', maxnsc=8, fnum=4,
   # x,y components for every wind direction and plot settings:
   fx <- cos(pi/2-(2*pi/ndir*0:(ndir-1)))
   fy <- sin(pi/2-(2*pi/ndir*0:(ndir-1)))
-
-  library(magick)  ## DEV
-  ## DEV: Use magick's native R graphics device
-  fig <- image_graph(width = 400, height = 400, res = 96) ## DEV
-
   plot(fx,fy,xlim=c(-fmax-mlf*fint,fmax+fint),ylim=c(-fmax-fint,fmax+fint),
     xaxt="n",yaxt="n",xlab="",ylab="",bty="n",asp=1,type="n")
   if(nr==1) {  #only one speed class
@@ -129,8 +121,4 @@ windrose <- function(data, code='', name='', uni='m/s', maxnsc=8, fnum=4,
   }
   title(paste(name,'windrose\n',startdate,'to',enddate))
   invisible(tab)
-
-  image_write(fig, path = NULL, format = "png")
-  Sys.sleep(8)  ## DEV: pause so that plot can be seen before terminated
-
 }
