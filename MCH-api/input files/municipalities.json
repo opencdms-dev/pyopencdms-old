@@ -1,0 +1,37 @@
+[
+    {
+        "Municipality": "AG001",
+        "Municipality2": "AG001",
+        "MunicipalityName": "AGUASCALIENTES"
+    },
+    {
+        "Municipality": "AG002",
+        "Municipality2": "AG002",
+        "MunicipalityName": "ASIENTOS"
+    },
+    {
+        "Municipality": "AG003",
+        "Municipality2": "AG003",
+        "MunicipalityName": "CALVILLO"
+    },
+    {
+        "Municipality": "AG004",
+        "Municipality2": "AG004",
+        "MunicipalityName": "COSIO"
+    },
+    {
+        "Municipality": "AG005",
+        "Municipality2": "AG005",
+        "MunicipalityName": "JESUS MARIA"
+    },
+    {
+        "Municipality": "AG006",
+        "Municipality2": "AG006",
+        "MunicipalityName": "PABELLON DE ARTEAGA"
+    },
+    {
+        "Municipality": "AG007",
+        "Municipality2": "AG007",
+        "MunicipalityName": "RINCON DE ROMOS"
+    }
+]
