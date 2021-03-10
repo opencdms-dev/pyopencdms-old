@@ -1,0 +1,56 @@
+[
+    {
+        "Station": "BOYACUIBA",
+        "Date": "1977-01-01T00:00:00Z",
+        "Value": 16.25,
+        "MaxValDate": "1977-01-01T00:00:00Z",
+        "MaxValue": 18.0,
+        "MinValDate": "1977-01-01T00:00:00Z",
+        "MinValue": 16.0
+    },
+    {
+        "Station": "BOYACUIBA",
+        "Date": "1977-01-02T00:00:00Z",
+        "Value": 16.5,
+        "MaxValDate": "1977-01-02T00:00:00Z",
+        "MaxValue": 17.5,
+        "MinValDate": "1977-01-02T00:00:00Z",
+        "MinValue": 15.5
+    },
+    {
+        "Station": "BOYACUIBA",
+        "Date": "1977-01-03T00:00:00Z",
+        "Value": 16.25,
+        "MaxValDate": "1977-01-03T00:00:00Z",
+        "MaxValue": 17.0,
+        "MinValDate": "1977-01-03T00:00:00Z",
+        "MinValue": 16.0
+    },
+    {
+        "Station": "BOYACUIBA",
+        "Date": "1977-01-04T00:00:00Z",
+        "Value": 18.25,
+        "MaxValDate": "1977-01-04T00:00:00Z",
+        "MaxValue": 22.0,
+        "MinValDate": "1977-01-04T00:00:00Z",
+        "MinValue": 14.5
+    },
+    {
+        "Station": "BOYACUIBA",
+        "Date": "1977-01-05T00:00:00Z",
+        "Value": 18.75,
+        "MaxValDate": "1977-01-05T00:00:00Z",
+        "MaxValue": 24.5,
+        "MinValDate": "1977-01-05T00:00:00Z",
+        "MinValue": 14.0
+    },
+    {
+        "Station": "BOYACUIBA",
+        "Date": "1977-01-06T00:00:00Z",
+        "Value": 20.0,
+        "MaxValDate": "1977-01-06T00:00:00Z",
+        "MaxValue": 27.0,
+        "MinValDate": "1977-01-06T00:00:00Z",
+        "MinValue": 15.0
+    }
+]
