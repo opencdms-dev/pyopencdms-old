@@ -1,0 +1,37 @@
+[
+    {
+        "Hydroreg": "RH10",
+        "Hydroreg2": "",
+        "HydrRegionName": "REGION DE PRUEBA 10"
+    },
+    {
+        "Hydroreg": "RH10A",
+        "Hydroreg2": "RH10A",
+        "HydrRegionName": "RIO FUERTE"
+    },
+    {
+        "Hydroreg": "RH10B",
+        "Hydroreg2": "RH10B",
+        "HydrRegionName": "RIO SINALOA"
+    },
+    {
+        "Hydroreg": "RH10C",
+        "Hydroreg2": "RH10C",
+        "HydrRegionName": "RIO MOCORITO"
+    },
+    {
+        "Hydroreg": "RH10D",
+        "Hydroreg2": "RH10D",
+        "HydrRegionName": "RIO CULIACAN"
+    },
+    {
+        "Hydroreg": "RH10E",
+        "Hydroreg2": "RH10E",
+        "HydrRegionName": "RIOS ELOTA, PIAXTLA Y SAN LORENZO"
+    },
+    {
+        "Hydroreg": "RH10F",
+        "Hydroreg2": "RH10F",
+        "HydrRegionName": "CUENCA BAJA DEL RIO F"
+    }
+]
