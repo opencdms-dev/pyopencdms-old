@@ -1,0 +1,37 @@
+[
+    {
+        "Station": "01MATTRG",
+        "Date": "2013-11-01T00:00:00Z",
+        "Value": 7.8
+    },
+    {
+        "Station": "01MATTRG",
+        "Date": "2013-11-02T00:00:00Z",
+        "Value": 12.2
+    },
+    {
+        "Station": "01MATTRG",
+        "Date": "2013-11-03T00:00:00Z",
+        "Value": 10.5
+    },
+    {
+        "Station": "01MATTRG",
+        "Date": "2013-11-04T00:00:00Z",
+        "Value": 0.0
+    },
+    {
+        "Station": "01MATTRG",
+        "Date": "2013-11-05T00:00:00Z",
+        "Value": 0.0
+    },
+    {
+        "Station": "01MATTRG",
+        "Date": "2013-11-06T00:00:00Z",
+        "Value": 8.8
+    },
+    {
+        "Station": "01MATTRG",
+        "Date": "2013-11-07T00:00:00Z",
+        "Value": 9.0
+    }
+]
