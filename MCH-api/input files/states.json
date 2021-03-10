@@ -1,0 +1,27 @@
+[
+    {
+        "Statee": "AG",
+        "State2": "AG",
+        "Statename": "AGUASCALIENTES"
+    },
+    {
+        "Statee": "AR",
+        "State2": "ARTIGAS",
+        "Statename": "ARTIGAS"
+    },
+    {
+        "Statee": "BN",
+        "State2": "BN",
+        "Statename": "BAJA CALIFORNIA NORTE"
+    },
+    {
+        "Statee": "BS",
+        "State2": "BS",
+        "Statename": "BAJA CALIFORNIA SUR"
+    },
+    {
+        "Statee": "CA",
+        "State2": "CANELONES",
+        "Statename": "CANELONES"
+    }
+]
