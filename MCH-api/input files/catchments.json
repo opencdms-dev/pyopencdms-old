@@ -1,0 +1,37 @@
+[
+    {
+        "Catchment": "C0101",
+        "Catchment2": "C0101",
+        "CatchmentName": "RIO TIJUANA-ARROYO MENEADERO"
+    },
+    {
+        "Catchment": "C0102",
+        "Catchment2": "C0102",
+        "CatchmentName": "ARROYO LAS ANIMAS-ARROYO SANTO DOMINGO"
+    },
+    {
+        "Catchment": "C0103",
+        "Catchment2": "C0103",
+        "CatchmentName": "ARROYO ESCOPETA-CA\u00d1ON DE SAN FERNANDO"
+    },
+    {
+        "Catchment": "C0104",
+        "Catchment2": "C0104",
+        "CatchmentName": "ARROYO ENSENADA"
+    },
+    {
+        "Catchment": "C0201",
+        "Catchment2": "C0201",
+        "CatchmentName": "ARROYO SANTA CATARINA-ARROYO ROSARITO"
+    },
+    {
+        "Catchment": "C0202",
+        "Catchment2": "C0202",
+        "CatchmentName": "BAHIA SAN MIGUEL-ARROYO DEL VIGIA"
+    },
+    {
+        "Catchment": "C0203",
+        "Catchment2": "C0203",
+        "CatchmentName": "LAGO SAN IGNACIO-ARROYO SAN RAYMUNDO"
+    }
+]
