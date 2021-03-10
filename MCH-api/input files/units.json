@@ -1,0 +1,26 @@
+[
+    {
+        "Unit": "%",
+        "UnitDescription": "porcentaje"
+    },
+    {
+        "Unit": "ac.ft.",
+        "UnitDescription": "acre feet"
+    },
+    {
+        "Unit": "acre",
+        "UnitDescription": "acre"
+    },
+    {
+        "Unit": "C",
+        "UnitDescription": "grados Celsius"
+    },
+    {
+        "Unit": "cm",
+        "UnitDescription": "cent\u00edmetros"
+    },
+    {
+        "Unit": "F",
+        "UnitDescription": "degrees Farenheit"
+    }
+]
