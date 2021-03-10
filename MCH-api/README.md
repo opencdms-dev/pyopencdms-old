@@ -6,8 +6,8 @@ All responses will have the form
 
 ```json
 {
-    "Field1": Field in the table ...,
-    "Field1": Field in the table ...
+    "Field1": "Field in the table ...",
+    "Field1": "Field in the table ..."
     "..."
 }
 ```
