@@ -4,6 +4,10 @@ OpenCDMS
 
 [![](https://img.shields.io/pypi/v/opencdms.svg)](https://pypi.python.org/pypi/opencdms) [![Travis-CI Build](https://img.shields.io/travis/opencdms/pyopencdms.svg)](https://travis-ci.com/opencdms/pyopencdms) [![Documentation Status](https://readthedocs.org/projects/opencdms/badge/?version=latest)](https://opencdms.readthedocs.io/en/latest/?badge=latest) [![Updates](https://pyup.io/repos/github/opencdms/opencdms/shield.svg)](https://pyup.io/repos/github/opencdms/opencdms/)
 
+## Overview
+
+During the early stages of development, pyopencdms will also include the `pyopencdms.process` package which has dependencies on external R libraries. The development may also include dependencies running on node.js to allow the same JavaScript validation code to be executed the browser and also on the server. If a user does not have the necessary dependencies then useful error messages should be provided.
+
 ## Example
 
 ### Create a virtual environment for OpenCDMS development
