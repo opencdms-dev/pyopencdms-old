@@ -6,7 +6,17 @@ OpenCDMS Python library: `pyopencdms`
 
 ## Overview
 
-`pyopencdms` aims to build a common Python API on top of multiple Climate Data Management Systems (CDMS) that use different underlying database engines.
+A Climate Data Management System (CDMS) is an integrated computer-based system that facilitates the effective archival, management, analysis, delivery and utilization of a wide range of integrated climate data ([WMO 2014](https://library.wmo.int/index.php?lvl=notice_display&id=16300)).
+
+`pyopencdms` aims to build a common Python API supporting multiple Climate Data Management Systems (CDMS) that use different underlying database engines.
+
+The image below shows the [CliDE](http://www.bom.gov.au/climate/pacific/about-clide.shtml), [Climsoft](https://climsoft.org/), [MCH](https://community.wmo.int/mch-meteorology-climatology-and-hydrology-database-management-system), [MIDAS](https://catalogue.ceda.ac.uk/uuid/dbd451271eb04662beade68da43546e1) and other CDMSs being accessed through a single common API.
+
+In addition we will add support for the [WIGOS Meta Data Representation (WMDR)](https://github.com/wmo-im/wmdr) and collaborate with experts to create a new "CDMS Data Model Representation" that will support addional capabilities that are beyond the scope of WMDR.
+
+![](https://raw.githubusercontent.com/opencdms/binaries/main/architecture/pyopencdms-architecture-1.0.png)
+
+The [opencdms-test-data](https://github.com/opencdms/opencdms-test-data) repository will be used as a source of test data for development to ensure interoperability is woking as intended.
 
 ## Example
 
