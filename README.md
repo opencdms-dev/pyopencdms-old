@@ -14,9 +14,19 @@ The image below shows the [CliDE](http://www.bom.gov.au/climate/pacific/about-cl
 
 In addition we will add support for the [WIGOS Meta Data Representation (WMDR)](https://github.com/wmo-im/wmdr) and collaborate with experts to create a new "CDMS Data Model Representation" that will support addional capabilities that are beyond the scope of WMDR.
 
-![](https://raw.githubusercontent.com/opencdms/binaries/main/architecture/pyopencdms-architecture-1.0.png)
+![OpenCDMS data layer](https://raw.githubusercontent.com/opencdms/binaries/main/architecture/pyopencdms-architecture-1.0.png)
 
 The [opencdms-test-data](https://github.com/opencdms/opencdms-test-data) repository will be used as a source of test data for development to ensure interoperability is woking as intended.
+
+## Dependencies
+
+<img src="https://raw.githubusercontent.com/opencdms/binaries/main/architecture/pyopencdms-dependencies-0.1.png" width="400" />
+
+`pyopencdms` uses SQLAlchemy (2.0-style) to connect to multiple database technologies including PostgreSQL, MySQL/MariaDB, Oracle and SQLite.
+
+It is expected that SQLAlchemy objects, Panda's [DataFrames](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html) and JSON will be key data types for exchanging data.
+
+<!-- Geospatial dependencies like [PostGIS](http://postgis.net/), [GeoAlchemy2](https://github.com/geoalchemy/geoalchemy2) and [SpatiaLite](https://en.wikipedia.org/wiki/SpatiaLite) may be introduced in the future if required. -->
 
 ## Example
 
