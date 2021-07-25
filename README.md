@@ -14,13 +14,13 @@ The image below shows the [CliDE](http://www.bom.gov.au/climate/pacific/about-cl
 
 In addition we will add support for the [WIGOS Meta Data Representation (WMDR)](https://github.com/wmo-im/wmdr) and collaborate with experts to create a new "CDMS Data Model Representation" that will support addional capabilities that are beyond the scope of WMDR.
 
-![OpenCDMS data layer](https://raw.githubusercontent.com/opencdms/binaries/main/architecture/pyopencdms-architecture-1.0.png)
+![OpenCDMS data layer](https://raw.githubusercontent.com/opencdms/media/main/architecture/pyopencdms-architecture-1.0.png)
 
 The [opencdms-test-data](https://github.com/opencdms/opencdms-test-data) repository will be used as a source of test data for development to ensure interoperability is woking as intended.
 
 ## Dependencies
 
-<img src="https://raw.githubusercontent.com/opencdms/binaries/main/architecture/pyopencdms-dependencies-0.1.png" width="400" />
+<img src="https://raw.githubusercontent.com/opencdms/media/main/architecture/pyopencdms-dependencies-0.1.png" width="400" />
 
 `pyopencdms` uses SQLAlchemy (2.0-style) to connect to multiple database technologies including PostgreSQL, MySQL/MariaDB, Oracle and SQLite.
 
