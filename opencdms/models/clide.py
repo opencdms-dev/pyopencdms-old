@@ -15,6 +15,7 @@ from sqlalchemy import (
     Table,
     Text,
     UniqueConstraint,
+    Index,
     text,
 )
 from sqlalchemy.orm import relationship
@@ -946,7 +947,10 @@ class LandUse(Base):
 
 class ObsAudit(Base):
     __tablename__ = "obs_audit"
-    __table_args__ = {"comment": "Audit trail of all changes to station Station."}
+    __table_args__ = (
+        Index("obs_audit_row_id_idx", "row_id"),
+        {"comment": "Audit trail of all changes to station Station."},
+    )
 
     id = Column(
         Integer,
@@ -955,7 +959,7 @@ class ObsAudit(Base):
         comment="Surrogate Key",
     )
     table_name = Column(String(100), comment="Observation table where data is changed")
-    row_id = Column(Integer, index=True, comment="Row id of changed data")
+    row_id = Column(Integer, comment="Row id of changed data")
     column_name = Column(String(100), comment="Column that has been changed")
     column_value = Column(String(4000))
     change_user = Column(String(20), comment="User performing the change")
@@ -1066,6 +1070,7 @@ class ObsMonthly(Base):
     __tablename__ = "obs_monthly"
     __table_args__ = (
         UniqueConstraint("station_no", "lsd"),
+        Index("obs_monthly_lsd_idx", "lsd"),
         {"comment": "Stores monthly data not available as daily or subdaily"},
     )
 
@@ -1076,9 +1081,7 @@ class ObsMonthly(Base):
         comment="Surrogate Key",
     )
     station_no = Column(String(15), nullable=False, comment="Local Station identifier")
-    lsd = Column(
-        Date, nullable=False, index=True, comment="Local System Year and Month"
-    )
+    lsd = Column(Date, nullable=False, comment="Local System Year and Month")
     data_source = Column(
         CHAR(2), comment="Code for data source, see codes_simple for code_type=DATA_SRC"
     )
@@ -1231,7 +1234,10 @@ class ObsMonthly(Base):
 
 class ObsSubdailySoilTemp(Base):
     __tablename__ = "obs_subdaily_soil_temps"
-    __table_args__ = {"comment": "Sub Daily surface observations"}
+    __table_args__ = (
+        Index("fki_obs_subdaily_soil_temps_subdaily_id_fkey", "sub_daily_id"),
+        {"comment": "Sub Daily surface observations"},
+    )
 
     id = Column(
         Integer,
@@ -1241,7 +1247,6 @@ class ObsSubdailySoilTemp(Base):
     sub_daily_id = Column(
         Integer,
         nullable=False,
-        index=True,
         comment="Surrogate key of parent sub daily row",
     )
     data_source = Column(CHAR(2), nullable=False, server_default=text("'1'::bpchar"))
@@ -1596,6 +1601,14 @@ class UserSession(Base):
 class Station(Base):
     __tablename__ = "stations"
     __table_args__ = (
+        Index("fki_stations_country_code_fkey", "country_code"),
+        Index("fki_stations_time_zone_fkey", "time_zone"),
+        Index("fki_stations_soil_type_id_fkey", "soil_type"),
+        Index("fki_stations_status_id_fkey", "status_id"),
+        Index("fki_stations_surface_type_id_fkey", "surface_type"),
+        Index("fki_stations_land_use_0_id_fkey", "lu_0_100m"),
+        Index("fki_stations_land_use_100_id_fkey", "lu_100m_1km"),
+        Index("fki_stations_land_use_1km_id_fkey", "lu_1km_10km"),
         UniqueConstraint("id_wmo", "start_date"),
         {"comment": "Stores station data."},
     )
@@ -1610,12 +1623,9 @@ class Station(Base):
     status_id = Column(
         ForeignKey("station_status.id"),
         nullable=False,
-        index=True,
         comment="Station status ID joins to station_status",
     )
-    time_zone = Column(
-        ForeignKey("station_timezones.tm_zone"), nullable=False, index=True
-    )
+    time_zone = Column(ForeignKey("station_timezones.tm_zone"), nullable=False)
     id_aero = Column(String(10))
     id_imo = Column(String(10))
     id_marine = Column(String(10))
@@ -1625,7 +1635,7 @@ class Station(Base):
     id_niwa = Column(String(10))
     id_niwa_agent = Column(String(10))
     comments = Column(String(1000))
-    country_code = Column(ForeignKey("station_countries.iso_code"), index=True)
+    country_code = Column(ForeignKey("station_countries.iso_code"))
     start_date = Column(Date)
     end_date = Column(Date)
     ht_aero = Column(Numeric(6, 1))
@@ -1638,11 +1648,11 @@ class Station(Base):
     region = Column(String(40))
     catchment = Column(String(40))
     authority = Column(String(50))
-    lu_0_100m = Column(ForeignKey("land_use.id"), index=True)
-    lu_100m_1km = Column(ForeignKey("land_use.id"), index=True)
-    lu_1km_10km = Column(ForeignKey("land_use.id"), index=True)
-    soil_type = Column(ForeignKey("soil_types.id"), index=True)
-    surface_type = Column(ForeignKey("surface_types.id"), index=True)
+    lu_0_100m = Column(ForeignKey("land_use.id"))
+    lu_100m_1km = Column(ForeignKey("land_use.id"))
+    lu_1km_10km = Column(ForeignKey("land_use.id"))
+    soil_type = Column(ForeignKey("soil_types.id"))
+    surface_type = Column(ForeignKey("surface_types.id"))
     critical_river_height = Column(
         Numeric(7, 3), comment="Critical River height (eg. Flood level) in M"
     )
@@ -1663,7 +1673,10 @@ class Station(Base):
 
 class TimezoneDiff(Base):
     __tablename__ = "timezone_diffs"
-    __table_args__ = {"comment": "Stores timezone differences due to daylight savings"}
+    __table_args__ = (
+        Index("fki_timezone_diffs", "tm_zone"),
+        {"comment": "Stores timezone differences due to daylight savings"},
+    )
 
     id = Column(
         Integer,
@@ -1680,7 +1693,6 @@ class TimezoneDiff(Base):
     tm_zone = Column(
         ForeignKey("station_timezones.tm_zone"),
         nullable=False,
-        index=True,
         comment="Time zone where difference applies",
     )
     tm_diff = Column(Numeric(4, 1), comment="UTC offset during this period")
@@ -1851,6 +1863,8 @@ class ObsAw(Base):
     __tablename__ = "obs_aws"
     __table_args__ = (
         Index("obs_aws_unique_1", "station_no", "lsd", unique=True),
+        Index("obs_aws_lct_idx", "lct"),
+        Index("obs_aws_lsd_idx", "lsd"),
         {"comment": "AWS observations"},
     )
 
@@ -1867,13 +1881,10 @@ class ObsAw(Base):
     lsd = Column(
         DateTime,
         nullable=False,
-        index=True,
         comment="Local System Time (No Daylight Savings)",
     )
     gmt = Column(DateTime, comment="GMT (UTC+0)")
-    lct = Column(
-        DateTime, index=True, comment="Local Clock Time (With Daylight Savings)"
-    )
+    lct = Column(DateTime, comment="Local Clock Time (With Daylight Savings)")
     insert_datetime = Column(
         DateTime, nullable=False, comment="Date/time row is inserted"
     )
@@ -2051,6 +2062,7 @@ class ObsDaily(Base):
     __tablename__ = "obs_daily"
     __table_args__ = (
         Index("obs_daily_unique_1", "station_no", "lsd", unique=True),
+        Index("obs_daily_lsd_idx", "lsd"),
         {"comment": "Daily surface observations"},
     )
 
@@ -2067,7 +2079,6 @@ class ObsDaily(Base):
     lsd = Column(
         DateTime,
         nullable=False,
-        index=True,
         comment="Local System Time (No Daylight Savings)",
     )
     data_source = Column(
@@ -2224,6 +2235,8 @@ class ObsSubdaily(Base):
     __tablename__ = "obs_subdaily"
     __table_args__ = (
         Index("obs_subdaily_unique_1", "station_no", "lsd", unique=True),
+        Index("obs_subdaily_lct_idx", "lct"),
+        Index("obs_subdaily_lsd_idx", "lsd"),
         {"comment": "Sub Daily surface observations"},
     )
 
@@ -2240,13 +2253,10 @@ class ObsSubdaily(Base):
     lsd = Column(
         DateTime,
         nullable=False,
-        index=True,
         comment="Local System Time (No Daylight Savings)",
     )
     gmt = Column(DateTime, comment="GMT (UTC+0)")
-    lct = Column(
-        DateTime, index=True, comment="Local Clock Time (With Daylight Savings)"
-    )
+    lct = Column(DateTime, comment="Local Clock Time (With Daylight Savings)")
     data_source = Column(
         CHAR(2), nullable=False, comment="Code for data source (DATA_SRC)"
     )
@@ -2467,7 +2477,11 @@ class ObsUpperAir(Base):
 
 class StationAudit(Base):
     __tablename__ = "station_audit"
-    __table_args__ = {"comment": "Audit trail of all changes to station Station."}
+    __table_args__ = (
+        Index("fki_station_audit_audit_type_id_fkey", "audit_type_id"),
+        Index("fki_station_audit_station_id_fkey", "station_id"),
+        {"comment": "Audit trail of all changes to station Station."},
+    )
 
     id = Column(
         Integer,
@@ -2475,15 +2489,12 @@ class StationAudit(Base):
         server_default=text("nextval('station_audit_id'::regclass)"),
         comment="Surrogate Key",
     )
-    station_id = Column(
-        ForeignKey("stations.id"), index=True, comment="Station ID of audit record"
-    )
+    station_id = Column(ForeignKey("stations.id"), comment="Station ID of audit record")
     datetime = Column(DateTime(True), comment="Date/Time of event being recorded")
     event_datetime = Column(DateTime(True), server_default=text("now()"))
     audit_type_id = Column(
         ForeignKey("station_audit_types.id"),
         nullable=False,
-        index=True,
         comment="Audit Type ID. Joins to station_audit_type",
     )
     description = Column(String(1000), comment="Description of audit event")
@@ -2495,7 +2506,11 @@ class StationAudit(Base):
 
 class StationClas(Base):
     __tablename__ = "station_class"
-    __table_args__ = {"comment": "Stores contacts (people) for station"}
+    __table_args__ = (
+        Index("fki_station_class_station_id_fkey", "station_id"),
+        Index("fki_station_class_type_id_fkey", "type_id"),
+        {"comment": "Stores contacts (people) for station"},
+    )
 
     id = Column(
         Integer,
@@ -2506,11 +2521,10 @@ class StationClas(Base):
     station_id = Column(
         ForeignKey("stations.id"),
         nullable=False,
-        index=True,
         comment="Station ID of station class",
     )
     type_id = Column(
-        ForeignKey("station_types.id"), index=True, comment="ID of Type for this class"
+        ForeignKey("station_types.id"), comment="ID of Type for this class"
     )
     description = Column(String(80))
     class_start = Column(DateTime, comment="Date this class started for the station.")
@@ -2522,7 +2536,10 @@ class StationClas(Base):
 
 class StationContact(Base):
     __tablename__ = "station_contacts"
-    __table_args__ = {"comment": "Stores contacts (people) for station"}
+    __table_args__ = (
+        Index("fki_station_contacts_station_id_fkey", "station_id"),
+        {"comment": "Stores contacts (people) for station"},
+    )
 
     id = Column(
         Integer,
@@ -2533,7 +2550,6 @@ class StationContact(Base):
     station_id = Column(
         ForeignKey("stations.id"),
         nullable=False,
-        index=True,
         comment="Station ID of station contact",
     )
     title = Column(String(50))
@@ -2560,7 +2576,11 @@ class StationContact(Base):
 
 class StationEquipment(Base):
     __tablename__ = "station_equipment"
-    __table_args__ = {"comment": "Stores equipment installed at station."}
+    __table_args__ = (
+        Index("fki_station_equipment_equipment_id_fkey", "equipment_id"),
+        Index("fki_station_equipment_station_id_fkey", "station_id"),
+        {"comment": "Stores equipment installed at station."},
+    )
 
     id = Column(
         Integer,
@@ -2569,9 +2589,9 @@ class StationEquipment(Base):
         comment="Surrogate Key",
     )
     station_id = Column(
-        ForeignKey("stations.id"), nullable=False, index=True, comment="ID of station"
+        ForeignKey("stations.id"), nullable=False, comment="ID of station"
     )
-    equipment_id = Column(ForeignKey("equipment.id"), index=True)
+    equipment_id = Column(ForeignKey("equipment.id"))
     serial_no = Column(String(50), comment="Serial no of equipment")
     asset_id = Column(String(50), comment="Asset code of equipment")
     height = Column(Numeric(7, 3))
@@ -2585,9 +2605,12 @@ class StationEquipment(Base):
 
 class StationFile(Base):
     __tablename__ = "station_files"
-    __table_args__ = {
-        "comment": "Stores address of files such as images, pdfs, Word docs, etc. for station."
-    }
+    __table_args__ = (
+        Index("fki_station_files_station_id_fkey", "station_id"),
+        {
+            "comment": "Stores address of files such as images, pdfs, Word docs, etc. for station."
+        },
+    )
 
     id = Column(
         Integer,
@@ -2598,7 +2621,6 @@ class StationFile(Base):
     station_id = Column(
         ForeignKey("stations.id"),
         nullable=False,
-        index=True,
         comment="ID of station this row belongs to",
     )
     title = Column(String(50), comment="Title of file")
@@ -2610,7 +2632,10 @@ class StationFile(Base):
 
 class ObsSubdailyCloudLayer(Base):
     __tablename__ = "obs_subdaily_cloud_layers"
-    __table_args__ = {"comment": "Sub Daily surface observations"}
+    __table_args__ = (
+        Index("fki_obs_subdaily_cloud_layers_subdaily_id_fkey", "sub_daily_id"),
+        {"comment": "Sub Daily surface observations"},
+    )
 
     id = Column(
         Integer,
@@ -2620,7 +2645,6 @@ class ObsSubdailyCloudLayer(Base):
     sub_daily_id = Column(
         ForeignKey("obs_subdaily.id"),
         nullable=False,
-        index=True,
         comment="Surrogate key of parent sub daily row",
     )
     data_source = Column(CHAR(2), nullable=False, server_default=text("'1'::bpchar"))
