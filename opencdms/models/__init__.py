@@ -1,21 +1,12 @@
-from typing import Callable, Optional, Sequence, Tuple
+from typing import Callable, List, Optional, Sequence
 from alembic import migration
-from sqlalchemy import Table, MetaData
+from sqlalchemy import MetaData, create_engine
 from alembic.autogenerate import compare_metadata
-from sqlalchemy import create_engine
-from logging import getLogger
-
-
-logger = getLogger(__name__)
-
-
-class DatabaseModelMismatchError(Exception):
-    pass
 
 
 def filter_ignored_tables(
     tables: Sequence[str],
-) -> Callable[[Tuple[str, Table]], bool]:
+) -> Callable[[tuple], bool]:
     """ Accept sequence of table names to be ignored  when comparing model to\
          db schema
     Parameters
@@ -25,24 +16,27 @@ def filter_ignored_tables(
 
     Return
     ------
-    `Callable[[Tuple[str, Table]], bool]`
+    `Callable[[tuple]], bool]`
     """
 
-    def filter_func(item: Tuple[str, Table]):
+    def filter_func(item: tuple):
         """
         Return true if item's table name not in `tables`
         """
-        _, table = item
-        return table.name not in tables
+        operation: str = item[0]
+        if operation == "add_table":
+            _, table = item
+            return table.name not in tables
+        return True
 
     return filter_func
 
 
-def check_schema(
+def get_schema_diff(
     metadata: MetaData,
     database_url: str,
     ignore_tables: Optional[Sequence[str]] = None,
-):
+) -> List[tuple]:
     """
     Parameters
     -----
@@ -55,7 +49,7 @@ def check_schema(
 
     Return
     ------
-    `None`
+    List[tuple]
 
     Raises
     ------
@@ -67,19 +61,18 @@ def check_schema(
     mc = migration.MigrationContext.configure(engine.connect())
     diff = compare_metadata(mc, metadata)
     if ignore_tables is not None:
-        diff = filter(filter_ignored_tables(ignore_tables), diff)
-    if len(list(diff)) != 0:
-        raise DatabaseModelMismatchError(
-            "Database schema does not match model definitions"
-        )
-    print("\n\nModel definition matches database schema\n\n")
+        diff = list(filter(filter_ignored_tables(ignore_tables), diff))
+    return list(diff)
 
 
+# TODO remove and use automated tests instead.
 if __name__ == "__main__":
     from opencdms.models.clide import metadata, CLIDE_VIEWS
 
-    check_schema(
-        metadata,
-        "postgresql+psycopg2://localhost/clideDB",
-        ignore_tables=CLIDE_VIEWS,
+    print(
+        get_schema_diff(
+            metadata,
+            "postgresql+psycopg2://localhost/clideDB",
+            ignore_tables=CLIDE_VIEWS,
+        )
     )
