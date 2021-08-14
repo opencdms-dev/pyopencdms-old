@@ -15,7 +15,6 @@ from sqlalchemy import (
     Table,
     Text,
     UniqueConstraint,
-    Index,
     text,
 )
 from sqlalchemy.orm import relationship
@@ -25,53 +24,33 @@ Base = declarative_base()
 metadata = Base.metadata
 
 
+CLIDE_VIEWS = {
+    "cdms_get_ext_views",
+    "ext_class",
+    "ext_equipment",
+    "ext_obs_aero",
+    "ext_obs_aws",
+    "ext_obs_climat",
+    "ext_obs_daily",
+    "ext_obs_daily_basics",
+    "ext_obs_monthly",
+    "ext_obs_monthly_calculated",
+    "ext_obs_monthly_combined",
+    "ext_obs_subdaily",
+    "ext_obs_subdaily_cloud_layers",
+    "ext_obs_subdaily_soil_temps",
+    "ext_obs_upper_air",
+    "ext_station_audit",
+    "ext_station_class",
+    "ext_station_equipment",
+    "ext_stations",
+}
+
+
+# region SQL Views
 t_cdms_get_ext_views = Table(
     "cdms_get_ext_views", metadata, Column("table_name", String)
 )
-
-
-class CodesSimple(Base):
-    __tablename__ = "codes_simple"
-    __table_args__ = (
-        UniqueConstraint("code_type", "code"),
-        {"comment": "List of codes used in CliDE"},
-    )
-
-    id = Column(
-        Integer,
-        primary_key=True,
-        server_default=text("nextval('codes_simple_id'::regclass)"),
-    )
-    code_type = Column(String(40), nullable=False, comment="Character code type")
-    code = Column(String(40), nullable=False)
-    description = Column(String(400), comment="Description of code")
-    change_user = Column(String(10), comment="User of last change")
-    change_datetime = Column(DateTime, comment="Timestamp of last change")
-    insert_datetime = Column(DateTime, nullable=False, comment="Timestamp of insert")
-
-
-class Datum(Base):
-    __tablename__ = "datums"
-    __table_args__ = {"comment": "Geodetic datums"}
-
-    datum_name = Column(String(20), primary_key=True)
-    description = Column(String(100))
-
-
-class Equipment(Base):
-    __tablename__ = "equipment"
-    __table_args__ = {"comment": "Stores equipment master information."}
-
-    id = Column(
-        Integer,
-        primary_key=True,
-        server_default=text("nextval('equipment_id'::regclass)"),
-        comment="Surrogate Key",
-    )
-    type = Column(String(50), comment="Type of equipment")
-    comments = Column(String(1000), comment="Comments for equipment")
-    version = Column(String(50), comment="Version of equipment")
-
 
 t_ext_class = Table(
     "ext_class",
@@ -844,6 +823,50 @@ t_ext_stations = Table(
     Column("land_use_1km_10km", String(100)),
     Column("comments", String(1000)),
 )
+# endregion
+
+
+class CodesSimple(Base):
+    __tablename__ = "codes_simple"
+    __table_args__ = (
+        UniqueConstraint("code_type", "code"),
+        {"comment": "List of codes used in CliDE"},
+    )
+
+    id = Column(
+        Integer,
+        primary_key=True,
+        server_default=text("nextval('codes_simple_id'::regclass)"),
+    )
+    code_type = Column(String(40), nullable=False, comment="Character code type")
+    code = Column(String(40), nullable=False)
+    description = Column(String(400), comment="Description of code")
+    change_user = Column(String(10), comment="User of last change")
+    change_datetime = Column(DateTime, comment="Timestamp of last change")
+    insert_datetime = Column(DateTime, nullable=False, comment="Timestamp of insert")
+
+
+class Datum(Base):
+    __tablename__ = "datums"
+    __table_args__ = {"comment": "Geodetic datums"}
+
+    datum_name = Column(String(20), primary_key=True)
+    description = Column(String(100))
+
+
+class Equipment(Base):
+    __tablename__ = "equipment"
+    __table_args__ = {"comment": "Stores equipment master information."}
+
+    id = Column(
+        Integer,
+        primary_key=True,
+        server_default=text("nextval('equipment_id'::regclass)"),
+        comment="Surrogate Key",
+    )
+    type = Column(String(50), comment="Type of equipment")
+    comments = Column(String(1000), comment="Comments for equipment")
+    version = Column(String(50), comment="Version of equipment")
 
 
 class GuiUser(Base):
