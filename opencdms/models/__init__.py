@@ -51,11 +51,6 @@ def get_schema_diff(
     ------
     List[tuple]
 
-    Raises
-    ------
-    `DatabaseModelMismatchError`:
-        if there is mismatch between models in metadata and target\
-        database schema
     """
     engine = create_engine(database_url)
     mc = migration.MigrationContext.configure(engine.connect())
