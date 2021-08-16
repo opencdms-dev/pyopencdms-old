@@ -430,7 +430,7 @@ class Recepsping(Base):
     __tablename__ = 'Recepsping'
 
     IPDir = Column(CHAR(120), primary_key=True, nullable=False, server_default=text("''"))
-    Datee = Column(DateTime, primary_key=True, nullable=False, server_default=text("'1901-01-01 00:00:00'"))
+    Datee = Column(DateTime, primary_key=True, nullable=False, server_default=text("'0000-00-00 00:00:00'"))
     Med7 = Column(Float(asdecimal=True))
     Min7 = Column(Float(asdecimal=True))
     Max7 = Column(Float(asdecimal=True))
