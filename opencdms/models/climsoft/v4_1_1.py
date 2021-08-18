@@ -63,34 +63,34 @@ class AwsElement(Base):
     element_description = Column(String(50), nullable=False)
 
 
-t_aws_lsi = Table(
-    'aws_lsi', metadata,
-    Column('Cols', Integer, nullable=False, unique=True),
-    Column('Element_abbreviation', String(20)),
-    Column('Element_Name', String(20)),
-    Column('Element_Details', String(25)),
-    Column('Climsoft_Element', String(6)),
-    Column('Bufr_Element', String(6)),
-    Column('unit', String(15)),
-    Column('lower_limit', String(10)),
-    Column('upper_limit', String(10)),
-    Column('obsv', String(25))
-)
+class AwsLsi(Base):
+    __tablename__ = 'aws_lsi'
+
+    Cols = Column(Integer, primary_key=True, unique=True)
+    Element_abbreviation = Column(String(20))
+    Element_Name = Column(String(20))
+    Element_Details = Column(String(25))
+    Climsoft_Element = Column(String(6))
+    Bufr_Element = Column(String(6))
+    unit = Column(String(15))
+    lower_limit = Column(String(10))
+    upper_limit = Column(String(10))
+    obsv = Column(String(25))
 
 
-t_aws_lsi1 = Table(
-    'aws_lsi1', metadata,
-    Column('Cols', Integer, nullable=False, unique=True),
-    Column('Element_abbreviation', String(20)),
-    Column('Element_Name', String(20)),
-    Column('Element_Details', String(25)),
-    Column('Climsoft_Element', String(6)),
-    Column('Bufr_Element', String(6)),
-    Column('unit', String(15)),
-    Column('lower_limit', String(10)),
-    Column('upper_limit', String(10)),
-    Column('obsv', String(25))
-)
+class AwsLsi1(Base):
+    __tablename__ = 'aws_lsi1'
+
+    Cols = Column(Integer, primary_key=True, unique=True)
+    Element_abbreviation = Column(String(20))
+    Element_Name = Column(String(20))
+    Element_Details = Column(String(25))
+    Climsoft_Element = Column(String(6))
+    Bufr_Element = Column(String(6))
+    unit = Column(String(15))
+    lower_limit = Column(String(10))
+    upper_limit = Column(String(10))
+    obsv = Column(String(25))
 
 
 class AwsMalawi1(Base):
@@ -108,19 +108,19 @@ class AwsMalawi1(Base):
     obsv = Column(String(50))
 
 
-t_aws_malawi12 = Table(
-    'aws_malawi12', metadata,
-    Column('No', Integer, nullable=False, unique=True),
-    Column('Element_abbreviation', Text, nullable=False),
-    Column('Element_Name', Text, nullable=False),
-    Column('Element_Details', Text, nullable=False),
-    Column('Climsoft_Element', Text, nullable=False),
-    Column('Bufr_Element', Text, nullable=False),
-    Column('unit', Text, nullable=False),
-    Column('lower_limit', Text, nullable=False),
-    Column('upper_limit', Text, nullable=False),
-    Column('obsv', Text, nullable=False)
-)
+class AwsMalawi12(Base):
+    __tablename__ = 'aws_malawi12'
+
+    No = Column(Integer, primary_key=True, unique=True)
+    Element_abbreviation = Column(Text, nullable=False)
+    Element_Name = Column(Text, nullable=False)
+    Element_Details = Column(Text, nullable=False)
+    Climsoft_Element = Column(Text, nullable=False)
+    Bufr_Element = Column(Text, nullable=False)
+    unit = Column(Text, nullable=False)
+    lower_limit = Column(Text, nullable=False)
+    upper_limit = Column(Text, nullable=False)
+    obsv = Column(Text, nullable=False)
 
 
 class AwsMs(Base):
@@ -144,19 +144,19 @@ class AwsProcessParameter(Base):
     UTCDiff = Column(TINYINT(2), nullable=False, server_default=text("'00'"))
 
 
-t_aws_rema1 = Table(
-    'aws_rema1', metadata,
-    Column('Cols', Integer, nullable=False, unique=True),
-    Column('Element_abbreviation', String(20)),
-    Column('Element_Name', String(20)),
-    Column('Element_Details', String(25)),
-    Column('Climsoft_Element', String(6)),
-    Column('Bufr_Element', String(6)),
-    Column('unit', String(15)),
-    Column('lower_limit', String(10)),
-    Column('upper_limit', String(10)),
-    Column('obsv', String(25))
-)
+class AwsRema1(Base):
+    __tablename__ = 'aws_rema1'
+
+    Cols = Column(Integer, primary_key=True, unique=True)
+    Element_abbreviation = Column(String(20))
+    Element_Name = Column(String(20))
+    Element_Details = Column(String(25))
+    Climsoft_Element = Column(String(6))
+    Bufr_Element = Column(String(6))
+    unit = Column(String(15))
+    lower_limit = Column(String(10))
+    upper_limit = Column(String(10))
+    obsv = Column(String(25))
 
 
 t_aws_rwanda1 = Table(
@@ -189,19 +189,19 @@ class AwsRwanda4(Base):
     obsv = Column(String(25))
 
 
-t_aws_rwanda_rain = Table(
-    'aws_rwanda_rain', metadata,
-    Column('Cols', Integer, nullable=False, unique=True),
-    Column('Element_abbreviation', String(20)),
-    Column('Element_Name', String(20)),
-    Column('Element_Details', String(25)),
-    Column('Climsoft_Element', String(6)),
-    Column('Bufr_Element', String(6)),
-    Column('unit', String(15)),
-    Column('lower_limit', String(10)),
-    Column('upper_limit', String(10)),
-    Column('obsv', String(25))
-)
+class AwsRwandaRain(Base):
+    __tablename__ = 'aws_rwanda_rain'
+
+    Cols = Column(Integer, primary_key=True, unique=True)
+    Element_abbreviation = Column(String(20))
+    Element_Name = Column(String(20))
+    Element_Details = Column(String(25))
+    Climsoft_Element = Column(String(6))
+    Bufr_Element = Column(String(6))
+    unit = Column(String(15))
+    lower_limit = Column(String(10))
+    upper_limit = Column(String(10))
+    obsv = Column(String(25))
 
 
 class AwsSasscal1(Base):
@@ -1132,24 +1132,26 @@ class QcInterelementRelationshipDefinition(Base):
     elementId_2 = Column(Integer, primary_key=True, nullable=False)
 
 
-t_qcabslimits = Table(
-    'qcabslimits', metadata,
-    Column('StationId', String(15), nullable=False),
-    Column('ElementId', BigInteger),
-    Column('Datetime', DateTime),
-    Column('YYYY', Integer),
-    Column('mm', TINYINT),
-    Column('dd', TINYINT),
-    Column('hh', TINYINT),
-    Column('obsValue', String(10)),
-    Column('limitValue', String(10)),
-    Column('qcStatus', Integer),
-    Column('acquisitionType', Integer),
-    Column('obsLevel', String(255)),
-    Column('capturedBy', String(255)),
-    Column('dataForm', String(255)),
-    Index('obsInitialIdentification', 'StationId', 'ElementId', 'Datetime', unique=True)
-)
+class Qcabslimit(Base):
+    __tablename__ = 'qcabslimits'
+    __table_args__ = (
+        Index('obsInitialIdentification', 'StationId', 'ElementId', 'Datetime', unique=True),
+    )
+
+    StationId = Column(String(15), primary_key=True, nullable=False)
+    ElementId = Column(BigInteger, primary_key=True, nullable=False)
+    Datetime = Column(DateTime, primary_key=True, nullable=False)
+    YYYY = Column(Integer)
+    mm = Column(TINYINT)
+    dd = Column(TINYINT)
+    hh = Column(TINYINT)
+    obsValue = Column(String(10))
+    limitValue = Column(String(10))
+    qcStatus = Column(Integer)
+    acquisitionType = Column(Integer)
+    obsLevel = Column(String(255))
+    capturedBy = Column(String(255))
+    dataForm = Column(String(255))
 
 
 class Qcstatusdefinition(Base):
@@ -1787,24 +1789,31 @@ class Physicalfeatureclas(Base):
     station = relationship('Station')
 
 
-t_routinereporttransmission = Table(
-    'routinereporttransmission', metadata,
-    Column('reportClass', ForeignKey('routinereportdefinition.reportClass')),
-    Column('reportDatetime', DateTime),
-    Column('receivedDatetime', DateTime),
-    Column('reportedFrom', ForeignKey('station.stationId'), index=True),
-    Index('report', 'reportClass', 'reportDatetime', 'reportedFrom', unique=True)
-)
+class Routinereporttransmission(Base):
+    __tablename__ = 'routinereporttransmission'
+    __table_args__ = (
+        Index('report', 'reportClass', 'reportDatetime', 'reportedFrom', unique=True),
+    )
+
+    reportClass = Column(ForeignKey('routinereportdefinition.reportClass'), primary_key=True, nullable=False)
+    reportDatetime = Column(DateTime, primary_key=True, nullable=False)
+    receivedDatetime = Column(DateTime)
+    reportedFrom = Column(ForeignKey('station.stationId'), primary_key=True, nullable=False, index=True)
+
+    routinereportdefinition = relationship('Routinereportdefinition')
+    station = relationship('Station')
 
 
-t_stationidalias = Table(
-    'stationidalias', metadata,
-    Column('idAlias', String(255), unique=True),
-    Column('refersTo', String(255)),
-    Column('belongsTo', ForeignKey('station.stationId'), index=True),
-    Column('idAliasBeginDate', String(50)),
-    Column('idAliasEndDate', String(50))
-)
+class Stationidalia(Base):
+    __tablename__ = 'stationidalias'
+
+    idAlias = Column(String(255), primary_key=True, unique=True)
+    refersTo = Column(String(255))
+    belongsTo = Column(ForeignKey('station.stationId'), index=True)
+    idAliasBeginDate = Column(String(50))
+    idAliasEndDate = Column(String(50))
+
+    station = relationship('Station')
 
 
 class Stationlocationhistory(Base):
