@@ -1,62 +1,58 @@
 import pytest
 from sqlalchemy import Column, Integer, String, create_engine, inspect
-from sqlalchemy.engine.base import Engine
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.sql.schema import MetaData
 from opencdms.models import get_schema_diff
 
-
+DB_URL = "sqlite:///test.db"
 TABLE_NAME = "samples"
 
+db_engine = create_engine(DB_URL)
+base = declarative_base()
 
-def get_column_names(db_engine, tablename):
-    inspector = inspect(db_engine)
+
+def get_column_names(engine, tablename):
+    inspector = inspect(engine)
     table_columns = inspector.get_columns(tablename)
     return [x["name"] for x in table_columns]
 
 
-@pytest.fixture
-def db_url() -> str:
-    return "sqlite:///test.db"
+def setup_module(module):
+    base.metadata.drop_all(db_engine)
 
 
-@pytest.fixture
-def db_engine(db_url: str) -> Engine:
-    return create_engine(db_url)
+def teardown_module(module):
+    base.metadata.drop_all(db_engine)
 
 
-@pytest.fixture
-def metadata(db_engine) -> MetaData:
-    return MetaData(db_engine)
+@pytest.mark.order(1)
+def test_inspector_should_not_find_table():
+    inspector = inspect(db_engine)
+    assert not inspector.has_table(TABLE_NAME)
 
 
-@pytest.fixture
-def Base(metadata):
-    return declarative_base(metadata=metadata)
-
-
-@pytest.fixture
-def db(Base, metadata: MetaData, db_engine: Engine):
-    class Sample(Base):
+@pytest.mark.order(2)
+def test_should_create_table_and_inspector_should_find_table():
+    class Sample(base):
         __tablename__ = TABLE_NAME
         id = Column(Integer, primary_key=True)
         key = Column(String)
         value = Column(Integer)
 
+    base.metadata.create_all(db_engine)
+
     inspector = inspect(db_engine)
-    assert not inspector.has_table(TABLE_NAME)
-    metadata.create_all()
     assert inspector.has_table(TABLE_NAME)
-    yield
-    metadata.drop_all()
-    assert not inspector.has_table(TABLE_NAME)
 
 
-def test_schema_diff(db, metadata: MetaData, db_engine: Engine, db_url: str):
-    assert "new" not in get_column_names(db_engine, TABLE_NAME)
-    schema_diff = get_schema_diff(metadata, db_url)
+@pytest.mark.order(3)
+def test_schema_diff_should_be_zero():
+    schema_diff = get_schema_diff(base.metadata, DB_URL)
     assert len(schema_diff) == 0
+
+
+@pytest.mark.order(4)
+def test_schema_diff_should_be_one():
     db_engine.execute(f"ALTER TABLE {TABLE_NAME} ADD COLUMN new integer")
     assert "new" in get_column_names(db_engine, TABLE_NAME)
-    schema_diff = get_schema_diff(metadata, db_url)
+    schema_diff = get_schema_diff(base.metadata, DB_URL)
     assert len(schema_diff) == 1
