@@ -8,6 +8,34 @@ Base = declarative_base()
 metadata = Base.metadata
 
 
+TARGET_TABLES = [
+    "acquisitiontype", 
+    "data_forms", 
+    "flags",
+    "obselement",
+    "paperarchivedefinition",
+    "qcstatusdefinition",
+    "qctype",
+    "regkeys",
+    "station",
+    "synopfeature",
+    "featuregeographicalposition",
+    "instrument",
+    "observationfinal",
+    "observationinitial",
+    "obsscheduleclass",
+    "paperarchive",
+    "physicalfeatureclass",
+    "stationlocationhistory",
+    "stationqualifier",
+    "instrumentfaultreport",
+    "instrumentinspection",
+    "observationschedule",
+    "physicalfeature",
+    "stationelement",
+    "faultresolution"
+]
+
 class Acquisitiontype(Base):
     __tablename__ = 'acquisitiontype'
 
