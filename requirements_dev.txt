@@ -11,3 +11,4 @@ Click==7.0
 pytest==6.2.4
 pytest-runner==5.1
 pytest-order==1.0.0
+django
