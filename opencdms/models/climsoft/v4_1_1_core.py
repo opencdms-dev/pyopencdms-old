@@ -1,6 +1,6 @@
 # coding: utf-8
 from sqlalchemy import BigInteger, CHAR, Column, DECIMAL, DateTime, Float, ForeignKey, Index, Integer, String, Text, text
-from sqlalchemy.dialects.mysql import TINYINT
+from sqlalchemy.dialects.mysql import TINYINT, DOUBLE
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
 
@@ -122,9 +122,9 @@ class Station(Base):
     stationName = Column(String(255))
     wmoid = Column(String(20))
     icaoid = Column(String(20))
-    latitude = Column(Float(11, True))
+    latitude = Column(DOUBLE(precision=11, scale=6, asdecimal=True))
     qualifier = Column(String(20))
-    longitude = Column(Float(11, True))
+    longitude = Column(DOUBLE(precision=11, scale=6, asdecimal=True))
     elevation = Column(String(255))
     geoLocationMethod = Column(String(255))
     geoLocationAccuracy = Column(Float(11))
@@ -154,8 +154,8 @@ class Featuregeographicalposition(Base):
 
     belongsTo = Column(ForeignKey('synopfeature.abbreviation'), primary_key=True, nullable=False)
     observedOn = Column(String(50), primary_key=True, nullable=False)
-    latitude = Column(Float(11, True))
-    longitude = Column(Float(11, True))
+    latitude = Column(DOUBLE(precision=11, scale=6, asdecimal=True))
+    longitude = Column(DOUBLE(precision=11, scale=6, asdecimal=True))
 
     synopfeature = relationship('Synopfeature')
 
@@ -291,8 +291,8 @@ class Stationlocationhistory(Base):
     geoLocationAccuracy = Column(Float(11))
     openingDatetime = Column(String(50), primary_key=True, nullable=False)
     closingDatetime = Column(String(50))
-    latitude = Column(Float(11, True))
-    longitude = Column(Float(11, True))
+    latitude = Column(DOUBLE(precision=11, scale=6, asdecimal=True))
+    longitude = Column(DOUBLE(precision=11, scale=6, asdecimal=True))
     elevation = Column(BigInteger)
     authority = Column(String(255))
     adminRegion = Column(String(255))
