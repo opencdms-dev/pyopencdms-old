@@ -1,12 +1,40 @@
 # coding: utf-8
 from sqlalchemy import BigInteger, CHAR, Column, DECIMAL, DateTime, Float, ForeignKey, Index, Integer, String, Text, text
-from sqlalchemy.dialects.mysql import TINYINT
+from sqlalchemy.dialects.mysql import TINYINT, DOUBLE
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
 metadata = Base.metadata
 
+
+TARGET_TABLES = [
+    "acquisitiontype", 
+    "data_forms", 
+    "flags",
+    "obselement",
+    "paperarchivedefinition",
+    "qcstatusdefinition",
+    "qctype",
+    "regkeys",
+    "station",
+    "synopfeature",
+    "featuregeographicalposition",
+    "instrument",
+    "observationfinal",
+    "observationinitial",
+    "obsscheduleclass",
+    "paperarchive",
+    "physicalfeatureclass",
+    "stationlocationhistory",
+    "stationqualifier",
+    "instrumentfaultreport",
+    "instrumentinspection",
+    "observationschedule",
+    "physicalfeature",
+    "stationelement",
+    "faultresolution"
+]
 
 class Acquisitiontype(Base):
     __tablename__ = 'acquisitiontype'
@@ -41,8 +69,9 @@ class Flag(Base):
 
 class Obselement(Base):
     __tablename__ = 'obselement'
+    __table_args__ = ( Index('elementCode', 'elementId'),)
 
-    elementId = Column(BigInteger, primary_key=True, index=True, server_default=text("'0'"))
+    elementId = Column(BigInteger, primary_key=True, server_default=text("'0'"))
     abbreviation = Column(String(255))
     elementName = Column(String(255))
     description = Column(String(255))
@@ -57,8 +86,9 @@ class Obselement(Base):
 
 class Paperarchivedefinition(Base):
     __tablename__ = 'paperarchivedefinition'
+    __table_args__ = (Index('paperarchivedef','formId'),)
 
-    formId = Column(String(50), primary_key=True, index=True)
+    formId = Column(String(50), primary_key=True)
     description = Column(String(255))
 
 
@@ -86,14 +116,15 @@ class Regkey(Base):
 
 class Station(Base):
     __tablename__ = 'station'
+    __table_args__ = (Index('StationStationId', 'stationId'),)
 
-    stationId = Column(String(255), primary_key=True, index=True)
+    stationId = Column(String(255), primary_key=True)
     stationName = Column(String(255))
     wmoid = Column(String(20))
     icaoid = Column(String(20))
-    latitude = Column(Float(11, True))
+    latitude = Column(DOUBLE(precision=11, scale=6, asdecimal=True))
     qualifier = Column(String(20))
-    longitude = Column(Float(11, True))
+    longitude = Column(DOUBLE(precision=11, scale=6, asdecimal=True))
     elevation = Column(String(255))
     geoLocationMethod = Column(String(255))
     geoLocationAccuracy = Column(Float(11))
@@ -123,17 +154,18 @@ class Featuregeographicalposition(Base):
 
     belongsTo = Column(ForeignKey('synopfeature.abbreviation'), primary_key=True, nullable=False)
     observedOn = Column(String(50), primary_key=True, nullable=False)
-    latitude = Column(Float(11, True))
-    longitude = Column(Float(11, True))
+    latitude = Column(DOUBLE(precision=11, scale=6, asdecimal=True))
+    longitude = Column(DOUBLE(precision=11, scale=6, asdecimal=True))
 
     synopfeature = relationship('Synopfeature')
 
 
 class Instrument(Base):
     __tablename__ = 'instrument'
+    __table_args__ = (Index('code', 'instrumentId'),)
 
     instrumentName = Column(String(255))
-    instrumentId = Column(String(255), primary_key=True, index=True)
+    instrumentId = Column(String(255), primary_key=True)
     serialNumber = Column(String(255))
     abbreviation = Column(String(255))
     model = Column(String(255))
@@ -143,7 +175,7 @@ class Instrument(Base):
     deinstallationDatetime = Column(String(50))
     height = Column(String(255))
     instrumentPicture = Column(CHAR(255))
-    installedAt = Column(ForeignKey('station.stationId'), index=True)
+    installedAt = Column(ForeignKey('station.stationId'))
 
     station = relationship('Station')
 
@@ -152,10 +184,12 @@ class Observationfinal(Base):
     __tablename__ = 'observationfinal'
     __table_args__ = (
         Index('obsFinalIdentification', 'recordedFrom', 'describedBy', 'obsDatetime', unique=True),
+        Index('obsElementObservationInitial', 'describedBy'),
+        Index('stationObservationInitial', 'recordedFrom')
     )
 
-    recordedFrom = Column(ForeignKey('station.stationId'), primary_key=True, nullable=False, index=True)
-    describedBy = Column(ForeignKey('obselement.elementId'), primary_key=True, nullable=False, index=True)
+    recordedFrom = Column(ForeignKey('station.stationId'), primary_key=True, nullable=False)
+    describedBy = Column(ForeignKey('obselement.elementId'), primary_key=True, nullable=False)
     obsDatetime = Column(DateTime, primary_key=True, nullable=False)
     obsLevel = Column(String(255), primary_key=True, nullable=False, server_default=text("'surface'"))
     obsValue = Column(DECIMAL(8, 2))
@@ -181,10 +215,12 @@ class Observationinitial(Base):
     __tablename__ = 'observationinitial'
     __table_args__ = (
         Index('obsInitialIdentification', 'recordedFrom', 'describedBy', 'obsDatetime', 'qcStatus', 'acquisitionType', unique=True),
+        Index('obsElementObservationInitial', 'describedBy'),
+        Index('stationObservationInitial', 'recordedFrom')
     )
 
-    recordedFrom = Column(ForeignKey('station.stationId'), primary_key=True, nullable=False, index=True)
-    describedBy = Column(ForeignKey('obselement.elementId'), primary_key=True, nullable=False, index=True)
+    recordedFrom = Column(ForeignKey('station.stationId'), primary_key=True, nullable=False)
+    describedBy = Column(ForeignKey('obselement.elementId'), primary_key=True, nullable=False)
     obsDatetime = Column(DateTime, primary_key=True, nullable=False)
     obsLevel = Column(String(255), primary_key=True, nullable=False)
     obsValue = Column(String(255))
@@ -208,10 +244,11 @@ class Observationinitial(Base):
 
 class Obsscheduleclas(Base):
     __tablename__ = 'obsscheduleclass'
+    __table_args__ = (Index('scheduleClassIdeification', 'scheduleClass'),)
 
-    scheduleClass = Column(String(255), primary_key=True, index=True, server_default=text("''"))
+    scheduleClass = Column(String(255), primary_key=True, server_default=text("''"))
     description = Column(String(255))
-    refersTo = Column(ForeignKey('station.stationId'), index=True)
+    refersTo = Column(ForeignKey('station.stationId'))
 
     station = relationship('Station')
 
@@ -225,7 +262,7 @@ class Paperarchive(Base):
     belongsTo = Column(ForeignKey('station.stationId'), primary_key=True, nullable=False)
     formDatetime = Column(DateTime, primary_key=True, nullable=False)
     image = Column(String(255))
-    classifiedInto = Column(ForeignKey('paperarchivedefinition.formId'), primary_key=True, nullable=False, index=True)
+    classifiedInto = Column(ForeignKey('paperarchivedefinition.formId'), primary_key=True, nullable=False)
 
     station = relationship('Station')
     paperarchivedefinition = relationship('Paperarchivedefinition')
@@ -233,10 +270,11 @@ class Paperarchive(Base):
 
 class Physicalfeatureclas(Base):
     __tablename__ = 'physicalfeatureclass'
+    __table_args__ = (Index('stationFeatureClass', 'featureClass'),)
 
-    featureClass = Column(String(255), primary_key=True, index=True)
+    featureClass = Column(String(255), primary_key=True)
     description = Column(String(255))
-    refersTo = Column(ForeignKey('station.stationId'), index=True)
+    refersTo = Column(ForeignKey('station.stationId'))
 
     station = relationship('Station')
 
@@ -253,8 +291,8 @@ class Stationlocationhistory(Base):
     geoLocationAccuracy = Column(Float(11))
     openingDatetime = Column(String(50), primary_key=True, nullable=False)
     closingDatetime = Column(String(50))
-    latitude = Column(Float(11, True))
-    longitude = Column(Float(11, True))
+    latitude = Column(DOUBLE(precision=11, scale=6, asdecimal=True))
+    longitude = Column(DOUBLE(precision=11, scale=6, asdecimal=True))
     elevation = Column(BigInteger)
     authority = Column(String(255))
     adminRegion = Column(String(255))
@@ -267,6 +305,7 @@ class Stationqualifier(Base):
     __tablename__ = 'stationqualifier'
     __table_args__ = (
         Index('stationid_qualifier_identification', 'qualifier', 'qualifierBeginDate', 'qualifierEndDate', 'belongsTo', unique=True),
+        Index('stationQualifierIdentification', 'belongsTo')
     )
 
     qualifier = Column(String(255), primary_key=True, nullable=False)
@@ -274,7 +313,7 @@ class Stationqualifier(Base):
     qualifierEndDate = Column(String(50), primary_key=True, nullable=False)
     stationTimeZone = Column(Integer, server_default=text("'0'"))
     stationNetworkType = Column(String(255))
-    belongsTo = Column(ForeignKey('station.stationId'), primary_key=True, nullable=False, index=True)
+    belongsTo = Column(ForeignKey('station.stationId'), primary_key=True, nullable=False)
 
     station = relationship('Station')
 
@@ -283,16 +322,17 @@ class Instrumentfaultreport(Base):
     __tablename__ = 'instrumentfaultreport'
     __table_args__ = (
         Index('instrument_report', 'refersTo', 'reportDatetime', 'reportedFrom', unique=True),
+        Index('report_id', 'reportId')
     )
 
     refersTo = Column(ForeignKey('instrument.instrumentId'))
-    reportId = Column(BigInteger, primary_key=True, index=True)
+    reportId = Column(BigInteger, primary_key=True)
     reportDatetime = Column(String(50))
     faultDescription = Column(String(255))
     reportedBy = Column(String(255))
     receivedDatetime = Column(String(50))
     receivedBy = Column(String(255))
-    reportedFrom = Column(ForeignKey('station.stationId'), index=True)
+    reportedFrom = Column(ForeignKey('station.stationId'))
 
     instrument = relationship('Instrument')
     station = relationship('Station')
@@ -309,7 +349,7 @@ class Instrumentinspection(Base):
     performedBy = Column(String(255))
     status = Column(String(255))
     remarks = Column(String(255))
-    performedAt = Column(ForeignKey('station.stationId'), index=True)
+    performedAt = Column(ForeignKey('station.stationId'))
 
     station = relationship('Station')
     instrument = relationship('Instrument')
@@ -334,14 +374,16 @@ class Physicalfeature(Base):
     __tablename__ = 'physicalfeature'
     __table_args__ = (
         Index('featureIdentification', 'associatedWith', 'beginDate', 'classifiedInto', 'description', unique=True),
+        Index('physicalFeatureidentification_idx', 'classifiedInto'),
+        Index('stationfeature', 'associatedWith')
     )
 
-    associatedWith = Column(ForeignKey('station.stationId'), primary_key=True, nullable=False, index=True)
+    associatedWith = Column(ForeignKey('station.stationId'), primary_key=True, nullable=False)
     beginDate = Column(String(50), primary_key=True, nullable=False)
     endDate = Column(String(50))
     image = Column(String(255))
     description = Column(String(255), primary_key=True, nullable=False)
-    classifiedInto = Column(ForeignKey('physicalfeatureclass.featureClass'), primary_key=True, nullable=False, index=True)
+    classifiedInto = Column(ForeignKey('physicalfeatureclass.featureClass'), primary_key=True, nullable=False)
 
     station = relationship('Station')
     physicalfeatureclas = relationship('Physicalfeatureclas')
@@ -351,13 +393,15 @@ class Stationelement(Base):
     __tablename__ = 'stationelement'
     __table_args__ = (
         Index('stationElementIdentification', 'recordedFrom', 'describedBy', 'recordedWith', 'beginDate', unique=True),
+        Index('obsElementobservationInitial', 'describedBy'),
+        Index('stationobservationInitial', 'recordedFrom')
     )
 
-    recordedFrom = Column(ForeignKey('station.stationId'), primary_key=True, nullable=False, index=True)
-    describedBy = Column(ForeignKey('obselement.elementId'), primary_key=True, nullable=False, index=True)
-    recordedWith = Column(ForeignKey('instrument.instrumentId'), primary_key=True, nullable=False, index=True)
+    recordedFrom = Column(ForeignKey('station.stationId'), primary_key=True, nullable=False)
+    describedBy = Column(ForeignKey('obselement.elementId'), primary_key=True, nullable=False)
+    recordedWith = Column(ForeignKey('instrument.instrumentId'), primary_key=True, nullable=False)
     instrumentcode = Column(String(6))
-    scheduledFor = Column(ForeignKey('obsscheduleclass.scheduleClass'), index=True)
+    scheduledFor = Column(ForeignKey('obsscheduleclass.scheduleClass'))
     height = Column(Float(6))
     beginDate = Column(String(50), primary_key=True, nullable=False)
     endDate = Column(String(50))
@@ -376,7 +420,7 @@ class Faultresolution(Base):
 
     resolvedDatetime = Column(String(50), primary_key=True, nullable=False)
     resolvedBy = Column(String(255))
-    associatedWith = Column(ForeignKey('instrumentfaultreport.reportId'), primary_key=True, nullable=False, index=True)
+    associatedWith = Column(ForeignKey('instrumentfaultreport.reportId'), primary_key=True, nullable=False)
     remarks = Column(String(255))
 
     instrumentfaultreport = relationship('Instrumentfaultreport')
