@@ -37,7 +37,7 @@ def teardown_module(module):
 def test_should_return_same_station_ids():
     from opencdms.models.djangodemo.metadata import Station
 
-    station_ids = [838, 675]
+    station_ids = ['838', '675']
 
     for st_id in station_ids:
         new_station = Station(
@@ -54,4 +54,4 @@ def test_should_return_same_station_ids():
         new_station.save()
 
     for st in Station.objects.all():
-        assert int(st.stationid) in station_ids
+        assert st.stationid in station_ids
