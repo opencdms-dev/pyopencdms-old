@@ -1,9 +1,7 @@
 import os
-import sys
 import django
 from django.conf import settings
 from django.core.management import execute_from_command_line
-import pytest
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -19,15 +17,26 @@ def setup_module(module):
             },
             DEFAULT_AUTO_FIELD="django.db.models.AutoField",
             BASE_DIR=BASE_DIR,
-            INSTALLED_APPS=("opencdms.models.djangodemo", "django.contrib.auth", "django.contrib.contenttypes")
+            INSTALLED_APPS=(
+                "opencdms.models.djangodemo",
+                "django.contrib.auth",
+                "django.contrib.contenttypes"
+            )
         )
     except RuntimeError:
         pass
 
     django.setup()
 
-    execute_from_command_line([os.path.abspath(__file__), "makemigrations", "djangodemo"])
-    execute_from_command_line([os.path.abspath(__file__), "migrate"])
+    execute_from_command_line([
+        os.path.abspath(__file__),
+        "makemigrations",
+        "djangodemo"
+    ])
+    execute_from_command_line([
+        os.path.abspath(__file__),
+        "migrate"
+    ])
 
 
 def teardown_module(module):
