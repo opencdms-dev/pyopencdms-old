@@ -97,14 +97,3 @@ def get_schema_diff(
         diff = list(filter(filter_in_included_tables(include_tables), diff))
     return list(diff)
 
-
-# TODO remove and use automated tests instead.
-if __name__ == "__main__":
-    from opencdms.models.climsoft.v4_1_1_core import metadata, TARGET_TABLES
-    diff = get_schema_diff(
-            metadata,
-            "mysql://root:#Classicnerdswag1@localhost/mariadb_climsoft_db_v4",
-            include_tables=TARGET_TABLES
-        )
-    with open('output.txt', 'wt') as out:
-        pprint(diff, stream=out, indent=4)
