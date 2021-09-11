@@ -20,6 +20,8 @@ The [opencdms-test-data](https://github.com/opencdms/opencdms-test-data) reposit
 
 ## Dependencies
 
+`pyopencdms` officially supports Python 3.7.1 and above, 3.8, and 3.9 (in line with the [Pandas package](https://pandas.pydata.org/docs/getting_started/install.html#python-version-support))
+
 <img src="https://raw.githubusercontent.com/opencdms/media/main/architecture/pyopencdms-architecture-0.2.png" width="400" />
 
 `pyopencdms` uses SQLAlchemy (2.0-style) to connect to multiple database technologies including PostgreSQL, MySQL/MariaDB, Oracle and SQLite.
