@@ -1,10 +1,11 @@
+from pprint import pprint
 from typing import Callable, List, Optional, Sequence
 from alembic import migration
-from sqlalchemy import MetaData, create_engine
+from sqlalchemy import MetaData, create_engine, Table, Index
 from alembic.autogenerate import compare_metadata
 
 
-def filter_ignored_tables(
+def filter_out_excluded_tables(
     tables: Sequence[str],
 ) -> Callable[[tuple], bool]:
     """ Accept sequence of table names to be ignored  when comparing model to\
@@ -23,10 +24,40 @@ def filter_ignored_tables(
         """
         Return true if item's table name not in `tables`
         """
-        operation: str = item[0]
-        if operation == "add_table":
-            _, table = item
-            return table.name not in tables
+        target_object = item[1]
+        if isinstance(target_object, Table):
+            return target_object.name not in tables
+        if isinstance(target_object, Index):
+            return target_object.table.name not in tables
+        return True
+
+    return filter_func
+
+
+def filter_in_included_tables(
+    tables: Sequence[str],
+) -> Callable[[tuple], bool]:
+    """ Accept sequence of table names to be included  when comparing model to\
+         db schema
+    Parameters
+    -----
+    `tables`: Sequence[str]
+        Table names to be included, other tables not in this list would be ignored.
+
+    Return
+    ------
+    `Callable[[tuple]], bool]`
+    """
+
+    def filter_func(item: tuple):
+        """
+        Return true if item's table name not in `tables`
+        """
+        target_object = item[1]
+        if isinstance(target_object, Table):
+            return target_object.name in tables
+        if isinstance(target_object, Index):
+            return target_object.table.name in tables
         return True
 
     return filter_func
@@ -35,7 +66,8 @@ def filter_ignored_tables(
 def get_schema_diff(
     metadata: MetaData,
     database_url: str,
-    ignore_tables: Optional[Sequence[str]] = None,
+    include_tables: Optional[Sequence[str]] = None,
+    exclude_tables: Optional[Sequence[str]] = None,
 ) -> List[tuple]:
     """
     Parameters
@@ -44,7 +76,9 @@ def get_schema_diff(
         Sqlalchemy Metadata
     `database_url`:
         Target databse url e.g. `sqlite://`
-    `ignore_tables`: Sequence[str] | None
+    `include_tables`: Sequence[str] | None
+        List of table names to check against the database
+    `exclude_tables`: Sequence[str] | None
         List of table names to be ignored
 
     Return
@@ -55,19 +89,11 @@ def get_schema_diff(
     engine = create_engine(database_url)
     mc = migration.MigrationContext.configure(engine.connect())
     diff = compare_metadata(mc, metadata)
-    if ignore_tables is not None:
-        diff = list(filter(filter_ignored_tables(ignore_tables), diff))
+    if include_tables is not None and exclude_tables is not None:
+        raise Exception("`include_tables` and `exclude_tables` must not be used together") #TODO define custom error class
+    if exclude_tables is not None:
+        diff = list(filter(filter_out_excluded_tables(exclude_tables), diff))
+    if include_tables is not None:
+        diff = list(filter(filter_in_included_tables(include_tables), diff))
     return list(diff)
 
-
-# TODO remove and use automated tests instead.
-if __name__ == "__main__":
-    from opencdms.models.clide import metadata, CLIDE_VIEWS
-
-    print(
-        get_schema_diff(
-            metadata,
-            "postgresql+psycopg2://localhost/clideDB",
-            ignore_tables=CLIDE_VIEWS,
-        )
-    )
