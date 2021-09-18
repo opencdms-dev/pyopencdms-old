@@ -1,8 +1,23 @@
 [tool.poetry]
-name = "pyopencdms"
+name = "opencdms"
 version = "0.1.0"
-description = ""
-authors = ["Your Name <you@example.com>"]
+description = "OpenCDMS Python package"
+authors = ["OpenCDMS <info@opencdms.org>"]
+license = "MIT license"
+repository = "https://github.com/opencdms/opencdms"
+keywords = ["opencdms"]
+classifiers = [
+    "Development Status :: 2 - Pre-Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Natural Language :: English",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.5",
+    "Programming Language :: Python :: 3.6",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+]
+readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.8"
