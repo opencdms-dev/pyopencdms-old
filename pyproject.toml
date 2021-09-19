@@ -4,15 +4,14 @@ version = "0.1.0"
 description = "OpenCDMS Python package"
 authors = ["OpenCDMS <info@opencdms.org>"]
 license = "MIT license"
-repository = "https://github.com/opencdms/opencdms"
-keywords = ["opencdms"]
+repository = "https://github.com/opencdms/pyopencdms"
+keywords = ["opencdms", "climate"]
 classifiers = [
     "Development Status :: 2 - Pre-Alpha",
     "Intended Audience :: Developers",
     "License :: OSI Approved :: MIT License",
     "Natural Language :: English",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.5",
     "Programming Language :: Python :: 3.6",
     "Programming Language :: Python :: 3.7",
     "Programming Language :: Python :: 3.8",
