@@ -1,5 +1,5 @@
 # coding: utf-8
-from sqlalchemy import CHAR, Column, Date, DateTime, Float, Integer, String, Text, Time, text
+from sqlalchemy import CHAR, Column, Date, DATETIME, Float, Integer, String, Text, Time, text
 from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
@@ -92,11 +92,11 @@ class DisponibDD(Base):
     Station = Column(CHAR(20), primary_key=True, nullable=False, server_default=text("''"))
     Variable = Column(CHAR(15), primary_key=True, nullable=False, server_default=text("''"))
     Ndatos = Column(Integer)
-    BegDate = Column(DateTime)
-    EndDate = Column(DateTime)
+    BegDate = Column(DATETIME)
+    EndDate = Column(DATETIME)
     Porcen1 = Column(Float(asdecimal=True))
     Ndatos2 = Column(Integer)
-    MedDate = Column(DateTime)
+    MedDate = Column(DATETIME)
     Porcen2 = Column(Float(asdecimal=True))
 
 
@@ -122,15 +122,15 @@ class Estacautoma(Base):
     Genera = Column(CHAR(2))
     DayLigthTime = Column(CHAR(2))
     HoursToUTC = Column(Integer)
-    DTBegDate = Column(DateTime)
-    DTEndDate = Column(DateTime)
+    DTBegDate = Column(DATETIME)
+    DTEndDate = Column(DATETIME)
 
 
 class Ftpbitacproc(Base):
     __tablename__ = 'Ftpbitacproc'
 
     Filee = Column(CHAR(250), primary_key=True, server_default=text("''"))
-    Datee = Column(DateTime)
+    Datee = Column(DATETIME)
 
 
 class Hydrregion(Base):
@@ -145,16 +145,16 @@ class Isolinbitac(Base):
     __tablename__ = 'Isolinbitac'
 
     Opcion = Column(CHAR(60), primary_key=True, server_default=text("''"))
-    DateTime = Column(DateTime)
+    DateTime = Column(DATETIME)
     NumRegs = Column(Integer)
-    ActDate = Column(DateTime)
+    ActDate = Column(DATETIME)
 
 
 class Logbitacproc(Base):
     __tablename__ = 'Logbitacproc'
 
     Filee = Column(CHAR(250), primary_key=True, server_default=text("''"))
-    Datee = Column(DateTime)
+    Datee = Column(DATETIME)
 
 
 class MapasCroqui(Base):
@@ -364,7 +364,7 @@ class MensajesMetar(Base):
     __tablename__ = 'MensajesMetar'
 
     Station = Column(CHAR(20), primary_key=True, nullable=False, server_default=text("''"))
-    Datee = Column(DateTime, primary_key=True, nullable=False, server_default=text("'1901-01-01 00:00:00'"))
+    Datee = Column(DATETIME, primary_key=True, nullable=False, server_default=text("'1901-01-01 00:00:00'"))
     Tipo = Column(CHAR(5))
     Codee = Column(CHAR(10))
     Message = Column(Text)
@@ -374,7 +374,7 @@ class MensajesSynop(Base):
     __tablename__ = 'MensajesSynop'
 
     Station = Column(CHAR(20), primary_key=True, nullable=False, server_default=text("''"))
-    Datee = Column(DateTime, primary_key=True, nullable=False, server_default=text("'1901-01-01 00:00:00'"))
+    Datee = Column(DATETIME, primary_key=True, nullable=False, server_default=text("'1901-01-01 00:00:00'"))
     Codee = Column(CHAR(10))
     Message = Column(Text)
 
@@ -415,7 +415,7 @@ class Recepsdato(Base):
     Name = Column(CHAR(25), primary_key=True, nullable=False, server_default=text("''"))
     StationGroup = Column(CHAR(20), primary_key=True, nullable=False, server_default=text("''"))
     Variable = Column(CHAR(15), primary_key=True, nullable=False, server_default=text("''"))
-    Datee = Column(DateTime, primary_key=True, nullable=False, server_default=text("'1901-01-01 00:00:00'"))
+    Datee = Column(DATETIME, primary_key=True, nullable=False, server_default=text("'1901-01-01 00:00:00'"))
     NumEstac = Column(Integer)
     Recep09 = Column(Integer)
     Recep10 = Column(Integer)
@@ -430,7 +430,7 @@ class Recepsping(Base):
     __tablename__ = 'Recepsping'
 
     IPDir = Column(CHAR(120), primary_key=True, nullable=False, server_default=text("''"))
-    Datee = Column(DateTime, primary_key=True, nullable=False, server_default=text("'0000-00-00 00:00:00'"))
+    Datee = Column(DATETIME, primary_key=True, nullable=False, server_default=text("'0000-00-00 00:00:00'"))
     Med7 = Column(Float(asdecimal=True))
     Min7 = Column(Float(asdecimal=True))
     Max7 = Column(Float(asdecimal=True))
@@ -476,8 +476,8 @@ class Tablaswebconst(Base):
     Opcion = Column(CHAR(15))
     Variable = Column(CHAR(15))
     Description = Column(CHAR(150))
-    BegnDate = Column(DateTime)
-    EndDate = Column(DateTime)
+    BegnDate = Column(DATETIME)
+    EndDate = Column(DATETIME)
     NombreHtml = Column(CHAR(40))
     WithExtremes = Column(CHAR(2))
     WithDataNumb = Column(CHAR(2))
@@ -583,7 +583,7 @@ class Variabautomaxfecha(Base):
     __tablename__ = 'Variabautomaxfecha'
 
     SatelliteID = Column(CHAR(8), primary_key=True, nullable=False, server_default=text("''"))
-    DateTime = Column(DateTime, primary_key=True, nullable=False, server_default=text("'2001-01-01 00:00:00'"))
+    DateTime = Column(DATETIME, primary_key=True, nullable=False, server_default=text("'2001-01-01 00:00:00'"))
     Secuen = Column(Integer, primary_key=True, nullable=False, server_default=text("'0'"))
     Area = Column(CHAR(15))
     Name = Column(CHAR(30))
@@ -611,7 +611,7 @@ class Variablestransf(Base):
 
     Station = Column(CHAR(20), primary_key=True, nullable=False, server_default=text("''"))
     Variable = Column(CHAR(15), primary_key=True, nullable=False, server_default=text("''"))
-    BegnDate = Column(DateTime, primary_key=True, nullable=False, server_default=text("'1901-01-01 00:00:00'"))
+    BegnDate = Column(DATETIME, primary_key=True, nullable=False, server_default=text("'1901-01-01 00:00:00'"))
     Adjust1 = Column(Float(asdecimal=True), nullable=False, server_default=text("'0'"))
     Adjust2 = Column(Float(asdecimal=True), nullable=False, server_default=text("'0'"))
     VariabTransf1 = Column(CHAR(20))
@@ -654,7 +654,7 @@ class Webbitacoraproc(Base):
     Userr = Column(CHAR(50))
     proctype = Column(CHAR(20))
     OpcionProc = Column(CHAR(15))
-    DateTime = Column(DateTime)
+    DateTime = Column(DATETIME)
 
 
 class Webcontadore(Base):
@@ -679,7 +679,7 @@ class Estacionesinstrum(Base):
 
     Station = Column(CHAR(20), primary_key=True, nullable=False)
     Variable = Column(CHAR(15), primary_key=True, nullable=False)
-    BeginDate = Column(DateTime, primary_key=True, nullable=False)
+    BeginDate = Column(DATETIME, primary_key=True, nullable=False)
     elevation = Column(Float(asdecimal=True))
     tipo1 = Column(CHAR(15))
     Descrip = Column(CHAR(120))

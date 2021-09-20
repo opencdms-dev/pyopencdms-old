@@ -32,6 +32,7 @@ wheels/
 *.spec
 
 # Installer logs
+pip-wheel-metadata/
 pip-log.txt
 pip-delete-this-directory.txt
 
@@ -104,8 +105,6 @@ ENV/
 # IDE settings
 .vscode/
 .idea/
-
-
 
 # Ignore db
 *.db
