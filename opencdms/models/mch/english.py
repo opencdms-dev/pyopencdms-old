@@ -145,7 +145,7 @@ class Isolinbitac(Base):
     __tablename__ = 'Isolinbitac'
 
     Opcion = Column(CHAR(60), primary_key=True, server_default=text("''"))
-    DateTime = Column(DateTime)
+    DateTime_ = Column("DateTime", DateTime)
     NumRegs = Column(Integer)
     ActDate = Column(DateTime)
 
