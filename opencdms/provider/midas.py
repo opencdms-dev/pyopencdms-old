@@ -56,9 +56,15 @@ DEFAULT_QC_VERSION = 1
 element_lookup = {
     "wind_speed": {"hourly": "uk-hourly-weather-obs"},
     "wind_direction": {"hourly": "uk-hourly-weather-obs"},
-    # 'mean_wind_speed': {'hourly': 'uk-mean-wind-obs'},
-    # 'mean_wind_dir': {'hourly': 'uk-mean-wind-obs'},
-    # 'prcp_amt': {'hourly': 'uk-hourly-rain-obs'},
+    'mean_wind_speed': {'hourly': 'uk-mean-wind-obs'},
+    'mean_wind_dir': {'hourly': 'uk-mean-wind-obs'},
+    'prcp_amt': {'hourly': 'uk-hourly-rain-obs', 'daily': 'uk-daily-rain-obs'},
+    'max_air_temp': {'daily': 'uk-daily-temperature-obs'},
+    'min_air_temp': {'daily': 'uk-daily-temperature-obs'},
+    'glbl_irad_amt': {'daily': 'uk-radiation-obs'},
+    'difu_irad_amt': {'daily': 'uk-radiation-obs'},
+    'q5cm_soil_temp': {'daily': 'uk-soil-temperature-obs'},
+    'q10cm_soil_temp': {'daily': 'uk-soil-temperature-obs'},
 }
 station_county_lookup = {
     838: "berkshire",
