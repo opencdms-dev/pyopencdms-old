@@ -169,4 +169,8 @@ class MidasOpen(CDMSProvider):
 
         filepath = os.path.join(self.connection_string, directory, filename)
 
-        return read_badc(filepath, usecols=["src_id", date_time_column_lookup[element_lookup[element][period]], *elements])
+        return read_badc(filepath, usecols=[
+            "src_id",
+            date_time_column_lookup[element_lookup[element][period]],
+            *elements
+        ])
