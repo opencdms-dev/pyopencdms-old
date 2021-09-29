@@ -72,6 +72,18 @@ station_county_lookup = {
 station_filename_lookup = {
     838: "00838_bracknell-beaufort-park",
 }
+
+date_time_column_lookup = {
+    'uk-daily-rain-obs': 'ob_date',
+    'uk-daily-temperature-obs': 'ob_end_time',
+    'uk-daily-weather-obs': 'ob_end_time',
+    'uk-hourly-rain-obs': 'ob_end_time',
+    'uk-hourly-weather-obs': 'ob_time',
+    'uk-mean-wind-obs': 'ob_end_time',
+    'uk-radiation-obs': 'ob_end_time',
+    'uk-soil-temperature-obs': 'ob_time'
+}
+
 valid_dataset_versions = ["201901", "201908"]
 valid_qc_versions = [0, 1]
 
@@ -157,4 +169,4 @@ class MidasOpen(CDMSProvider):
 
         filepath = os.path.join(self.connection_string, directory, filename)
 
-        return read_badc(filepath, usecols=["src_id", "ob_time", *elements])
+        return read_badc(filepath, usecols=["src_id", date_time_column_lookup[element_lookup[element][period]], *elements])
