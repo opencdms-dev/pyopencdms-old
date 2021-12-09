@@ -31,7 +31,7 @@ jobs:
                   cd /home/ubuntu/opencdms-test-data
                   git pull origin main
                   cd /home/ubuntu/pyopencdms
-                  git pull origin main
+                  git pull origin integration-tests
                   docker-compose -f docker-compose-test.yml up -d --build
                 '
             - name: Test with pytest
