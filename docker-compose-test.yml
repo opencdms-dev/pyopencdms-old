@@ -6,7 +6,7 @@ services:
     postgresql:
         build:
             context: .
-            dockerfile: ./docker/Dockerfile.postgresql
+            dockerfile: ./docker/Dockerfile.postgres
         container_name: postgresql
         ports:
             - "5432:5432"
