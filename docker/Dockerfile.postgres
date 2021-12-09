@@ -1,4 +1,4 @@
 FROM postgres:13
-COPY /home/ubuntu/opencdms-test-data/scripts/entrypoints/clide.sh /docker-entrypoint-initdb.d/1.sh
-COPY /home/ubuntu/opencdms-test-data/schemas/clide/clidedb_schema.sql /docker-entrypoint-initdb.d/2.sql
-COPY /home/ubuntu/opencdms-test-data/schemas/wmdr/wmdr_ddl.sql /docker-entrypoint-initdb.d/3.sql
+COPY scripts/entrypoints/clide.sh /docker-entrypoint-initdb.d/1.sh
+COPY schemas/clide/clidedb_schema.sql /docker-entrypoint-initdb.d/2.sql
+COPY schemas/wmdr/wmdr_ddl.sql /docker-entrypoint-initdb.d/3.sql

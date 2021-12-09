@@ -1,0 +1,570 @@
+# Archivo con los nombres de los campos y las tablas en varios idiomas en la base de datos para el MCH-BD.
+# Las columnas 1, 2 y 3(secuencia, tipo y clavesecuecia) no deben ser modificadas
+# La columna 4 que es el mensaje en el idioma base del desarrollo se inserta solo como referencia para la
+#   traducción a otros idiomas y si se modifica no es tomada en cuenta.
+# Las columnas 5, 6 y 7 son los mensajes en los idiomas 2, 3 y 4. El idioma 2 se ha pensado sea Inglés y
+#   el idioma 3 el francés. El idioma 4 puede ser cualquier otro idioma o se puede utilizar para regionalismos
+#   en el idioma 1 (español).
+#   Cuando no está definido un mensaje en un idioma y ese idioma se utiliza, se toma el valor del idioma base
+#     del desarrollo como valor para ese mensaje.
+# La columna 8 es un comentario que puede existir para explicar algo acerca del mensaje
+#
+# Los mensajes pueden ser de tres tipos: 
+#   1) de menús en la forma principal del sistema,
+#   2) de mensajes en botones de comando, etiquetas o desplegados en la formas
+#   3) de contenidos de algunas cajas compuestas en algunas formas
+#
+# El formato del archivo es:
+#   Un mensaje en cada línea
+#   Línea que empieza con el símbolo # es un comentario y no es tomada en cuenta
+#   Los datos en cada línea deben ir separados por tabuladores (Chr(9), 0x9, \t)
+#
+
+################
+# nombres de campos en las tablas
+################
+1	campo	ncAbrevVariab	AbrevVariab	VariabAbbrev	AbrevVariab	Abreviation	Abreviatura para la variable
+2	campo	ncAccion	Accion	Action	Action		x
+3	campo	ncActivo	Activo	Enabled	Actif		x
+4	campo	ncAgnoFin	AgnoFin	EndYear	AnneeFin		Año final
+402	campo	ncAgnoIni	AgnoIni	StartYear	AnneeIni		Año inicial
+412	campo	ncAgnoMax	AgnoMax	MaxYear	AnneeMax		Año de valor máximo
+411	campo	ncAgnoMed	AgnoMed	MedYear	AnneeMoy		Año de valor mediana
+413	campo	ncAgnoMin	AgnoMin	MinYear	AnneeMin		Año del valor mínimo
+5	campo	ncAjuste1	Ajuste1	Adjust1	Ajuster1		x
+6	campo	ncAjuste2	Ajuste2	Adjust2	Ajuster2		x
+7	campo	ncAlineacion	Alineacion	Alignment	Alignement		x
+8	campo	ncAlmacConserv	AlmacConserv	HoldingStorage	StockageDeCons		Almacenamiento de conservación en una presa
+9	campo	ncAltitud	Altitud	Altitude	Altitude		x
+10	campo	ncAltitud2	Altitud2	Altitude2	Altitude2		x
+11	campo	ncAlto	Alto	High	Elevation		x
+424	campo	ncAltura	altura	Height	Hauteur		x
+12	campo	ncAlturaLetra	AlturaLetra	FontHeight	TaillePolice		x
+13	campo	ncAlturaProyec	AlturaProyec	ProjHeight	HauteurProj		Altura de proyección geográfica
+14	campo	ncAncho	Ancho	Width	Largeur		x
+15	campo	ncAnchoBase	AnchoBase	BaseWidth	LargeurBase		x
+16	campo	ncAngulo	Angulo	Angle	Angle		x
+17	campo	ncAnguloProyec	AnguloProyec	AngleProj	AngleProj		Ángulo de proyección geográfica
+18	campo	ncApellidos	Apellidos	Surnames	Noms		x
+19	campo	ncArchivo	Archivo	Filee	Fichier		x
+20	campo	ncArea	Area	Area	Surface		x
+25	campo	ncCalcDTaD	CalcDTaD	CalcDTaD	CalcDetJ		Cálculo de detalle a datos diarios
+26	campo	ncCalcxGpo	CalcxGpo	CalcbyGrp	CalcparGrp		Cálculo por grupo de estaciones
+446	campo	nccaminocolor	caminocolor	roadcolor	couleurroute		x
+445	campo	nccaminolinea	caminolinea	roadline	ligneroute		x
+27	campo	ncCantEstac	CantEstac	NumStns	NbrSta		Cantidad de estaciones
+28	campo	ncCantidad	Cantidad	Amount	Quantite		x
+29	campo	ncCapMuertaAlmac	CapMuertaAlmac	DeadStrgCapac	Culot		Capacidad no utilizable de almacenamiento de una presa
+30	campo	ncCapMuertaElev	CapMuertaElev	DeadStrgLevel	SeuilCulot		Nivel del agua que define el almacenamiento no utilizable de una presa
+31	campo	ncCapNoDisp	CapNoDisp	NAStorage	CapNonDispo		Capacidad de almacenamiento no disponible de una presa
+32	campo	ncCapTotal	CapTotal	TotalStorage	CapTotale		Capacidad total de almacenamiento de una presa
+33	campo	ncCapUtilAlmac	CapUtilAlmac	UsableStorage	CapUtile		Capacidad útil de una presa
+34	campo	ncCapUtilElev	CapUtilElev	UsableStorageCapLev	NiveauCapUtile		Nivel del agua que define la capacidad útil de una presa
+35	campo	ncCeldaMedios	CeldaMedios	MeanCell	CellMoyennes		Valor de parte de grados geográficos para cálculo de valores medios para trazo de isolíneas
+36	campo	ncCeldaSuperf	CeldaSuperf	AreaCell	CellSurface		Valor de parte de grados geográficos para cálculo de superficies para trazo de isolíneas
+37	campo	ncClav1fil	Clav1fil	Key1fil	Cle1fil		x
+38	campo	ncClav2fil	Clav2fil	Key2fil	Cle2fil		x
+39	campo	ncClav3fil	Clav3fil	Key3fil	Cle3fil		x
+40	campo	ncClave	Clave	Keyy	Cle		x
+41	campo	ncClaveAcceso	ClaveAcceso	Password	MotDePasse		x
+42	campo	ncCod1	Cod1	Code1	Code1		x
+43	campo	ncCod2	Cod2	Code2	Code2		x
+44	campo	ncCod3	Cod3	Code3	Code3		x
+45	campo	ncCodB	CodB	CodeB	CodeB		x
+46	campo	ncCodCB	CodCB	CodeCB	CodeCB		x
+47	campo	ncCodCL	CodCL	CodeCL	CodeCL		x
+48	campo	ncCodE	CodE	CodeE	CodeE		x
+49	campo	ncCodG	CodG	CodeG	CodeG		x
+50	campo	ncCodHG	CodHG	CodeHG	CodeHG		x
+51	campo	ncCodigo	Codigo	Codee	Code		x
+52	campo	ncCodigoMax	CodigoMax	MaxCode	CodeMax		x
+53	campo	ncCodigoMin	CodigoMin	MinCode	CodeMin		x
+54	campo	ncCodigoPostal	CodigoPostal	PostCode	CodePost		x
+55	campo	ncCodNw	CodNw	CodeNw	CodeNw		x
+56	campo	ncCodPB	CodPB	CodePB	CodePB		x
+57	campo	ncCodPG	CodPG	CodePG	CodePG		x
+58	campo	ncColor1	Color1	Color1	Couleur1		x
+59	campo	ncColor2	Color2	Color2	Couleur2		x
+60	campo	ncColor3	Color3	Color3	Couleur3		x
+61	campo	ncColor4	Color4	Color4	Couleur4		x
+62	campo	ncColor5	Color5	Color5	Couleur5		x
+63	campo	ncColor6	Color6	Color6	Couleur6		x
+64	campo	ncColores	Colores	Colors	Couleurs		x
+65	campo	ncColorLinAnot	ColorLinAnot	AnnotLineColor	CouleurLigAnnot		Color de líneas anotadas en trazo de isolíneas
+66	campo	ncColorLinComun	ColorLinComun	ColorCommLin	CouleurLigComm		Color de líneas comunes en trazo de isolíneas
+67	campo	ncColorMar	ColorMar	SeaColor	CouleurMer		Color del mar
+68	campo	ncColorRios	ColorRios	RiverColor	CouleurRivieres		x
+69	campo	ncCom10	Com10	Com10	Com10		x
+70	campo	ncCom11	Com11	Com11	Com11		x
+71	campo	ncCom12	Com12	Com12	Com12		x
+72	campo	ncCom18	Com18	Com18	Com18		x
+73	campo	ncCom7	Com7	Com7	Com7		x
+74	campo	ncCom8	Com8	Com8	Com8		x
+75	campo	ncCom9	Com9	Com9	Com9		x
+76	campo	ncCompania	Compania	Company	Compagnie		x
+77	campo	ncComputadora	Computadora	Computer	Ordinateur		x
+450	campo	ncconduccolor	conduccolor	SupplyLineColour	couleurlgnconduc		Color de líneas de conducción
+449	campo	ncconduclinea	conduclinea	SupplyLine	ligneconduc		Grueso de líneas de conducción
+78	campo	ncConExtremos	ConExtremos	WithExtremes	AvecExtremes		x
+459	campo	ncconisolineas	conisolineas	Withisolines	Avecisolignes		Indicador de con o sin isolíneas
+79	campo	ncConNumDatos	ConNumDatos	WithNumData	AvecNbrDonnees		x
+80	campo	ncConRios	ConRios	WithRivers	AvecRivieres		x
+81	campo	ncConstante1	Constante1	Constant1	Constante1		x
+82	campo	ncConstante2	Constante2	Constant2	Constante2		x
+83	campo	ncConstante3	Constante3	Constant3	Constante3		x
+84	campo	ncConstConvMult	ConstConvMult	MultConvConst	ConstConvMult		x
+85	campo	ncConstConvSuma	ConstConvSuma	SumConvConst	ConstConvSomme		x
+86	campo	ncContacto	Contacto	Contact	Contact		x
+87	campo	ncContador	Contador	Meter	Compteur		x
+88	campo	ncCoordX	CoordX	XCoord	CoordX		x
+89	campo	ncCoordY	CoordY	YCoord	CoordY		x
+90	campo	ncCorreoE	CorreoE	Email	Courriel		x
+91	campo	ncCorriente	Corriente	Stream	Courseau		x
+455	campo	nccostascolor	costascolor	coastcolor	couleurcote		Color de costas
+454	campo	nccostaslinea	costaslinea	coastline	lignecotiere		Grueso de líneas de costas
+92	campo	ncCriticoAbajo	CriticoAbajo	CriticalLow	CritiqueInf		Valor crítico inferior para una variable
+93	campo	ncCriticoArriba	CriticoArriba	CriticalHigh	CritiqueSup		Valor crítico superior para una variable
+95	campo	ncCuenca	Cuenca	Catchment	BassinVersant		x
+96	campo	ncCuenca2	Cuenca2	Catchment2	BassinVersant2		x
+97	campo	ncDato	Dato	Datum	Donnee		x
+98	campo	ncDato2	Dato2	Datum2	Donnee2		x
+99	campo	ncDato3	Dato3	Datum3	Donnee3		x
+100	campo	ncDatosEncab1	DatosEncab1	HeadingData1	DonneeEntete1		Indicador para incluir datos en Encabezado 1
+101	campo	ncDatosEncab2	DatosEncab2	HeadingData2	DonneeEntete2		Indicador para incluir datos en Encabezado 2
+403	campo	ncDecena	decena	dekad	decade		"Periodo de diez días en el mes (pueden ser 8, 9, 10 u 11 en la tercera decena)"
+102	campo	ncDescOrigen	DescOrigen	SourceDescrn	DescSource		Descripción de origen de datos
+103	campo	ncDescrip	Descrip	Descrn	Descrip		Drescripción
+104	campo	ncDescripAlarma	DescripAlarma	AlarmDescrn	AlarmDescrip		x
+105	campo	ncDescripcion	Descripcion	Description	Description		x
+106	campo	ncDescripcionUnidad	DescripcionUnidad	UnitDescription	DescriptionUnite		x
+107	campo	ncDescripHtm	DescripHtm	HtmDescrn	DescripHtm		Descripción para documento Html
+108	campo	ncDescripTipo	DescripTipo	TypeDescrn	DescripType		Descripción de tipo
+109	campo	ncDescripVariab	DescripVariab	VariabDescrn	DescripVariab		Descripción de variable
+110	campo	ncDevStd	DevStd	StdDevn	EcartType		Desviación estándar
+111	campo	ncDiasDatos	DiasDatos	DaysData	DonneesJour		Número de días con datos
+463	campo	ncdifaltura	difaltura	HeightDiff	difhauteur		Diferencia de alturas
+112	campo	ncDireccionCorreoE	DireccionCorreoE	EmailAddress	adressecourriel		x
+113	campo	ncDireccionIP	DireccionIP	IPAddress	AdresseIP		x
+114	campo	ncDirectHtml	DirectHtml	HTMLDirect	RepHTML		Directorio Html
+115	campo	ncDirIP	DirIP	IPDir	DirIP		Dirección IP
+116	campo	ncDistancia	Distancia	Distance	Distance		x
+117	campo	ncDomicilio	Domicilio	Home	Domicile		x
+118	campo	ncDomicilio2	Domicilio2	Home2	Domicile2		x
+119	campo	ncDsn	Dsn	DSN	DSN		Data Source Name
+452	campo	ncelipsoide	ncelipsoide	ncellipsoid	ncellipsoide		Elipsoide en proyecciones cartográficas
+120	campo	ncEncabezado1	Encabezado1	Heading1	Entete1		x
+121	campo	ncEncabezado2	Encabezado2	Heading2	Entete2		x
+122	campo	ncEscCrit	EscCrit	CritLevelSta	NvCritiqueStn		Nivel crítico de una estación hidrométrica
+123	campo	ncEscMaximoRang	EscMaximoRang	MaxLevelSta	NvMaxStn		Nivel máximo de una estación hidrométrica
+124	campo	ncEscMinimoRang	EscMinimoRang	MinLevelSta	NvMinStn		Nivel mínimo de una estación hidrométrica
+125	campo	ncEstacion	Estacion	Station	Station		Clave de una estación
+126	campo	ncEstacion2	Estacion2	Station2	Station2		x
+127	campo	ncEstacion3	Estacion3	Station3	Station3		x
+128	campo	ncEstado	Estado	Statee	Etat		"Estado, segundo nivel de gobierno de un país"
+129	campo	ncEstado2	Estado2	State2	Etat2		x
+130	campo	ncEstadoAlarma	EstadoAlarma	AlarmState	AlarmeEtat		x
+436	campo	ncestadoscolor	estadoscolor	statecolor	couleuretat		Color de estados
+435	campo	ncestadoslinea	estadoslinea	Stateline	ligneetat		Grueso de línea de estados
+131	campo	ncFactorDotac	FactorDotac	AssignFactor	Coefdotation		Factor de dotación en contabilidad de cuenca
+132	campo	ncFax	Fax	Fax	Fax		x
+133	campo	ncFecha	Fecha	Datee	Date		x
+134	campo	ncFechaact	Fechaact	ActDate	DateAct		Fecha actual
+135	campo	ncFechaFin	FechaFin	EndDate	DateFin		Fecha final
+136	campo	ncFechaFinHV	FechaFinHV	DTEndDate	DateFinHE		"Fecha final del horario de verano, para una estación automática"
+137	campo	ncFechaHora	FechaHora	DateTimee	DateHeure		x
+138	campo	ncFechaHoraMax	FechaHoraMax	DateTimeMax	MaxDateHeure		x
+404	campo	ncFechaHoraMin	FechaHoraMin	DateTimeMin	MinDateHeure		x
+139	campo	ncFechaHoraNotif	FechaHoraNotif	DateTimeNotif	DateHeureNotif		Fecha-hora de notificación de un evento
+140	campo	ncFechaHoraReporte	FechaHoraReporte	DateTimeReport	RapportDateHeure		x
+141	campo	ncFechaIni	FechaIni	StrtDate	DateIni		Fecha inicial
+142	campo	ncFechainic	Fechainic	StartDate	DateInit		Fecha inicial
+143	campo	ncFechaInicio	FechaInicio	StartDate	DateInitial		Fecha de inicio
+144	campo	ncFechaIniHV	FechaIniHV	DTStartDate	DateDebHE		"Fecha inicial del horario de verano, para una estación automática"
+145	campo	ncFechaMed	FechaMed	MedDate	DateMed		Fecha del valor medio o de la mediana
+146	campo	ncFenDescrip	FenDescrip	PhenDescrip	DescrPhen		Descripción de un fenómeno meteorológico
+147	campo	ncFenomeno	Fenomeno	Phenomenon	Phenomene		x
+148	campo	ncFenSimbolo	FenSimbolo	PhenSymbol	PhenSymbole		Símbolo de un fenómeno meteorológico
+152	campo	ncFormatAutom	FormatAutom	AutoFormat	FormatAutom		Indicador de formateo automático en trazo de isolíneas
+153	campo	ncFormatoGrados	FormatoGrados	DegreesFormat	DegresFormat		x
+416	campo	ncFormCalculo	FormCalculo	CalculationForm	FormCalcul		Fórmula de cálculo
+154	campo	ncFormulaConv	FormulaConv	ConvFormula	FormuleConv		x
+434	campo	ncfronteracolor	fronteracolor	bordercolor	Couleurfrontiere		Color de fronteras
+433	campo	ncfronteralinea	fronteralinea	borderline	Lignefrontiere		Grueso de línea de fronteras
+155	campo	ncFuncion	Funcion	Function	Fonction		x
+156	campo	ncGastCrit	GastCrit	CritFlow	DebitCrit		Caudal (gasto) crítico en una estación hidrométrica
+157	campo	ncGastMaximoRang	GastMaximoRang	MaxDischarge	DebitMax		Valor máximo de caudal (gasto) de una estación hidrométrica
+158	campo	ncGastMinimoRang	GastMinimoRang	MinDischarge	DebitMin		Valor mínimo de caudal (gasto) de una estación hidrométrica
+159	campo	ncGenera	Genera	Generate	Genere		Indicador de generación de un documento
+160	campo	ncGerencia	Gerencia	Management	Direction		x
+161	campo	ncGerenReg	GerenReg	RegManagmt	DirectionReg		x
+162	campo	ncGerenReg2	GerenReg2	RegManagmt2	DirectionReg2		x
+163	campo	ncGrupo	Grupo	Groupp	Groupe		Clave de grupo de estaciones
+164	campo	ncGrupoEstac	GrupoEstac	StnGroup	GroupeStation		Clave de grupo de estaciones
+165	campo	ncGrupoGEstac	GrupoGEstac	GStnGroup	GGroupeStation		Clave de grupo de grupos de estaciones
+422	campo	ncHoraFin	HoraFin	EndTime	HeureFin		Hora inicial
+421	campo	ncHoraIni	HoraIni	StartTime	HeureDp		Hora final
+166	campo	ncHorarioVerano	HorarioVerano	SummerTime	HoraireEte		x
+167	campo	ncHorasaUTC	HorasaUTC	HoursToUTC	HeureUTC		Horas a Tiempo Universal Coordinado
+168	campo	ncHoraTrans	HoraTrans	TransmTime	HeureTrans		Hora de transmisión de una estación automática
+169	campo	ncHusoHorario	HusoHorario	TimeZone	FuseauHoraire		x
+170	campo	ncIdentifSatel	IdentifSatel	SatelliteID	IdSatellite		Identificador de Satélite
+171	campo	ncImagen	Imagen	Image	Image		x
+172	campo	ncIncX	IncX	Xinc	IncX		Valor de incremento en dirección X
+173	campo	ncIncY	IncY	Yinc	IncY		Valor de incremento en dirección Y
+174	campo	ncIndica	Indica	Indicate	indique		x
+175	campo	ncInfraestruc	Infraestruc	Infrastructure	Infrastructure		x
+176	campo	ncInicFinInterv	InicFinInterv	StartEndInterv	IntervDebFin		"Valores inicial, final e intervalo para trazo de isolíneas"
+177	campo	ncInterv1	Interv1	Interv1	Interv1		x
+178	campo	ncInterv2	Interv2	Interv2	Interv2		x
+179	campo	ncInterv3	Interv3	Interv3	Interv3		x
+180	campo	ncInterv4	Interv4	Interv4	Interv4		x
+181	campo	ncInterv5	Interv5	Interv5	Interv5		x
+182	campo	ncInterv6	Interv6	Interv6	Interv6		x
+183	campo	ncIntervAnotac	IntervAnotac	AnnotatedInterv	IntervAnnot		Valor de intervalo entre líneas anotadas en trazo de isolíneas
+184	campo	ncIntervComun	IntervComun	CommonInterv	IntervCommun		Valor de intervalo entre líneas comunes en trazo de isolíneas
+461	campo	ncintervmin	intervmin	intervmins	intervmin		Intervalo en minutos del dato de detalle reportado
+185	campo	ncIntInc	IntInc	IncInt	IntInc		Valor de incremento entre intervalos en trazo de isolíneas
+439	campo	ncisolinprim	isolinprim	primisolin	isolignprim		Isolíneas primarias
+442	campo	ncisolinsec	isolinsec	seconisolin	isolignsec		Isolíneas secundarias
+441	campo	ncisolprimcolor	isolprimcolor	primisolincolor	coulisoliprim		Color de isolíneas primarias
+440	campo	ncisolprimlinea	isolprimlinea	primisolinline	lgnisolignprim		Grueso de isolíneas primarias
+444	campo	ncisolseccolor	isolseccolor	secisolincolor	coulisolignsec		Color de isolíneas secundarias
+443	campo	ncisolseclinea	isolseclinea	seconisoline	isolignesec		Grueso de isolíneas secundarias
+186	campo	ncLatitud	Latitud	Latitude	Latitude		x
+187	campo	ncLatitud1	Latitud1	Latitude1	Latitude1		x
+188	campo	ncLatitud2	Latitud2	Latitude2	Latitude2		x
+189	campo	ncLatitud3	Latitud3	Latitude3	Latitude3		x
+190	campo	ncLatitud4	Latitud4	Latitude4	Latitude4		x
+191	campo	ncLatitudGMS	LatitudGMS	DMSLatitude	LatitudeDMS		x
+192	campo	ncLetPosX	LetPosX	LabelXPosn	PosXEtiquet		Posición X de letreros
+193	campo	ncLetPosY	LetPosY	LabelYPosn	PosYEtiquet		Posición Y de letreros
+197	campo	ncLineasEstado	LineasEstado	StateLines	LignesEtat		Grueso de líneas de estado en trazo de isolíneas
+198	campo	ncLineasInter	LineasInter	InterLines	LignesInter		Grueso de líneas de límites internacionales en trazo de isolíneas
+199	campo	ncLineasRios	LineasRios	RiverLines	LignesRiviere		Grueso de líneas de ríos en trazo de isolíneas
+200	campo	ncLineaTrazo	LineaTrazo	TraceLine	Episolignes		Grueso de líneas en trazo de isolíneas
+202	campo	ncLista	Lista	List	Liste		x
+206	campo	ncLongitud	Longitud	Longitude	Longitude		x
+207	campo	ncLongitud1	Longitud1	Longitude1	Longitude1		x
+208	campo	ncLongitud2	Longitud2	Longitude2	Longitude2		x
+209	campo	ncLongitud3	Longitud3	Longitude3	Longitude3		x
+210	campo	ncLongitud4	Longitud4	Longitude4	Longitude4		x
+211	campo	ncLongitudGMS	LongitudGMS	DMSlongitude	LongitudeDMS		x
+212	campo	ncMapa	Mapa	Map	Carte		x
+213	campo	ncMax10	Max10	Max10	Max10		x
+214	campo	ncMax11	Max11	Max11	Max11		x
+215	campo	ncMax12	Max12	Max12	Max12		x
+216	campo	ncMax18	Max18	Max18	Max18		x
+217	campo	ncMax7	Max7	Max7	Max7		x
+218	campo	ncMax8	Max8	Max8	Max8		x
+219	campo	ncMax9	Max9	Max9	Max9		x
+220	campo	ncMaxx	Maxx	Maxx	Maxx		x
+221	campo	ncMed10	Med10	Mean10	Moy10		x
+222	campo	ncMed11	Med11	Mean11	Moy11		x
+223	campo	ncMed12	Med12	Mean12	Moy12		x
+224	campo	ncMed18	Med18	Mean18	Moy18		x
+225	campo	ncMed7	Med7	Mean7	Moy7		x
+226	campo	ncMed8	Med8	Mean8	Moy8		x
+227	campo	ncMed9	Med9	Mean9	Moy9		x
+414	campo	ncMedAcum	MedAcum	CumulMean	MoyCum		x
+228	campo	ncMedia	Media	Mean	Moyenne		x
+410	campo	ncMediana	Mediana	Median	Mediane		x
+229	campo	ncMensaje	Mensaje	Message	Message		x
+230	campo	ncMensAnterior	MensAnterior	PrevMsg	MsgPrecedent		x
+231	campo	ncMensSiguiente	MensSiguiente	NextMsg	MsgSuivant		x
+232	campo	ncMes	Mes	Monthh	Mois		x
+233	campo	ncMesMax	MesMax	MaxMonth	MaxMois		x
+234	campo	ncMesMaxVeces	MesMaxVeces	MaxTimesMonth	MaxFoisMois		x
+235	campo	ncMesMin	MesMin	MinMonth	MinMois		x
+236	campo	ncMesMinVeces	MesMinVeces	MinTimesMonth	MinFoisMois		x
+237	campo	ncMetaDato	MetaDato	MetaDatum	Metadonnee		x
+238	campo	ncMin10	Min10	Min10	Min10		x
+239	campo	ncMin11	Min11	Min11	Min11		x
+240	campo	ncMin12	Min12	Min12	Min12		x
+241	campo	ncMin18	Min18	Min18	Min18		x
+242	campo	ncMin7	Min7	Min7	Min7		x
+243	campo	ncMin8	Min8	Min8	Min8		x
+244	campo	ncMin9	Min9	Min9	Min9		x
+245	campo	ncMinn	Minn	Minn	Minn		x
+246	campo	ncMinutos	Minutos	Minutes	Minutes		x
+247	campo	ncMinutosdeMedic	MinutosdeMedic	MeasurementMinutes	MInutesMesure		x
+248	campo	ncMinutosEspera	MinutosEspera	WaitingMinutes	MinutesAttente		x
+249	campo	ncMunicipio	Municipio	Municipality	Municipalite		x
+250	campo	ncMunicipio2	Municipio2	Municipality2	Municipalite2		x
+251	campo	ncNameAlmac	NameAlmac	MaxExtStrgVol	VolMaxExtrstock		Volumen máximo que se puede almacenar en una presa de manera extraordinaria
+252	campo	ncNameElev	NameElev	MaxExtStrgLvl	NivMaxExtrstock		Nivel que define el volumen máximo que se puede almacenar en una presa de manera extraordinaria
+253	campo	ncNamoAlmac	NamoAlmac	MaxOrdStrgVol	VolOrdExtrstock		Volumen máximo que se puede almacenar en una presa de manera ordinaria
+254	campo	ncNamoElev	NamoElev	MaxOrdStrgLvl	NivOrdExtrstock		Nivel que define el volumen máximo que se puede almacenar en una presa de manera ordinaria
+255	campo	ncNdatos	Ndatos	Ndata	NbrDonnees		Número de datos
+256	campo	ncNdatos2	Ndatos2	Ndata2	NbrDonnees2		x
+257	campo	ncNDecim	NDecim	NbrDecimal	NbrDecimal		Número de decimales con que se debe reportar una variable
+258	campo	ncNivelAlarma	NivelAlarma	AlarmLevel	NiveauAlert		x
+259	campo	ncNombre	Nombre	Name	Nom		x
+260	campo	ncNombre2	Nombre2	Name2	Nom2		x
+261	campo	ncNombreEstacion	NombreEstacion	StationName	NomStation2		x
+262	campo	ncNombreEstacion2	NombreEstacion2	StationName2	NomStation		x
+263	campo	ncNombreHtm	NombreHtm	HtmName	NomHtm		x
+264	campo	ncNombreHtml	NombreHtml	HtmlName	NomHtml		x
+265	campo	ncNombreTabla	NombreTabla	TableName	NomTable		x
+266	campo	ncNombreTipo	NombreTipo	TypeName	NomType		x
+267	campo	ncNomCuenca	NomCuenca	CatchmentName	NomBassinVersant		x
+268	campo	ncNomEstado	NomEstado	StateName	NomEtat		x
+269	campo	ncNomgerencia	Nomgerencia	ManagementName	NomDirection		Nombre de gerencia o de oficina regional
+458	campo	ncnommapa	nommapa	mapname	NomCarte		Nombre de mapa
+270	campo	ncNomMunicipio	NomMunicipio	MunicipalityName	NomMunicipalite		"Nombre de municipio, condado"
+271	campo	ncNomRegHidr	NomRegHidr	HydrRegionName	NomRegHydro		Nombre de región hidrológica
+272	campo	ncNomSubcuenca	NomSubcuenca	SubCatchmentName	NomSousBassinVersant		Nombre de subcuenca
+409	campo	ncNumDatos	numDatos	DataNum	NbreDonnees		Número de datos
+273	campo	ncNumDia	NumDia	DayNum	NbrJour		Número de día en el año con datos
+274	campo	ncNumElem	NumElem	NumElem	NbrElem		Número de elementos
+275	campo	ncNumEstac	NumEstac	StnNum	NbrStn		Número de estaciones que componen un dato de grupo de estaciones
+276	campo	ncNumRegs	NumRegs	NumRecs	NbrEnreg		Número de registros
+277	campo	ncNumSelect	NumSelect	SelectNum	NumSelect		x
+278	campo	ncObjetoMensaje	ObjetoMensaje	MessageSubject	SujetMessage		x
+279	campo	ncObservaciones	Observaciones	Remarks	Remarques		x
+280	campo	ncOpcion	Opcion	Optionn	Optionn		x
+281	campo	ncOpcionCons	OpcionCons	QryOption	OptionRqt		Opción de consulta
+282	campo	ncOpcionProc	OpcionProc	ProcOption	OptionProc		Opción de proceso
+283	campo	ncOpcionTrans	OpcionTrans	TransOption	OptionTrans		Opción de transmisión
+284	campo	ncOpcx	Opcx	xOpt	Optx		x
+285	campo	ncOrigen	Origen	Source	Source		Origen de datos
+286	campo	ncPais	Pais	Country	Pays		x
+287	campo	ncParado	Parado	Portrait	Portrait		x
+288	campo	ncPeriodo	Periodo	Period	Periode		x
+425	campo	ncPlantilla	plantilla	template	modele		x
+448	campo	ncpoblaccolor	poblaccolor	towncolor	Couleurville		Color de líneas de poblaciones
+447	campo	ncpoblaclinea	poblaclinea	townline	ligneville		Grueso de líneas de poblaciones
+289	campo	ncPorcAcept	PorcAcept	PercentOK	PourcentAccept		Porcentaje de aceptación de datos
+290	campo	ncPorcen1	Porcen1	Percent1	Pourcent1		Porcentaje 1
+291	campo	ncPorcen2	Porcen2	Percent2	Pourcent2		Porcentaje 2
+292	campo	ncPorcSedimentoAnual	PorcSedimentoAnual	AnnualSedimentPercent	PrctSedimAnnuel		Porcentaje de sedimento anual en una presa
+293	campo	ncPosX	PosX	Xposn	PosX		Posición X
+294	campo	ncPosY	PosY	Yposn	PosY		Posición Y
+295	campo	ncPrograma	Programa	Program	Programme		x
+451	campo	ncproyeccion	proyeccion	projection	projection		x
+296	campo	ncQbcolor	Qbcolor	Qbcolor	Qbcolor		x
+297	campo	ncRecep09	Recep09	Recvd09	Recep09		Porcentaje recibido a las 09 horas
+298	campo	ncRecep10	Recep10	Recvd10	Recep10		Porcentaje recibido a las 10 hora
+299	campo	ncRecep11	Recep11	Recvd11	Recep11		Porcentaje recibido a las 11 hora
+300	campo	ncRecep18	Recep18	Recvd18	Recep18		Porcentaje recibido a las 18 hora
+301	campo	ncRecepAgno	RecepAgno	RecvdYear	RecepAnnee		Porcentaje recibido en el año
+302	campo	ncRecepMes	RecepMes	RecvdMonth	RecepMois		Porcentaje recibido en el mes
+303	campo	ncRecepSem	RecepSem	RecvdWeek	RecepSem		Porcentaje recibido en la semana
+304	campo	ncReghidr	Reghidr	HydroReg	RegHydro		Clave de región hidrológica
+305	campo	ncRegHidr2	RegHidr2	HydroReg2	RegHydro2		x
+306	campo	ncRegional	Regional	Regional	Regional		x
+307	campo	ncRegopera	Regopera	OperatnlRegion	Regopera		Clave de región operativa
+308	campo	ncRegularizNiv	RegularizNiv	SmoothingLvl	Nivlissage		Nivel de regularización de curvas para trazado de isolíneas
+309	campo	ncRellen1	Rellen1	Fill1	Remplissage1		Tipo de relleno en mapas por zonas o regiones de un país
+310	campo	ncRellen2	Rellen2	Fill2	Remplissage2		x
+311	campo	ncRellen3	Rellen3	Fill3	Remplissage3		x
+312	campo	ncRellen4	Rellen4	Fill4	Remplissage4		x
+313	campo	ncRellen5	Rellen5	Fill5	Remplissage5		x
+314	campo	ncRellen6	Rellen6	Fill6	Remplissage6		x
+315	campo	ncReporte	Reporte	Report	Rapport		x
+456	campo	ncresoluc	resoluc	resoln	resoln		x
+316	campo	ncResolucjpg	Resolucjpg	JPGresoln	Resolnjpg		Pixeles por pulgada en mapas emitidos a través de manejo PostScript hacia archivos gráficos
+317	campo	ncRH	RH	RH	RH		Número de región hidrológica
+438	campo	ncrioscolor	rioscolor	rivercolour	rivierecouleur		Color de líneas de ríos
+437	campo	ncrioslinea	rioslinea	riverline	riviereligne		Grueso de líneas de ríos
+318	campo	ncSec	Sec	Seq	Seq		Número de secuencia
+319	campo	ncSecuen	Secuen	Sequen	Sequen		Número de secuencia
+320	campo	ncSecuenc	Secuenc	Sequence	Sequence		Número de secuencia
+321	campo	ncSecx	Secx	SeqNo	Secx		Número de secuencia
+322	campo	ncSemana	Semana	Weekk	Semaine		x
+323	campo	ncSeparacAnotac	SeparacAnotac	AnnotSpacing	SeparAnnot		Distancia de separación entre anotaciones en líneas anotadas en trazo de isolíneas
+324	campo	ncSubcuenca	Subcuenca	Subcatchment	SousBasinVersant		x
+325	campo	ncSubcuenca2	Subcuenca2	Subcatchment2	SousBasinVersant2		x
+326	campo	ncSubTipo	SubTipo	SubType	SousType		x
+327	campo	ncSubTipo2	SubTipo2	SubType2	SousType2		x
+328	campo	ncSuma	Suma	Summ	Somme		x
+329	campo	ncSuperfImagen	SuperfImagen	ImageArea	ImageSuperf		Indicador si la imagen es de tipo superficial
+330	campo	ncTablaTransf	TablaTransf	ConvTable	TableConv		Tabla de transformación para calculo de variables derivadas (o transformadas)
+331	campo	ncTablaTransf1	TablaTransf1	ConvTable1	TableConv1		x
+332	campo	ncTablaTransf2	TablaTransf2	ConvTable2	TableConv2		x
+333	campo	ncTablaTransf3	TablaTransf3	ConvTable3	TableConv3		x
+334	campo	ncTablaTransf4	TablaTransf4	ConvTable4	TableConv4		x
+335	campo	ncTamAnotac	TamAnotac	AnnotSize	TailleAnnot		Tamaño de anotaciones en trazo de isolíneas
+336	campo	ncTamEncab	TamEncab	HeadingSize	TailleEnTete		Tamaño de encabezados en trazo de isolíneas
+337	campo	ncTamEtiq	TamEtiq	LabelSize	TailleEtiquette		Tamaño de etiquetas en trazo de isolíneas
+338	campo	ncTamLinAnotac	TamLinAnotac	AnnotLineSize	TailleLignAnnot		Grueso de líneas anotadas en trazo de isolíneas
+339	campo	ncTamLinComun	TamLinComun	StdLineSize	TailleLignCommun		Grueso de líneas comunes en trazo de isolíneas
+344	campo	ncTipAcum	TipAcum	CumulType	TypeCumule		x
+345	campo	ncTipo	Tipo	Type	Type		x
+462	campo	nctipo1	tipo1	type1	type1		x
+346	campo	ncTipoDDoDE	TipoDDoDE	TypeDDorDE	TypeDJouDE		Tipo de dato diario DD o DE
+415	campo	ncTipoEstacion	tipoEstacion	StationType	TypeStation		Tipo de estación
+347	campo	ncTipomapa	Tipomapa	MapType	TypeCarte		Tipo de mapa
+348	campo	ncTipoMensaje	TipoMensaje	MessageType	TypeMessage		Tipo de mensaje
+349	campo	ncTipoProc	TipoProc	ProcType	TypeProc		Tipo de procesos
+350	campo	ncTipoUsuario	TipoUsuario	UserType	TypeUtilisateur		Tipo de usuario
+351	campo	ncTitulo	Titulo	Title	Titre		x
+352	campo	ncTrazoEjes	TrazoEjes	AxisPlot	TraceAxes		Trazado de ejes
+353	campo	ncUbicacion	Ubicacion	Location	Emplacement		x
+354	campo	ncUbicGeograf	UbicGeograf	GeogLocation	EmplaGeogra		Zona geográfica en trazo de isolíneas
+355	campo	ncUnidad	Unidad	Unit	Unite		x
+356	campo	ncUnidadEnt	UnidadEnt	InputUnit	UniteEntree		x
+357	campo	ncUnidadSal	UnidadSal	OutputUnit	UniteSortie		x
+358	campo	ncUso	Uso	Usee	Utilisation		x
+359	campo	ncUsuario	Usuario	Userr	Utilisateur		x
+360	campo	ncUtilizado	Utilizado	Used	Utilise		x
+361	campo	ncValor	Valor	Valuee	Valeur		x
+362	campo	ncValorAcum	ValorAcum	CumulValue	ValeurCumul		Valor acumulado
+364	campo	ncValorCorr	ValorCorr	CorrValue	ValeurCorr		Valor corregido
+365	campo	ncValorFin	ValorFin	EndValue	ValeurFin		Valor final
+366	campo	ncValorMax	ValorMax	MaxValue	ValeurMax		Valor máximo
+407	campo	ncValorMaxAcum	ValorMaxAcum	CumulMaxValue	ValeurMaxCumul		Valor máximo acumulado
+405	campo	ncValorMaxProm	ValorMaxProm	MeanMaxValue	ValeurMaxMoy		Valor promedio de máximos
+369	campo	ncValorMin	ValorMin	MinValue	ValeurMin		Valor mínimo
+408	campo	ncValorMinAcum	ValorMinAcum	CumulMinValue	ValeurMinCumul		Valor mínimo acumulado
+370	campo	ncValorMinInic	ValorMinInic	MinStartValue	ValeurMinIni		Valor máximo inicial autorizable de volumen de agua en contabilidad de cuencas
+406	campo	ncValorMinProm	ValorMinProm	MeanMinValue	ValeurMinMoy		Valor mínimo promedio
+428	campo	ncValorNormal	ValorNormal	NormalValue	ValeurNormal		Valor mínimo promedio
+429	campo	ncValorNormalAcum	ValorNormalAcum	CumulNormalValue	ValeurNormalCumul		Valor mínimo promedio
+371	campo	ncValorNoHayDato	ValorNoHayDato	NoDataValue	ValeurSansDonnees		Valor reportado por una estación automática cuando no hay dato disponible
+372	campo	ncValorTipo	ValorTipo	ValueType	ValeurType		Tipo de valor
+373	campo	ncValorX	ValorX	XValue	Xvalue		x
+374	campo	ncValorY	ValorY	YValue	Yvalue		x
+375	campo	ncVariable	Variable	Variable	Variable		x
+376	campo	ncVariable1	Variable1	Variable1	Variable1		x
+377	campo	ncVariable2	Variable2	Variable2	Variable2		x
+378	campo	ncVariable3	Variable3	Variable3	Variable3		x
+379	campo	ncVariable4	Variable4	Variable4	Variable4		x
+380	campo	ncVariabTransf1	VariabDeriv1	ConvVariable1	VariabDeriv1		Variable derivada
+381	campo	ncVariabTransf2	VariabDeriv2	ConvVariable2	VariabDeriv2		x
+382	campo	ncVariabTransf3	VariabDeriv3	ConvVariable3	VariabDeriv3		x
+383	campo	ncVariabTransf4	VariabDeriv4	ConvVariable4	VariabDeriv4		x
+384	campo	ncVariac	Variac	Changee	Varia		Variación máxima permitida entre dos medidas consecutivas en estaciones automáticas
+460	campo	ncvariacion	variacion	changee	variation		x
+385	campo	ncVecesPresentada	VecesPresentada	TimesPresented	NbrFoisPresente		Número de veces presentada
+423	campo	ncVerif	Verif	Checkk	Verif		Indicador de verificación
+386	campo	ncVerteAlmac	VerteAlmac	SpillwayStorage	StockageEvacuateur		Volumen que almacena una presa al nivel del vertedor
+387	campo	ncVerteElev	VerteElev	SpillwayLevel	NiveauEvacuateur		"Nivel (cota, escala) del vertedor de una presa"
+388	campo	ncVertlAlmac	VertlAlmac	FreeSpillwayStorage	StockageEvacuateurLib		Volumen que almacena una presa al nivel del vertedor libre
+389	campo	ncVertlElev	VertlElev	FreeSpillwayLevel	NiveauEvacuateurLib		"Nivel (cota, escala) del vertedor libre de una presa'"
+390	campo	ncXp	Xp	Xp	Xp		x
+391	campo	ncXp1	Xp1	Xp1	Xp1		x
+392	campo	ncXp2	Xp2	Xp2	Xp2		x
+393	campo	ncXp3	Xp3	Xp3	Xp3		x
+394	campo	ncXp4	Xp4	Xp4	Xp4		x
+395	campo	ncYp	Yp	Yp	Yp		x
+396	campo	ncYp1	Yp1	Yp1	Yp1		x
+397	campo	ncYp2	Yp2	Yp2	Yp2		x
+398	campo	ncYp3	Yp3	Yp3	Yp3		x
+399	campo	ncYp4	Yp4	Yp4	Yp4		x
+400	campo	ncZona	Zona	Zone	Zone		x
+401	campo	ncZonarep	Zonarep	RepZone	ZoneRep		Zona de reporte
+463	campo	ncdifaltura	difaltura	heightdif	diffhauteur		x
+464	campo	ncvalorminh	valorminh	minvalueh	valeurminh		x
+465	campo	ncvalormaxh	valormaxh	maxvalueh	valeurmaxh		x
+466	campo	ncdesvest	desvest	stddev	ecarttype		x
+467	campo	ncvalormindv	valormindv	minvaluev	valeurminv		x
+468	campo	ncvalormaxdv	valormaxdv	maxvaluev	valeurmaxv		x
+469	campo	ncpositivo	positivo	positive	positif		x
+470	campo	ncfechainih	fechainih	startdateh	dateini		x
+471	campo	ncfechafinh	fechafinh	enddateh	datefin		x
+
+
+################							
+# nombres de tablas							
+################							
+
+8	tabla	ntCodigos	Codigos	Codes	Codes		x
+9	tabla	ntCuencas	Cuencas	Catchments	BassinVersant		x
+13	tabla	ntDefiniclineascontorno	Definiclineascontorno	ContourLineDefn	Deflignecontour		Definiciones para trazo de isolíneas
+18	tabla	ntEstacautoma	Estacautoma	AutoStation	Stationautom		Estaciones automáticas por identificador de satélite
+19	tabla	ntEstaciones	Estaciones	Stations	Stations		x
+20	tabla	ntEstacionesmetadatos	Estacionesmetadatos	MetadataStations	Stationsmetadonnees		x
+21	tabla	ntEstados	Estados	States	Etat		x
+22	tabla	ntFrecuen	Frecuen	Frequen	Frequen		x
+23	tabla	ntFtpbitacproc	Ftpbitacproc	Ftpproclog	FtpProcHab		x
+24	tabla	ntGerenciasreg	Gerenciasreg	RgnlManagement	Directionregion		x
+25	tabla	ntGruposestac	Gruposestac	StnGroups	Groupsta		x
+29	tabla	ntHusoshorarios	Husoshorarios	TimeZones	Fuseauhoraire		x
+30	tabla	ntIsolinbitac	Isolinbitac	IsolineLog	IsoligneHabitac		x
+31	tabla	ntLogbitacproc	Logbitacproc	LogProcLog	LogHabProc		x
+32	tabla	ntMapas	Mapas	Maps	Cartes		x
+114	tabla	ntMapasCroquis	MapasCroquis	SketchMaps	CartesCroquis		
+33	tabla	ntMapasestac	Mapasestac	StationMaps	Cartesstations		x
+34	tabla	ntMapasgrupos	Mapasgrupos	GroupMaps	Cartegroupe		x
+35	tabla	ntMapaspixelgeogr	Mapaspixelgeogr	GeogPixelMaps	Cartepixelgeogr		x
+36	tabla	ntMapaspixelgeogr4	Mapaspixelgeogr4	Geogpixelmaps4	Cartepixelgeogr4		x
+37	tabla	ntMapasxcoord	Mapasxcoord	Mapsbycoords	Carteparcoord		x
+38	tabla	ntMapasxcoordclrs	Mapasxcoordclrs	MapsbyClrcoords	Carteparcoordclrs		x
+39	tabla	ntMapasxcoordgeogr	Mapasxcoordgeogr	MapsbyGeogcoords	Carteparcoordgeogr		x
+40	tabla	ntMapasxcoordzonas	Mapasxcoordzonas	MapsbyZonecoords	Carteparcoordzones		x
+41	tabla	ntMunicipios	Municipios	Municipalities	Municipalites		x
+42	tabla	ntOpcionesmapasintxxnet	Opcionesmapasintxxnet	Intxxnetmapoptions	Optionscartesintxxnet		x
+43	tabla	ntOpcxvariabautom	Opcxvariabautom	AutoVariableOptions	Optvariabautom		x
+44	tabla	ntOrigenes	Origenes	Sources	Sources		x
+46	tabla	ntRecepdefs	Recepdefs	Recepdefs	Recepdefs		x
+47	tabla	ntRecepsdatos	Recepsdatos	Recepsdata	Recepsdonnees		x
+48	tabla	ntRecepsping	Recepsping	Recepsping	Recepsping		x
+49	tabla	ntRegionhidr	Regionhidr	HydroRegion	RegionHydro		x
+50	tabla	ntSubcuencas	Subcuencas	Subcatchments	SousBassins		x
+51	tabla	ntTablastransf	Tablastransf	ConvTables	Tableconv		Tablas para cálculos de variables derivadas
+52	tabla	ntTablaswebconst	Tablaswebconst	WebconstTables	Tablesconstweb		x
+53	tabla	ntTablaswebdef	Tablaswebdef	WebdefTables	Tablesdefweb		Definiciones para tablas Web
+54	tabla	ntTransftp	Transftp	FTPtrans	Transftp		Definición de transmisiones por FTP entre servidores
+55	tabla	ntTransmchamch	Transmchamch	Transmch2mch	Transmchamch		Definición de envíos (transmisiones) de datos entre servidores
+56	tabla	ntUnidades	Unidades	Units	Unites		x
+57	tabla	ntUnidadesconversion	Unidadesconversion	Conversionunits	Unitesconversion		x
+58	tabla	ntUsuarios	Usuarios	Users	Utilisateur		x
+59	tabla	ntUsuariostipos	Usuariostipos	Usertypes	Utilisateurtype		x
+60	tabla	ntValoresacep	Valoresacep	AcceptableValues	Valeursacep		Valores aceptables para estaciones/variables
+61	tabla	ntValsvariabaut	Valsvariabaut	AutoVariableValues	Valvariableauto		Valores aceptables para estaciones/variables de automáticas
+62	tabla	ntVariabautomatv	Variabautomatv	AutoVariablev	Variabautomatv		Variables por estación automática
+63	tabla	ntVariabautomaxfecha	Variabautomaxfecha	AutoVariablemaxdate	Variabautomaxdate		Variables por estación automática y por fecha
+64	tabla	ntVariables	Variables	Variables	Variables		x
+65	tabla	ntVariablestransf	Variablestransf	TransfVariables	Variablestransf		Variables derivadas
+66	tabla	ntWebbitacoraproc	Webbitacoraproc	WebProcLog	WebHabitacProc		Bitácora de procesos Web
+67	tabla	ntWebcontadores	Webcontadores	Webcounters	Webconteur		Contadores de procesos Web.
+68	tabla	nttipoestacionvariable	tipoEstacionVariable	VariableStationType	TypeStationVariable		x
+69	tabla	ntVariabDeriv3	VariabDeriv3	DerivedVariable3	VariabDeriv3		x
+70	tabla	ntZonasAreas	ZonasAreas	ZonesAreas	ZonesAires		x
+71	tabla	ntVariabDeriv2	VariabDeriv2	DerivedVariable2	VariabDeriv2		x
+72	tabla	ntVariabDeriv	VariabDeriv	DerivedVariable	VariabDeriv		x
+73	tabla	ntVerific	Verific	Checkk	Verifier		x
+74	tabla	ntMensajesSynop	MensajesSynop	SynopMessages	MessagesSynop		x
+75	tabla	ntaltnubes	altnubes	cloudheight	Hautnuages		x
+76	tabla	ntvisibilidad	visibilidad	visibility	visibilite		x
+77	tabla	ntnublado	nublado	cloudcover	couvnuageuse		x
+78	tabla	ntdirviento	dirviento	winddirn	dirvent		x
+79	tabla	ntrapviento	rapviento	windspeed	vitvent		x
+80	tabla	nttempaire	tempaire	airtemp	tempaire		x
+81	tabla	nttemprocio	temprocio	dewpoint	pointderosee		x
+82	tabla	nthumrelativa	humrelativa	relhumidity	humrelative		x
+83	tabla	ntpresbarometr	presbarometric	barompressure	presbarometriq		x
+84	tabla	ntpresbarmar	presbarmar	sealevelpress	presbarmer		x
+85	tabla	ntaltgeopot	altgeopot	geopotheight	hautgeopot		x
+86	tabla	nttendpres	tendpres	presstrend	tendpres		x
+87	tabla	nttiempopres	tiempopres	presstime	tempspres		x
+88	tabla	nttiempopas1	tiempopas1	timepas1	tempspas1		x
+89	tabla	nttiempopas2	tiempopas2	timepas2	tempspas2		x
+90	tabla	ntnubladobajmd	nubladobajmd	lowmidcloud	nuagebasmoy		x
+91	tabla	nttiponubbaj	tiponubbaj	lowcloudtype	typenuagebas		x
+92	tabla	nttiponubmed	tiponubmed	midcloudtype	typenuagemoy		x
+93	tabla	nttiponubalt	tiponubalt	highcloudtype	typenuageelev		x
+94	tabla	ntpisosinnieve	pisosinnieve	nosnowground	solsansneige		x
+95	tabla	ntpisoconnieve	pisoconnieve	snowonground	solavecneige		x
+96	tabla	ntnubladoind	nubladoind	indcloudcover	indcouvnuage		x
+97	tabla	nttiponube	tiponube	cloudtype	typenuage		x
+98	tabla	ntaltnubesc	altnubesc	ccloudheight	hauteurnuage		x
+99	tabla	ntprecipitacion	precipitacion	precipitation	precipitation		x
+100	tabla	ntaltnieve	altnieve	snowdepth	epaisseurneige		x
+101	tabla	ntheliofania	heliofania	heliophany	heliophane		x
+102	tabla	ntevaporacion	evaporacion	evaporation	evaporation		x
+103	tabla	ntestacionesinstrum	estacionesinstrum	stationinstruments	instrumstations		x
+104	tabla	ntsynopcrexplant	synopcrexplant	synopcrextempl	synopcrexmodel		x
+105	tabla	nttemprocio	temprocio	dewpoint	pointderosee		x
+106	tabla	ntnivel	nivel	level	niveau		x
+107	tabla	ntareapresa	areapresa	damarea	surfacebarrage		x
+108	tabla	ntvolumenalm	volumenalm	strgvolume	volumestock		x
+109	tabla	ntgastoenrio	gastoenrio	riverflow	ecoulemriviere		x
+110	tabla	ntsynopcrexdatos	synopcrexdatos	synopcrexdata	synopcrexdonnees		x
+111	tabla	ntDisponibDD	DisponibDD	DDavailability	DisponibDJ		x
+112	tabla	ntVariabAutomat	VariabAutomat	AutoVariable	VariabAutomat		x
+113	tabla	ntVerifCerca	VerifCerca	ProximityCheck	VerifProximite		x
+115	tabla	ntMapasGenxCoord	MapasGenxCoord	GenMapsbyCoords	CartesGenxCoord		x
+116	tabla	ntMapasMchxCoord	MapasMchxCoord	MchMapsbycoords	CartesMchxCoord		x
+117	tabla	ntMensajesMetar	MensajesMetar	MetarMessages	MessageMetar		x
+118	tabla	ntValoresaceph	Valoresaceph	Acceptvaluesh	Valeursacepth		Valores aceptables para estaciones/variables
