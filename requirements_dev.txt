@@ -12,3 +12,5 @@ pytest==6.2.4
 pytest-runner==5.1
 pytest-order==1.0.0
 django
+pytest
+python-dotenv

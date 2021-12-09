@@ -5,3 +5,4 @@ sqlacodegen==2.3.0
 SQLAlchemy==1.4.22
 mysqlclient==2.0.3
 python-dotenv
+pytest
