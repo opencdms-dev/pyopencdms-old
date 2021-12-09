@@ -1,5 +1,5 @@
 FROM mariadb:10.1
-COPY /opencdms/opencdms-test-data/schemas/climsoft/v4/v4.1.1/climsoft_v4_all.sql /docker-entrypoint-initdb.d/1.sql
-COPY /opencdms/opencdms-test-data/scripts/entrypoints/mch-english.sql /tmp/settings.sql
-COPY /opencdms/opencdms-test-data/schemas/mch/Create_MCH_English_basic_tables.sql /tmp/ddl.sql
+COPY /home/ubuntu/opencdms-test-data/schemas/climsoft/v4/v4.1.1/climsoft_v4_all.sql /docker-entrypoint-initdb.d/1.sql
+COPY /home/ubuntu/opencdms-test-data/scripts/entrypoints/mch-english.sql /tmp/settings.sql
+COPY /home/ubuntu/opencdms-test-data/schemas/mch/Create_MCH_English_basic_tables.sql /tmp/ddl.sql
 RUN cat /tmp/settings.sql /tmp/ddl.sql > /docker-entrypoint-initdb.d/2.sql
