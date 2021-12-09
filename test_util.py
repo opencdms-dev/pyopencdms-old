@@ -17,7 +17,7 @@ def get_clide_connection_string() -> str:
         password="password",
         host="api.opencdms.org",
         port=os.getenv("CLIDE_PORT", 5432),
-        db_name=os.getenv("CLIDE_DB_NAME")
+        db_name=os.getenv("CLIDE_DB_NAME", "clideDB")
     )
 
 
@@ -29,7 +29,7 @@ def get_climsoft_4_1_1_connection_string() -> str:
         password="password",
         host="api.opencdms.org",
         port=os.getenv("CLIMSOFT_4_1_1_PORT", 3306),
-        db_name=os.getenv("CLIMSOFT_DB_NAME")
+        db_name=os.getenv("CLIMSOFT_DB_NAME", "mariadb_climsoft_db_v4")
     )
 
 
@@ -41,5 +41,5 @@ def get_mch_english_connection_string(port_override: str = None) -> str:
         password="password",
         host="api.opencdms.org",
         port=os.getenv("MCH_ENGLISH_PORT", 3306) if port_override is None else port_override,
-        db_name=os.getenv("MCH_DB_NAME")
+        db_name=os.getenv("MCH_DB_NAME", "mch_english")
     )
