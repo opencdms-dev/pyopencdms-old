@@ -1,0 +1,26 @@
+version: "3"
+
+services:
+
+    # A PostgreSQL instance containing schemas from CDMSs that use PostgreSQL (currently clide and wmdr)
+    postgresql:
+        build:
+            context: .
+            dockerfile: ./docker/Dockerfile.postgresql
+        container_name: postgresql
+        ports:
+            - "5432:5432"
+        environment:
+            - POSTGRES_PASSWORD=password
+
+
+    # A MariaDB instance containing schemas from CDMSs that use MySQL/MariaDB (currently climsoft-4.1.1 and mch-english)
+    mysql:
+        build:
+            context: .
+            dockerfile: ./docker/Dockerfile.mysql
+        container_name: mysql
+        ports:
+            - "3306:3306"
+        environment:
+            - MYSQL_ROOT_PASSWORD=password
