@@ -1,9 +1,9 @@
-CREATE USER clideadmin;
-CREATE USER clidegui;
-CREATE USER clide;
-CREATE USER datacomp;
-CREATE DATABASE clideDB OWNER postgres;
-GRANT ALL PRIVILEGES ON DATABASE clideDB TO postgres;
+--CREATE USER clideadmin;
+--CREATE USER clidegui;
+--CREATE USER clide;
+--CREATE USER datacomp;
+--CREATE DATABASE clideDB OWNER postgres;
+--GRANT ALL PRIVILEGES ON DATABASE clideDB TO postgres;
 
 --
 -- PostgreSQL database dump
