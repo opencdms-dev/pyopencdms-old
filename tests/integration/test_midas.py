@@ -6,9 +6,9 @@ from sqlalchemy import create_engine
 from sqlalchemy.sql import text as sa_text
 from sqlalchemy.orm import sessionmaker
 from opencdms.models.midas import core as midas_models
-from test_util import get_clide_connection_string
+from test_util import get_midas_connection_string
 
-DB_URL = get_clide_connection_string()
+DB_URL = get_midas_connection_string()
 
 
 db_engine = create_engine(DB_URL)
