@@ -68,7 +68,6 @@ def setup_module(module):
                 ).execution_options(autocommit=True)
             )
 
-
     Session = sessionmaker(bind=db_engine)
     session = Session()
 
@@ -149,4 +148,3 @@ def test_should_delete_station(db_session):
     deleted_station = db_session.query(clide.Station).get(station_data['id'])
 
     assert deleted_station is None
-

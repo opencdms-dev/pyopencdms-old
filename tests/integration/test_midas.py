@@ -28,6 +28,7 @@ equipment_data = dict(
     )
 )
 
+
 @pytest.fixture
 def db_session():
     Session = sessionmaker(bind=db_engine)
@@ -124,4 +125,3 @@ def test_should_delete_equipment(db_session):
         .get(equipment_data['equipment_id'])
 
     assert deleted_equipment is None
-

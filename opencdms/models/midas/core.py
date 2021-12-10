@@ -163,8 +163,8 @@ class EquipmentCalibration(Base):
     check_equipment_id = Column(ForeignKey('equipment.equipment_id'), index=True, comment=' Unique identifier for check equipment used')
     eqpt_calib_rmrk = Column(VARCHAR(200), comment=' Remark on the calibration')
 
-    check_equipment = relationship('Equipment', primaryjoin='EquipmentCalibration.check_equipment_id == Equipment.equipment_id')
-    equipment = relationship('Equipment', primaryjoin='EquipmentCalibration.equipment_id == Equipment.equipment_id')
+    check_equipment = relationship('Equipment', foreign_keys=[check_equipment_id])
+    equipment = relationship('Equipment', foreign_keys=[equipment_id])
 
 
 class Inspection(Base):

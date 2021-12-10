@@ -96,5 +96,3 @@ def test_should_delete_station(db_session):
         .get(station_data['Station'])
 
     assert deleted_station is None
-
-
