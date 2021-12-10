@@ -5,7 +5,15 @@ from dotenv import load_dotenv
 load_dotenv()
 
 
-def get_connection_string(engine: str, driver: str, user: str, password: str, host: str, port: str, db_name: str) -> str:
+def get_connection_string(
+    engine: str,
+    driver: str,
+    user: str,
+    password: str,
+    host: str,
+    port: str,
+    db_name: str
+) -> str:
     return f"{engine}+{driver}://{user}:{password}@{host}:{port}/{db_name}"
 
 
@@ -40,6 +48,9 @@ def get_mch_english_connection_string(port_override: str = None) -> str:
         user="root",
         password="password",
         host="api.opencdms.org",
-        port=os.getenv("MCH_ENGLISH_PORT", 3306) if port_override is None else port_override,
+        port=os.getenv(
+            "MCH_ENGLISH_PORT",
+            3306
+        ) if port_override is None else port_override,
         db_name=os.getenv("MCH_DB_NAME", "test")
     )

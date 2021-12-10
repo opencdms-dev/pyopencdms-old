@@ -6,7 +6,9 @@ from sqlalchemy.orm import sessionmaker
 from opencdms.models.mch import english as mch_english
 from test_util import get_mch_english_connection_string
 
-DB_URL = get_mch_english_connection_string(port_override=os.getenv("MYSQL_PORT"))
+DB_URL = get_mch_english_connection_string(
+    port_override=os.getenv("MYSQL_PORT")
+)
 
 db_engine = create_engine(DB_URL)
 
@@ -65,27 +67,33 @@ def test_should_read_all_stations(db_session):
 
 @pytest.mark.order(402)
 def test_should_return_a_single_station(db_session):
-    station = db_session.query(mch_english.Station).get(station_data['Station'])
+    station = db_session.query(mch_english.Station)\
+        .get(station_data['Station'])
 
     assert station.Station == station_data['Station']
 
 
 @pytest.mark.order(403)
 def test_should_update_station(db_session):
-    db_session.query(mch_english.Station).filter_by(Station=station_data['Station']).update({'StationName': 'Updated Station Name'})
+    db_session.query(mch_english.Station)\
+        .filter_by(Station=station_data['Station'])\
+        .update({'StationName': 'Updated Station Name'})
     db_session.commit()
 
-    updated_station = db_session.query(mch_english.Station).get(station_data['Station'])
+    updated_station = db_session.query(mch_english.Station)\
+        .get(station_data['Station'])
 
     assert updated_station.StationName == 'Updated Station Name'
 
 
 @pytest.mark.order(404)
 def test_should_delete_station(db_session):
-    db_session.query(mch_english.Station).filter_by(Station=station_data['Station']).delete()
+    db_session.query(mch_english.Station)\
+        .filter_by(Station=station_data['Station']).delete()
     db_session.commit()
 
-    deleted_station = db_session.query(mch_english.Station).get(station_data['Station'])
+    deleted_station = db_session.query(mch_english.Station)\
+        .get(station_data['Station'])
 
     assert deleted_station is None
 

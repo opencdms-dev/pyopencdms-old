@@ -48,9 +48,22 @@ def setup_module(module):
 
     with db_engine.connect() as connection:
         with connection.begin():
-            db_engine.execute(sa_text(f'''TRUNCATE TABLE {clide.Station.__tablename__} RESTART IDENTITY CASCADE''').execution_options(autocommit=True))
-            db_engine.execute(sa_text(f'''TRUNCATE TABLE {clide.StationStatu.__tablename__} RESTART IDENTITY CASCADE''').execution_options(autocommit=True))
-            db_engine.execute(sa_text(f'''TRUNCATE TABLE {clide.StationTimezone.__tablename__} RESTART IDENTITY CASCADE''').execution_options(autocommit=True))
+            db_engine.execute(
+                sa_text(
+                    f'''TRUNCATE TABLE {clide.Station.__tablename__} RESTART IDENTITY CASCADE'''
+                ).execution_options(autocommit=True)
+            )
+            db_engine.execute(
+                sa_text(
+                    f'''TRUNCATE TABLE {clide.StationStatu.__tablename__} RESTART IDENTITY CASCADE'''
+                ).execution_options(autocommit=True)
+            )
+            db_engine.execute(
+                sa_text(
+                    f'''TRUNCATE TABLE {clide.StationTimezone.__tablename__} RESTART IDENTITY CASCADE'''
+                ).execution_options(autocommit=True)
+            )
+
 
     Session = sessionmaker(bind=db_engine)
     session = Session()
@@ -68,9 +81,21 @@ def teardown_module(module):
 
     with db_engine.connect() as connection:
         with connection.begin():
-            db_engine.execute(sa_text(f'''TRUNCATE TABLE {clide.Station.__tablename__} RESTART IDENTITY CASCADE''').execution_options(autocommit=True))
-            db_engine.execute(sa_text(f'''TRUNCATE TABLE {clide.StationStatu.__tablename__} RESTART IDENTITY CASCADE''').execution_options(autocommit=True))
-            db_engine.execute(sa_text(f'''TRUNCATE TABLE {clide.StationTimezone.__tablename__} RESTART IDENTITY CASCADE''').execution_options(autocommit=True))
+            db_engine.execute(
+                sa_text(
+                    f'''TRUNCATE TABLE {clide.Station.__tablename__} RESTART IDENTITY CASCADE'''
+                ).execution_options(autocommit=True)
+            )
+            db_engine.execute(
+                sa_text(
+                    f'''TRUNCATE TABLE {clide.StationStatu.__tablename__} RESTART IDENTITY CASCADE'''
+                ).execution_options(autocommit=True)
+            )
+            db_engine.execute(
+                sa_text(
+                    f'''TRUNCATE TABLE {clide.StationTimezone.__tablename__} RESTART IDENTITY CASCADE'''
+                ).execution_options(autocommit=True)
+            )
 
 
 @pytest.mark.order(100)

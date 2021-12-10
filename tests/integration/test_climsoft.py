@@ -72,20 +72,25 @@ def test_should_return_a_single_station(db_session):
 
 @pytest.mark.order(203)
 def test_should_update_station(db_session):
-    db_session.query(climsoft.Station).filter_by(stationId=station_data['stationId']).update({'country': 'US'})
+    db_session.query(climsoft.Station)\
+        .filter_by(stationId=station_data['stationId'])\
+        .update({'country': 'US'})
     db_session.commit()
 
-    updated_station = db_session.query(climsoft.Station).get(station_data['stationId'])
+    updated_station = db_session.query(climsoft.Station)\
+        .get(station_data['stationId'])
 
     assert updated_station.country == 'US'
 
 
 @pytest.mark.order(204)
 def test_should_delete_station(db_session):
-    db_session.query(climsoft.Station).filter_by(stationId=station_data['stationId']).delete()
+    db_session.query(climsoft.Station)\
+        .filter_by(stationId=station_data['stationId']).delete()
     db_session.commit()
 
-    deleted_station = db_session.query(climsoft.Station).get(station_data['stationId'])
+    deleted_station = db_session.query(climsoft.Station)\
+        .get(station_data['stationId'])
 
     assert deleted_station is None
 
