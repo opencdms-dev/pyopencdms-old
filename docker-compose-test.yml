@@ -20,6 +20,8 @@ services:
             context: .
             dockerfile: ./docker/Dockerfile.mysql
         container_name: test-mysql
+        volumes:
+            - ./docker/mysql.conf:/etc/mysql/my.conf
         ports:
             - "3306:3306"
         environment:
