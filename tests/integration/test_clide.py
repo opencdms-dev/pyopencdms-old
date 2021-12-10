@@ -44,6 +44,8 @@ def db_session():
 
 def setup_module(module):
     # Postgresql does not automatically reset ID if a table is truncated like mysql does
+    clide.Base.metadata.create_all(bind=db_engine)
+
     with db_engine.connect() as connection:
         with connection.begin():
             db_engine.execute(sa_text(f'''TRUNCATE TABLE {clide.Station.__tablename__} RESTART IDENTITY CASCADE''').execution_options(autocommit=True))
@@ -62,6 +64,8 @@ def setup_module(module):
 
 def teardown_module(module):
     # Postgresql does not automatically reset ID if a table is truncated like mysql does
+    clide.Base.metadata.create_all(bind=db_engine)
+
     with db_engine.connect() as connection:
         with connection.begin():
             db_engine.execute(sa_text(f'''TRUNCATE TABLE {clide.Station.__tablename__} RESTART IDENTITY CASCADE''').execution_options(autocommit=True))

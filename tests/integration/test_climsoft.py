@@ -25,6 +25,7 @@ def db_session():
 
 
 def setup_module(module):
+    climsoft.Base.metadata.create_all(db_engine)
     with db_engine.connect() as connection:
         trans = connection.begin()
         connection.execute('SET FOREIGN_KEY_CHECKS = 0;')
@@ -35,6 +36,7 @@ def setup_module(module):
 
 
 def teardown_module(module):
+    climsoft.Base.metadata.create_all(db_engine)
     with db_engine.connect() as connection:
         trans = connection.begin()
         connection.execute('SET FOREIGN_KEY_CHECKS = 0;')
