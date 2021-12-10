@@ -14,3 +14,4 @@ pytest-order==1.0.0
 django
 pytest
 python-dotenv
+pytest-order
