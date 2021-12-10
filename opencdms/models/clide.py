@@ -836,7 +836,7 @@ class CodesSimple(Base):
     id = Column(
         Integer,
         primary_key=True,
-        server_default=text("nextval('codes_simple_id'::regclass)"),
+        autoincrement=True,
     )
     code_type = Column(String(40), nullable=False, comment="Character code type")
     code = Column(String(40), nullable=False)
@@ -861,7 +861,7 @@ class Equipment(Base):
     id = Column(
         Integer,
         primary_key=True,
-        server_default=text("nextval('equipment_id'::regclass)"),
+        autoincrement=True,
         comment="Surrogate Key",
     )
     type = Column(String(50), comment="Type of equipment")
@@ -876,14 +876,14 @@ class GuiUser(Base):
     id = Column(
         Integer,
         primary_key=True,
-        server_default=text("nextval('gui_users_id_seq'::regclass)"),
+        autoincrement=True,
         comment="Surrogate Key",
     )
     username = Column(String(20), nullable=False, unique=True, comment="Login user id")
     css_filename = Column(String(120), comment="Name of style sheet selected")
     layout = Column(
         CHAR(4),
-        server_default=text("'POP'::bpchar"),
+        autoincrement=True,
         comment="Layout of page: LEFT menu, top menu, popup menu, HTML",
     )
     key = Column(String(64))
@@ -905,7 +905,7 @@ class IngestMonitor(Base):
     id = Column(
         Integer,
         primary_key=True,
-        server_default=text("nextval('ingest_monitor_id'::regclass)"),
+        autoincrement=True,
         comment="Surrogate Key",
     )
     username = Column(String(20), nullable=False, comment="User that started ingest")
@@ -939,7 +939,7 @@ class KeySetting(Base):
     id = Column(
         Integer,
         primary_key=True,
-        server_default=text("nextval('key_settings_id'::regclass)"),
+        autoincrement=True,
         comment="Surrogate Key",
     )
     profile = Column(String(20), nullable=False, comment="profile name")
@@ -958,7 +958,7 @@ class LandUse(Base):
     id = Column(
         Integer,
         primary_key=True,
-        server_default=text("nextval('land_use_id'::regclass)"),
+        autoincrement=True,
         comment="Surrogate Key",
     )
     land_use_code = Column(
@@ -978,7 +978,7 @@ class ObsAudit(Base):
     id = Column(
         Integer,
         primary_key=True,
-        server_default=text("nextval('obs_audit_id'::regclass)"),
+        autoincrement=True,
         comment="Surrogate Key",
     )
     table_name = Column(String(100), comment="Observation table where data is changed")
@@ -999,7 +999,7 @@ class ObsAverage(Base):
     id = Column(
         Integer,
         primary_key=True,
-        server_default=text("nextval('obs_averages_id'::regclass)"),
+        autoincrement=True,
     )
     insert_datetime = Column(DateTime, nullable=False, server_default=text("now()"))
     change_datetime = Column(DateTime)
@@ -1078,7 +1078,7 @@ class ObsClicomElementMap(Base):
     id = Column(
         Integer,
         primary_key=True,
-        server_default=text("nextval('obs_clicom_element_map_id'::regclass)"),
+        autoincrement=True,
     )
     clicom_element = Column(String(5), nullable=False)
     cldb_table = Column(String(80), nullable=False)
@@ -1100,7 +1100,7 @@ class ObsMonthly(Base):
     id = Column(
         Integer,
         primary_key=True,
-        server_default=text("nextval('key_settings_id'::regclass)"),
+        autoincrement=True,
         comment="Surrogate Key",
     )
     station_no = Column(String(15), nullable=False, comment="Local Station identifier")
@@ -1265,7 +1265,7 @@ class ObsSubdailySoilTemp(Base):
     id = Column(
         Integer,
         primary_key=True,
-        server_default=text("nextval('obs_subdaily_soil_temps_id'::regclass)"),
+        autoincrement=True,
     )
     sub_daily_id = Column(
         Integer,
@@ -1291,7 +1291,7 @@ class ObscodesCloudAmtConv(Base):
     id = Column(
         Integer,
         primary_key=True,
-        server_default=text("nextval('obscodes_cloud_amt_conv_id'::regclass)"),
+        autoincrement=True,
     )
     code_0501 = Column(CHAR(1), comment="WMO Code 0501 code form")
     code_2700 = Column(CHAR(1), comment="WMO Code 2700 code form")
@@ -1312,7 +1312,7 @@ class ObscodesCloudConv1677(Base):
     id = Column(
         Integer,
         primary_key=True,
-        server_default=text("nextval('obscodes_cloud_conv_1677_id'::regclass)"),
+        autoincrement=True,
     )
     code = Column(String(2), comment="WMO 1677 code")
     low_feet = Column(Numeric(7, 0), comment="Lower bound in feet")
@@ -1329,7 +1329,7 @@ class ObscodesCloudHtConv(Base):
     id = Column(
         Integer,
         primary_key=True,
-        server_default=text("nextval('obscodes_cloud_ht_conv_id'::regclass)"),
+        autoincrement=True,
     )
     code = Column(CHAR(1), comment="WMO 1600 Code")
     low_feet = Column(Numeric(9, 0), comment="Lower bound in feet")
@@ -1348,7 +1348,7 @@ class ObscodesCloudTypeConv(Base):
     id = Column(
         Integer,
         primary_key=True,
-        server_default=text("nextval('obscodes_cloud_type_conv_id'::regclass)"),
+        autoincrement=True,
     )
     code_0500 = Column(CHAR(1))
     code_figure = Column(CHAR(1), comment="WMO Code figure")
@@ -1369,7 +1369,7 @@ class ObscodesVisibility(Base):
     id = Column(
         Integer,
         primary_key=True,
-        server_default=text("nextval('obscodes_visibility_id'::regclass)"),
+        autoincrement=True,
     )
     non_aero_scale = Column(
         String(2), nullable=False, comment="Visibility non-Aero scale"
@@ -1392,7 +1392,7 @@ class ObscodesWindDir(Base):
     id = Column(
         Integer,
         primary_key=True,
-        server_default=text("nextval('obscodes_wind_dir_id'::regclass)"),
+        autoincrement=True,
     )
     compass = Column(String(6), nullable=False, comment="Compass points: NNE, SE, CLM,")
     degrees = Column(Numeric(3, 0), comment="Degrees (0-360)")
@@ -1410,7 +1410,7 @@ class ObscodesWindSpeed(Base):
     id = Column(
         Integer,
         primary_key=True,
-        server_default=text("nextval('obscodes_wind_speed_id'::regclass)"),
+        autoincrement=True,
     )
     code_bft = Column(String(2), nullable=False, comment="Beaufort code")
     ms = Column(Numeric(5, 2), comment="M/S")
@@ -1430,7 +1430,7 @@ class ObscodesWx(Base):
     id = Column(
         Integer,
         primary_key=True,
-        server_default=text("nextval('obscodes_wx_id'::regclass)"),
+        autoincrement=True,
     )
     code = Column(String(2), nullable=False, comment="WMO 4677 code")
     name = Column(String(40), comment="Name of phenomenon")
@@ -1447,7 +1447,7 @@ class ObsconvFactor(Base):
     id = Column(
         Integer,
         primary_key=True,
-        server_default=text("nextval('obsconv_factors_id'::regclass)"),
+        autoincrement=True,
     )
     from_type = Column(
         String(20), nullable=False, comment="From unit (eg. Fahrenheit, Inches)"
@@ -1481,7 +1481,7 @@ class SoilType(Base):
     id = Column(
         Integer,
         primary_key=True,
-        server_default=text("nextval('soil_types_id'::regclass)"),
+        autoincrement=True,
         comment="Surrogate Key",
     )
     soil_type = Column(String(10), nullable=False, comment="Soil type code")
@@ -1506,7 +1506,7 @@ class StationAuditType(Base):
     id = Column(
         Integer,
         primary_key=True,
-        server_default=text("nextval('station_audit_type_id'::regclass)"),
+        autoincrement=True,
         comment="Surrogate Key",
     )
     audit_type = Column(
@@ -1523,7 +1523,7 @@ class StationCountry(Base):
     id = Column(
         Integer,
         primary_key=True,
-        server_default=text("nextval('station_countries_id'::regclass)"),
+        autoincrement=True,
         comment="Surrogate Key",
     )
     iso_code = Column(
@@ -1542,7 +1542,7 @@ class StationStatu(Base):
     id = Column(
         Integer,
         primary_key=True,
-        server_default=text("nextval('station_status_id'::regclass)"),
+        autoincrement=True,
         comment="Surrogate Key",
     )
     status = Column(String(10), nullable=False, comment="Status Code")
@@ -1556,7 +1556,7 @@ class StationTimezone(Base):
     id = Column(
         Integer,
         primary_key=True,
-        server_default=text("nextval('station_timezones_id'::regclass)"),
+        autoincrement=True,
         comment="Surrogate Key",
     )
     tm_zone = Column(String(3), nullable=False, unique=True, comment="Time zone code")
@@ -1575,7 +1575,7 @@ class StationType(Base):
     id = Column(
         Integer,
         primary_key=True,
-        server_default=text("nextval('station_types_id'::regclass)"),
+        autoincrement=True,
         comment="Surrogate Key",
     )
     station_type = Column(String(10), nullable=False, comment="Station type code")
@@ -1589,7 +1589,7 @@ class SurfaceType(Base):
     id = Column(
         Integer,
         primary_key=True,
-        server_default=text("nextval('surface_types_id'::regclass)"),
+        autoincrement=True,
         comment="Surrogate Key",
     )
     surface_type = Column(String(10), nullable=False, comment="Surface type code")
@@ -1603,7 +1603,7 @@ class UserSession(Base):
     id = Column(
         Integer,
         primary_key=True,
-        server_default=text("nextval('user_sessions_id'::regclass)"),
+        autoincrement=True,
         comment="Surrogate Key",
     )
     username = Column(String(20), nullable=False, comment="Login username")
@@ -1639,7 +1639,7 @@ class Station(Base):
     id = Column(
         Integer,
         primary_key=True,
-        server_default=text("nextval('stations_id'::regclass)"),
+        autoincrement=True,
         comment="Surrogate Key",
     )
     station_no = Column(String(15), nullable=False, unique=True)
@@ -1704,7 +1704,7 @@ class TimezoneDiff(Base):
     id = Column(
         Integer,
         primary_key=True,
-        server_default=text("nextval('timezone_diffs_id'::regclass)"),
+        autoincrement=True,
         comment="Surrogate Key",
     )
     start_timestamp = Column(
@@ -1733,7 +1733,7 @@ class ObsAero(Base):
     id = Column(
         Integer,
         primary_key=True,
-        server_default=text("nextval('obs_aero_id'::regclass)"),
+        autoincrement=True,
     )
     station_no = Column(
         ForeignKey("stations.station_no"),
@@ -1894,7 +1894,7 @@ class ObsAw(Base):
     id = Column(
         Integer,
         primary_key=True,
-        server_default=text("nextval('obs_aws_id'::regclass)"),
+        autoincrement=True,
     )
     station_no = Column(
         ForeignKey("stations.station_no"),
@@ -2092,7 +2092,7 @@ class ObsDaily(Base):
     id = Column(
         Integer,
         primary_key=True,
-        server_default=text("nextval('obs_daily_id'::regclass)"),
+        autoincrement=True,
     )
     station_no = Column(
         ForeignKey("stations.station_no"),
@@ -2266,7 +2266,7 @@ class ObsSubdaily(Base):
     id = Column(
         Integer,
         primary_key=True,
-        server_default=text("nextval('obs_subdaily_id'::regclass)"),
+        autoincrement=True,
     )
     station_no = Column(
         ForeignKey("stations.station_no"),
@@ -2455,7 +2455,7 @@ class ObsUpperAir(Base):
     id = Column(
         Integer,
         primary_key=True,
-        server_default=text("nextval('obs_upper_air_id'::regclass)"),
+        autoincrement=True,
     )
     station_no = Column(
         ForeignKey("stations.station_no"),
@@ -2509,7 +2509,7 @@ class StationAudit(Base):
     id = Column(
         Integer,
         primary_key=True,
-        server_default=text("nextval('station_audit_id'::regclass)"),
+        autoincrement=True,
         comment="Surrogate Key",
     )
     station_id = Column(ForeignKey("stations.id"), comment="Station ID of audit record")
@@ -2538,7 +2538,7 @@ class StationClas(Base):
     id = Column(
         Integer,
         primary_key=True,
-        server_default=text("nextval('station_class_id'::regclass)"),
+        autoincrement=True,
         comment="Surrogate Key",
     )
     station_id = Column(
@@ -2567,7 +2567,7 @@ class StationContact(Base):
     id = Column(
         Integer,
         primary_key=True,
-        server_default=text("nextval('station_contacts_id'::regclass)"),
+        autoincrement=True,
         comment="Surrogate Key",
     )
     station_id = Column(
@@ -2608,7 +2608,7 @@ class StationEquipment(Base):
     id = Column(
         Integer,
         primary_key=True,
-        server_default=text("nextval('station_equipment_id'::regclass)"),
+        autoincrement=True,
         comment="Surrogate Key",
     )
     station_id = Column(
@@ -2638,7 +2638,7 @@ class StationFile(Base):
     id = Column(
         Integer,
         primary_key=True,
-        server_default=text("nextval('station_files_id'::regclass)"),
+        autoincrement=True,
         comment="Surrogate Key",
     )
     station_id = Column(
@@ -2663,7 +2663,7 @@ class ObsSubdailyCloudLayer(Base):
     id = Column(
         Integer,
         primary_key=True,
-        server_default=text("nextval('obs_subdaily_cloud_layers_id'::regclass)"),
+        autoincrement=True,
     )
     sub_daily_id = Column(
         ForeignKey("obs_subdaily.id"),
