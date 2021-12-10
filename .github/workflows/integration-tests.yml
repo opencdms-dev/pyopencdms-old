@@ -39,7 +39,7 @@ jobs:
               run: |
                   pytest tests/integration/test_clide.py
                   sleep 3
-                  pytest tests/integration/test_clmsoft.py
+                  pytest tests/integration/test_climsoft.py
                   sleep 3
                   pytest tests/integration/test_mch_english.py
                   sleep 3
