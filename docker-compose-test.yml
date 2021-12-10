@@ -11,7 +11,7 @@ services:
         ports:
             - "5432:5432"
         environment:
-            - POSTGRES_DATABSE=clideDB
+            - POSTGRES_DATABASE=clideDB
             - POSTGRES_PASSWORD=password
 
 
