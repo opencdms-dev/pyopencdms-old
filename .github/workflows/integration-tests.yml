@@ -43,10 +43,8 @@ jobs:
                   sleep 3
                   pytest tests/integration/test_mch_english.py
                   sleep 3
-#                  pytest tests/integration/test_midas.py
-#                  sleep 3
                   pytest tests/unit/*
-
+                  sleep 3
 
 #            - name: Destroy environment
 #              env:
