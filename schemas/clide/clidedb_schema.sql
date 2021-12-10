@@ -1,3 +1,9 @@
+CREATE USER clideadmin;
+CREATE USER clidegui;
+CREATE USER clide;
+CREATE USER datacomp;
+CREATE DATABASE clideDB OWNER postgres;
+
 --
 -- PostgreSQL database dump
 --
@@ -187,8 +193,8 @@ CREATE FUNCTION climat_data(station_no character varying, yyyy_mm date) RETURNS 
   day.max_temp, day.min_temp, day.avg_temp, day.temp_stddev,
   day.rain, day.rain_days, day.sunshine,
   day.max_rowcount, day.min_rowcount,
-  day.rain_rowcount, day.sunshine_rowcount, subday.pres_daycount, subday.vapour_daycount, 
-  date_part('day'::text, date_trunc('month', subday.yyyy_mm) + '1 month'::interval - '1 day'::interval) AS days_in_month, 
+  day.rain_rowcount, day.sunshine_rowcount, subday.pres_daycount, subday.vapour_daycount,
+  date_part('day'::text, date_trunc('month', subday.yyyy_mm) + '1 month'::interval - '1 day'::interval) AS days_in_month,
   day.max_gt_25_count, day.max_gt_30_count, day.max_gt_35_count, day.max_gt_40_count,
   day.min_lt_0_count, day.max_lt_0_count,
   day.rain_gt_1_count, day.rain_gt_5_count, day.rain_gt_10_count, day.rain_gt_50_count, day.rain_gt_100_count,
@@ -205,126 +211,126 @@ CREATE FUNCTION climat_data(station_no character varying, yyyy_mm date) RETURNS 
   day.max_rain, to_char(max_rain_dt.lsd, 'dd'::text) AS max_rain_dt, day.max_gust,
   to_char(max_gust_dt.lsd, 'dd'::text) AS max_gust_dt,
   day.hail_count,
-  day.thunder_count, 
-  substr(lct_to_utc(subday.station_no, (subday.yyyy_mm::date + '9 hours'::interval)::character varying)::text, 12, 2) AS utc_temp_time, 
-  day.aws_flag, day.day_count 
-   FROM ( SELECT sdd.station_no, 
-            date_trunc('month', sdd.yyyy_mm_dd) AS yyyy_mm, 
-            round(avg(iif_sql(sdd.pres_count >= 2, sdd.station_pres, NULL::numeric)), 1) AS station_pres, round(avg(iif_sql(sdd.pres_count >= 2, sdd.msl_pres, NULL::numeric)), 1) AS msl_pres, round(avg(sdd.dew_point), 1) AS dew_point, round(avg(sdd.vapour_pres), 1) AS vapour_pres, sum(iif_sql(sdd.pres_count >= 2, 1, 0)) AS pres_daycount, sum(iif_sql(sdd.vapour_count >= 2, 1, 0)) AS vapour_daycount, sum( 
-                CASE 
-                    WHEN sdd.avg_daily_wind > 10::numeric THEN 1 
-                    ELSE 0 
-                END) AS wind_gt_10_count, sum( 
-                CASE 
-                    WHEN sdd.avg_daily_wind > 20::numeric THEN 1 
-                    ELSE 0 
-                END) AS wind_gt_20_count, sum( 
-                CASE 
-                    WHEN sdd.avg_daily_wind > 30::numeric THEN 1 
-                    ELSE 0 
-                END) AS wind_gt_30_count, sum( 
-                CASE 
-                    WHEN sdd.daily_wind_count >= 8 THEN 1 
-                    ELSE 0 
-                END) AS wind_daycount, sum( 
-                CASE 
-                    WHEN sdd.min_daily_visibility < 0.05 THEN 1 
-                    ELSE 0 
-                END) AS vis_lt_50m_count, sum( 
-                CASE 
-                    WHEN sdd.min_daily_visibility < 0.1 THEN 1 
-                    ELSE 0 
-                END) AS vis_lt_100m_count, sum( 
-                CASE 
-                    WHEN sdd.min_daily_visibility < 1::numeric THEN 1 
-                    ELSE 0 
-                END) AS vis_lt_1km_count, sum( 
-                CASE 
-                    WHEN sdd.daily_vis_count > 0 THEN 1 
-                    ELSE 0 
-                END) AS vis_daycount 
-           FROM ( SELECT sd.station_no, 
-                    date_trunc('day', sd.lsd) AS yyyy_mm_dd, 
-                    avg(sd.station_pres) AS station_pres, avg(sd.msl_pres) AS msl_pres, avg(sd.dew_point) AS dew_point, avg(exp(1.8096 + 17.269425 * sd.dew_point / (237.3 + sd.dew_point))) AS vapour_pres, count(sd.station_pres) AS pres_count, count(sd.dew_point) AS vapour_count, avg(sd.wind_speed) AS avg_daily_wind, count(sd.wind_speed) AS daily_wind_count, min(sd.visibility) AS min_daily_visibility, count(sd.visibility) AS daily_vis_count 
-                   FROM obs_subdaily sd 
+  day.thunder_count,
+  substr(lct_to_utc(subday.station_no, (subday.yyyy_mm::date + '9 hours'::interval)::character varying)::text, 12, 2) AS utc_temp_time,
+  day.aws_flag, day.day_count
+   FROM ( SELECT sdd.station_no,
+            date_trunc('month', sdd.yyyy_mm_dd) AS yyyy_mm,
+            round(avg(iif_sql(sdd.pres_count >= 2, sdd.station_pres, NULL::numeric)), 1) AS station_pres, round(avg(iif_sql(sdd.pres_count >= 2, sdd.msl_pres, NULL::numeric)), 1) AS msl_pres, round(avg(sdd.dew_point), 1) AS dew_point, round(avg(sdd.vapour_pres), 1) AS vapour_pres, sum(iif_sql(sdd.pres_count >= 2, 1, 0)) AS pres_daycount, sum(iif_sql(sdd.vapour_count >= 2, 1, 0)) AS vapour_daycount, sum(
+                CASE
+                    WHEN sdd.avg_daily_wind > 10::numeric THEN 1
+                    ELSE 0
+                END) AS wind_gt_10_count, sum(
+                CASE
+                    WHEN sdd.avg_daily_wind > 20::numeric THEN 1
+                    ELSE 0
+                END) AS wind_gt_20_count, sum(
+                CASE
+                    WHEN sdd.avg_daily_wind > 30::numeric THEN 1
+                    ELSE 0
+                END) AS wind_gt_30_count, sum(
+                CASE
+                    WHEN sdd.daily_wind_count >= 8 THEN 1
+                    ELSE 0
+                END) AS wind_daycount, sum(
+                CASE
+                    WHEN sdd.min_daily_visibility < 0.05 THEN 1
+                    ELSE 0
+                END) AS vis_lt_50m_count, sum(
+                CASE
+                    WHEN sdd.min_daily_visibility < 0.1 THEN 1
+                    ELSE 0
+                END) AS vis_lt_100m_count, sum(
+                CASE
+                    WHEN sdd.min_daily_visibility < 1::numeric THEN 1
+                    ELSE 0
+                END) AS vis_lt_1km_count, sum(
+                CASE
+                    WHEN sdd.daily_vis_count > 0 THEN 1
+                    ELSE 0
+                END) AS vis_daycount
+           FROM ( SELECT sd.station_no,
+                    date_trunc('day', sd.lsd) AS yyyy_mm_dd,
+                    avg(sd.station_pres) AS station_pres, avg(sd.msl_pres) AS msl_pres, avg(sd.dew_point) AS dew_point, avg(exp(1.8096 + 17.269425 * sd.dew_point / (237.3 + sd.dew_point))) AS vapour_pres, count(sd.station_pres) AS pres_count, count(sd.dew_point) AS vapour_count, avg(sd.wind_speed) AS avg_daily_wind, count(sd.wind_speed) AS daily_wind_count, min(sd.visibility) AS min_daily_visibility, count(sd.visibility) AS daily_vis_count
+                   FROM obs_subdaily sd
                    WHERE station_no = $1
                      AND date_trunc('month', sd.lsd) = $2
-                  GROUP BY sd.station_no, date_trunc('day', sd.lsd)) sdd 
-          GROUP BY sdd.station_no, date_trunc('month', sdd.yyyy_mm_dd)) subday 
-   JOIN ( SELECT d.station_no AS stationno, 
-            date_trunc('month', d.lsd) AS yyyymm, 
-            round(avg(d.max_air_temp), 1) AS max_temp, round(avg(d.min_air_temp), 1) AS min_temp, round(avg((d.max_air_temp + d.min_air_temp) / 2::numeric), 1) AS avg_temp, round(stddev((d.max_air_temp + d.min_air_temp) / 2::numeric), 1) AS temp_stddev, round(sum(d.rain_24h), 0) AS rain, sum( 
-                CASE 
-                    WHEN d.rain_24h >= 1::numeric THEN 1 
-                    ELSE 0 
-                END) AS rain_days, round(sum(d.sunshine_duration), 0) AS sunshine, count(d.max_air_temp) AS max_rowcount, count(d.min_air_temp) AS min_rowcount, count(d.rain_24h) AS rain_rowcount, count(d.sunshine_duration) AS sunshine_rowcount, sum( 
-                CASE 
-                    WHEN d.max_air_temp >= 25::numeric THEN 1 
-                    ELSE 0 
-                END) AS max_gt_25_count, sum( 
-                CASE 
-                    WHEN d.max_air_temp >= 30::numeric THEN 1 
-                    ELSE 0 
-                END) AS max_gt_30_count, sum( 
-                CASE 
-                    WHEN d.max_air_temp >= 35::numeric THEN 1 
-                    ELSE 0 
-                END) AS max_gt_35_count, sum( 
-                CASE 
-                    WHEN d.max_air_temp >= 40::numeric THEN 1 
-                    ELSE 0 
-                END) AS max_gt_40_count, sum( 
-                CASE 
-                    WHEN d.min_air_temp < 0::numeric THEN 1 
-                    ELSE 0 
-                END) AS min_lt_0_count, sum( 
-                CASE 
-                    WHEN d.max_air_temp < 0::numeric THEN 1 
-                    ELSE 0 
-                END) AS max_lt_0_count, sum( 
-                CASE 
-                    WHEN d.rain_24h >= 1::numeric THEN 1 
-                    ELSE 0 
-                END) AS rain_gt_1_count, sum( 
-                CASE 
-                    WHEN d.rain_24h >= 5::numeric THEN 1 
-                    ELSE 0 
-                END) AS rain_gt_5_count, sum( 
-                CASE 
-                    WHEN d.rain_24h >= 10::numeric THEN 1 
-                    ELSE 0 
-                END) AS rain_gt_10_count, sum( 
-                CASE 
-                    WHEN d.rain_24h >= 50::numeric THEN 1 
-                    ELSE 0 
-                END) AS rain_gt_50_count, sum( 
-                CASE 
-                    WHEN d.rain_24h >= 100::numeric THEN 1 
-                    ELSE 0 
-                END) AS rain_gt_100_count, sum( 
-                CASE 
-                    WHEN d.rain_24h >= 150::numeric THEN 1 
-                    ELSE 0 
-                END) AS rain_gt_150_count, max((d.max_air_temp + d.min_air_temp) / 2::numeric) AS max_avg_temp, min((d.max_air_temp + d.min_air_temp) / 2::numeric) AS min_avg_temp, max(d.max_air_temp) AS max_max_temp, min(d.min_air_temp) AS min_min_temp, max(d.rain_24h) AS max_rain, max(d.max_gust_speed) AS max_gust, sum( 
-                CASE 
-                    WHEN d.hail_flag = 'Y'::bpchar THEN 1 
-                    ELSE 0 
-                END) AS hail_count, sum( 
-                CASE 
-                    WHEN d.thunder_flag = 'Y'::bpchar THEN 1 
-                    ELSE 0 
-                END) AS thunder_count, 'N'::character(1) AS aws_flag, count(*) AS day_count 
-           FROM obs_daily d 
+                  GROUP BY sd.station_no, date_trunc('day', sd.lsd)) sdd
+          GROUP BY sdd.station_no, date_trunc('month', sdd.yyyy_mm_dd)) subday
+   JOIN ( SELECT d.station_no AS stationno,
+            date_trunc('month', d.lsd) AS yyyymm,
+            round(avg(d.max_air_temp), 1) AS max_temp, round(avg(d.min_air_temp), 1) AS min_temp, round(avg((d.max_air_temp + d.min_air_temp) / 2::numeric), 1) AS avg_temp, round(stddev((d.max_air_temp + d.min_air_temp) / 2::numeric), 1) AS temp_stddev, round(sum(d.rain_24h), 0) AS rain, sum(
+                CASE
+                    WHEN d.rain_24h >= 1::numeric THEN 1
+                    ELSE 0
+                END) AS rain_days, round(sum(d.sunshine_duration), 0) AS sunshine, count(d.max_air_temp) AS max_rowcount, count(d.min_air_temp) AS min_rowcount, count(d.rain_24h) AS rain_rowcount, count(d.sunshine_duration) AS sunshine_rowcount, sum(
+                CASE
+                    WHEN d.max_air_temp >= 25::numeric THEN 1
+                    ELSE 0
+                END) AS max_gt_25_count, sum(
+                CASE
+                    WHEN d.max_air_temp >= 30::numeric THEN 1
+                    ELSE 0
+                END) AS max_gt_30_count, sum(
+                CASE
+                    WHEN d.max_air_temp >= 35::numeric THEN 1
+                    ELSE 0
+                END) AS max_gt_35_count, sum(
+                CASE
+                    WHEN d.max_air_temp >= 40::numeric THEN 1
+                    ELSE 0
+                END) AS max_gt_40_count, sum(
+                CASE
+                    WHEN d.min_air_temp < 0::numeric THEN 1
+                    ELSE 0
+                END) AS min_lt_0_count, sum(
+                CASE
+                    WHEN d.max_air_temp < 0::numeric THEN 1
+                    ELSE 0
+                END) AS max_lt_0_count, sum(
+                CASE
+                    WHEN d.rain_24h >= 1::numeric THEN 1
+                    ELSE 0
+                END) AS rain_gt_1_count, sum(
+                CASE
+                    WHEN d.rain_24h >= 5::numeric THEN 1
+                    ELSE 0
+                END) AS rain_gt_5_count, sum(
+                CASE
+                    WHEN d.rain_24h >= 10::numeric THEN 1
+                    ELSE 0
+                END) AS rain_gt_10_count, sum(
+                CASE
+                    WHEN d.rain_24h >= 50::numeric THEN 1
+                    ELSE 0
+                END) AS rain_gt_50_count, sum(
+                CASE
+                    WHEN d.rain_24h >= 100::numeric THEN 1
+                    ELSE 0
+                END) AS rain_gt_100_count, sum(
+                CASE
+                    WHEN d.rain_24h >= 150::numeric THEN 1
+                    ELSE 0
+                END) AS rain_gt_150_count, max((d.max_air_temp + d.min_air_temp) / 2::numeric) AS max_avg_temp, min((d.max_air_temp + d.min_air_temp) / 2::numeric) AS min_avg_temp, max(d.max_air_temp) AS max_max_temp, min(d.min_air_temp) AS min_min_temp, max(d.rain_24h) AS max_rain, max(d.max_gust_speed) AS max_gust, sum(
+                CASE
+                    WHEN d.hail_flag = 'Y'::bpchar THEN 1
+                    ELSE 0
+                END) AS hail_count, sum(
+                CASE
+                    WHEN d.thunder_flag = 'Y'::bpchar THEN 1
+                    ELSE 0
+                END) AS thunder_count, 'N'::character(1) AS aws_flag, count(*) AS day_count
+           FROM obs_daily d
            WHERE station_no = $1
              AND date_trunc('month', d.lsd) = $2
-          GROUP BY d.station_no, date_trunc('month', d.lsd)) day 
-     ON subday.station_no::text = day.stationno::text AND subday.yyyy_mm = day.yyyymm 
-   LEFT JOIN obs_daily max_avg_temp_dt ON day.stationno::text = max_avg_temp_dt.station_no::text AND date_trunc('month', max_avg_temp_dt.lsd) = day.yyyymm AND ((max_avg_temp_dt.max_air_temp + max_avg_temp_dt.min_air_temp) / 2::numeric) = day.max_avg_temp 
-   LEFT JOIN obs_daily min_avg_temp_dt ON day.stationno::text = min_avg_temp_dt.station_no::text AND date_trunc('month', min_avg_temp_dt.lsd) = day.yyyymm AND ((min_avg_temp_dt.max_air_temp + min_avg_temp_dt.min_air_temp) / 2::numeric) = day.min_avg_temp 
-   LEFT JOIN obs_daily max_max_temp_dt ON day.stationno::text = max_max_temp_dt.station_no::text AND date_trunc('month', max_max_temp_dt.lsd) = day.yyyymm AND max_max_temp_dt.max_air_temp = day.max_max_temp 
-   LEFT JOIN obs_daily min_min_temp_dt ON day.stationno::text = min_min_temp_dt.station_no::text AND date_trunc('month', min_min_temp_dt.lsd) = day.yyyymm AND min_min_temp_dt.min_air_temp = day.min_min_temp 
-   LEFT JOIN obs_daily max_rain_dt ON day.stationno::text = max_rain_dt.station_no::text AND date_trunc('month', max_rain_dt.lsd) = day.yyyymm AND max_rain_dt.rain_24h = day.max_rain 
-   LEFT JOIN obs_daily max_gust_dt ON day.stationno::text = max_gust_dt.station_no::text AND date_trunc('month', max_gust_dt.lsd) = day.yyyymm AND max_gust_dt.max_gust_speed = day.max_gust 
+          GROUP BY d.station_no, date_trunc('month', d.lsd)) day
+     ON subday.station_no::text = day.stationno::text AND subday.yyyy_mm = day.yyyymm
+   LEFT JOIN obs_daily max_avg_temp_dt ON day.stationno::text = max_avg_temp_dt.station_no::text AND date_trunc('month', max_avg_temp_dt.lsd) = day.yyyymm AND ((max_avg_temp_dt.max_air_temp + max_avg_temp_dt.min_air_temp) / 2::numeric) = day.max_avg_temp
+   LEFT JOIN obs_daily min_avg_temp_dt ON day.stationno::text = min_avg_temp_dt.station_no::text AND date_trunc('month', min_avg_temp_dt.lsd) = day.yyyymm AND ((min_avg_temp_dt.max_air_temp + min_avg_temp_dt.min_air_temp) / 2::numeric) = day.min_avg_temp
+   LEFT JOIN obs_daily max_max_temp_dt ON day.stationno::text = max_max_temp_dt.station_no::text AND date_trunc('month', max_max_temp_dt.lsd) = day.yyyymm AND max_max_temp_dt.max_air_temp = day.max_max_temp
+   LEFT JOIN obs_daily min_min_temp_dt ON day.stationno::text = min_min_temp_dt.station_no::text AND date_trunc('month', min_min_temp_dt.lsd) = day.yyyymm AND min_min_temp_dt.min_air_temp = day.min_min_temp
+   LEFT JOIN obs_daily max_rain_dt ON day.stationno::text = max_rain_dt.station_no::text AND date_trunc('month', max_rain_dt.lsd) = day.yyyymm AND max_rain_dt.rain_24h = day.max_rain
+   LEFT JOIN obs_daily max_gust_dt ON day.stationno::text = max_gust_dt.station_no::text AND date_trunc('month', max_gust_dt.lsd) = day.yyyymm AND max_gust_dt.max_gust_speed = day.max_gust
 WHERE subday.station_no = $1
   AND subday.yyyy_mm = $2;$_$;
 
@@ -1292,7 +1298,7 @@ DECLARE prev_quintile integer;
 
 BEGIN
 	FOR res IN
-	
+
 		select mm, quintile, min(rain) as min, max(rain) as max
 		from (
 		select mm, rain, ntile(5) over (partition by mm order by rain) as quintile
@@ -1302,7 +1308,7 @@ BEGIN
 					select sum(rain_24h) as rain, to_char(lsd, 'yyyy-mm') as year_mm
 					from obs_daily
 					where lsd > to_timestamp($4, 'yyyy-mm') AND lsd <= to_timestamp($5, 'yyyy-mm')
-					and station_no = $1		
+					and station_no = $1
 					group by to_char(lsd, 'yyyy-mm')
 				) z
 			) x WHERE mm = $2
@@ -1310,7 +1316,7 @@ BEGIN
 		group by mm, quintile
 		order by mm, quintile
 
-	LOOP	--Logic to extract appropriate quintile 
+	LOOP	--Logic to extract appropriate quintile
 
 	--Lower than the minimum value in lowest quintile...return 0
 	IF res.quintile = 1 AND $3 < res.min THEN
@@ -1321,7 +1327,7 @@ BEGIN
 	IF $3 >= res.min AND $3 <= res.max THEN
 		--Amount is definitely in this quintile
 		RETURN res.quintile;
-	ELSIF $3 < res.min THEN	
+	ELSIF $3 < res.min THEN
 		--need to determine if part of this or previous quintile.
 		--calculate half-way between maximum of prev and minimum of current
 		IF $3 > (prev_max + (res.min-prev_max)/2) THEN
@@ -1957,7 +1963,7 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- Name: codes_simple; Type: TABLE; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: codes_simple; Type: TABLE; Schema: public; Owner: clidegui; Tablespace:
 --
 
 CREATE TABLE codes_simple (
@@ -2016,7 +2022,7 @@ COMMENT ON COLUMN codes_simple.insert_datetime IS 'Timestamp of insert';
 
 
 --
--- Name: datums; Type: TABLE; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: datums; Type: TABLE; Schema: public; Owner: clidegui; Tablespace:
 --
 
 CREATE TABLE datums (
@@ -2056,7 +2062,7 @@ COMMENT ON SEQUENCE equipment_id IS 'PK sequence for equipment';
 
 
 --
--- Name: equipment; Type: TABLE; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: equipment; Type: TABLE; Schema: public; Owner: clidegui; Tablespace:
 --
 
 CREATE TABLE equipment (
@@ -2126,7 +2132,7 @@ COMMENT ON SEQUENCE station_types_id IS 'PK sequence for station status';
 
 
 --
--- Name: station_types; Type: TABLE; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: station_types; Type: TABLE; Schema: public; Owner: clidegui; Tablespace:
 --
 
 CREATE TABLE station_types (
@@ -2208,7 +2214,7 @@ COMMENT ON SEQUENCE obs_aero_id IS 'PK sequence for obs_aero';
 
 
 --
--- Name: obs_aero; Type: TABLE; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: obs_aero; Type: TABLE; Schema: public; Owner: clidegui; Tablespace:
 --
 
 CREATE TABLE obs_aero (
@@ -2827,7 +2833,7 @@ COMMENT ON SEQUENCE obs_aws_id IS 'PK sequence for obs_aws';
 
 
 --
--- Name: obs_aws; Type: TABLE; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: obs_aws; Type: TABLE; Schema: public; Owner: clidegui; Tablespace:
 --
 
 CREATE TABLE obs_aws (
@@ -3386,7 +3392,7 @@ COMMENT ON SEQUENCE obs_daily_id IS 'PK sequence for obs_daily';
 
 
 --
--- Name: obs_daily; Type: TABLE; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: obs_daily; Type: TABLE; Schema: public; Owner: clidegui; Tablespace:
 --
 
 CREATE TABLE obs_daily (
@@ -4125,7 +4131,7 @@ COMMENT ON SEQUENCE obs_subdaily_id IS 'PK sequence for obs_subdaily';
 
 
 --
--- Name: obs_subdaily; Type: TABLE; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: obs_subdaily; Type: TABLE; Schema: public; Owner: clidegui; Tablespace:
 --
 
 CREATE TABLE obs_subdaily (
@@ -4925,7 +4931,7 @@ COMMENT ON SEQUENCE key_settings_id IS 'PK sequence for key_settings';
 
 
 --
--- Name: obs_monthly; Type: TABLE; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: obs_monthly; Type: TABLE; Schema: public; Owner: clidegui; Tablespace:
 --
 
 CREATE TABLE obs_monthly (
@@ -5464,7 +5470,7 @@ COMMENT ON SEQUENCE obs_subdaily_cloud_layers_id IS 'PK sequence for obs_subdail
 
 
 --
--- Name: obs_subdaily_cloud_layers; Type: TABLE; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: obs_subdaily_cloud_layers; Type: TABLE; Schema: public; Owner: clidegui; Tablespace:
 --
 
 CREATE TABLE obs_subdaily_cloud_layers (
@@ -5623,7 +5629,7 @@ COMMENT ON SEQUENCE obs_subdaily_soil_temps_id IS 'PK sequence for obs_subdaily_
 
 
 --
--- Name: obs_subdaily_soil_temps; Type: TABLE; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: obs_subdaily_soil_temps; Type: TABLE; Schema: public; Owner: clidegui; Tablespace:
 --
 
 CREATE TABLE obs_subdaily_soil_temps (
@@ -5718,7 +5724,7 @@ COMMENT ON SEQUENCE obs_upper_air_id IS 'PK sequence for obs_upper_air';
 
 
 --
--- Name: obs_upper_air; Type: TABLE; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: obs_upper_air; Type: TABLE; Schema: public; Owner: clidegui; Tablespace:
 --
 
 CREATE TABLE obs_upper_air (
@@ -5901,7 +5907,7 @@ COMMENT ON SEQUENCE station_audit_id IS 'PK sequence for station audit';
 
 
 --
--- Name: station_audit; Type: TABLE; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: station_audit; Type: TABLE; Schema: public; Owner: clidegui; Tablespace:
 --
 
 CREATE TABLE station_audit (
@@ -5988,7 +5994,7 @@ COMMENT ON SEQUENCE station_audit_type_id IS 'PK sequence for station audit type
 
 
 --
--- Name: station_audit_types; Type: TABLE; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: station_audit_types; Type: TABLE; Schema: public; Owner: clidegui; Tablespace:
 --
 
 CREATE TABLE station_audit_types (
@@ -6051,7 +6057,7 @@ COMMENT ON SEQUENCE stations_id IS 'PK sequence for stations';
 
 
 --
--- Name: stations; Type: TABLE; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: stations; Type: TABLE; Schema: public; Owner: clidegui; Tablespace:
 --
 
 CREATE TABLE stations (
@@ -6154,7 +6160,7 @@ COMMENT ON SEQUENCE station_class_id IS 'PK sequence for station class';
 
 
 --
--- Name: station_class; Type: TABLE; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: station_class; Type: TABLE; Schema: public; Owner: clidegui; Tablespace:
 --
 
 CREATE TABLE station_class (
@@ -6243,7 +6249,7 @@ COMMENT ON SEQUENCE station_equipment_id IS 'PK sequence for station equipment';
 
 
 --
--- Name: station_equipment; Type: TABLE; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: station_equipment; Type: TABLE; Schema: public; Owner: clidegui; Tablespace:
 --
 
 CREATE TABLE station_equipment (
@@ -6349,7 +6355,7 @@ COMMENT ON SEQUENCE land_use_id IS 'PK sequence for land use';
 
 
 --
--- Name: land_use; Type: TABLE; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: land_use; Type: TABLE; Schema: public; Owner: clidegui; Tablespace:
 --
 
 CREATE TABLE land_use (
@@ -6419,7 +6425,7 @@ COMMENT ON SEQUENCE soil_types_id IS 'PK sequence for soil types';
 
 
 --
--- Name: soil_types; Type: TABLE; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: soil_types; Type: TABLE; Schema: public; Owner: clidegui; Tablespace:
 --
 
 CREATE TABLE soil_types (
@@ -6481,7 +6487,7 @@ COMMENT ON SEQUENCE station_countries_id IS 'PK sequence for station countries';
 
 
 --
--- Name: station_countries; Type: TABLE; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: station_countries; Type: TABLE; Schema: public; Owner: clidegui; Tablespace:
 --
 
 CREATE TABLE station_countries (
@@ -6543,7 +6549,7 @@ COMMENT ON SEQUENCE station_status_id IS 'PK sequence for station status';
 
 
 --
--- Name: station_status; Type: TABLE; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: station_status; Type: TABLE; Schema: public; Owner: clidegui; Tablespace:
 --
 
 CREATE TABLE station_status (
@@ -6605,7 +6611,7 @@ COMMENT ON SEQUENCE station_timezones_id IS 'PK sequence for station time zones'
 
 
 --
--- Name: station_timezones; Type: TABLE; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: station_timezones; Type: TABLE; Schema: public; Owner: clidegui; Tablespace:
 --
 
 CREATE TABLE station_timezones (
@@ -6675,7 +6681,7 @@ COMMENT ON SEQUENCE surface_types_id IS 'PK sequence for surface types';
 
 
 --
--- Name: surface_types; Type: TABLE; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: surface_types; Type: TABLE; Schema: public; Owner: clidegui; Tablespace:
 --
 
 CREATE TABLE surface_types (
@@ -6747,7 +6753,7 @@ COMMENT ON SEQUENCE gui_users_id_seq IS 'PK sequence for gui_users';
 
 
 --
--- Name: gui_users; Type: TABLE; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: gui_users; Type: TABLE; Schema: public; Owner: clidegui; Tablespace:
 --
 
 CREATE TABLE gui_users (
@@ -6827,7 +6833,7 @@ COMMENT ON SEQUENCE ingest_monitor_id IS 'PK sequence for ingest_monitor';
 
 
 --
--- Name: ingest_monitor; Type: TABLE; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: ingest_monitor; Type: TABLE; Schema: public; Owner: clidegui; Tablespace:
 --
 
 CREATE TABLE ingest_monitor (
@@ -6913,7 +6919,7 @@ COMMENT ON COLUMN ingest_monitor.ingested_recs IS 'Count of all ingested input f
 
 
 --
--- Name: key_settings; Type: TABLE; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: key_settings; Type: TABLE; Schema: public; Owner: clidegui; Tablespace:
 --
 
 CREATE TABLE key_settings (
@@ -7001,7 +7007,7 @@ COMMENT ON SEQUENCE obs_audit_id IS 'PK sequence for obs audit';
 
 
 --
--- Name: obs_audit; Type: TABLE; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: obs_audit; Type: TABLE; Schema: public; Owner: clidegui; Tablespace:
 --
 
 CREATE TABLE obs_audit (
@@ -7088,7 +7094,7 @@ COMMENT ON SEQUENCE obs_averages_id IS 'PK sequence for obs_averages';
 
 
 --
--- Name: obs_averages; Type: TABLE; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: obs_averages; Type: TABLE; Schema: public; Owner: clidegui; Tablespace:
 --
 
 CREATE TABLE obs_averages (
@@ -7292,7 +7298,7 @@ COMMENT ON SEQUENCE obs_clicom_element_map_id IS 'PK sequence for obs_clicom_ele
 
 
 --
--- Name: obs_clicom_element_map; Type: TABLE; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: obs_clicom_element_map; Type: TABLE; Schema: public; Owner: clidegui; Tablespace:
 --
 
 CREATE TABLE obs_clicom_element_map (
@@ -7359,7 +7365,7 @@ COMMENT ON SEQUENCE obscodes_cloud_amt_conv_id IS 'PK sequence for obscodes_clou
 
 
 --
--- Name: obscodes_cloud_amt_conv; Type: TABLE; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: obscodes_cloud_amt_conv; Type: TABLE; Schema: public; Owner: clidegui; Tablespace:
 --
 
 CREATE TABLE obscodes_cloud_amt_conv (
@@ -7462,7 +7468,7 @@ COMMENT ON SEQUENCE obscodes_cloud_conv_1677_id IS 'PK sequence for obscodes_clo
 
 
 --
--- Name: obscodes_cloud_conv_1677; Type: TABLE; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: obscodes_cloud_conv_1677; Type: TABLE; Schema: public; Owner: clidegui; Tablespace:
 --
 
 CREATE TABLE obscodes_cloud_conv_1677 (
@@ -7549,7 +7555,7 @@ COMMENT ON SEQUENCE obscodes_cloud_ht_conv_id IS 'PK sequence for obscodes_cloud
 
 
 --
--- Name: obscodes_cloud_ht_conv; Type: TABLE; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: obscodes_cloud_ht_conv; Type: TABLE; Schema: public; Owner: clidegui; Tablespace:
 --
 
 CREATE TABLE obscodes_cloud_ht_conv (
@@ -7652,7 +7658,7 @@ COMMENT ON SEQUENCE obscodes_cloud_type_conv_id IS 'PK sequence for obscodes_clo
 
 
 --
--- Name: obscodes_cloud_type_conv; Type: TABLE; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: obscodes_cloud_type_conv; Type: TABLE; Schema: public; Owner: clidegui; Tablespace:
 --
 
 CREATE TABLE obscodes_cloud_type_conv (
@@ -7748,7 +7754,7 @@ COMMENT ON SEQUENCE obscodes_visibility_id IS 'PK sequence for obscodes_visibili
 
 
 --
--- Name: obscodes_visibility; Type: TABLE; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: obscodes_visibility; Type: TABLE; Schema: public; Owner: clidegui; Tablespace:
 --
 
 CREATE TABLE obscodes_visibility (
@@ -7844,7 +7850,7 @@ COMMENT ON SEQUENCE obscodes_wind_dir_id IS 'PK sequence for obscodes_wind_dir';
 
 
 --
--- Name: obscodes_wind_dir; Type: TABLE; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: obscodes_wind_dir; Type: TABLE; Schema: public; Owner: clidegui; Tablespace:
 --
 
 CREATE TABLE obscodes_wind_dir (
@@ -7939,7 +7945,7 @@ COMMENT ON SEQUENCE obscodes_wind_speed_id IS 'PK sequence for obscodes_wind_spe
 
 
 --
--- Name: obscodes_wind_speed; Type: TABLE; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: obscodes_wind_speed; Type: TABLE; Schema: public; Owner: clidegui; Tablespace:
 --
 
 CREATE TABLE obscodes_wind_speed (
@@ -8050,7 +8056,7 @@ COMMENT ON SEQUENCE obscodes_wx_id IS 'PK sequence for obscodes_wx';
 
 
 --
--- Name: obscodes_wx; Type: TABLE; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: obscodes_wx; Type: TABLE; Schema: public; Owner: clidegui; Tablespace:
 --
 
 CREATE TABLE obscodes_wx (
@@ -8137,7 +8143,7 @@ COMMENT ON SEQUENCE obsconv_factors_id IS 'PK sequence for obsconv_factors';
 
 
 --
--- Name: obsconv_factors; Type: TABLE; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: obsconv_factors; Type: TABLE; Schema: public; Owner: clidegui; Tablespace:
 --
 
 CREATE TABLE obsconv_factors (
@@ -8219,7 +8225,7 @@ COMMENT ON COLUMN obsconv_factors.insert_datetime IS 'Timestamp of insert';
 
 
 --
--- Name: pivot; Type: TABLE; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: pivot; Type: TABLE; Schema: public; Owner: clidegui; Tablespace:
 --
 
 CREATE TABLE pivot (
@@ -8237,7 +8243,7 @@ COMMENT ON TABLE pivot IS 'Utility table of sequential integers';
 
 
 --
--- Name: spatial_ref_sys; Type: TABLE; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: spatial_ref_sys; Type: TABLE; Schema: public; Owner: clidegui; Tablespace:
 --
 
 CREATE TABLE spatial_ref_sys (
@@ -8280,7 +8286,7 @@ COMMENT ON SEQUENCE station_contacts_id IS 'PK sequence for station contacts';
 
 
 --
--- Name: station_contacts; Type: TABLE; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: station_contacts; Type: TABLE; Schema: public; Owner: clidegui; Tablespace:
 --
 
 CREATE TABLE station_contacts (
@@ -8352,7 +8358,7 @@ COMMENT ON SEQUENCE station_files_id IS 'PK sequence for station files';
 
 
 --
--- Name: station_files; Type: TABLE; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: station_files; Type: TABLE; Schema: public; Owner: clidegui; Tablespace:
 --
 
 CREATE TABLE station_files (
@@ -8430,7 +8436,7 @@ COMMENT ON SEQUENCE timezone_diffs_id IS 'PK sequence for timezone diffs';
 
 
 --
--- Name: timezone_diffs; Type: TABLE; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: timezone_diffs; Type: TABLE; Schema: public; Owner: clidegui; Tablespace:
 --
 
 CREATE TABLE timezone_diffs (
@@ -8508,7 +8514,7 @@ COMMENT ON SEQUENCE user_sessions_id IS 'PK sequence for user_sessions';
 
 
 --
--- Name: user_sessions; Type: TABLE; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: user_sessions; Type: TABLE; Schema: public; Owner: clidegui; Tablespace:
 --
 
 CREATE TABLE user_sessions (
@@ -8583,7 +8589,7 @@ COMMENT ON COLUMN user_sessions.killed_flag IS 'Session ended by admin kill';
 
 
 --
--- Name: CODES_SIMPLE_PK; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: CODES_SIMPLE_PK; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace:
 --
 
 ALTER TABLE ONLY codes_simple
@@ -8591,7 +8597,7 @@ ALTER TABLE ONLY codes_simple
 
 
 --
--- Name: EQUIPMENT_PK; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: EQUIPMENT_PK; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace:
 --
 
 ALTER TABLE ONLY equipment
@@ -8599,7 +8605,7 @@ ALTER TABLE ONLY equipment
 
 
 --
--- Name: INGEST_MONITOR_PK; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: INGEST_MONITOR_PK; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace:
 --
 
 ALTER TABLE ONLY ingest_monitor
@@ -8607,7 +8613,7 @@ ALTER TABLE ONLY ingest_monitor
 
 
 --
--- Name: KEY_SETTINGS_PK; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: KEY_SETTINGS_PK; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace:
 --
 
 ALTER TABLE ONLY key_settings
@@ -8615,7 +8621,7 @@ ALTER TABLE ONLY key_settings
 
 
 --
--- Name: LAND_USE_PK; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: LAND_USE_PK; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace:
 --
 
 ALTER TABLE ONLY land_use
@@ -8623,7 +8629,7 @@ ALTER TABLE ONLY land_use
 
 
 --
--- Name: OBSCODES_CLOUD_AMT_CONV_PK; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: OBSCODES_CLOUD_AMT_CONV_PK; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace:
 --
 
 ALTER TABLE ONLY obscodes_cloud_amt_conv
@@ -8631,7 +8637,7 @@ ALTER TABLE ONLY obscodes_cloud_amt_conv
 
 
 --
--- Name: OBSCODES_CLOUD_CONV_1677_PK; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: OBSCODES_CLOUD_CONV_1677_PK; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace:
 --
 
 ALTER TABLE ONLY obscodes_cloud_conv_1677
@@ -8639,7 +8645,7 @@ ALTER TABLE ONLY obscodes_cloud_conv_1677
 
 
 --
--- Name: OBSCODES_CLOUD_HT_CONV_PK; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: OBSCODES_CLOUD_HT_CONV_PK; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace:
 --
 
 ALTER TABLE ONLY obscodes_cloud_ht_conv
@@ -8647,7 +8653,7 @@ ALTER TABLE ONLY obscodes_cloud_ht_conv
 
 
 --
--- Name: OBSCODES_CLOUD_TYPE_CONV_PK; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: OBSCODES_CLOUD_TYPE_CONV_PK; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace:
 --
 
 ALTER TABLE ONLY obscodes_cloud_type_conv
@@ -8655,7 +8661,7 @@ ALTER TABLE ONLY obscodes_cloud_type_conv
 
 
 --
--- Name: OBSCODES_VISIBILITY_PK; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: OBSCODES_VISIBILITY_PK; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace:
 --
 
 ALTER TABLE ONLY obscodes_visibility
@@ -8663,7 +8669,7 @@ ALTER TABLE ONLY obscodes_visibility
 
 
 --
--- Name: OBSCODES_WIND_DIR_PK; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: OBSCODES_WIND_DIR_PK; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace:
 --
 
 ALTER TABLE ONLY obscodes_wind_dir
@@ -8671,7 +8677,7 @@ ALTER TABLE ONLY obscodes_wind_dir
 
 
 --
--- Name: OBSCODES_WIND_SPEED_PK; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: OBSCODES_WIND_SPEED_PK; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace:
 --
 
 ALTER TABLE ONLY obscodes_wind_speed
@@ -8679,7 +8685,7 @@ ALTER TABLE ONLY obscodes_wind_speed
 
 
 --
--- Name: OBSCODES_WX_PK; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: OBSCODES_WX_PK; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace:
 --
 
 ALTER TABLE ONLY obscodes_wx
@@ -8687,7 +8693,7 @@ ALTER TABLE ONLY obscodes_wx
 
 
 --
--- Name: OBSCONV_FACTORS_PK; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: OBSCONV_FACTORS_PK; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace:
 --
 
 ALTER TABLE ONLY obsconv_factors
@@ -8695,7 +8701,7 @@ ALTER TABLE ONLY obsconv_factors
 
 
 --
--- Name: OBS_AERO_PK; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: OBS_AERO_PK; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace:
 --
 
 ALTER TABLE ONLY obs_aero
@@ -8703,7 +8709,7 @@ ALTER TABLE ONLY obs_aero
 
 
 --
--- Name: OBS_AUDIT_PK; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: OBS_AUDIT_PK; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace:
 --
 
 ALTER TABLE ONLY obs_audit
@@ -8711,7 +8717,7 @@ ALTER TABLE ONLY obs_audit
 
 
 --
--- Name: OBS_AVERAGES_PK; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: OBS_AVERAGES_PK; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace:
 --
 
 ALTER TABLE ONLY obs_averages
@@ -8719,7 +8725,7 @@ ALTER TABLE ONLY obs_averages
 
 
 --
--- Name: OBS_AWS_PK; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: OBS_AWS_PK; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace:
 --
 
 ALTER TABLE ONLY obs_aws
@@ -8727,7 +8733,7 @@ ALTER TABLE ONLY obs_aws
 
 
 --
--- Name: OBS_DAILY_PK; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: OBS_DAILY_PK; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace:
 --
 
 ALTER TABLE ONLY obs_daily
@@ -8735,7 +8741,7 @@ ALTER TABLE ONLY obs_daily
 
 
 --
--- Name: OBS_MONTHLY_PK; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: OBS_MONTHLY_PK; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace:
 --
 
 ALTER TABLE ONLY obs_monthly
@@ -8743,7 +8749,7 @@ ALTER TABLE ONLY obs_monthly
 
 
 --
--- Name: OBS_MONTHLY_UNIQUE; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: OBS_MONTHLY_UNIQUE; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace:
 --
 
 ALTER TABLE ONLY obs_monthly
@@ -8751,7 +8757,7 @@ ALTER TABLE ONLY obs_monthly
 
 
 --
--- Name: OBS_SUBDAILY_CLOUD_LAYERS_PK; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: OBS_SUBDAILY_CLOUD_LAYERS_PK; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace:
 --
 
 ALTER TABLE ONLY obs_subdaily_cloud_layers
@@ -8759,7 +8765,7 @@ ALTER TABLE ONLY obs_subdaily_cloud_layers
 
 
 --
--- Name: OBS_SUBDAILY_PK; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: OBS_SUBDAILY_PK; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace:
 --
 
 ALTER TABLE ONLY obs_subdaily
@@ -8767,7 +8773,7 @@ ALTER TABLE ONLY obs_subdaily
 
 
 --
--- Name: OBS_SUBDAILY_SOIL_TEMPS_PK; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: OBS_SUBDAILY_SOIL_TEMPS_PK; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace:
 --
 
 ALTER TABLE ONLY obs_subdaily_soil_temps
@@ -8775,7 +8781,7 @@ ALTER TABLE ONLY obs_subdaily_soil_temps
 
 
 --
--- Name: OBS_UPPER_AIR_PK; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: OBS_UPPER_AIR_PK; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace:
 --
 
 ALTER TABLE ONLY obs_upper_air
@@ -8783,7 +8789,7 @@ ALTER TABLE ONLY obs_upper_air
 
 
 --
--- Name: SOIL_TYPES_PK; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: SOIL_TYPES_PK; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace:
 --
 
 ALTER TABLE ONLY soil_types
@@ -8791,7 +8797,7 @@ ALTER TABLE ONLY soil_types
 
 
 --
--- Name: STATIONS_PK; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: STATIONS_PK; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace:
 --
 
 ALTER TABLE ONLY stations
@@ -8799,7 +8805,7 @@ ALTER TABLE ONLY stations
 
 
 --
--- Name: STATION_AUDIT_PK; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: STATION_AUDIT_PK; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace:
 --
 
 ALTER TABLE ONLY station_audit
@@ -8807,7 +8813,7 @@ ALTER TABLE ONLY station_audit
 
 
 --
--- Name: STATION_AUDIT_TYPES_PK; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: STATION_AUDIT_TYPES_PK; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace:
 --
 
 ALTER TABLE ONLY station_audit_types
@@ -8815,7 +8821,7 @@ ALTER TABLE ONLY station_audit_types
 
 
 --
--- Name: STATION_CLASS_PK; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: STATION_CLASS_PK; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace:
 --
 
 ALTER TABLE ONLY station_class
@@ -8823,7 +8829,7 @@ ALTER TABLE ONLY station_class
 
 
 --
--- Name: STATION_CONTACTS_PK; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: STATION_CONTACTS_PK; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace:
 --
 
 ALTER TABLE ONLY station_contacts
@@ -8831,7 +8837,7 @@ ALTER TABLE ONLY station_contacts
 
 
 --
--- Name: STATION_COUNTRIES_PK; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: STATION_COUNTRIES_PK; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace:
 --
 
 ALTER TABLE ONLY station_countries
@@ -8839,7 +8845,7 @@ ALTER TABLE ONLY station_countries
 
 
 --
--- Name: STATION_EQUIPMENT_PK; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: STATION_EQUIPMENT_PK; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace:
 --
 
 ALTER TABLE ONLY station_equipment
@@ -8847,7 +8853,7 @@ ALTER TABLE ONLY station_equipment
 
 
 --
--- Name: STATION_FILES_PK; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: STATION_FILES_PK; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace:
 --
 
 ALTER TABLE ONLY station_files
@@ -8855,7 +8861,7 @@ ALTER TABLE ONLY station_files
 
 
 --
--- Name: STATION_STATUS_PK; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: STATION_STATUS_PK; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace:
 --
 
 ALTER TABLE ONLY station_status
@@ -8863,7 +8869,7 @@ ALTER TABLE ONLY station_status
 
 
 --
--- Name: STATION_TIMEZONES_PK; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: STATION_TIMEZONES_PK; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace:
 --
 
 ALTER TABLE ONLY station_timezones
@@ -8871,7 +8877,7 @@ ALTER TABLE ONLY station_timezones
 
 
 --
--- Name: STATION_TYPES_PK; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: STATION_TYPES_PK; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace:
 --
 
 ALTER TABLE ONLY station_types
@@ -8879,7 +8885,7 @@ ALTER TABLE ONLY station_types
 
 
 --
--- Name: SURFACE_TYPES_PK; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: SURFACE_TYPES_PK; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace:
 --
 
 ALTER TABLE ONLY surface_types
@@ -8887,7 +8893,7 @@ ALTER TABLE ONLY surface_types
 
 
 --
--- Name: TIMEZONE_DIFFS_PK; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: TIMEZONE_DIFFS_PK; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace:
 --
 
 ALTER TABLE ONLY timezone_diffs
@@ -8895,7 +8901,7 @@ ALTER TABLE ONLY timezone_diffs
 
 
 --
--- Name: USER_SESSIONS_PK; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: USER_SESSIONS_PK; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace:
 --
 
 ALTER TABLE ONLY user_sessions
@@ -8903,7 +8909,7 @@ ALTER TABLE ONLY user_sessions
 
 
 --
--- Name: codes_simple_code_unique; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: codes_simple_code_unique; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace:
 --
 
 ALTER TABLE ONLY codes_simple
@@ -8911,7 +8917,7 @@ ALTER TABLE ONLY codes_simple
 
 
 --
--- Name: datums_pkey; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: datums_pkey; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace:
 --
 
 ALTER TABLE ONLY datums
@@ -8919,7 +8925,7 @@ ALTER TABLE ONLY datums
 
 
 --
--- Name: gui_users_PK; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: gui_users_PK; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace:
 --
 
 ALTER TABLE ONLY gui_users
@@ -8927,7 +8933,7 @@ ALTER TABLE ONLY gui_users
 
 
 --
--- Name: gui_users_username_unique; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: gui_users_username_unique; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace:
 --
 
 ALTER TABLE ONLY gui_users
@@ -8935,7 +8941,7 @@ ALTER TABLE ONLY gui_users
 
 
 --
--- Name: key_settings_unique; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: key_settings_unique; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace:
 --
 
 ALTER TABLE ONLY key_settings
@@ -8943,7 +8949,7 @@ ALTER TABLE ONLY key_settings
 
 
 --
--- Name: land_use_code_unique; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: land_use_code_unique; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace:
 --
 
 ALTER TABLE ONLY land_use
@@ -8951,7 +8957,7 @@ ALTER TABLE ONLY land_use
 
 
 --
--- Name: obs_average_unique; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: obs_average_unique; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace:
 --
 
 ALTER TABLE ONLY obs_averages
@@ -8959,7 +8965,7 @@ ALTER TABLE ONLY obs_averages
 
 
 --
--- Name: obs_clicom_element_map_pk; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: obs_clicom_element_map_pk; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace:
 --
 
 ALTER TABLE ONLY obs_clicom_element_map
@@ -8967,7 +8973,7 @@ ALTER TABLE ONLY obs_clicom_element_map
 
 
 --
--- Name: pivot_pkey; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: pivot_pkey; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace:
 --
 
 ALTER TABLE ONLY pivot
@@ -8975,7 +8981,7 @@ ALTER TABLE ONLY pivot
 
 
 --
--- Name: spatial_ref_sys_pkey; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: spatial_ref_sys_pkey; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace:
 --
 
 ALTER TABLE ONLY spatial_ref_sys
@@ -8983,7 +8989,7 @@ ALTER TABLE ONLY spatial_ref_sys
 
 
 --
--- Name: station_countries_iso_code_unique; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: station_countries_iso_code_unique; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace:
 --
 
 ALTER TABLE ONLY station_countries
@@ -8991,7 +8997,7 @@ ALTER TABLE ONLY station_countries
 
 
 --
--- Name: station_timezones_tm_zone_unique; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: station_timezones_tm_zone_unique; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace:
 --
 
 ALTER TABLE ONLY station_timezones
@@ -8999,7 +9005,7 @@ ALTER TABLE ONLY station_timezones
 
 
 --
--- Name: stations_id_wmo_start_date_unique; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: stations_id_wmo_start_date_unique; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace:
 --
 
 ALTER TABLE ONLY stations
@@ -9007,7 +9013,7 @@ ALTER TABLE ONLY stations
 
 
 --
--- Name: stations_station_no_unique; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: stations_station_no_unique; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace:
 --
 
 ALTER TABLE ONLY stations
@@ -9015,7 +9021,7 @@ ALTER TABLE ONLY stations
 
 
 --
--- Name: type_unique; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: type_unique; Type: CONSTRAINT; Schema: public; Owner: clidegui; Tablespace:
 --
 
 ALTER TABLE ONLY station_audit_types
@@ -9023,287 +9029,287 @@ ALTER TABLE ONLY station_audit_types
 
 
 --
--- Name: fki_obs_subdaily_cloud_layers_subdaily_id_fkey; Type: INDEX; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: fki_obs_subdaily_cloud_layers_subdaily_id_fkey; Type: INDEX; Schema: public; Owner: clidegui; Tablespace:
 --
 
 CREATE INDEX fki_obs_subdaily_cloud_layers_subdaily_id_fkey ON obs_subdaily_cloud_layers USING btree (sub_daily_id);
 
 
 --
--- Name: fki_obs_subdaily_soil_temps_subdaily_id_fkey; Type: INDEX; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: fki_obs_subdaily_soil_temps_subdaily_id_fkey; Type: INDEX; Schema: public; Owner: clidegui; Tablespace:
 --
 
 CREATE INDEX fki_obs_subdaily_soil_temps_subdaily_id_fkey ON obs_subdaily_soil_temps USING btree (sub_daily_id);
 
 
 --
--- Name: fki_station_audit_audit_type_id_fkey; Type: INDEX; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: fki_station_audit_audit_type_id_fkey; Type: INDEX; Schema: public; Owner: clidegui; Tablespace:
 --
 
 CREATE INDEX fki_station_audit_audit_type_id_fkey ON station_audit USING btree (audit_type_id);
 
 
 --
--- Name: fki_station_audit_station_id_fkey; Type: INDEX; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: fki_station_audit_station_id_fkey; Type: INDEX; Schema: public; Owner: clidegui; Tablespace:
 --
 
 CREATE INDEX fki_station_audit_station_id_fkey ON station_audit USING btree (station_id);
 
 
 --
--- Name: fki_station_class_station_id_fkey; Type: INDEX; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: fki_station_class_station_id_fkey; Type: INDEX; Schema: public; Owner: clidegui; Tablespace:
 --
 
 CREATE INDEX fki_station_class_station_id_fkey ON station_class USING btree (station_id);
 
 
 --
--- Name: fki_station_class_type_id_fkey; Type: INDEX; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: fki_station_class_type_id_fkey; Type: INDEX; Schema: public; Owner: clidegui; Tablespace:
 --
 
 CREATE INDEX fki_station_class_type_id_fkey ON station_class USING btree (type_id);
 
 
 --
--- Name: fki_station_contacts_station_id_fkey; Type: INDEX; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: fki_station_contacts_station_id_fkey; Type: INDEX; Schema: public; Owner: clidegui; Tablespace:
 --
 
 CREATE INDEX fki_station_contacts_station_id_fkey ON station_contacts USING btree (station_id);
 
 
 --
--- Name: fki_station_equipment_equipment_id_fkey; Type: INDEX; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: fki_station_equipment_equipment_id_fkey; Type: INDEX; Schema: public; Owner: clidegui; Tablespace:
 --
 
 CREATE INDEX fki_station_equipment_equipment_id_fkey ON station_equipment USING btree (equipment_id);
 
 
 --
--- Name: fki_station_equipment_station_id_fkey; Type: INDEX; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: fki_station_equipment_station_id_fkey; Type: INDEX; Schema: public; Owner: clidegui; Tablespace:
 --
 
 CREATE INDEX fki_station_equipment_station_id_fkey ON station_equipment USING btree (station_id);
 
 
 --
--- Name: fki_station_files_station_id_fkey; Type: INDEX; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: fki_station_files_station_id_fkey; Type: INDEX; Schema: public; Owner: clidegui; Tablespace:
 --
 
 CREATE INDEX fki_station_files_station_id_fkey ON station_files USING btree (station_id);
 
 
 --
--- Name: fki_stations_country_code_fkey; Type: INDEX; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: fki_stations_country_code_fkey; Type: INDEX; Schema: public; Owner: clidegui; Tablespace:
 --
 
 CREATE INDEX fki_stations_country_code_fkey ON stations USING btree (country_code);
 
 
 --
--- Name: fki_stations_land_use_0_id_fkey; Type: INDEX; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: fki_stations_land_use_0_id_fkey; Type: INDEX; Schema: public; Owner: clidegui; Tablespace:
 --
 
 CREATE INDEX fki_stations_land_use_0_id_fkey ON stations USING btree (lu_0_100m);
 
 
 --
--- Name: fki_stations_land_use_100_id_fkey; Type: INDEX; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: fki_stations_land_use_100_id_fkey; Type: INDEX; Schema: public; Owner: clidegui; Tablespace:
 --
 
 CREATE INDEX fki_stations_land_use_100_id_fkey ON stations USING btree (lu_100m_1km);
 
 
 --
--- Name: fki_stations_land_use_1km_id_fkey; Type: INDEX; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: fki_stations_land_use_1km_id_fkey; Type: INDEX; Schema: public; Owner: clidegui; Tablespace:
 --
 
 CREATE INDEX fki_stations_land_use_1km_id_fkey ON stations USING btree (lu_1km_10km);
 
 
 --
--- Name: fki_stations_soil_type_id_fkey; Type: INDEX; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: fki_stations_soil_type_id_fkey; Type: INDEX; Schema: public; Owner: clidegui; Tablespace:
 --
 
 CREATE INDEX fki_stations_soil_type_id_fkey ON stations USING btree (soil_type);
 
 
 --
--- Name: fki_stations_status_id_fkey; Type: INDEX; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: fki_stations_status_id_fkey; Type: INDEX; Schema: public; Owner: clidegui; Tablespace:
 --
 
 CREATE INDEX fki_stations_status_id_fkey ON stations USING btree (status_id);
 
 
 --
--- Name: fki_stations_surface_type_id_fkey; Type: INDEX; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: fki_stations_surface_type_id_fkey; Type: INDEX; Schema: public; Owner: clidegui; Tablespace:
 --
 
 CREATE INDEX fki_stations_surface_type_id_fkey ON stations USING btree (surface_type);
 
 
 --
--- Name: fki_stations_time_zone_fkey; Type: INDEX; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: fki_stations_time_zone_fkey; Type: INDEX; Schema: public; Owner: clidegui; Tablespace:
 --
 
 CREATE INDEX fki_stations_time_zone_fkey ON stations USING btree (time_zone);
 
 
 --
--- Name: fki_timezone_diffs; Type: INDEX; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: fki_timezone_diffs; Type: INDEX; Schema: public; Owner: clidegui; Tablespace:
 --
 
 CREATE INDEX fki_timezone_diffs ON timezone_diffs USING btree (tm_zone);
 
 
 --
--- Name: obs_aero_insert_datetime_day_idx; Type: INDEX; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: obs_aero_insert_datetime_day_idx; Type: INDEX; Schema: public; Owner: clidegui; Tablespace:
 --
 
 CREATE INDEX obs_aero_insert_datetime_day_idx ON obs_aero USING btree (date_trunc('day'::text, insert_datetime));
 
 
 --
--- Name: obs_aero_unique_1; Type: INDEX; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: obs_aero_unique_1; Type: INDEX; Schema: public; Owner: clidegui; Tablespace:
 --
 
 CREATE UNIQUE INDEX obs_aero_unique_1 ON obs_aero USING btree (station_no, lsd) WITH (fillfactor=70);
 
 
 --
--- Name: obs_audit_row_id_idx; Type: INDEX; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: obs_audit_row_id_idx; Type: INDEX; Schema: public; Owner: clidegui; Tablespace:
 --
 
 CREATE INDEX obs_audit_row_id_idx ON obs_audit USING btree (row_id);
 
 
 --
--- Name: obs_aws_lct_idx; Type: INDEX; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: obs_aws_lct_idx; Type: INDEX; Schema: public; Owner: clidegui; Tablespace:
 --
 
 CREATE INDEX obs_aws_lct_idx ON obs_aws USING btree (lct);
 
 
 --
--- Name: obs_aws_lsd_idx; Type: INDEX; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: obs_aws_lsd_idx; Type: INDEX; Schema: public; Owner: clidegui; Tablespace:
 --
 
 CREATE INDEX obs_aws_lsd_idx ON obs_aws USING btree (lsd);
 
 
 --
--- Name: obs_aws_unique_1; Type: INDEX; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: obs_aws_unique_1; Type: INDEX; Schema: public; Owner: clidegui; Tablespace:
 --
 
 CREATE UNIQUE INDEX obs_aws_unique_1 ON obs_aws USING btree (station_no, lsd) WITH (fillfactor=70);
 
 
 --
--- Name: obs_aws_upper_station_lct_idx; Type: INDEX; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: obs_aws_upper_station_lct_idx; Type: INDEX; Schema: public; Owner: clidegui; Tablespace:
 --
 
 CREATE INDEX obs_aws_upper_station_lct_idx ON obs_aws USING btree (upper((station_no)::text), lct);
 
 
 --
--- Name: obs_aws_upper_station_lsd_idx; Type: INDEX; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: obs_aws_upper_station_lsd_idx; Type: INDEX; Schema: public; Owner: clidegui; Tablespace:
 --
 
 CREATE INDEX obs_aws_upper_station_lsd_idx ON obs_aws USING btree (upper((station_no)::text), lsd);
 
 
 --
--- Name: obs_daily_insert_datetime_day_idx; Type: INDEX; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: obs_daily_insert_datetime_day_idx; Type: INDEX; Schema: public; Owner: clidegui; Tablespace:
 --
 
 CREATE INDEX obs_daily_insert_datetime_day_idx ON obs_daily USING btree (date_trunc('day'::text, insert_datetime));
 
 
 --
--- Name: obs_daily_lsd_idx; Type: INDEX; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: obs_daily_lsd_idx; Type: INDEX; Schema: public; Owner: clidegui; Tablespace:
 --
 
 CREATE INDEX obs_daily_lsd_idx ON obs_daily USING btree (lsd);
 
 
 --
--- Name: obs_daily_unique_1; Type: INDEX; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: obs_daily_unique_1; Type: INDEX; Schema: public; Owner: clidegui; Tablespace:
 --
 
 CREATE UNIQUE INDEX obs_daily_unique_1 ON obs_daily USING btree (station_no, lsd) WITH (fillfactor=70);
 
 
 --
--- Name: obs_daily_upper_station_lsd_idx; Type: INDEX; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: obs_daily_upper_station_lsd_idx; Type: INDEX; Schema: public; Owner: clidegui; Tablespace:
 --
 
 CREATE INDEX obs_daily_upper_station_lsd_idx ON obs_daily USING btree (upper((station_no)::text), lsd);
 
 
 --
--- Name: obs_monthly_insert_datetime_day_idx; Type: INDEX; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: obs_monthly_insert_datetime_day_idx; Type: INDEX; Schema: public; Owner: clidegui; Tablespace:
 --
 
 CREATE INDEX obs_monthly_insert_datetime_day_idx ON obs_monthly USING btree (date_trunc('day'::text, insert_datetime));
 
 
 --
--- Name: obs_monthly_lsd_idx; Type: INDEX; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: obs_monthly_lsd_idx; Type: INDEX; Schema: public; Owner: clidegui; Tablespace:
 --
 
 CREATE INDEX obs_monthly_lsd_idx ON obs_monthly USING btree (lsd);
 
 
 --
--- Name: obs_monthly_upper_station_lsd_idx; Type: INDEX; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: obs_monthly_upper_station_lsd_idx; Type: INDEX; Schema: public; Owner: clidegui; Tablespace:
 --
 
 CREATE INDEX obs_monthly_upper_station_lsd_idx ON obs_monthly USING btree (upper((station_no)::text), lsd);
 
 
 --
--- Name: obs_subdaily_insert_datetime_day_idx; Type: INDEX; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: obs_subdaily_insert_datetime_day_idx; Type: INDEX; Schema: public; Owner: clidegui; Tablespace:
 --
 
 CREATE INDEX obs_subdaily_insert_datetime_day_idx ON obs_subdaily USING btree (date_trunc('day'::text, insert_datetime));
 
 
 --
--- Name: obs_subdaily_lct_idx; Type: INDEX; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: obs_subdaily_lct_idx; Type: INDEX; Schema: public; Owner: clidegui; Tablespace:
 --
 
 CREATE INDEX obs_subdaily_lct_idx ON obs_subdaily USING btree (lct);
 
 
 --
--- Name: obs_subdaily_lsd_idx; Type: INDEX; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: obs_subdaily_lsd_idx; Type: INDEX; Schema: public; Owner: clidegui; Tablespace:
 --
 
 CREATE INDEX obs_subdaily_lsd_idx ON obs_subdaily USING btree (lsd);
 
 
 --
--- Name: obs_subdaily_unique_1; Type: INDEX; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: obs_subdaily_unique_1; Type: INDEX; Schema: public; Owner: clidegui; Tablespace:
 --
 
 CREATE UNIQUE INDEX obs_subdaily_unique_1 ON obs_subdaily USING btree (station_no, lsd) WITH (fillfactor=70);
 
 
 --
--- Name: obs_subdaily_upper_station_lct_idx; Type: INDEX; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: obs_subdaily_upper_station_lct_idx; Type: INDEX; Schema: public; Owner: clidegui; Tablespace:
 --
 
 CREATE INDEX obs_subdaily_upper_station_lct_idx ON obs_subdaily USING btree (upper((station_no)::text), lct);
 
 
 --
--- Name: obs_subdaily_upper_station_lsd_idx; Type: INDEX; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: obs_subdaily_upper_station_lsd_idx; Type: INDEX; Schema: public; Owner: clidegui; Tablespace:
 --
 
 CREATE INDEX obs_subdaily_upper_station_lsd_idx ON obs_subdaily USING btree (upper((station_no)::text), lsd);
 
 
 --
--- Name: obs_upper_unique_1; Type: INDEX; Schema: public; Owner: clidegui; Tablespace: 
+-- Name: obs_upper_unique_1; Type: INDEX; Schema: public; Owner: clidegui; Tablespace:
 --
 
 CREATE UNIQUE INDEX obs_upper_unique_1 ON obs_upper_air USING btree (station_no, lsd, geo_height) WITH (fillfactor=70);
