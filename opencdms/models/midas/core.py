@@ -1,5 +1,5 @@
 # coding: utf-8
-from sqlalchemy import CHAR, CheckConstraint, Column, DateTime, Enum, ForeignKey, Index, VARCHAR, text, NUMERIC, JSON
+from sqlalchemy import CHAR, CheckConstraint, Column, DateTime, Enum, ForeignKey, Index, VARCHAR, text, NUMERIC, JSON, Integer
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.sql.sqltypes import NullType
 from sqlalchemy.orm import relationship
@@ -155,12 +155,12 @@ class EquipmentCalibration(Base):
     __tablename__ = 'equipment_calibration'
 
     eqpt_calib_id = Column(NUMERIC(6, 0, False), primary_key=True, comment=' Unique identifier for calibration of this equipment')
-    equipment_id = Column(ForeignKey('equipment.equipment_id'), nullable=False, index=True, comment=' Unique identifier of equipment')
+    equipment_id = Column(Integer, ForeignKey('equipment.equipment_id'), nullable=False, index=True, comment=' Unique identifier of equipment')
     eqpt_calib_date = Column(DateTime, nullable=False, comment=' Date on which calibration was carried out')
     calib_mthd_code = Column(VARCHAR(4), nullable=False, comment=' Code for method of calibration')
     eqpt_calib_next_due_date = Column(DateTime, comment='Date on which next calibration is due')
     eqpt_calib_name = Column(VARCHAR(28), comment=' Name of person carrying out calibration')
-    check_equipment_id = Column(ForeignKey('equipment.equipment_id'), index=True, comment=' Unique identifier for check equipment used')
+    check_equipment_id = Column(Integer, ForeignKey('equipment.equipment_id'), index=True, comment=' Unique identifier for check equipment used')
     eqpt_calib_rmrk = Column(VARCHAR(200), comment=' Remark on the calibration')
 
     check_equipment = relationship('Equipment', foreign_keys=[check_equipment_id])
