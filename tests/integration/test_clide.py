@@ -43,24 +43,28 @@ def db_session():
 
 
 def setup_module(module):
-    # Postgresql does not automatically reset ID if a table is truncated like mysql does
+    # Postgresql does not automatically reset ID
+    # if a table is truncated like mysql does
     clide.Base.metadata.create_all(bind=db_engine)
 
     with db_engine.connect() as connection:
         with connection.begin():
             db_engine.execute(
                 sa_text(
-                    f'''TRUNCATE TABLE {clide.Station.__tablename__} RESTART IDENTITY CASCADE'''
+                    f'''TRUNCATE TABLE {clide.Station.__tablename__}
+                     RESTART IDENTITY CASCADE'''
                 ).execution_options(autocommit=True)
             )
             db_engine.execute(
                 sa_text(
-                    f'''TRUNCATE TABLE {clide.StationStatu.__tablename__} RESTART IDENTITY CASCADE'''
+                    f'''TRUNCATE TABLE {clide.StationStatu.__tablename__}
+                     RESTART IDENTITY CASCADE'''
                 ).execution_options(autocommit=True)
             )
             db_engine.execute(
                 sa_text(
-                    f'''TRUNCATE TABLE {clide.StationTimezone.__tablename__} RESTART IDENTITY CASCADE'''
+                    f'''TRUNCATE TABLE {clide.StationTimezone.__tablename__}
+                     RESTART IDENTITY CASCADE'''
                 ).execution_options(autocommit=True)
             )
 
@@ -76,24 +80,28 @@ def setup_module(module):
 
 
 def teardown_module(module):
-    # Postgresql does not automatically reset ID if a table is truncated like mysql does
+    # Postgresql does not automatically reset ID
+    # if a table is truncated like mysql does
     clide.Base.metadata.create_all(bind=db_engine)
 
     with db_engine.connect() as connection:
         with connection.begin():
             db_engine.execute(
                 sa_text(
-                    f'''TRUNCATE TABLE {clide.Station.__tablename__} RESTART IDENTITY CASCADE'''
+                    f'''TRUNCATE TABLE {clide.Station.__tablename__}
+                    RESTART IDENTITY CASCADE'''
                 ).execution_options(autocommit=True)
             )
             db_engine.execute(
                 sa_text(
-                    f'''TRUNCATE TABLE {clide.StationStatu.__tablename__} RESTART IDENTITY CASCADE'''
+                    f'''TRUNCATE TABLE {clide.StationStatu.__tablename__}
+                    RESTART IDENTITY CASCADE'''
                 ).execution_options(autocommit=True)
             )
             db_engine.execute(
                 sa_text(
-                    f'''TRUNCATE TABLE {clide.StationTimezone.__tablename__} RESTART IDENTITY CASCADE'''
+                    f'''TRUNCATE TABLE {clide.StationTimezone.__tablename__}
+                    RESTART IDENTITY CASCADE'''
                 ).execution_options(autocommit=True)
             )
 
@@ -124,7 +132,8 @@ def test_should_return_a_single_station(db_session):
 
 @pytest.mark.order(103)
 def test_should_update_station(db_session):
-    db_session.query(clide.Station).filter_by(id=station_data['id']).update({'region': 'US'})
+    db_session.query(clide.Station)\
+        .filter_by(id=station_data['id']).update({'region': 'US'})
     db_session.commit()
 
     updated_station = db_session.query(clide.Station).get(station_data['id'])

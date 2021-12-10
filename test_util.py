@@ -29,6 +29,18 @@ def get_clide_connection_string() -> str:
     )
 
 
+def get_midas_connection_string() -> str:
+    return get_connection_string(
+        engine="postgresql",
+        driver="psycopg2",
+        user="postgres",
+        password="password",
+        host="api.opencdms.org",
+        port=os.getenv("MIDAS_PORT", 5432),
+        db_name=os.getenv("MIDAS_DB_NAME", "postgres")
+    )
+
+
 def get_climsoft_4_1_1_connection_string() -> str:
     return get_connection_string(
         engine="mysql",
