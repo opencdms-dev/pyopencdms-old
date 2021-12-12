@@ -109,13 +109,13 @@ class Source(Base):
         CheckConstraint('NORTH_GRID_REF >= 0'),
         CheckConstraint(
             "SRC_BGN_DATE BETWEEN "
-            "TO_DATE('01011677','DDMMYYYY') AND TO_DATE('31123999','DDMMYYYY')"),
+            " TO_DATE('01011677','DDMMYYYY') AND TO_DATE('31123999','DDMMYYYY')"),
         CheckConstraint(
             "SRC_END_DATE BETWEEN"
-            "TO_DATE('01011677','DDMMYYYY') AND TO_DATE('31123999','DDMMYYYY')"),
+            " TO_DATE('01011677','DDMMYYYY') AND TO_DATE('31123999','DDMMYYYY')"),
         CheckConstraint(
             "SRC_UPD_DATE BETWEEN"
-            "TO_DATE('01011677','DDMMYYYY') AND TO_DATE('31123999','DDMMYYYY')"),
+            " TO_DATE('01011677','DDMMYYYY') AND TO_DATE('31123999','DDMMYYYY')"),
         CheckConstraint('parent_src_id >= 0'),
         CheckConstraint(
             "src_type IN "
