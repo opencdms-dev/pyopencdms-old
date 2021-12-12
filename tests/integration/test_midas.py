@@ -102,13 +102,13 @@ def test_should_return_a_single_source(db_session):
 def test_should_update_source(db_session):
     db_session.query(midas_models.Source) \
         .filter_by(src_id=source_data['src_id']) \
-        .update({'wmo_region_code': 2})
+        .update({'wmo_region_code': '2'})
     db_session.commit()
 
     updated_source = db_session.query(midas_models.Source) \
         .get(source_data['src_id'])
 
-    assert updated_source.wmo_region_code == 2
+    assert updated_source.wmo_region_code == '2'
 
 
 @pytest.mark.order(504)
