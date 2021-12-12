@@ -1,4 +1,4 @@
-name: Integration Tests
+name: Run Tests
 
 on: [push]
 
@@ -35,7 +35,7 @@ jobs:
 #                  docker-compose -f docker-compose-test.yml down -v --remove-orphans
 #                  docker-compose -f docker-compose-test.yml up -d --build
 #                '
-            - name: Test with pytest
+            - name: Run tests with pytest
               run: |
                   pytest tests/integration/test_clide.py
                   sleep 3
