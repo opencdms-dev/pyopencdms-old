@@ -304,7 +304,7 @@ class EquipmentCalibration(Base):
 
     # check_equipment = relationship('Equipment',
     #                                foreign_keys=[check_equipment_id])
-    equipment = relationship('Equipment', foreign_keys=[equipment_id])
+    equipment = relationship('Equipment')
 
 
 class Inspection(Base):
