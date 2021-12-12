@@ -82,7 +82,7 @@ def teardown_module(module):
             )
 
 
-@pytest.mark.order(100)
+@pytest.mark.order(500)
 def test_should_create_a_source(db_session):
     source = midas_models.Source(**source_data)
     db_session.add(source)
@@ -91,7 +91,7 @@ def test_should_create_a_source(db_session):
     assert source.source_id == source_data['source_id']
 
 
-@pytest.mark.order(101)
+@pytest.mark.order(501)
 def test_should_read_all_sources(db_session):
     sources = db_session.query(midas_models.Source).all()
 
@@ -99,7 +99,7 @@ def test_should_read_all_sources(db_session):
         assert isinstance(source, midas_models.Source)
 
 
-@pytest.mark.order(102)
+@pytest.mark.order(502)
 def test_should_return_a_single_source(db_session):
     source = db_session.query(midas_models.Source)\
         .get(source_data['source_id'])
@@ -107,7 +107,7 @@ def test_should_return_a_single_source(db_session):
     assert source.source_id == source_data['source_id']
 
 
-@pytest.mark.order(103)
+@pytest.mark.order(503)
 def test_should_update_source(db_session):
     db_session.query(midas_models.Source)\
         .filter_by(source_id=source_data['source_id'])\
@@ -120,7 +120,7 @@ def test_should_update_source(db_session):
     assert updated_source.region == 'US'
 
 
-@pytest.mark.order(104)
+@pytest.mark.order(504)
 def test_should_delete_source(db_session):
     db_session.query(midas_models.Source)\
         .filter_by(source_id=source_data['source_id']).delete()
