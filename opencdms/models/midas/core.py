@@ -254,31 +254,57 @@ class Deployment(Base):
     equipment = relationship('Equipment')
     src = relationship('Source')
 
-
-class EquipmentCalibration(Base):
-    __tablename__ = 'equipment_calibration'
-
-    eqpt_calib_id = Column(NUMERIC(6, 0, False), primary_key=True,
-                           comment='Unique identifier for calibration of this equipment')
-    equipment_id = Column(Integer, ForeignKey('equipment.equipment_id'),
-                          nullable=False, index=True,
-                          comment='Unique identifier of equipment')
-    eqpt_calib_date = Column(DateTime, nullable=False,
-                             comment='Date on which calibration was carried out')
-    calib_mthd_code = Column(VARCHAR(4), nullable=False,
-                             comment='Code for method of calibration')
-    eqpt_calib_next_due_date = Column(DateTime,
-                                      comment='Date on which next calibration is due')
-    eqpt_calib_name = Column(VARCHAR(28),
-                             comment='Name of person carrying out calibration')
-    check_equipment_id = Column(Integer, ForeignKey('equipment.equipment_id'),
-                                index=True,
-                                comment='Unique identifier for check equipment used')
-    eqpt_calib_rmrk = Column(VARCHAR(200), comment='Remark on the calibration')
-
-    check_equipment = relationship('Equipment',
-                                   foreign_keys=[check_equipment_id])
-    equipment = relationship('Equipment', foreign_keys=[equipment_id])
+###
+# For now, it's disabled. It throws this error
+#
+#     def do_execute(self, cursor, statement, parameters, context=None):
+# >       cursor.execute(statement, parameters)
+# E       sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedColumn) column "equipment_id" referenced in foreign key constraint does not exist
+# E
+# E       [SQL:
+# E       CREATE TABLE equipment_calibration (
+# E       	eqpt_calib_id NUMERIC(6, 0) NOT NULL,
+# E       	equipment_id INTEGER NOT NULL,
+# E       	eqpt_calib_date TIMESTAMP WITHOUT TIME ZONE NOT NULL,
+# E       	calib_mthd_code VARCHAR(4) NOT NULL,
+# E       	eqpt_calib_next_due_date TIMESTAMP WITHOUT TIME ZONE,
+# E       	eqpt_calib_name VARCHAR(28),
+# E       	check_equipment_id INTEGER,
+# E       	eqpt_calib_rmrk VARCHAR(200),
+# E       	PRIMARY KEY (eqpt_calib_id),
+# E       	FOREIGN KEY(equipment_id) REFERENCES equipment (equipment_id),
+# E       	FOREIGN KEY(check_equipment_id) REFERENCES equipment (equipment_id)
+# E       )
+# E
+# E       ]
+# E       (Background on this error at: https://sqlalche.me/e/14/f405)
+#
+# /opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/sqlalchemy/engine/default.py:717: ProgrammingError
+#
+# class EquipmentCalibration(Base):
+#     __tablename__ = 'equipment_calibration'
+#
+#     eqpt_calib_id = Column(NUMERIC(6, 0, False), primary_key=True,
+#                            comment='Unique identifier for calibration of this equipment')
+#     equipment_id = Column(Integer, ForeignKey('equipment.equipment_id'),
+#                           nullable=False, index=True,
+#                           comment='Unique identifier of equipment')
+#     eqpt_calib_date = Column(DateTime, nullable=False,
+#                              comment='Date on which calibration was carried out')
+#     calib_mthd_code = Column(VARCHAR(4), nullable=False,
+#                              comment='Code for method of calibration')
+#     eqpt_calib_next_due_date = Column(DateTime,
+#                                       comment='Date on which next calibration is due')
+#     eqpt_calib_name = Column(VARCHAR(28),
+#                              comment='Name of person carrying out calibration')
+#     check_equipment_id = Column(Integer, ForeignKey('equipment.equipment_id'),
+#                                 index=True,
+#                                 comment='Unique identifier for check equipment used')
+#     eqpt_calib_rmrk = Column(VARCHAR(200), comment='Remark on the calibration')
+#
+#     check_equipment = relationship('Equipment',
+#                                    foreign_keys=[check_equipment_id])
+#     equipment = relationship('Equipment', foreign_keys=[equipment_id])
 
 
 class Inspection(Base):
