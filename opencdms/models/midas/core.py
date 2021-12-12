@@ -298,8 +298,8 @@ class EquipmentCalibration(Base):
     eqpt_calib_name = Column(VARCHAR(28),
                              comment='Name of person carrying out calibration')
     # check_equipment_id = Column(Integer, ForeignKey('equipment.equipment_id'),
-                                index=True,
-                                comment='Unique identifier for check equipment used')
+    #                             index=True,
+    #                             comment='Unique identifier for check equipment used')
     eqpt_calib_rmrk = Column(VARCHAR(200), comment='Remark on the calibration')
 
     # check_equipment = relationship('Equipment',
