@@ -14,7 +14,23 @@ fake = Faker()
 
 db_engine = create_engine(DB_URL)
 
-source_data = {'src_id': 1605, 'src_name': 'BOTTOMS WOOD, ST HELENA', 'high_prcn_lat': -15.9422, 'high_prcn_lon': -5.6676, 'loc_geog_area_id': 'SHEL', 'src_bgn_date': '01-Jan-1958', 'rec_st_ind': 1001, 'src_type': 'SFC UA', 'grid_ref_type': 'XX', 'src_end_date': '31-Dec-3999', 'elevation': 435, 'wmo_region_code': 1, 'zone_time': 0, 'drainage_stream_id': 1866.0, 'src_upd_date': '04-Nov-2019 16:03:40'}
+source_data = {
+    'src_id': 1605,
+    'src_name': 'BOTTOMS WOOD, ST HELENA',
+    'high_prcn_lat': -15.9422,
+    'high_prcn_lon': -5.6676,
+    'loc_geog_area_id': 'SHEL',
+    'src_bgn_date': '01-Jan-1958',
+    'rec_st_ind': 1001,
+    'src_type': 'SFC UA',
+    'grid_ref_type': 'XX',
+    'src_end_date': '31-Dec-3999',
+    'elevation': 435,
+    'wmo_region_code': 1,
+    'zone_time': 0,
+    'drainage_stream_id': '1866',
+    'src_upd_date': '04-Nov-2019 16:03:40'
+}
 
 
 @pytest.fixture
