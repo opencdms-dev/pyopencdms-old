@@ -286,9 +286,9 @@ class EquipmentCalibration(Base):
 
     eqpt_calib_id = Column(NUMERIC(6, 0, False), primary_key=True,
                            comment='Unique identifier for calibration of this equipment')
-    equipment_id = Column(Integer, ForeignKey('equipment.equipment_id'),
-                          nullable=False, index=True,
-                          comment='Unique identifier of equipment')
+    # equipment_id = Column(Integer, ForeignKey('equipment.equipment_id'),
+    #                       nullable=False, index=True,
+    #                       comment='Unique identifier of equipment')
     eqpt_calib_date = Column(DateTime, nullable=False,
                              comment='Date on which calibration was carried out')
     calib_mthd_code = Column(VARCHAR(4), nullable=False,
@@ -304,7 +304,7 @@ class EquipmentCalibration(Base):
 
     # check_equipment = relationship('Equipment',
     #                                foreign_keys=[check_equipment_id])
-    equipment = relationship('Equipment')
+    # equipment = relationship('Equipment')
 
 
 class Inspection(Base):
