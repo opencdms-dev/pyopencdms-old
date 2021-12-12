@@ -21,16 +21,16 @@ source_data = dict(
     high_prcn_lon=fake.longitude(),
     loc_geog_area_id=uuid.uuid4().hex[:4],
     rec_st_ind=random.randint(1, 1000),
-    src_bgn_date=datetime.datetime.utcnow().strftime("%Y:%m:%d %H:%M:%S"),
+    src_bgn_date=datetime.datetime.utcnow().strftime("%d:%b:%Y"),
     src_type=uuid.uuid4().hex[:15],
     grid_ref_type=random.choice(['CI', 'IRL', 'OS', 'XX', 'ROI']),
     east_grid_ref=random.randint(1, 100000),
     north_grid_ref=random.randint(1, 100000),
-    hydr_area_id = random.randint(1, 1000),
-    post_code = uuid.uuid4().hex[:9],
-    src_end_date = datetime.datetime.utcnow().strftime("%Y:%m:%d %H:%M:%S"),
-    elevation = random.random()*100,
-    wmo_region_code = random.choice(["A", "B", "S", "Q", "W", "E", "R", "T"]),
+    hydr_area_id=random.randint(1, 1000),
+    post_code=uuid.uuid4().hex[:9],
+    src_end_date=datetime.datetime.utcnow().strftime("%d:%b:%Y"),
+    elevation=random.random() * 100,
+    wmo_region_code=random.choice(["A", "B", "S", "Q", "W", "E", "R", "T"]),
 )
 
 
@@ -101,7 +101,7 @@ def test_should_read_all_sources(db_session):
 
 @pytest.mark.order(502)
 def test_should_return_a_single_source(db_session):
-    source = db_session.query(midas_models.Source)\
+    source = db_session.query(midas_models.Source) \
         .get(source_data['source_id'])
 
     assert source.source_id == source_data['source_id']
@@ -109,12 +109,12 @@ def test_should_return_a_single_source(db_session):
 
 @pytest.mark.order(503)
 def test_should_update_source(db_session):
-    db_session.query(midas_models.Source)\
-        .filter_by(source_id=source_data['source_id'])\
+    db_session.query(midas_models.Source) \
+        .filter_by(source_id=source_data['source_id']) \
         .update({'region': 'US'})
     db_session.commit()
 
-    updated_source = db_session.query(midas_models.Source)\
+    updated_source = db_session.query(midas_models.Source) \
         .get(source_data['source_id'])
 
     assert updated_source.region == 'US'
@@ -122,11 +122,11 @@ def test_should_update_source(db_session):
 
 @pytest.mark.order(504)
 def test_should_delete_source(db_session):
-    db_session.query(midas_models.Source)\
+    db_session.query(midas_models.Source) \
         .filter_by(source_id=source_data['source_id']).delete()
     db_session.commit()
 
-    deleted_source = db_session.query(midas_models.Source)\
+    deleted_source = db_session.query(midas_models.Source) \
         .get(source_data['source_id'])
 
     assert deleted_source is None
