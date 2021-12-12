@@ -57,14 +57,6 @@ def setup_module(module):
                 ).execution_options(autocommit=True)
             )
 
-    Session = sessionmaker(bind=db_engine)
-    session = Session()
-
-    session.add(midas_models.Source(**source_data))
-
-    session.commit()
-    session.close()
-
 
 def teardown_module(module):
     # Postgresql does not automatically reset ID
@@ -110,13 +102,13 @@ def test_should_return_a_single_source(db_session):
 def test_should_update_source(db_session):
     db_session.query(midas_models.Source) \
         .filter_by(src_id=source_data['src_id']) \
-        .update({'region': 'US'})
+        .update({'wmo_region_code': 2})
     db_session.commit()
 
     updated_source = db_session.query(midas_models.Source) \
         .get(source_data['src_id'])
 
-    assert updated_source.region == 'US'
+    assert updated_source.wmo_region_code == 2
 
 
 @pytest.mark.order(504)
