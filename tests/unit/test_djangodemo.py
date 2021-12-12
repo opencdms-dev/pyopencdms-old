@@ -40,7 +40,7 @@ def setup_module(module):
 
 
 def teardown_module(module):
-    os.remove(os.path.join(BASE_DIR, "tests/db.sqlite3"))
+    os.remove(os.path.join(BASE_DIR, "db.sqlite3"))
 
 
 def test_should_return_same_station_ids():
