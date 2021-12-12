@@ -217,8 +217,8 @@ class Deployment(Base):
     id = Column(VARCHAR(8), comment='Identifier associated with station')
     id_type = Column(VARCHAR(4), nullable=False,
                      comment='Identifier type describing identifier above')
-    equipment_id = Column(ForeignKey('equipment.equipment_id'), index=True,
-                          comment='Unique identifier of piece of equipment')
+    # equipment_id = Column(ForeignKey('equipment.equipment_id'), index=True,
+    #                       comment='Unique identifier of piece of equipment')
     equipment_type_id = Column(NUMERIC(6, 0, False), nullable=False, index=True,
                                comment='Unique identifier for equipment type')
     met_office_eqpt_flag = Column(CHAR(1), nullable=False,
@@ -251,7 +251,7 @@ class Deployment(Base):
                        comment='Code identifying who owns the intellectual property rights of the deployed equipment.')
     egm96_elevation = Column(NUMERIC(6, 2, True))
 
-    equipment = relationship('Equipment')
+    # equipment = relationship('Equipment')
     src = relationship('Source')
 
 ###
