@@ -87,7 +87,7 @@ def test_should_create_a_source(db_session):
     db_session.add(source)
     db_session.commit()
 
-    assert source.source_id == source_data['source_id']
+    assert source.src_id == source_data['src_id']
 
 
 @pytest.mark.order(501)
@@ -101,20 +101,20 @@ def test_should_read_all_sources(db_session):
 @pytest.mark.order(502)
 def test_should_return_a_single_source(db_session):
     source = db_session.query(midas_models.Source) \
-        .get(source_data['source_id'])
+        .get(source_data['src_id'])
 
-    assert source.source_id == source_data['source_id']
+    assert source.src_id == source_data['src_id']
 
 
 @pytest.mark.order(503)
 def test_should_update_source(db_session):
     db_session.query(midas_models.Source) \
-        .filter_by(source_id=source_data['source_id']) \
+        .filter_by(src_id=source_data['src_id']) \
         .update({'region': 'US'})
     db_session.commit()
 
     updated_source = db_session.query(midas_models.Source) \
-        .get(source_data['source_id'])
+        .get(source_data['src_id'])
 
     assert updated_source.region == 'US'
 
@@ -122,10 +122,10 @@ def test_should_update_source(db_session):
 @pytest.mark.order(504)
 def test_should_delete_source(db_session):
     db_session.query(midas_models.Source) \
-        .filter_by(source_id=source_data['source_id']).delete()
+        .filter_by(src_id=source_data['src_id']).delete()
     db_session.commit()
 
     deleted_source = db_session.query(midas_models.Source) \
-        .get(source_data['source_id'])
+        .get(source_data['src_id'])
 
     assert deleted_source is None
