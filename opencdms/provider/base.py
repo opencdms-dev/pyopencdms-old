@@ -26,15 +26,54 @@
 # OTHER DEALINGS IN THE SOFTWARE.
 #
 # =================================================================
-
-from abc import ABC
+from abc import ABC, abstractmethod
 import logging
+from typing import Dict, Any, Union
 
 LOGGER = logging.getLogger(__name__)
 
 
 class CDMSProvider(ABC):
     """Generic CDMS Provider Abstract Base Class"""
-    # @abstractmethod
-    # def ...
-    pass
+    @abstractmethod
+    def list(
+        self,
+        model_name: str,
+        query: Dict[str, Dict[str, Any]],
+        limit, offset
+    ):
+        """
+        Takes a model name for a specific provider and a query parameter
+        which looks like this:
+
+        {
+            "column_name": {
+                "operator": "one of <, >, <=, >=, =,
+                 contains, starts_with, ends_with"
+            }
+        }
+
+        """
+        raise NotImplementedError
+
+    @abstractmethod
+    def create(self, model_name: str, data: Dict) -> Any:
+        raise NotImplementedError
+
+    @abstractmethod
+    def get(self, model_name: str, unique_id: Union[str, int]):
+        raise NotImplementedError
+
+    @abstractmethod
+    def update(self, model_name: str, unique_id: dict, data: Dict) -> Any:
+        raise NotImplementedError
+
+    @abstractmethod
+    def delete(self, model_name: str, unique_id: Union[str, int]):
+        raise NotImplementedError
+
+    @abstractmethod
+    def soft_delete(self, model_name: str, unique_id: Dict[str, Union[str, int]]):
+        raise NotImplementedError
+
+
