@@ -6,12 +6,13 @@ from sqlalchemy import create_engine
 from sqlalchemy.sql import text as sa_text
 from sqlalchemy.orm import sessionmaker
 from opencdms.models.midas import core as midas_models
+from opencdms.provider.midas import MidasProvider
 from test_util import get_midas_connection_string
 from faker import Faker
 
 DB_URL = get_midas_connection_string()
 fake = Faker()
-
+midas_provider = MidasProvider(models=midas_models)
 db_engine = create_engine(DB_URL)
 
 source_data = {
@@ -75,16 +76,14 @@ def teardown_module(module):
 
 @pytest.mark.order(500)
 def test_should_create_a_source(db_session):
-    source = midas_models.Source(**source_data)
-    db_session.add(source)
-    db_session.commit()
-
+    source = midas_provider.create(db_session, "Source", source_data)
+    print(source)
     assert source.src_id == source_data['src_id']
 
 
 @pytest.mark.order(501)
 def test_should_read_all_sources(db_session):
-    sources = db_session.query(midas_models.Source).all()
+    sources = midas_provider.list(db_session, "Source")
 
     for source in sources:
         assert isinstance(source, midas_models.Source)
@@ -92,32 +91,32 @@ def test_should_read_all_sources(db_session):
 
 @pytest.mark.order(502)
 def test_should_return_a_single_source(db_session):
-    source = db_session.query(midas_models.Source) \
-        .get(source_data['src_id'])
+    source = midas_provider.get(
+        db_session,
+        "Source",
+        {"src_id": source_data["src_id"]}
+    )
 
     assert source.src_id == source_data['src_id']
 
 
 @pytest.mark.order(503)
 def test_should_update_source(db_session):
-    db_session.query(midas_models.Source) \
-        .filter_by(src_id=source_data['src_id']) \
-        .update({'wmo_region_code': '2'})
-    db_session.commit()
-
-    updated_source = db_session.query(midas_models.Source) \
-        .get(source_data['src_id'])
+    updated_source = midas_provider.update(
+        db_session, "Source",
+        {"src_id": source_data["src_id"]},
+        {'wmo_region_code': '2'}
+    )
 
     assert updated_source.wmo_region_code == '2'
 
 
 @pytest.mark.order(504)
 def test_should_delete_source(db_session):
-    db_session.query(midas_models.Source) \
-        .filter_by(src_id=source_data['src_id']).delete()
-    db_session.commit()
+    deleted = midas_provider.delete(
+        db_session,
+        "Source",
+        {"src_id": source_data["src_id"]}
+    )
 
-    deleted_source = db_session.query(midas_models.Source) \
-        .get(source_data['src_id'])
-
-    assert deleted_source is None
+    assert deleted == {"src_id": source_data["src_id"]}
