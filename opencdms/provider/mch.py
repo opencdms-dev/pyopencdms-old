@@ -28,14 +28,14 @@
 # =================================================================
 
 import logging
-
+from types import ModuleType
 from .base import CDMSProvider
-
+from opencdms.models.mch import english as mch_models
 
 LOGGER = logging.getLogger(__name__)
 
 
 class MCH(CDMSProvider):
-    """"""
+    def __init__(self, db_conn_str: str, models: ModuleType = mch_models):
+        super().__init__(db_conn_str, models)
 
-    pass

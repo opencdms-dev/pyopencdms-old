@@ -29,12 +29,14 @@
 
 # NOTE: Currently this module only contains a provider for "MIDAS Open"
 
-import logging
+
 import os
+import logging
+from types import ModuleType
+from opencdms.models.midas import core as midas_models
 
 from .base import CDMSProvider
 from ..fileformats.text import read_badc
-
 
 LOGGER = logging.getLogger(__name__)
 
@@ -174,3 +176,9 @@ class MidasOpen(CDMSProvider):
             date_time_column_lookup[element_lookup[element][period]],
             *elements
         ])
+
+
+class Midas(CDMSProvider):
+    def __init__(self, db_conn_str: str, models: ModuleType = midas_models):
+        super().__init__(db_conn_str, models)
+
