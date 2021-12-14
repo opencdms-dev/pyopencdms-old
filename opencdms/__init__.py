@@ -34,7 +34,7 @@ __author__ = """OpenCDMS Project"""
 __email__ = "info@opencdms.org"
 __version__ = "0.1.0"
 
-from .provider.clide import Clide
-from .provider.climsoft import Climsoft4, Climsoft5
-from .provider.mch import MCH
-from .provider.midas import MidasOpen
+from .provider.clide import ClideProvider
+from .provider.climsoft import Climsoft4Provider, Climsoft5
+from .provider.mch import MCHProvider
+from .provider.midas import MidasOpen, MidasProvider

@@ -35,7 +35,7 @@ from opencdms.models import clide as clide_models
 LOGGER = logging.getLogger(__name__)
 
 
-class Clide(CDMSProvider):
-    def __init__(self, db_conn_str: str, models: ModuleType = clide_models):
-        super().__init__(db_conn_str, models)
+class ClideProvider(CDMSProvider):
+    def __init__(self, models: ModuleType = clide_models):
+        super().__init__(models)
 

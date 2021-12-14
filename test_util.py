@@ -21,10 +21,10 @@ def get_clide_connection_string() -> str:
     return get_connection_string(
         engine="postgresql",
         driver="psycopg2",
-        user="postgres",
-        password="password",
-        host="api.opencdms.org",
-        port=os.getenv("CLIDE_PORT", 5432),
+        user=os.getenv("CLIDE_DB_USER", "postgres"),
+        password=os.getenv("CLIDE_DB_PASSWORD", "password"),
+        host=os.getenv("CLIDE_DB_HOST", "api.opencdms.org"),
+        port=os.getenv("CLIDE_DB_PORT", 5432),
         db_name=os.getenv("CLIDE_DB_NAME", "postgres")
     )
 
@@ -33,10 +33,10 @@ def get_midas_connection_string() -> str:
     return get_connection_string(
         engine="postgresql",
         driver="psycopg2",
-        user="postgres",
-        password="password",
-        host="api.opencdms.org",
-        port=os.getenv("MIDAS_PORT", 5432),
+        user=os.getenv("MIDAS_DB_USER", "postgres"),
+        password=os.getenv("MIDAS_DB_PASSWORD", "password"),
+        host=os.getenv("MIDAS_DB_HOST", "api.opencdms.org"),
+        port=os.getenv("MIDAS_DB_PORT", 5432),
         db_name=os.getenv("MIDAS_DB_NAME", "postgres")
     )
 
@@ -45,10 +45,10 @@ def get_climsoft_4_1_1_connection_string() -> str:
     return get_connection_string(
         engine="mysql",
         driver="mysqldb",
-        user="root",
-        password="password",
-        host="api.opencdms.org",
-        port=os.getenv("CLIMSOFT_4_1_1_PORT", 3306),
+        user=os.getenv("CLIMSOFT_DB_USER", "root"),
+        password=os.getenv("CLIMSOFT_DB_PASSWORD", "password"),
+        host=os.getenv("CLIMSOFT_DB_HOST", "api.opencdms.org"),
+        port=os.getenv("CLIMSOFT_DB_PORT", 3306),
         db_name=os.getenv("CLIMSOFT_DB_NAME", "test")
     )
 
@@ -57,11 +57,11 @@ def get_mch_english_connection_string(port_override: str = None) -> str:
     return get_connection_string(
         engine="mysql",
         driver="mysqldb",
-        user="root",
-        password="password",
-        host="api.opencdms.org",
+        user=os.getenv("MCH_DB_USER", "root"),
+        password=os.getenv("MCH_DB_PASSWORD", "password"),
+        host=os.getenv("MCH_DB_HOST", "api.opencdms.org"),
         port=os.getenv(
-            "MCH_ENGLISH_PORT",
+            "MCH_DB_PORT",
             3306
         ) if port_override is None else port_override,
         db_name=os.getenv("MCH_DB_NAME", "test")

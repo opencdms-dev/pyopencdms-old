@@ -178,7 +178,7 @@ class MidasOpen(CDMSProvider):
         ])
 
 
-class Midas(CDMSProvider):
-    def __init__(self, db_conn_str: str, models: ModuleType = midas_models):
-        super().__init__(db_conn_str, models)
+class MidasProvider(CDMSProvider):
+    def __init__(self, models: ModuleType = midas_models):
+        super().__init__(models)
 

@@ -30,7 +30,6 @@ import logging
 from typing import Dict, Any, Union, List
 from types import ModuleType
 from sqlalchemy.orm.session import Session
-from . import get_session_factory
 
 LOGGER = logging.getLogger(__name__)
 
@@ -64,33 +63,42 @@ class CDMSProvider:
 
     def __init__(
         self,
-        db_conn_str: str,
         models: ModuleType,
-        # schemas: ModuleType,
-        session_factory=get_session_factory
+        # schemas: ModuleType
     ):
-        self.db_session: Session = session_factory(db_conn_str)
         self.models = models
         # self.schemas = schemas
 
-    def create(self, model_name: str, data: Dict) -> Any:
+    def create(
+        self,
+        db_session: Session,
+        model_name: str,
+        data: Dict
+    ) -> Any:
+
         try:
             model = getattr(self.models, model_name)
             instance = model(**data)
-            self.db_session.add(instance)
-            self.db_session.commit()
+            db_session.add(instance)
+            db_session.commit()
             return instance
         except Exception as e:
-            self.db_session.rollback()
+            db_session.rollback()
             LOGGER.exception(e)
             raise FailedCreatingModel(
                 f"Failed creating Clide model: {model_name}, with error: {e}"
             )
 
-    def get(self, model_name: str, unique_id: Dict[str, Union[str, int]]):
+    def get(
+        self,
+        db_session: Session,
+        model_name: str,
+        unique_id: Dict[str, Union[str, int]]
+    ):
+
         try:
             model = getattr(self.models, model_name)
-            instance = self.db_session.query(model) \
+            instance = db_session.query(model) \
                 .filter_by(**unique_id).first()
             return instance
         except Exception as e:
@@ -102,73 +110,80 @@ class CDMSProvider:
 
     def list(
         self,
+        db_session: Session,
         model_name: str,
-        query: Dict[str, Dict[str, Any]],
-        limit: 25,
-        offset: 0
+        query: Dict[str, Dict[str, Any]] = None,
+        limit: int = 25,
+        offset: int = 0
     ) -> List[Any]:
+
         try:
             model = getattr(self.models, model_name)
-            q = self.db_session.query(model)
+            q = db_session.query(model)
 
-            for k, v in query.items():
-                column = k
-                operator = v["operator"]
-                value = v.get("value")
+            if query is not None:
+                for k, v in query.items():
+                    column = k
+                    operator = v["operator"]
+                    value = v.get("value")
 
-                if operator in {"__gt__", "__lt__", "__ge__",
-                                "__le__", "__eq__", "__ne__"}:
-                    q = q.filter(
-                        getattr(
-                            getattr(model, column),
-                            operator
-                        )(value))  # Model.column.operator(value)
-                elif operator == "contains":
-                    q = q.filter(
-                        getattr(
-                            getattr(model, column),
-                            "ilike"
-                        )(f"%{value}%")  # Model.column.ilike(%value%)
-                    )
-                elif operator == "starts_with":
-                    q = q.filter(
-                        getattr(
-                            getattr(model, column),  # Model.column
-                            "ilike"
-                        )(f"{value}%")  # Model.column.ilike(value%)
-                    )
-                elif operator == "ends_with":
-                    q = q.filter(
-                        getattr(
-                            getattr(model, column),  # Model.column
-                            "ilike"
-                        )(f"%{value}")  # Model.column.ilike(%value)
-                    )
-                else:
-                    raise NotImplementedError
+                    if operator in {"__gt__", "__lt__", "__ge__",
+                                    "__le__", "__eq__", "__ne__"}:
+                        q = q.filter(
+                            getattr(
+                                getattr(model, column),
+                                operator
+                            )(value))  # Model.column.operator(value)
+                    elif operator == "contains":
+                        q = q.filter(
+                            getattr(
+                                getattr(model, column),
+                                "ilike"
+                            )(f"%{value}%")  # Model.column.ilike(%value%)
+                        )
+                    elif operator == "starts_with":
+                        q = q.filter(
+                            getattr(
+                                getattr(model, column),  # Model.column
+                                "ilike"
+                            )(f"{value}%")  # Model.column.ilike(value%)
+                        )
+                    elif operator == "ends_with":
+                        q = q.filter(
+                            getattr(
+                                getattr(model, column),  # Model.column
+                                "ilike"
+                            )(f"%{value}")  # Model.column.ilike(%value)
+                        )
+                    else:
+                        raise NotImplementedError
+
             return q.offset(offset).limit(limit).all()
         except Exception as e:
             LOGGER.exception(e)
-            raise QueryFailedForModel(f"Query failed for "
-                                           f"Clide model: {model_name} "
-                                           f"for query: {query}")
+            raise QueryFailedForModel(
+                f"Query failed for Clide model: {model_name} "
+                f"for query: {query}"
+            )
 
     def update(
         self,
+        db_session: Session,
         model_name: str,
         unique_id: Dict[str, Union[str, int]],
         data: dict
     ):
+
         try:
             model = getattr(self.models, model_name)
-            self.db_session.query(model).filter_by(**unique_id).update(data)
-            self.db_session.commit()
-            updated_instance = self.db_session.query(model)\
+            db_session.query(model).filter_by(**unique_id).update(data)
+            db_session.commit()
+            updated_instance = db_session.query(model)\
                 .filter_by(**unique_id).first()
 
             return updated_instance
         except Exception as e:
-            self.db_session.rollback()
+            db_session.rollback()
             LOGGER.exception(e)
             raise FailedUpdatingModel(
                 f"Failed updating Clide model: {model_name} "
@@ -177,16 +192,18 @@ class CDMSProvider:
 
     def delete(
         self,
+        db_session: Session,
         model_name: str,
         unique_id: Dict[str, Union[str, int]]
     ):
+
         try:
             model = getattr(self.models, model_name)
-            self.db_session.query(model).filter_by(unique_id).delete()
-            self.db_session.commit()
+            db_session.query(model).filter_by(**unique_id).delete()
+            db_session.commit()
             return unique_id
         except Exception as e:
-            self.db_session.rollback()
+            db_session.rollback()
             LOGGER.exception(e)
             raise FailedDeletingModel(
                 f"Failed deleting Clide model: {model_name}"

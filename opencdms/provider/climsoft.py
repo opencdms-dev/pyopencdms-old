@@ -35,9 +35,9 @@ from opencdms.models.climsoft import v4_1_1_core as climsoft_models
 LOGGER = logging.getLogger(__name__)
 
 
-class Climsoft4(CDMSProvider):
-    def __init__(self, db_conn_str: str, models: ModuleType = climsoft_models):
-        super().__init__(db_conn_str, models)
+class Climsoft4Provider(CDMSProvider):
+    def __init__(self, models: ModuleType = climsoft_models):
+        super().__init__(models)
 
 
 class Climsoft5(CDMSProvider):

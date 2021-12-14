@@ -1,0 +1,96 @@
+import random
+import pytest
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+from opencdms.models.climsoft import v4_1_1_core as climsoft
+from opencdms.provider.climsoft import Climsoft4Provider
+from test_util import get_climsoft_4_1_1_connection_string
+
+DB_URL = get_climsoft_4_1_1_connection_string()
+db_engine = create_engine(DB_URL)
+climsoft_provider = Climsoft4Provider()
+
+
+station_data = dict(
+    stationId=str(random.randint(1000, 2000)),
+    stationName='Test Station',
+    country='UK'
+)
+
+
+@pytest.fixture
+def db_session():
+    Session = sessionmaker(bind=db_engine)
+    session = Session()
+    yield session
+    session.close()
+
+
+def setup_module(module):
+    climsoft.Base.metadata.create_all(db_engine)
+    with db_engine.connect() as connection:
+        trans = connection.begin()
+        connection.execute('SET FOREIGN_KEY_CHECKS = 0;')
+        for table in climsoft.metadata.sorted_tables:
+            connection.execute(table.delete())
+        connection.execute('SET FOREIGN_KEY_CHECKS = 1;')
+        trans.commit()
+
+
+def teardown_module(module):
+    climsoft.Base.metadata.create_all(db_engine)
+    with db_engine.connect() as connection:
+        trans = connection.begin()
+        connection.execute('SET FOREIGN_KEY_CHECKS = 0;')
+        for table in climsoft.metadata.sorted_tables:
+            connection.execute(table.delete())
+        connection.execute('SET FOREIGN_KEY_CHECKS = 1;')
+        trans.commit()
+
+
+@pytest.mark.order(200)
+def test_should_create_a_station(db_session):
+    station = climsoft_provider.create(db_session, "Station", station_data)
+    assert station.stationId == station_data['stationId']
+
+
+@pytest.mark.order(201)
+def test_should_read_all_stations(db_session):
+    stations = climsoft_provider.list(db_session, "Station")
+
+    for station in stations:
+        assert isinstance(station, climsoft.Station)
+
+
+@pytest.mark.order(202)
+def test_should_return_a_single_station(db_session):
+    station = climsoft_provider.get(
+        db_session,
+        "Station",
+        {"stationId": station_data["stationId"]}
+    )
+
+    assert station.stationId == station_data['stationId']
+
+
+@pytest.mark.order(203)
+def test_should_update_station(db_session):
+    updated_station = climsoft_provider.update(
+        db_session,
+        "Station",
+        {"stationId": station_data["stationId"]},
+        {'country': 'US'}
+    )
+
+    assert updated_station.country == 'US'
+
+
+@pytest.mark.order(204)
+def test_should_delete_station(db_session):
+    deleted = climsoft_provider.delete(
+        db_session,
+        "Station",
+        {"stationId": station_data["stationId"]}
+    )
+
+    assert deleted == {"stationId": station_data["stationId"]}
