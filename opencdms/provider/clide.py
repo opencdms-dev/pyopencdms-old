@@ -30,6 +30,7 @@
 import logging
 from abc import ABC
 from typing import Dict, Any, Union, List
+from sqlalchemy.orm.session import Session
 from .base import CDMSProvider
 from . import get_session_factory
 from opencdms.models import clide as clide_models
@@ -64,7 +65,7 @@ class FailedSoftDeletingClideModel(Exception):
 class Clide(CDMSProvider, ABC):
     def __init__(self, db_conn_str: str):
         session_factory = get_session_factory(db_uri=db_conn_str)
-        self.db_session = session_factory()
+        self.db_session: Session = session_factory()
 
     def create(self, model_name: str, data: Dict) -> Any:
         try:
@@ -146,9 +147,42 @@ class Clide(CDMSProvider, ABC):
                                            f"Clide model: {model_name} "
                                            f"for query: {query}")
 
-    def update(self, model_name: str, unique_id: dict, data: dict):
-        model = getattr(clide_models, model_name)
-        self.db_session.query(model).filter_by(**unique_id).update(data)
-        self.db_session.commit()
-        # updated_instance =
+    def update(
+        self,
+        model_name: str,
+        unique_id: Dict[str, Union[str, int]],
+        data: dict
+    ):
+        try:
+            model = getattr(clide_models, model_name)
+            self.db_session.query(model).filter_by(**unique_id).update(data)
+            self.db_session.commit()
+            updated_instance = self.db_session.query(model)\
+                .filter_by(**unique_id).first()
 
+            return updated_instance
+        except Exception as e:
+            self.db_session.rollback()
+            LOGGER.exception(e)
+            raise FailedUpdatingClideModel(
+                f"Failed updating Clide model: {model_name} "
+                f"with updates: {data}"
+            )
+
+    def delete(
+        self,
+        model_name: str,
+        unique_id: Dict[str, Union[str, int]]
+    ):
+        try:
+            model = getattr(clide_models, model_name)
+            self.db_session.query(model).filter_by(unique_id).delete()
+            self.db_session.commit()
+            return unique_id
+        except Exception as e:
+            self.db_session.rollback()
+            LOGGER.exception(e)
+            raise FailedDeletingClideModel(
+                f"Failed deleting Clide model: {model_name}"
+                f"with unique_id: {unique_id}"
+            )

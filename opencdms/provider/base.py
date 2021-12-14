@@ -61,19 +61,20 @@ class CDMSProvider(ABC):
         raise NotImplementedError
 
     @abstractmethod
-    def get(self, model_name: str, unique_id: Union[str, int]):
+    def get(self, model_name: str, unique_id: Dict[str, Union[str, int]]):
         raise NotImplementedError
 
     @abstractmethod
-    def update(self, model_name: str, unique_id: dict, data: Dict) -> Any:
+    def update(
+        self,
+        model_name: str,
+        unique_id: Dict[str, Union[str, int]],
+        data: Dict
+    ) -> Any:
         raise NotImplementedError
 
     @abstractmethod
-    def delete(self, model_name: str, unique_id: Union[str, int]):
-        raise NotImplementedError
-
-    @abstractmethod
-    def soft_delete(self, model_name: str, unique_id: Dict[str, Union[str, int]]):
+    def delete(self, model_name: str, unique_id: Dict[str, Union[str, int]]):
         raise NotImplementedError
 
 
