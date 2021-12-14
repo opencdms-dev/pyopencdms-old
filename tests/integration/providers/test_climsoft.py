@@ -12,7 +12,7 @@ climsoft_provider = Climsoft4Provider()
 
 
 station_data = dict(
-    stationId=str(random.randint(1000, 2000)),
+    stationId=str(random.randint(1000, 22000)),
     stationName='Test Station',
     country='UK'
 )
@@ -48,13 +48,13 @@ def teardown_module(module):
         trans.commit()
 
 
-@pytest.mark.order(200)
+@pytest.mark.order(2200)
 def test_should_create_a_station(db_session):
     station = climsoft_provider.create(db_session, "Station", station_data)
     assert station.stationId == station_data['stationId']
 
 
-@pytest.mark.order(201)
+@pytest.mark.order(2201)
 def test_should_read_all_stations(db_session):
     stations = climsoft_provider.list(db_session, "Station")
 
@@ -62,7 +62,7 @@ def test_should_read_all_stations(db_session):
         assert isinstance(station, climsoft.Station)
 
 
-@pytest.mark.order(202)
+@pytest.mark.order(2202)
 def test_should_return_a_single_station(db_session):
     station = climsoft_provider.get(
         db_session,
@@ -73,7 +73,7 @@ def test_should_return_a_single_station(db_session):
     assert station.stationId == station_data['stationId']
 
 
-@pytest.mark.order(203)
+@pytest.mark.order(2203)
 def test_should_update_station(db_session):
     updated_station = climsoft_provider.update(
         db_session,
@@ -85,7 +85,7 @@ def test_should_update_station(db_session):
     assert updated_station.country == 'US'
 
 
-@pytest.mark.order(204)
+@pytest.mark.order(2204)
 def test_should_delete_station(db_session):
     deleted = climsoft_provider.delete(
         db_session,

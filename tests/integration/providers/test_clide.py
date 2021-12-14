@@ -28,7 +28,7 @@ timezone_data = dict(
 )
 
 station_data = dict(
-    id=random.randint(1000, 2000),
+    id=random.randint(21000, 2000),
     station_no=uuid.uuid4().hex[:15],
     status_id=station_status_data["id"],
     time_zone=timezone_data["tm_zone"],
@@ -107,14 +107,14 @@ def db_session():
     session.close()
 
 
-@pytest.mark.order(100)
+@pytest.mark.order(2100)
 def test_should_create_a_station(db_session: Session):
     station = clide_provider.create(db_session, "Station", station_data)
 
     assert station.id == station_data['id']
 
 
-@pytest.mark.order(101)
+@pytest.mark.order(2101)
 def test_should_read_all_stations(db_session):
     stations = clide_provider.list(db_session, "Station")
 
@@ -122,14 +122,14 @@ def test_should_read_all_stations(db_session):
         assert isinstance(station, clide.Station)
 
 
-@pytest.mark.order(102)
+@pytest.mark.order(2102)
 def test_should_return_a_single_station(db_session):
     station = clide_provider.get(db_session, "Station", {"id": station_data["id"]})
 
     assert station.id == station_data['id']
 
 
-@pytest.mark.order(103)
+@pytest.mark.order(2103)
 def test_should_update_station(db_session):
     updated_station = clide_provider.update(
         db_session,
@@ -141,7 +141,7 @@ def test_should_update_station(db_session):
     assert updated_station.region == 'US'
 
 
-@pytest.mark.order(104)
+@pytest.mark.order(2104)
 def test_should_delete_station(db_session):
     deleted = clide_provider.delete(
         db_session,

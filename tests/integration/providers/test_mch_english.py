@@ -48,7 +48,7 @@ def teardown_module(module):
         trans.commit()
 
 
-@pytest.mark.order(400)
+@pytest.mark.order(2400)
 def test_should_create_a_station(db_session):
     station = mch_english.Station(**station_data)
     db_session.add(station)
@@ -57,7 +57,7 @@ def test_should_create_a_station(db_session):
     assert station.Station == station_data['Station']
 
 
-@pytest.mark.order(401)
+@pytest.mark.order(2401)
 def test_should_read_all_stations(db_session):
     stations = db_session.query(mch_english.Station).all()
 
@@ -65,7 +65,7 @@ def test_should_read_all_stations(db_session):
         assert isinstance(station, mch_english.Station)
 
 
-@pytest.mark.order(402)
+@pytest.mark.order(2402)
 def test_should_return_a_single_station(db_session):
     station = db_session.query(mch_english.Station)\
         .get(station_data['Station'])
@@ -73,7 +73,7 @@ def test_should_return_a_single_station(db_session):
     assert station.Station == station_data['Station']
 
 
-@pytest.mark.order(403)
+@pytest.mark.order(2403)
 def test_should_update_station(db_session):
     db_session.query(mch_english.Station)\
         .filter_by(Station=station_data['Station'])\
@@ -86,7 +86,7 @@ def test_should_update_station(db_session):
     assert updated_station.StationName == 'Updated Station Name'
 
 
-@pytest.mark.order(404)
+@pytest.mark.order(2404)
 def test_should_delete_station(db_session):
     db_session.query(mch_english.Station)\
         .filter_by(Station=station_data['Station']).delete()
