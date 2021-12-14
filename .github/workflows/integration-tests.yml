@@ -38,13 +38,21 @@ jobs:
             - name: Run tests with pytest
               run: |
                   sleep 10
-                  pytest tests/integration/*/test_clide.py
+                  pytest tests/integration/models/test_clide.py
                   sleep 3
-                  pytest tests/integration/*/test_climsoft.py
+                  pytest tests/integration/models/test_climsoft.py
                   sleep 3
-                  pytest tests/integration/*/test_mch_english.py
+                  pytest tests/integration/models/test_mch_english.py
                   sleep 3
-                  pytest tests/integration/*/test_midas.py
+                  pytest tests/integration/models/test_midas.py
+                  sleep 3
+                  pytest tests/integration/providers/test_clide.py
+                  sleep 3
+                  pytest tests/integration/providers/test_climsoft.py
+                  sleep 3
+                  pytest tests/integration/providers/test_mch_english.py
+                  sleep 3
+                  pytest tests/integration/providers/test_midas.py
                   sleep 3
                   pytest tests/unit/*
                   sleep 3
