@@ -28,7 +28,7 @@ timezone_data = dict(
 )
 
 station_data = dict(
-    id=random.randint(21000, 2000),
+    id=random.randint(21000, 25000),
     station_no=uuid.uuid4().hex[:15],
     status_id=station_status_data["id"],
     time_zone=timezone_data["tm_zone"],
