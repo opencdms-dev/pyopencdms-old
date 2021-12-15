@@ -1,0 +1,35 @@
+import os
+
+
+class OpenCDMSConfig:
+    CLIMSOFT_DB_HOST = os.getenv("CLIMSOFT_DB_HOST", "127.0.0.1")
+    CLIMSOFT_DB_PORT = os.getenv("CLIMSOFT_DB_PORT", 3306)
+    CLIMSOFT_DB_USER = os.getenv("CLIMSOFT_DB_USER", "root")
+    CLIMSOFT_DB_PASS = os.getenv("CLIMSOFT_DB_PASSWORD", "password")
+    CLIMSOFT_DB_NAME = os.getenv("CLIMSOFT_DB_NAME", "test")
+    CLIMSOFT_DB_ENGINE = os.getenv("CLIMSOFT_DB_ENGINE", "mysql")
+    CLIMSOFT_DB_DRIVER = os.getenv("CLIMSOFT_DB_DRIVER", "mysqldb")
+    CLIDE_DB_HOST = os.getenv("CLIDE_DB_HOST", "127.0.0.1")
+    CLIDE_DB_PORT = os.getenv("CLIDE_DB_PORT", 5432)
+    CLIDE_DB_USER = os.getenv("CLIDE_DB_USER", "postgres")
+    CLIDE_DB_PASS = os.getenv("CLIDE_DB_PASSWORD", "password")
+    CLIDE_DB_NAME = os.getenv("CLIDE_DB_NAME", "postgres")
+    CLIDE_DB_ENGINE = os.getenv("CLIDE_DB_ENGINE", "postgresql")
+    CLIDE_DB_DRIVER = os.getenv("CLIDE_DB_DRIVER", "psycopg2")
+    MCH_DB_HOST = os.getenv("MCH_DB_HOST", "127.0.0.1")
+    MCH_DB_PORT = os.getenv("MCH_DB_PORT", 3306)
+    MCH_DB_USER = os.getenv("MCH_DB_USER", "root")
+    MCH_DB_PASS = os.getenv("MCH_DB_PASSWORD", "password")
+    MCH_DB_NAME = os.getenv("MCH_DB_NAME", "test")
+    MCH_DB_ENGINE = os.getenv("MCH_DB_ENGINE", "mysql")
+    MCH_DB_DRIVER = os.getenv("MCH_DB_DRIVER", "mysqldb")
+    MIDAS_DB_HOST = os.getenv("MIDAS_DB_HOST", "127.0.0.1")
+    MIDAS_DB_PORT = os.getenv("MIDAS_DB_PORT", 5432)
+    MIDAS_DB_USER = os.getenv("MIDAS_DB_USER", "postgres")
+    MIDAS_DB_PASS = os.getenv("MIDAS_DB_PASSWORD", "password")
+    MIDAS_DB_NAME = os.getenv("MIDAS_DB_NAME", "postgres")
+    MIDAS_DB_ENGINE = os.getenv("MIDAS_DB_ENGINE", "postgresql")
+    MIDAS_DB_DRIVER = os.getenv("MIDAS_DB_DRIVER", "psycopg2")
+
+
+config = OpenCDMSConfig()
