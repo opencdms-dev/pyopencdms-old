@@ -17,7 +17,7 @@ class Station(BaseModel):
         orm_mode = True
         fields = {
             "stationId": "station_id",
-            "station_name": "name",
+            "stationName": "name",
             "adminRegion": "region",
             "openingDatetime": "start_datetime",
             "closingDatetime": "end_datetime"

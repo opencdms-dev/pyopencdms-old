@@ -18,17 +18,17 @@ class Source(BaseModel):
     src_name: str
     high_prcn_lat: condecimal(ge=Decimal("-90.0000"), le=Decimal("90"))
     high_prcn_lon: condecimal(gt=Decimal("-179.9999"), le=Decimal("180"))
-    loc_geog_area_id: str
+    loc_geog_area_id: Optional[str]
     src_bgn_date: str
-    rec_st_ind: conint(ge=1001)
-    src_type: constr(max_length=15)
-    grid_ref_type: GridRefType
+    rec_st_ind: Optional[conint(ge=1001)]
+    src_type: Optional[constr(max_length=15)]
+    grid_ref_type: Optional[GridRefType]
     src_end_date: str
     elevation: float
-    wmo_region_code: int
-    zone_time: int
-    drainage_stream_id: str
-    src_upd_date: str
+    wmo_region_code: Optional[int]
+    zone_time: Optional[int]
+    drainage_stream_id: Optional[str]
+    src_upd_date: Optional[str]
 
     class Config:
         orm_mode = True
