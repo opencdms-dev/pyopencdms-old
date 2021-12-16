@@ -30,6 +30,7 @@ import logging
 from typing import Dict, Any, Union, List
 from types import ModuleType
 from sqlalchemy.orm.session import Session
+from importlib import import_module
 
 LOGGER = logging.getLogger(__name__)
 
@@ -64,10 +65,10 @@ class CDMSProvider:
     def __init__(
         self,
         models: ModuleType,
-        # schemas: ModuleType
+        schemas: ModuleType
     ):
         self.models = models
-        # self.schemas = schemas
+        self.schemas = schemas
 
     def create(
         self,
@@ -78,7 +79,15 @@ class CDMSProvider:
 
         try:
             model = getattr(self.models, model_name)
-            instance = model(**data)
+
+            input_data = getattr(
+                import_module(
+                    f"{self.schemas.__name__}.{model_name.lower()}"
+                ),
+                f"Create{model_name}"
+            )(**data)
+
+            instance = model(**input_data.dict())
             db_session.add(instance)
             db_session.commit()
             return instance
@@ -176,8 +185,17 @@ class CDMSProvider:
 
         try:
             model = getattr(self.models, model_name)
-            db_session.query(model).filter_by(**unique_id).update(data)
+            input_data = getattr(
+                import_module(
+                    f"{self.schemas.__name__}.{model_name.lower()}"
+                ),
+                f"Update{model_name}"
+            )(**data)
+
+            db_session.query(model)\
+                .filter_by(**unique_id).update(input_data.dict())
             db_session.commit()
+
             updated_instance = db_session.query(model)\
                 .filter_by(**unique_id).first()
 

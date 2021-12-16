@@ -42,3 +42,6 @@ class Source(BaseModel):
         }
 
 
+class UniqueId(BaseModel):
+    src_id: conint(gt=0)
+

@@ -32,6 +32,15 @@ class CreateStation(BaseModel):
     time_zone: str
     region: str
 
+    class Config:
+        fields = {
+            "id": "station_id",
+            "time_zone": "timezone",
+            "ht_elev": "elevation",
+            "start_date": "start_datetime",
+            "end_date": "end_datetime"
+        }
+
 
 class UpdateStation(BaseModel):
     station_no: Optional[str]
@@ -39,6 +48,18 @@ class UpdateStation(BaseModel):
     time_zone: Optional[str]
     region: Optional[str]
 
+    class Config:
+        fields = {
+            "id": "station_id",
+            "time_zone": "timezone",
+            "ht_elev": "elevation",
+            "start_date": "start_datetime",
+            "end_date": "end_datetime"
+        }
+
+
+class UniqueId(BaseModel):
+    id: int
 
 
 

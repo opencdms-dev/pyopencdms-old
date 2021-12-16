@@ -32,6 +32,8 @@ class UpdateStation(BaseModel):
     StationName: Optional[str]
 
 
+class UniqueId(BaseModel):
+    Station: str
 
 
 

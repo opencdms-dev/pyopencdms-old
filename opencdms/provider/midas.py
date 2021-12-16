@@ -34,6 +34,7 @@ import os
 import logging
 from types import ModuleType
 from opencdms.models.midas import core as midas_models
+from opencdms.dtos import midas as midas_schemas
 
 from .base import CDMSProvider
 from ..fileformats.text import read_badc
@@ -179,6 +180,10 @@ class MidasOpen(CDMSProvider):
 
 
 class MidasProvider(CDMSProvider):
-    def __init__(self, models: ModuleType = midas_models):
-        super().__init__(models)
+    def __init__(
+        self,
+        models: ModuleType = midas_models,
+        schemas: ModuleType = midas_schemas
+    ):
+        super().__init__(models, schemas)
 

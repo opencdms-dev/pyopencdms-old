@@ -31,13 +31,18 @@ import logging
 from types import ModuleType
 from .base import CDMSProvider
 from opencdms.models.climsoft import v4_1_1_core as climsoft_models
+from opencdms.dtos import climsoft as climsoft_schemas
 
 LOGGER = logging.getLogger(__name__)
 
 
 class Climsoft4Provider(CDMSProvider):
-    def __init__(self, models: ModuleType = climsoft_models):
-        super().__init__(models)
+    def __init__(
+        self,
+        models: ModuleType = climsoft_models,
+        schemas: ModuleType = climsoft_schemas
+    ):
+        super().__init__(models, schemas)
 
 
 class Climsoft5(CDMSProvider):

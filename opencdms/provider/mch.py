@@ -31,11 +31,16 @@ import logging
 from types import ModuleType
 from .base import CDMSProvider
 from opencdms.models.mch import english as mch_models
+from opencdms.dtos import mch as mch_schemas
 
 LOGGER = logging.getLogger(__name__)
 
 
 class MCHProvider(CDMSProvider):
-    def __init__(self, models: ModuleType = mch_models):
-        super().__init__(models)
+    def __init__(
+        self,
+        models: ModuleType = mch_models,
+        schemas: ModuleType = mch_schemas
+    ):
+        super().__init__(models, schemas)
 

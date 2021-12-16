@@ -35,5 +35,7 @@ class UpdateStation(BaseModel):
     country: Optional[str]
 
 
+class UniqueId(BaseModel):
+    stationId: str
 
 
