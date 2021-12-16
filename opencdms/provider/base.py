@@ -87,10 +87,17 @@ class CDMSProvider:
                 f"Create{model_name}"
             ), "parse_obj")(data)
 
+            orm_parser = getattr(getattr(
+                import_module(
+                    f"{self.schemas.__name__}.{model_name.lower()}"
+                ),
+                model_name
+            ), "from_orm")
+
             instance = model(**input_data.dict())
             db_session.add(instance)
             db_session.commit()
-            return instance
+            return orm_parser(instance)
         except Exception as e:
             db_session.rollback()
             LOGGER.exception(e)
@@ -111,9 +118,17 @@ class CDMSProvider:
         )
         try:
             model = getattr(self.models, model_name)
+
+            orm_parser = getattr(getattr(
+                import_module(
+                    f"{self.schemas.__name__}.{model_name.lower()}"
+                ),
+                model_name
+            ), "from_orm")
+
             instance = db_session.query(model) \
                 .filter_by(**unique_id).first()
-            return instance
+            return orm_parser(instance)
         except Exception as e:
             LOGGER.exception(e)
             raise FailedGettingModel(
@@ -132,6 +147,14 @@ class CDMSProvider:
 
         try:
             model = getattr(self.models, model_name)
+
+            orm_parser = getattr(getattr(
+                import_module(
+                    f"{self.schemas.__name__}.{model_name.lower()}"
+                ),
+                model_name
+            ), "from_orm")
+
             q = db_session.query(model)
 
             if query is not None:
@@ -171,7 +194,7 @@ class CDMSProvider:
                     else:
                         raise NotImplementedError
 
-            return q.offset(offset).limit(limit).all()
+            return [orm_parser(li) for li in q.offset(offset).limit(limit).all()]
         except Exception as e:
             LOGGER.exception(e)
             raise QueryFailedForModel(
@@ -201,6 +224,13 @@ class CDMSProvider:
                 f"Update{model_name}"
             ), "parse_obj")(data)
 
+            orm_parser = getattr(getattr(
+                import_module(
+                    f"{self.schemas.__name__}.{model_name.lower()}"
+                ),
+                model_name
+            ), "from_orm")
+
             db_session.query(model)\
                 .filter_by(**unique_id).update(input_data.dict())
             db_session.commit()
@@ -208,7 +238,7 @@ class CDMSProvider:
             updated_instance = db_session.query(model)\
                 .filter_by(**unique_id).first()
 
-            return updated_instance
+            return orm_parser(updated_instance)
         except Exception as e:
             db_session.rollback()
             LOGGER.exception(e)

@@ -7,6 +7,10 @@ from opencdms.utils.db import get_clide_connection_string, \
 from sqlalchemy import create_engine
 from sqlalchemy.sql import text as sa_text
 from sqlalchemy.orm import sessionmaker
+from opencdms.dtos.clide import station as clide_station
+from opencdms.dtos.clide import stationstatu as clide_station_status
+from opencdms.dtos.clide import stationtimezone as clide_station_timezone
+from opencdms.dtos.mch import station as mch_station
 
 timezone_data = dict(
     id=1,
@@ -49,31 +53,28 @@ def test_clide_provider():
                 ).execution_options(autocommit=True)
             )
 
-    SessionLocal = sessionmaker(bind=db_engine)
-    session = SessionLocal()
-    station_status = clide.StationStatu(**station_status_data)
-    session.add(station_status)
-    timezone = clide.StationTimezone(**timezone_data)
-    session.add(timezone)
-
-    session.commit()
-
     provider = OpenCDMSProvider(ProviderConfig(enable_clide=True))
 
-    station_data["timezone"] = timezone.id
-    station_data["status_id"] = station_status.id
+    station_status = provider.create("StationStatu", station_status_data)
+    assert isinstance(station_status["clide"], clide_station_status.StationStatu)
 
-    session.close()
+    timezone = provider.create("StationTimezone", timezone_data)
+    assert isinstance(timezone["clide"], clide_station_timezone.StationTimezone)
+
+    station_data["timezone"] = timezone["clide"].tm_zone
+    station_data["status_id"] = station_status["clide"].id
+
+    print(provider.list("StationStatu"))
 
     station = provider.create("Station", station_data)
-    assert isinstance(station["clide"], clide.Station)
+    assert isinstance(station["clide"], clide_station.Station)
 
     station = provider.get("Station", {"id": station_data["station_id"]})
-    assert isinstance(station["clide"], clide.Station)
+    assert isinstance(station["clide"], clide_station.Station)
 
     stations = provider.list("Station")
     for station in stations["clide"]:
-        assert isinstance(station, clide.Station)
+        assert isinstance(station, clide_station.Station)
 
     station = provider.update(
         "Station",
@@ -89,27 +90,6 @@ def test_clide_provider():
     )
 
     assert deleted["clide"] == {"id": station_data['station_id']}
-
-    with db_engine.connect() as connection:
-        with connection.begin():
-            db_engine.execute(
-                sa_text(
-                    f'''TRUNCATE TABLE {clide.Station.__tablename__}
-                     RESTART IDENTITY CASCADE'''
-                ).execution_options(autocommit=True)
-            )
-            db_engine.execute(
-                sa_text(
-                    f'''TRUNCATE TABLE {clide.StationStatu.__tablename__}
-                     RESTART IDENTITY CASCADE'''
-                ).execution_options(autocommit=True)
-            )
-            db_engine.execute(
-                sa_text(
-                    f'''TRUNCATE TABLE {clide.StationTimezone.__tablename__}
-                     RESTART IDENTITY CASCADE'''
-                ).execution_options(autocommit=True)
-            )
 
 
 def test_mch_provider():
@@ -128,14 +108,14 @@ def test_mch_provider():
     provider = OpenCDMSProvider(ProviderConfig(enable_mch=True))
 
     station = provider.create("Station", station_data)
-    assert isinstance(station["mch"], mch.Station)
+    assert isinstance(station["mch"], mch_station.Station)
 
     station = provider.get("Station", {"Station": station_data["station_id"]})
-    assert isinstance(station["mch"], mch.Station)
+    assert isinstance(station["mch"], mch_station.Station)
 
     stations = provider.list("Station")
     for station in stations["mch"]:
-        assert isinstance(station, mch.Station)
+        assert isinstance(station, mch_station.Station)
 
     station = provider.update(
         "Station",

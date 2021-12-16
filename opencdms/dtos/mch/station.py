@@ -4,12 +4,12 @@ from decimal import Decimal
 
 
 class Station(BaseModel):
-    Station: str
-    StationName: str
-    StationName2: str
-    TimeZone: constr(max_length=4)
-    Longitud: Decimal
-    Latitud: Decimal
+    Station: Optional[str]
+    StationName: Optional[str]
+    StationName2: Optional[str]
+    TimeZone: Optional[constr(max_length=4)]
+    Longitud: Optional[Decimal]
+    Latitud: Optional[Decimal]
 
     class Config:
         orm_mode = True

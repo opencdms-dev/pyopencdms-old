@@ -3,17 +3,17 @@ from pydantic import BaseModel
 
 
 class Station(BaseModel):
-    id: int
-    station_no: str
-    status_id: int
-    time_zone: str
-    region: str
-    latitude: float
-    longitude: float
-    start_date: str
-    end_date: str
-    region: str
-    ht_elev: float
+    id: Optional[int]
+    station_no: Optional[str]
+    status_id: Optional[int]
+    time_zone: Optional[str]
+    region: Optional[str]
+    latitude: Optional[float]
+    longitude: Optional[float]
+    start_date: Optional[str]
+    end_date: Optional[str]
+    region: Optional[str]
+    ht_elev: Optional[float]
 
     class Config:
         orm_mode = True
