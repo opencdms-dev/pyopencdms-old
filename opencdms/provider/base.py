@@ -104,7 +104,11 @@ class CDMSProvider:
         model_name: str,
         unique_id: Dict[str, Union[str, int]]
     ):
-
+        # validate required unique id
+        getattr(
+            import_module(f"{self.schemas.__name__}.{model_name.lower()}"),
+            f"UniqueId"
+        )
         try:
             model = getattr(self.models, model_name)
             instance = db_session.query(model) \
@@ -182,6 +186,11 @@ class CDMSProvider:
         unique_id: Dict[str, Union[str, int]],
         data: dict
     ):
+        # validate required unique id
+        getattr(
+            import_module(f"{self.schemas.__name__}.{model_name.lower()}"),
+            f"UniqueId"
+        )
 
         try:
             model = getattr(self.models, model_name)
@@ -214,6 +223,11 @@ class CDMSProvider:
         model_name: str,
         unique_id: Dict[str, Union[str, int]]
     ):
+        # validate required unique id
+        getattr(
+            import_module(f"{self.schemas.__name__}.{model_name.lower()}"),
+            f"UniqueId"
+        )
 
         try:
             model = getattr(self.models, model_name)
