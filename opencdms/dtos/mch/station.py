@@ -27,13 +27,43 @@ class CreateStation(BaseModel):
     Station: str
     StationName: str
 
+    class Config:
+        fields = {
+            "Station": "station_id",
+            "StationName": "name",
+            "StationName2": "secondary_name",
+            "TimeZone": "timezone",
+            "Longitud": "longitude",
+            "Latitud": "latitude"
+        }
+
 
 class UpdateStation(BaseModel):
     StationName: Optional[str]
 
+    class Config:
+        fields = {
+            "Station": "station_id",
+            "StationName": "name",
+            "StationName2": "secondary_name",
+            "TimeZone": "timezone",
+            "Longitud": "longitude",
+            "Latitud": "latitude"
+        }
+
 
 class UniqueId(BaseModel):
     Station: str
+
+    class Config:
+        fields = {
+            "Station": "station_id",
+            "StationName": "name",
+            "StationName2": "secondary_name",
+            "TimeZone": "timezone",
+            "Longitud": "longitude",
+            "Latitud": "latitude"
+        }
 
 
 
