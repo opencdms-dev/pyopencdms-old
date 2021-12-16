@@ -27,6 +27,7 @@ class Station(BaseModel):
 
 
 class CreateStation(BaseModel):
+    id: str
     station_no: str
     status_id: int
     time_zone: str

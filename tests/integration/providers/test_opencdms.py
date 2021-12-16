@@ -4,7 +4,6 @@ from opencdms.models import clide
 from opencdms.models.mch import english as mch
 from opencdms.utils.db import get_clide_connection_string, \
     get_mch_english_connection_string
-
 from sqlalchemy import create_engine
 from sqlalchemy.sql import text as sa_text
 from sqlalchemy.orm import sessionmaker
@@ -52,22 +51,24 @@ def test_clide_provider():
 
     SessionLocal = sessionmaker(bind=db_engine)
     session = SessionLocal()
-
-    session.add(clide.StationStatu(**station_status_data))
-    session.add(clide.StationTimezone(**timezone_data))
+    station_status = clide.StationStatu(**station_status_data)
+    session.add(station_status)
+    timezone = clide.StationTimezone(**timezone_data)
+    session.add(timezone)
 
     session.commit()
-    session.close()
 
     provider = OpenCDMSProvider(ProviderConfig(enable_clide=True))
 
-    station_data["timezone"] = timezone_data["id"]
-    station_data["status_id"] = station_status_data["id"]
+    station_data["timezone"] = timezone.id
+    station_data["status_id"] = station_status.id
+
+    session.close()
 
     station = provider.create("Station", station_data)
     assert isinstance(station["clide"], clide.Station)
 
-    station = provider.get("Station", {"id": station_data["id"]})
+    station = provider.get("Station", {"id": station_data["station_id"]})
     assert isinstance(station["clide"], clide.Station)
 
     stations = provider.list("Station")
@@ -76,7 +77,7 @@ def test_clide_provider():
 
     station = provider.update(
         "Station",
-        {"id": station_data["id"]},
+        {"id": station_data["station_id"]},
         {'region': 'US'}
     )
 
@@ -84,10 +85,10 @@ def test_clide_provider():
 
     deleted = provider.delete(
         "Station",
-        {"id": station_data['id']}
+        {"id": station_data['station_id']}
     )
 
-    assert deleted["clide"] == {"id": station_data['id']}
+    assert deleted["clide"] == {"id": station_data['station_id']}
 
     with db_engine.connect() as connection:
         with connection.begin():
@@ -129,7 +130,7 @@ def test_mch_provider():
     station = provider.create("Station", station_data)
     assert isinstance(station["mch"], mch.Station)
 
-    station = provider.get("Station", {"Station": station_data["id"]})
+    station = provider.get("Station", {"Station": station_data["station_id"]})
     assert isinstance(station["mch"], mch.Station)
 
     stations = provider.list("Station")
@@ -138,18 +139,18 @@ def test_mch_provider():
 
     station = provider.update(
         "Station",
-        {"Station": station_data["id"]},
-        {'region': 'US'}
+        {"Station": station_data["station_id"]},
+        {'name': 'Updated Name'}
     )
-
-    assert station["mch"].region == 'US'
+    print(station["mch"].StationName)
+    assert station["mch"].StationName == 'Updated Name'
 
     deleted = provider.delete(
         "Station",
-        {"Station": station_data['id']}
+        {"Station": station_data['station_id']}
     )
 
-    assert deleted["mch"] == {"Station": station_data['id']}
+    assert deleted["mch"] == {"Station": station_data['station_id']}
 
     mch.Base.metadata.create_all(db_engine)
     with db_engine.connect() as connection:

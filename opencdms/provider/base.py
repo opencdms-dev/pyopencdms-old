@@ -80,12 +80,12 @@ class CDMSProvider:
         try:
             model = getattr(self.models, model_name)
 
-            input_data = getattr(
+            input_data = getattr(getattr(
                 import_module(
                     f"{self.schemas.__name__}.{model_name.lower()}"
                 ),
                 f"Create{model_name}"
-            )(**data)
+            ), "parse_obj")(data)
 
             instance = model(**input_data.dict())
             db_session.add(instance)
@@ -194,12 +194,12 @@ class CDMSProvider:
 
         try:
             model = getattr(self.models, model_name)
-            input_data = getattr(
+            input_data = getattr(getattr(
                 import_module(
                     f"{self.schemas.__name__}.{model_name.lower()}"
                 ),
                 f"Update{model_name}"
-            )(**data)
+            ), "parse_obj")(data)
 
             db_session.query(model)\
                 .filter_by(**unique_id).update(input_data.dict())
