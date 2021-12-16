@@ -64,8 +64,6 @@ def test_clide_provider():
     station_data["timezone"] = timezone["clide"].tm_zone
     station_data["status_id"] = station_status["clide"].id
 
-    print(provider.list("StationStatu"))
-
     station = provider.create("Station", station_data)
     assert isinstance(station["clide"], clide_station.Station)
 
@@ -74,8 +72,9 @@ def test_clide_provider():
 
     stations = provider.list("Station")
     for station in stations["clide"]:
+        print(station)
         assert isinstance(station, clide_station.Station)
-
+    print(station_data["station_id"])
     station = provider.update(
         "Station",
         {"id": station_data["station_id"]},
@@ -122,7 +121,7 @@ def test_mch_provider():
         {"Station": station_data["station_id"]},
         {'name': 'Updated Name'}
     )
-    print(station["mch"].StationName)
+
     assert station["mch"].StationName == 'Updated Name'
 
     deleted = provider.delete(

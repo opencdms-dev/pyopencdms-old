@@ -16,6 +16,7 @@ class Station(BaseModel):
     ht_elev: Optional[float]
 
     class Config:
+        allow_population_by_field_name = True
         orm_mode = True
         fields = {
             "id": "station_id",

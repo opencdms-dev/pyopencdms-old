@@ -215,6 +215,10 @@ class CDMSProvider:
             f"UniqueId"
         )
 
+        data = dict(filter(lambda kv: kv[1] is not None, data.items()))
+
+        print(data)
+
         try:
             model = getattr(self.models, model_name)
             input_data = getattr(getattr(
