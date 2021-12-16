@@ -1,5 +1,4 @@
 from typing import Dict, Union, Any
-from sqlalchemy.orm.session import Session
 from opencdms.provider.clide import ClideProvider
 from opencdms.provider.climsoft import Climsoft4Provider
 from opencdms.provider.mch import MCHProvider
@@ -14,12 +13,14 @@ class ProviderConfig:
         enable_clide: bool = False,
         enable_climsoft: bool = False,
         enable_mch: bool = False,
-        enable_midas: bool = False
+        enable_midas: bool = False,
+        enable_validation: bool = True
     ):
         self.enable_clide = enable_clide
         self.enable_climsoft = enable_climsoft
         self.enable_mch = enable_mch
         self.enable_midas = enable_midas
+        self.enable_validation = enable_validation
 
 
 class OpenCDMSProvider:
