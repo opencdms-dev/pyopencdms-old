@@ -54,6 +54,8 @@ jobs:
                   sleep 3
                   pytest tests/integration/providers/test_midas.py
                   sleep 3
+                  pytest tests/integration/providers/test_opencdms.py
+                  sleep 3
                   pytest tests/unit/*
                   sleep 3
 
