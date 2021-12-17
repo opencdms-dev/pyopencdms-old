@@ -2,6 +2,15 @@ from pydantic import BaseModel
 from typing import Optional
 
 
+field_mapping = {
+    "stationId": "station_id",
+    "stationName": "name",
+    "adminRegion": "region",
+    "openingDatetime": "start_datetime",
+    "closingDatetime": "end_datetime"
+}
+
+
 class Station(BaseModel):
     stationId: Optional[str]
     stationName: Optional[str]
@@ -16,13 +25,7 @@ class Station(BaseModel):
     class Config:
         orm_mode = True
         allow_population_by_field_name = True
-        fields = {
-            "stationId": "station_id",
-            "stationName": "name",
-            "adminRegion": "region",
-            "openingDatetime": "start_datetime",
-            "closingDatetime": "end_datetime"
-        }
+        fields = field_mapping
 
 
 class CreateStation(BaseModel):
@@ -32,13 +35,7 @@ class CreateStation(BaseModel):
 
     class Config:
         allow_population_by_field_name = True
-        fields = {
-            "stationId": "station_id",
-            "stationName": "name",
-            "adminRegion": "region",
-            "openingDatetime": "start_datetime",
-            "closingDatetime": "end_datetime"
-        }
+        fields = field_mapping
 
 
 class UpdateStation(BaseModel):
@@ -47,13 +44,7 @@ class UpdateStation(BaseModel):
 
     class Config:
         allow_population_by_field_name = True
-        fields = {
-            "stationId": "station_id",
-            "stationName": "name",
-            "adminRegion": "region",
-            "openingDatetime": "start_datetime",
-            "closingDatetime": "end_datetime"
-        }
+        fields = field_mapping
 
 
 class UniqueId(BaseModel):
@@ -61,10 +52,4 @@ class UniqueId(BaseModel):
 
     class Config:
         allow_population_by_field_name = True
-        fields = {
-            "stationId": "station_id",
-            "stationName": "name",
-            "adminRegion": "region",
-            "openingDatetime": "start_datetime",
-            "closingDatetime": "end_datetime"
-        }
+        fields = field_mapping

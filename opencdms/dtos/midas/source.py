@@ -5,6 +5,15 @@ from pydantic import BaseModel, conint, constr, condecimal
 from typing import Optional, Union
 from decimal import Decimal
 
+field_mapping = {
+    "src_id": "station_id",
+    "src_name": "name",
+    "high_prcn_lat": "latitude",
+    "high_prcn_lon": "longitude",
+    "src_bgn_date": "start_datetime",
+    "src_end_date": "end_datetime"
+}
+
 
 class GridRefType(str, enum.Enum):
     CI: str = "CI"
@@ -38,14 +47,7 @@ class Source(BaseModel):
     class Config:
         orm_mode = True
         allow_population_by_field_name = True
-        fields = {
-            "src_id": "station_id",
-            "src_name": "name",
-            "high_prcn_lat": "latitude",
-            "high_prcn_lon": "longitude",
-            "src_bgn_date": "start_datetime",
-            "src_end_date": "end_datetime"
-        }
+        fields = field_mapping
 
 
 class CreateSource(BaseModel):
@@ -62,14 +64,7 @@ class CreateSource(BaseModel):
     class Config:
         orm_mode = True
         allow_population_by_field_name = True
-        fields = {
-            "src_id": "station_id",
-            "src_name": "name",
-            "high_prcn_lat": "latitude",
-            "high_prcn_lon": "longitude",
-            "src_bgn_date": "start_datetime",
-            "src_end_date": "end_datetime"
-        }
+        fields = field_mapping
 
 
 class UpdateSource(BaseModel):
@@ -87,14 +82,7 @@ class UpdateSource(BaseModel):
     class Config:
         orm_mode = True
         allow_population_by_field_name = True
-        fields = {
-            "src_id": "station_id",
-            "src_name": "name",
-            "high_prcn_lat": "latitude",
-            "high_prcn_lon": "longitude",
-            "src_bgn_date": "start_datetime",
-            "src_end_date": "end_datetime"
-        }
+        fields = field_mapping
 
 
 class UniqueId(BaseModel):
@@ -103,11 +91,4 @@ class UniqueId(BaseModel):
     class Config:
         orm_mode = True
         allow_population_by_field_name = True
-        fields = {
-            "src_id": "station_id",
-            "src_name": "name",
-            "high_prcn_lat": "latitude",
-            "high_prcn_lon": "longitude",
-            "src_bgn_date": "start_datetime",
-            "src_end_date": "end_datetime"
-        }
+        fields = field_mapping
