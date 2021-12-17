@@ -6,8 +6,9 @@ from sqlalchemy.sql import text as sa_text
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.session import Session
 from opencdms.models import clide
+from opencdms.dtos.clide import station as clide_station_schema
 from opencdms.provider.clide import ClideProvider
-from test_util import get_clide_connection_string
+from opencdms.utils.db import get_clide_connection_string
 
 DB_URL = get_clide_connection_string()
 
@@ -28,10 +29,10 @@ timezone_data = dict(
 )
 
 station_data = dict(
-    id=random.randint(21000, 25000),
+    station_id=random.randint(21000, 25000),
     station_no=uuid.uuid4().hex[:15],
     status_id=station_status_data["id"],
-    time_zone=timezone_data["tm_zone"],
+    timezone=timezone_data["tm_zone"],
     region='UK'
 )
 
@@ -111,7 +112,7 @@ def db_session():
 def test_should_create_a_station(db_session: Session):
     station = clide_provider.create(db_session, "Station", station_data)
 
-    assert station.id == station_data['id']
+    assert station.id == station_data['station_id']
 
 
 @pytest.mark.order(2101)
@@ -119,14 +120,18 @@ def test_should_read_all_stations(db_session):
     stations = clide_provider.list(db_session, "Station")
 
     for station in stations:
-        assert isinstance(station, clide.Station)
+        assert isinstance(station, clide_station_schema.Station)
 
 
 @pytest.mark.order(2102)
 def test_should_return_a_single_station(db_session):
-    station = clide_provider.get(db_session, "Station", {"id": station_data["id"]})
+    station = clide_provider.get(
+        db_session,
+        "Station",
+        {"station_id": station_data['station_id']}
+    )
 
-    assert station.id == station_data['id']
+    assert station.id == station_data['station_id']
 
 
 @pytest.mark.order(2103)
@@ -134,8 +139,13 @@ def test_should_update_station(db_session):
     updated_station = clide_provider.update(
         db_session,
         "Station",
-        {"id": station_data["id"]},
-        {'region': 'US'}
+        {"station_id": station_data['station_id']},
+        {
+            'region': 'US',
+            "station_no": station_data["station_no"],
+            "timezone": station_data["timezone"],
+            "status_id": station_data["status_id"]
+        }
     )
 
     assert updated_station.region == 'US'
@@ -146,7 +156,7 @@ def test_should_delete_station(db_session):
     deleted = clide_provider.delete(
         db_session,
         "Station",
-        {"id": station_data['id']}
+        {"station_id": station_data['station_id']}
     )
 
-    assert deleted == {"id": station_data['id']}
+    assert deleted == {"station_id": station_data['station_id']}

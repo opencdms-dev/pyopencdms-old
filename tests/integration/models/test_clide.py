@@ -5,7 +5,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.sql import text as sa_text
 from sqlalchemy.orm import sessionmaker
 from opencdms.models import clide
-from test_util import get_clide_connection_string
+from opencdms.utils.db import get_clide_connection_string
 
 DB_URL = get_clide_connection_string()
 

@@ -4,7 +4,7 @@ import pytest
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from opencdms.models.mch import english as mch_english
-from test_util import get_mch_english_connection_string
+from opencdms.utils.db import get_mch_english_connection_string
 
 DB_URL = get_mch_english_connection_string(
     port_override=os.getenv("MCH_DB_PORT", 3306)

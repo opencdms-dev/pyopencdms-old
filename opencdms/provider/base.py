@@ -147,7 +147,7 @@ class CDMSProvider:
                 f"Failed getting model "
                 f"in module: {self.models.__name__}, "
                 f"model name: {model_name}, "
-                f"with key(s): {unique_id}"
+                f"with key(s): {unique_id} "
                 f"with error: {e} "
             )
 
@@ -217,7 +217,7 @@ class CDMSProvider:
         except Exception as e:
             LOGGER.exception(e)
             raise QueryFailedForModel(
-                f"Query failed"
+                f"Query failed "
                 f"in module: {self.models.__name__}, "
                 f"for query: {query}, "
                 f"with error: {e}"
@@ -274,7 +274,7 @@ class CDMSProvider:
             LOGGER.exception(e)
             raise FailedUpdatingModel(
                 f"Failed updating model "
-                f"in module: {self.models.__name__}"
+                f"in module: {self.models.__name__} "
                 f"model name: {model_name} "
                 f"with updates: {data}, "
                 f"with error: {e}"
@@ -311,17 +311,3 @@ class CDMSProvider:
                 f"with unique_id: {unique_id}, "
                 f"with error: {e}"
             )
-
-    # @abstractmethod def before_update(self, model_name: str, unique_id:
-    # Dict[str, Union[str, int]], data: dict): raise NotImplementedError
-    #
-    # @abstractmethod def after_update(self, model_name: str, unique_id:
-    # Dict[str, Union[str, int]], data: dict): raise NotImplementedError
-    #
-    # @abstractmethod
-    # def before_create(self, model_name: str, data: dict):
-    #     raise NotImplementedError
-    #
-    # @abstractmethod
-    # def after_create(self, model_name: str, data: dict):
-    #     raise NotImplementedError
