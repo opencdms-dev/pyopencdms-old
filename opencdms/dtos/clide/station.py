@@ -63,6 +63,14 @@ class UpdateStation(BaseModel):
 class UniqueId(BaseModel):
     id: int
 
+    class Config:
+        fields = {
+            "id": "station_id",
+            "time_zone": "timezone",
+            "ht_elev": "elevation",
+            "start_date": "start_datetime",
+            "end_date": "end_datetime"
+        }
 
 
 

@@ -67,7 +67,12 @@ def test_clide_provider():
     station = provider.create("Station", station_data)
     assert isinstance(station["clide"], clide_station.Station)
 
-    station = provider.get("Station", {"id": station_data["station_id"]})
+    station = provider.get(
+        "Station",
+        {
+            "station_id": station_data["station_id"]
+        },
+    )
     assert isinstance(station["clide"], clide_station.Station)
 
     stations = provider.list("Station")
@@ -76,7 +81,9 @@ def test_clide_provider():
 
     station = provider.update(
         "Station",
-        {"id": station_data["station_id"]},
+        {
+            "station_id": station_data["station_id"]
+        },
         {
             'region': 'US',
             "station_no": station_data["station_no"],
@@ -89,10 +96,12 @@ def test_clide_provider():
 
     deleted = provider.delete(
         "Station",
-        {"id": station_data['station_id']}
+        {
+            "station_id": station_data["station_id"]
+        },
     )
 
-    assert deleted["clide"] == {"id": station_data['station_id']}
+    assert deleted["clide"]["station_id"] == station_data['station_id']
 
 
 def test_mch_provider():
@@ -113,7 +122,10 @@ def test_mch_provider():
     station = provider.create("Station", station_data)
     assert isinstance(station["mch"], mch_station.Station)
 
-    station = provider.get("Station", {"Station": station_data["station_id"]})
+    station = provider.get(
+        "Station",
+        {"station_id": station_data["station_id"]}
+    )
     assert isinstance(station["mch"], mch_station.Station)
 
     stations = provider.list("Station")
@@ -122,7 +134,9 @@ def test_mch_provider():
 
     station = provider.update(
         "Station",
-        {"Station": station_data["station_id"]},
+        {
+            "station_id": station_data["station_id"]
+        },
         {'name': 'Updated Name'}
     )
 
@@ -130,10 +144,12 @@ def test_mch_provider():
 
     deleted = provider.delete(
         "Station",
-        {"Station": station_data['station_id']}
+        {
+            "station_id": station_data["station_id"]
+        },
     )
 
-    assert deleted["mch"] == {"Station": station_data['station_id']}
+    assert deleted["mch"]["station_id"] == station_data['station_id']
 
     mch.Base.metadata.create_all(db_engine)
     with db_engine.connect() as connection:
@@ -203,20 +219,19 @@ def test_clide_and_mch_provider_together():
     station = provider.get(
         "Station",
         {
-            "id": station_data["station_id"],
-            "Station": station_data["station_id"]
+            "station_id": station_data["station_id"]
         }
     )
     assert isinstance(station["clide"], clide_station.Station)
 
     stations = provider.list("Station")
     for station in stations["clide"]:
-        print(station)
         assert isinstance(station, clide_station.Station)
-    print(station_data["station_id"])
     station = provider.update(
         "Station",
-        {"id": station_data["station_id"]},
+        {
+            "station_id": station_data["station_id"]
+        },
         {
             'region': 'US',
             "station_no": station_data["station_no"],
@@ -229,6 +244,8 @@ def test_clide_and_mch_provider_together():
 
     deleted = provider.delete(
         "Station",
-        {"id": station_data['station_id']}
+        {
+            "station_id": station_data["station_id"]
+        }
     )
-    assert deleted["clide"] == {"id": station_data['station_id']}
+    assert deleted["clide"]["station_id"] == station_data['station_id']
