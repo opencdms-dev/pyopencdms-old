@@ -9,3 +9,4 @@ pytest
 pytest-order
 faker
 pydantic
+flake8

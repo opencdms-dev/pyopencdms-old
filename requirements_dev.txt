@@ -16,3 +16,4 @@ pytest
 python-dotenv
 pytest-order
 pydantic
+flake8

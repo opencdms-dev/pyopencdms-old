@@ -36,7 +36,13 @@ jobs:
                   docker-compose -f docker-compose-test.yml up -d --build
                 '
             - name: Run tests with pytest
+              env:
+                MCH_DB_HOST: ${{secrets.MCH_DB_HOST}}
+                MIDAS_DB_HOST: ${{secrets.MIDAS_DB_HOST}}
+                CLIDE_DB_HOST: ${{secrets.CLIDE_DB_HOST}}
+                CLIMSOFT_DB_HOST: ${{secrets.CLIMSOFT_DB_HOST}}
               run: |
+                  flake8 opencdms tests
                   sleep 10
                   pytest tests/integration/models/test_clide.py
                   sleep 3
