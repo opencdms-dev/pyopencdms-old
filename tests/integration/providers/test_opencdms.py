@@ -6,7 +6,6 @@ from opencdms.utils.db import get_clide_connection_string, \
     get_mch_english_connection_string
 from sqlalchemy import create_engine
 from sqlalchemy.sql import text as sa_text
-from sqlalchemy.orm import sessionmaker
 from opencdms.dtos.clide import station as clide_station
 from opencdms.dtos.clide import stationstatu as clide_station_status
 from opencdms.dtos.clide import stationtimezone as clide_station_timezone
