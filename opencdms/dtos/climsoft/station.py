@@ -68,6 +68,3 @@ class UniqueId(BaseModel):
             "openingDatetime": "start_datetime",
             "closingDatetime": "end_datetime"
         }
-
-
-

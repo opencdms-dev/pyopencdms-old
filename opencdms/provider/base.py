@@ -27,7 +27,7 @@
 #
 # =================================================================
 import logging
-from typing import Dict, Any, Union, List
+from typing import Dict, Any, Union
 from types import ModuleType
 from sqlalchemy.orm.session import Session
 from importlib import import_module

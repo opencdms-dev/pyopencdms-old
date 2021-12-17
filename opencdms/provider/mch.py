@@ -43,4 +43,3 @@ class MCHProvider(CDMSProvider):
         schemas: ModuleType = mch_schemas
     ):
         super().__init__(models, schemas)
-

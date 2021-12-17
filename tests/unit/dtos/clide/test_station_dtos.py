@@ -1,5 +1,5 @@
-from opencdms.dtos.opencdms import station_schema as opencdms_station
 from opencdms.dtos.clide import station_schema as clide_station
+from opencdms.dtos.opencdms import station_schema as opencdms_station
 from tests.unit.dtos import data
 
 

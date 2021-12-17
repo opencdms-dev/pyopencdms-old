@@ -58,4 +58,3 @@ class QueryOperators(str, Enum):
     ends_with: str = "ends_with"
     starts_with: str = "starts_with"
     identical_to: str = "identical_to"
-

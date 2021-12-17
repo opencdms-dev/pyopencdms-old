@@ -1,13 +1,11 @@
-import datetime
-import uuid
-import random
 import pytest
+from faker import Faker
 from sqlalchemy import create_engine
-from sqlalchemy.sql import text as sa_text
 from sqlalchemy.orm import sessionmaker
+from sqlalchemy.sql import text as sa_text
+
 from opencdms.models.midas import core as midas_models
 from opencdms.utils.db import get_midas_connection_string
-from faker import Faker
 
 DB_URL = get_midas_connection_string()
 fake = Faker()

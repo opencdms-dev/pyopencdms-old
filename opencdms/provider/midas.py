@@ -186,4 +186,3 @@ class MidasProvider(CDMSProvider):
         schemas: ModuleType = midas_schemas
     ):
         super().__init__(models, schemas)
-

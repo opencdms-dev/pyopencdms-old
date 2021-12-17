@@ -93,6 +93,3 @@ def mch_session():
     SessionLocal = sessionmaker(bind=db_engine)
     session = SessionLocal()
     return session
-
-
-

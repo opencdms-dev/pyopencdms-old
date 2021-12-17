@@ -43,4 +43,3 @@ class ClideProvider(CDMSProvider):
         schemas: ModuleType = clide_schemas
     ):
         super().__init__(models, schemas)
-

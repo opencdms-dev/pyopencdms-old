@@ -1,15 +1,16 @@
-from opencdms.provider.opencdms import OpenCDMSProvider, ProviderConfig
-from tests.unit.dtos.data import station_data
-from opencdms.models import clide
-from opencdms.models.mch import english as mch
-from opencdms.utils.db import get_clide_connection_string, \
-    get_mch_english_connection_string
 from sqlalchemy import create_engine
 from sqlalchemy.sql import text as sa_text
+
 from opencdms.dtos.clide import station as clide_station
 from opencdms.dtos.clide import stationstatu as clide_station_status
 from opencdms.dtos.clide import stationtimezone as clide_station_timezone
 from opencdms.dtos.mch import station as mch_station
+from opencdms.models import clide
+from opencdms.models.mch import english as mch
+from opencdms.provider.opencdms import OpenCDMSProvider, ProviderConfig
+from opencdms.utils.db import get_clide_connection_string, \
+    get_mch_english_connection_string
+from tests.unit.dtos.data import station_data
 
 timezone_data = dict(
     id=1,
@@ -55,10 +56,16 @@ def test_clide_provider():
     provider = OpenCDMSProvider(ProviderConfig(enable_clide=True))
 
     station_status = provider.create("StationStatu", station_status_data)
-    assert isinstance(station_status["clide"], clide_station_status.StationStatu)
+    assert isinstance(
+        station_status["clide"],
+        clide_station_status.StationStatu
+    )
 
     timezone = provider.create("StationTimezone", timezone_data)
-    assert isinstance(timezone["clide"], clide_station_timezone.StationTimezone)
+    assert isinstance(
+        timezone["clide"],
+        clide_station_timezone.StationTimezone
+    )
 
     station_data["timezone"] = timezone["clide"].tm_zone
     station_data["status_id"] = station_status["clide"].id
@@ -204,10 +211,16 @@ def test_clide_and_mch_provider_together():
     )
 
     station_status = provider.create("StationStatu", station_status_data)
-    assert isinstance(station_status["clide"], clide_station_status.StationStatu)
+    assert isinstance(
+        station_status["clide"],
+        clide_station_status.StationStatu
+    )
 
     timezone = provider.create("StationTimezone", timezone_data)
-    assert isinstance(timezone["clide"], clide_station_timezone.StationTimezone)
+    assert isinstance(
+        timezone["clide"],
+        clide_station_timezone.StationTimezone
+    )
 
     station_data["timezone"] = timezone["clide"].tm_zone
     station_data["status_id"] = station_status["clide"].id

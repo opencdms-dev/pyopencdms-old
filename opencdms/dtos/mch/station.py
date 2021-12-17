@@ -65,7 +65,3 @@ class UniqueId(BaseModel):
             "Longitud": "longitude",
             "Latitud": "latitude"
         }
-
-
-
-

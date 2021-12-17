@@ -1,8 +1,7 @@
-import os
-
 import pytest
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+
 from opencdms.models.mch import english as mch_english
 from opencdms.utils.db import get_mch_english_connection_string
 

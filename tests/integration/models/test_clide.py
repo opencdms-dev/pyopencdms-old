@@ -1,9 +1,11 @@
-import uuid
 import random
+import uuid
+
 import pytest
 from sqlalchemy import create_engine
-from sqlalchemy.sql import text as sa_text
 from sqlalchemy.orm import sessionmaker
+from sqlalchemy.sql import text as sa_text
+
 from opencdms.models import clide
 from opencdms.utils.db import get_clide_connection_string
 

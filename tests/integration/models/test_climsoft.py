@@ -1,7 +1,9 @@
 import random
+
 import pytest
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+
 from opencdms.models.climsoft import v4_1_1_core as climsoft
 from opencdms.utils.db import get_climsoft_4_1_1_connection_string
 
