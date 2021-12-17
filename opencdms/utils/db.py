@@ -1,7 +1,3 @@
-from dotenv import load_dotenv
-
-load_dotenv()
-
 from opencdms.config import config
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
