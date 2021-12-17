@@ -98,11 +98,16 @@ class CDMSProvider:
             db_session.add(instance)
             db_session.commit()
             return orm_parser(instance)
+        except AttributeError as e:
+            return e
         except Exception as e:
             db_session.rollback()
             LOGGER.exception(e)
             raise FailedCreatingModel(
-                f"Failed creating Clide model: {model_name}, with error: {e}"
+                f"Failed creating model "
+                f"in module: {self.models.__name__}, "
+                f"model name: {model_name}, "
+                f"with error: {e}"
             )
 
     def get(
@@ -112,10 +117,15 @@ class CDMSProvider:
         unique_id: Dict[str, Union[str, int]]
     ):
         # validate required unique id
-        getattr(
-            import_module(f"{self.schemas.__name__}.{model_name.lower()}"),
-            f"UniqueId"
-        )
+
+        unique_id_validated_fields = getattr(
+            getattr(
+                import_module(f"{self.schemas.__name__}.{model_name.lower()}"),
+                f"UniqueId"
+            ),
+            "parse_obj"
+        )(unique_id).dict()
+
         try:
             model = getattr(self.models, model_name)
 
@@ -127,13 +137,18 @@ class CDMSProvider:
             ), "from_orm")
 
             instance = db_session.query(model) \
-                .filter_by(**unique_id).first()
+                .filter_by(**unique_id_validated_fields).first()
             return orm_parser(instance)
+        except AttributeError as e:
+            return e
         except Exception as e:
             LOGGER.exception(e)
             raise FailedGettingModel(
-                f"Failed getting Clide model: {model_name}"
-                f" with key(s): {unique_id}"
+                f"Failed getting model "
+                f"in module: {self.models.__name__}, "
+                f"model name: {model_name}, "
+                f"with key(s): {unique_id}"
+                f"with error: {e} "
             )
 
     def list(
@@ -143,7 +158,7 @@ class CDMSProvider:
         query: Dict[str, Dict[str, Any]] = None,
         limit: int = 25,
         offset: int = 0
-    ) -> List[Any]:
+    ):
 
         try:
             model = getattr(self.models, model_name)
@@ -194,12 +209,18 @@ class CDMSProvider:
                     else:
                         raise NotImplementedError
 
-            return [orm_parser(li) for li in q.offset(offset).limit(limit).all()]
+            return [
+                orm_parser(li) for li in q.offset(offset).limit(limit).all()
+            ]
+        except AttributeError as e:
+            return e
         except Exception as e:
             LOGGER.exception(e)
             raise QueryFailedForModel(
-                f"Query failed for Clide model: {model_name} "
-                f"for query: {query}"
+                f"Query failed"
+                f"in module: {self.models.__name__}, "
+                f"for query: {query}, "
+                f"with error: {e}"
             )
 
     def update(
@@ -210,14 +231,15 @@ class CDMSProvider:
         data: dict
     ):
         # validate required unique id
-        getattr(
-            import_module(f"{self.schemas.__name__}.{model_name.lower()}"),
-            f"UniqueId"
-        )
+        unique_id_validated_fields = getattr(
+            getattr(
+                import_module(f"{self.schemas.__name__}.{model_name.lower()}"),
+                f"UniqueId"
+            ),
+            "parse_obj"
+        )(unique_id).dict()
 
         data = dict(filter(lambda kv: kv[1] is not None, data.items()))
-
-        print(data)
 
         try:
             model = getattr(self.models, model_name)
@@ -236,19 +258,26 @@ class CDMSProvider:
             ), "from_orm")
 
             db_session.query(model)\
-                .filter_by(**unique_id).update(input_data.dict())
+                .filter_by(**unique_id_validated_fields)\
+                .update(input_data.dict())
             db_session.commit()
 
             updated_instance = db_session.query(model)\
-                .filter_by(**unique_id).first()
+                .filter_by(**unique_id_validated_fields)\
+                .first()
 
             return orm_parser(updated_instance)
+        except AttributeError as e:
+            return e
         except Exception as e:
             db_session.rollback()
             LOGGER.exception(e)
             raise FailedUpdatingModel(
-                f"Failed updating Clide model: {model_name} "
-                f"with updates: {data}"
+                f"Failed updating model "
+                f"in module: {self.models.__name__}"
+                f"model name: {model_name} "
+                f"with updates: {data}, "
+                f"with error: {e}"
             )
 
     def delete(
@@ -258,22 +287,29 @@ class CDMSProvider:
         unique_id: Dict[str, Union[str, int]]
     ):
         # validate required unique id
-        getattr(
-            import_module(f"{self.schemas.__name__}.{model_name.lower()}"),
-            f"UniqueId"
-        )
+        unique_id_validated_fields = getattr(
+            getattr(
+                import_module(f"{self.schemas.__name__}.{model_name.lower()}"),
+                f"UniqueId"
+            ),
+            "parse_obj"
+        )(unique_id).dict()
 
         try:
             model = getattr(self.models, model_name)
-            db_session.query(model).filter_by(**unique_id).delete()
+            db_session.query(model)\
+                .filter_by(**unique_id_validated_fields).delete()
             db_session.commit()
             return unique_id
         except Exception as e:
             db_session.rollback()
             LOGGER.exception(e)
             raise FailedDeletingModel(
-                f"Failed deleting Clide model: {model_name}"
-                f"with unique_id: {unique_id}"
+                f"Failed deleting model "
+                f"in module: {self.models.__name__} "
+                f"model name: {model_name}, "
+                f"with unique_id: {unique_id}, "
+                f"with error: {e}"
             )
 
     # @abstractmethod def before_update(self, model_name: str, unique_id:
