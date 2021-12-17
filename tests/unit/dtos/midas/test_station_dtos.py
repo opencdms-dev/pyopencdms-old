@@ -57,5 +57,3 @@ def test_json_to_pydantic_should_match():
 
     for k, v in midas_station.field_mapping.items():
         assert k in output_dict and v in input_dict
-
-
