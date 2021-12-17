@@ -79,14 +79,13 @@ class CDMSProvider:
 
         try:
             model = getattr(self.models, model_name)
-
             input_data = getattr(getattr(
                 import_module(
                     f"{self.schemas.__name__}.{model_name.lower()}"
                 ),
                 f"Create{model_name}"
             ), "parse_obj")(data)
-
+            print(input_data)
             orm_parser = getattr(getattr(
                 import_module(
                     f"{self.schemas.__name__}.{model_name.lower()}"

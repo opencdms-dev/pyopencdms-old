@@ -12,4 +12,6 @@ station_data = {
     "status_id": 123,
     "timezone": 0,
     "country": "England",
+    "loc_geog_area_id": "SHEL",
+    "rec_st_ind": 1234
 }

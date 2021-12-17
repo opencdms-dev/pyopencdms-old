@@ -6,9 +6,7 @@ from sqlalchemy.orm import sessionmaker
 from opencdms.models.mch import english as mch_english
 from opencdms.utils.db import get_mch_english_connection_string
 
-DB_URL = get_mch_english_connection_string(
-    port_override=os.getenv("MCH_DB_PORT", 3306)
-)
+DB_URL = get_mch_english_connection_string()
 
 db_engine = create_engine(DB_URL)
 
