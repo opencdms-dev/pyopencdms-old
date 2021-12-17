@@ -78,7 +78,12 @@ def test_clide_provider():
     station = provider.update(
         "Station",
         {"id": station_data["station_id"]},
-        {'region': 'US'}
+        {
+            'region': 'US',
+            "station_no": station_data["station_no"],
+            "timezone": station_data["timezone"],
+            "status_id": station_data["status_id"]
+        }
     )
 
     assert station["clide"].region == 'US'
