@@ -27,8 +27,12 @@ class Station(BaseModel):
 
 
 class CreateStation(BaseModel):
-    Station: str
-    StationName: str
+    Station: Optional[str]
+    StationName: Optional[str]
+    StationName2: Optional[str]
+    TimeZone: Optional[constr(max_length=4)]
+    Longitud: Optional[Decimal]
+    Latitud: Optional[Decimal]
 
     class Config:
         fields = field_mapping
@@ -36,6 +40,10 @@ class CreateStation(BaseModel):
 
 class UpdateStation(BaseModel):
     StationName: Optional[str]
+    StationName2: Optional[str]
+    TimeZone: Optional[constr(max_length=4)]
+    Longitud: Optional[Decimal]
+    Latitud: Optional[Decimal]
 
     class Config:
         fields = field_mapping

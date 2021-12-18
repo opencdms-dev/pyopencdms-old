@@ -278,7 +278,11 @@ station = provider.update(
         'region': 'US',
         "station_no": station_data["station_no"],
         "timezone": station_data["timezone"],
-        "status_id": station_data["status_id"]
+        "status_id": station_data["status_id"],
+        "name": "Test station",
+        "secondary_name": "Alt test station",
+        "latitude": 67.111,
+        "longitude": 128.454,
     }
 )
 

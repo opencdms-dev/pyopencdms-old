@@ -253,12 +253,16 @@ def test_clide_and_mch_provider_together():
             'region': 'US',
             "station_no": station_data["station_no"],
             "timezone": station_data["timezone"],
-            "status_id": station_data["status_id"]
+            "status_id": station_data["status_id"],
+            "name": "Test station",
+            "secondary_name": "Alt test station",
+            "latitude": 67.111,
+            "longitude": 128.454,
         }
     )
 
     assert station["clide"].region == 'US'
-    assert station["mch"].TimeZone == '1'
+    assert station["mch"].TimeZone == 'UTC'
 
     deleted = provider.delete(
         "Station",
