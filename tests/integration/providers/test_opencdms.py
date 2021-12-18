@@ -258,7 +258,7 @@ def test_clide_and_mch_provider_together():
     )
 
     assert station["clide"].region == 'US'
-    assert station["mch"].TimeZone == '0'
+    assert station["mch"].TimeZone == '1'
 
     deleted = provider.delete(
         "Station",
