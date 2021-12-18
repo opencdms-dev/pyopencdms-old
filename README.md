@@ -78,6 +78,17 @@ obs.to_csv('example_observations.csv')
   * TODO
 -->
 
+### Naming Convention
+#### DTO naming convention
+
+DTOs reside in opencdms.dtos.{lower_case_provider_name}.{lower_case_model_name}.py files.
+
+Unique ID schema of any model should be in the respective schema file and named `UniqueId`
+
+Create and Update schema should be in the respective schema file and named:
+- Create{model_name_in_models_opencdms.models_module}
+- Update{model_name_in_models_opencdms.models_module}
+- For DTO used representing original row in database should be named as same as the model name in opencdms.models module.
 
 ### How to use `pyopencdms`
 
