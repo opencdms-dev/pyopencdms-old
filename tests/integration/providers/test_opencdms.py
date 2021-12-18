@@ -227,6 +227,7 @@ def test_clide_and_mch_provider_together():
 
     station = provider.create("Station", station_data)
     assert isinstance(station["clide"], clide_station.Station)
+    assert isinstance(station["mch"], mch_station.Station)
 
     station = provider.get(
         "Station",
@@ -235,10 +236,14 @@ def test_clide_and_mch_provider_together():
         }
     )
     assert isinstance(station["clide"], clide_station.Station)
+    assert isinstance(station["mch"], mch_station.Station)
 
     stations = provider.list("Station")
     for station in stations["clide"]:
         assert isinstance(station, clide_station.Station)
+    for station in stations["mch"]:
+        assert isinstance(station, mch_station.Station)
+
     station = provider.update(
         "Station",
         {
@@ -253,6 +258,7 @@ def test_clide_and_mch_provider_together():
     )
 
     assert station["clide"].region == 'US'
+    assert station["mch"].TimeZone == '0'
 
     deleted = provider.delete(
         "Station",
@@ -261,3 +267,4 @@ def test_clide_and_mch_provider_together():
         }
     )
     assert deleted["clide"]["station_id"] == station_data['station_id']
+    assert deleted["mch"]["station_id"] == station_data['station_id']
