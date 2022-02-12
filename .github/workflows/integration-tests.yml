@@ -43,6 +43,10 @@ jobs:
                     pip install .
             -   name: Run tests with pytest
                 run: |
+                    export CLIDE_DB_HOST=postgres
+                    export CLIMSOFT_DB_HOST=mariadb
+                    export MCH_DB_HOST=mariadb
+                    export MIDAS_DB_HOST=postgres
                     pytest tests/integration/models/test_clide.py
                     sleep 3
                     pytest tests/integration/models/test_climsoft.py
