@@ -120,7 +120,7 @@ class CDMSProvider:
         unique_id_validated_fields = getattr(
             getattr(
                 import_module(f"{self.schemas.__name__}.{model_name.lower()}"),
-                f"UniqueId"
+                "UniqueId"
             ),
             "parse_obj"
         )(unique_id).dict()
@@ -233,7 +233,7 @@ class CDMSProvider:
         unique_id_validated_fields = getattr(
             getattr(
                 import_module(f"{self.schemas.__name__}.{model_name.lower()}"),
-                f"UniqueId"
+                "UniqueId"
             ),
             "parse_obj"
         )(unique_id).dict()
@@ -289,7 +289,7 @@ class CDMSProvider:
         unique_id_validated_fields = getattr(
             getattr(
                 import_module(f"{self.schemas.__name__}.{model_name.lower()}"),
-                f"UniqueId"
+                "UniqueId"
             ),
             "parse_obj"
         )(unique_id).dict()
