@@ -1,71 +1,63 @@
-name: Run Tests
+name: Integration Tests
 
-on: [push]
+on: [ push ]
 
 
 jobs:
-  test-job:
-    runs-on: ubuntu-latest
-    container: python:3.8
+    test-job:
+        runs-on: ubuntu-latest
+        container: python:3.8
 
-    services:
-      postgres:
-        image: postgres
-        env:
-          POSTGRES_PASSWORD: password
-        ports:
-            - "5432:5432"
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-      mariadb:
-        image: mariadb:10.1
-        env:
-          MYSQL_ROOT_PASSWORD: password
-          MYSQL_DATABASE: test
-        ports:
-          - "3306:3306"
-        options: >-
-          --health-cmd "mysqladmin ping"
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Install dependencies
-        run: |
-          pip install -r requirements.txt
-          pip install -r requirements_dev.txt
-          pip install .
-      - name: Run tests with pytest
-        env:
-          MCH_DB_HOST: ${{secrets.MCH_DB_HOST}}
-          MIDAS_DB_HOST: ${{secrets.MIDAS_DB_HOST}}
-          CLIDE_DB_HOST: ${{secrets.CLIDE_DB_HOST}}
-          CLIMSOFT_DB_HOST: ${{secrets.CLIMSOFT_DB_HOST}}
-        run: |
-          flake8 opencdms tests
-          sleep 10
-          pytest tests/integration/models/test_clide.py
-          sleep 3
-          pytest tests/integration/models/test_climsoft.py
-          sleep 3
-          pytest tests/integration/models/test_mch_english.py
-          sleep 3
-          pytest tests/integration/models/test_midas.py
-          sleep 3
-          pytest tests/integration/providers/test_clide.py
-          sleep 3
-          pytest tests/integration/providers/test_climsoft.py
-          sleep 3
-          pytest tests/integration/providers/test_mch_english.py
-          sleep 3
-          pytest tests/integration/providers/test_midas.py
-          sleep 3
-          pytest tests/integration/providers/test_opencdms.py
-          sleep 3
-          pytest tests/unit/*
-          sleep 3
+        services:
+            postgres:
+                image: postgres
+                env:
+                    POSTGRES_PASSWORD: password
+                ports:
+                    - "5432:5432"
+                options: >-
+                    --health-cmd pg_isready
+                    --health-interval 10s
+                    --health-timeout 5s
+                    --health-retries 5
+
+            mariadb:
+                image: mariadb:10.1
+                env:
+                    MYSQL_ROOT_PASSWORD: password
+                    MYSQL_DATABASE: test
+                ports:
+                    - "3306:3306"
+                options: >-
+                    --health-cmd "mysqladmin ping"
+                    --health-interval 10s
+                    --health-timeout 5s
+                    --health-retries 5
+        steps:
+            -   name: Checkout
+                uses: actions/checkout@v2
+            -   name: Install dependencies
+                run: |
+                    pip install -r requirements.txt
+                    pip install -r requirements_dev.txt
+                    pip install .
+            -   name: Run tests with pytest
+                run: |
+                    pytest tests/integration/models/test_clide.py
+                    sleep 3
+                    pytest tests/integration/models/test_climsoft.py
+                    sleep 3
+                    pytest tests/integration/models/test_mch_english.py
+                    sleep 3
+                    pytest tests/integration/models/test_midas.py
+                    sleep 3
+                    pytest tests/integration/providers/test_clide.py
+                    sleep 3
+                    pytest tests/integration/providers/test_climsoft.py
+                    sleep 3
+                    pytest tests/integration/providers/test_mch_english.py
+                    sleep 3
+                    pytest tests/integration/providers/test_midas.py
+                    sleep 3
+                    pytest tests/integration/providers/test_opencdms.py
+                    sleep 3
