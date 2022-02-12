@@ -21,7 +21,7 @@ def get_clide_connection_string() -> str:
         driver=config.CLIDE_DB_DRIVER,
         user=config.CLIDE_DB_USER,
         password=config.CLIDE_DB_PASS,
-        host=config.CLIMSOFT_DB_HOST,
+        host=config.CLIDE_DB_HOST,
         port=config.CLIDE_DB_PORT,
         db_name=config.CLIDE_DB_NAME
     )
