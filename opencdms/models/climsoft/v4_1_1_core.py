@@ -9,8 +9,8 @@ metadata = Base.metadata
 
 
 TARGET_TABLES = [
-    "acquisitiontype", 
-    "data_forms", 
+    "acquisitiontype",
+    "data_forms",
     "flags",
     "obselement",
     "paperarchivedefinition",
@@ -33,8 +33,17 @@ TARGET_TABLES = [
     "observationschedule",
     "physicalfeature",
     "stationelement",
-    "faultresolution"
+    "faultresolution",
+    "climsoftusers"
 ]
+
+
+class ClimsoftUser(Base):
+    __tablename__ = 'climsoftusers'
+
+    userName = Column(String(50), primary_key=True, unique=True, nullable=False)
+    userRole = Column(String(50), nullable=False)
+
 
 class Acquisitiontype(Base):
     __tablename__ = 'acquisitiontype'

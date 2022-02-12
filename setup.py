@@ -10,9 +10,9 @@ with open("README.rst") as readme_file:
 with open("HISTORY.rst") as history_file:
     history = history_file.read()
 
-requirements = [
-    "Click>=7.0",
-]
+with open("requirements.txt") as requirements_file:
+    requirements = requirements_file.readlines()
+
 
 setup_requirements = [
     "pytest-runner",
