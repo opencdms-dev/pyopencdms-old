@@ -49,7 +49,7 @@ setup(
     include_package_data=True,
     keywords="opencdms",
     name="opencdms",
-    packages=find_packages(include=["opencdms", "opencdms.*"]),
+    packages=find_packages(),
     setup_requires=setup_requirements,
     test_suite="tests",
     tests_require=test_requirements,
