@@ -28,3 +28,33 @@
 # =================================================================
 
 """A package containing the plugins wrapping CDMS data sources"""
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+from enum import Enum
+
+
+def get_session_factory(db_uri: str):
+    db_engine = create_engine(
+        db_uri
+    )
+
+    session_factory = sessionmaker(
+        autocommit=False,
+        autoflush=False,
+        bind=db_engine
+    )
+
+    return session_factory
+
+
+class QueryOperators(str, Enum):
+    gt: str = "__gt__"
+    lt: str = "__lt__"
+    gte: str = "__ge__"
+    lte: str = "__le__"
+    equal: str = "__eq__"
+    contains: str = "contains"
+    not_equal: str = "__ne__"
+    ends_with: str = "ends_with"
+    starts_with: str = "starts_with"
+    identical_to: str = "identical_to"

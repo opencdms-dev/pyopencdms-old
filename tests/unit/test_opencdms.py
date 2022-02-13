@@ -3,7 +3,6 @@
 """Tests for `opencdms` package."""
 
 import pytest
-
 from click.testing import CliRunner
 
 # from opencdms import opencdms

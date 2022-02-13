@@ -1,4 +1,5 @@
 import os
+
 import django
 from django.conf import settings
 from django.core.management import execute_from_command_line
@@ -12,7 +13,7 @@ def setup_module(module):
             DATABASES={
                 "default": {
                     "ENGINE": "django.db.backends.sqlite3",
-                    "NAME": os.path.join(BASE_DIR, "tests/db.sqlite3"),
+                    "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
                 }
             },
             DEFAULT_AUTO_FIELD="django.db.models.AutoField",
@@ -40,7 +41,7 @@ def setup_module(module):
 
 
 def teardown_module(module):
-    os.remove(os.path.join(BASE_DIR, "tests/db.sqlite3"))
+    os.remove(os.path.join(BASE_DIR, "db.sqlite3"))
 
 
 def test_should_return_same_station_ids():
