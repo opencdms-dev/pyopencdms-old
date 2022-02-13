@@ -79,7 +79,7 @@ obs.to_csv('example_observations.csv')
 -->
 
 ### Naming Convention
-#### DTO naming convention
+#### Data Transfer Object (DTO) naming convention
 
 DTOs reside in opencdms.dtos.{lower_case_provider_name}.{lower_case_model_name}.py files.
 
@@ -92,7 +92,8 @@ Create and Update schema should be in the respective schema file and named:
 
 ### How to use `pyopencdms`
 
-After installing `pyopencdms`, `opencdms` will be available.
+After installing `pyopencdms` the `opencdms` Python package will be available to import.
+
 Currently, `opencdms` package has 5 providers:
  - mch
  - midas
