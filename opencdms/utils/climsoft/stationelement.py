@@ -104,10 +104,14 @@ def sync_stationelement_with_observationfinal_sql(db_session: Session):
     db_session.commit()
 
 
-def auto_update_end_time(
+def auto_update_end_date(
     db_session: Session,
     delay_threshold: datetime.timedelta = None
 ):
+    """
+    Updates endDate column in stationelement if last observation data is
+    older than delay_threshold
+    """
     if delay_threshold is None:
         return
 

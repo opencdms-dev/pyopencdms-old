@@ -10,7 +10,7 @@ from sqlalchemy.orm.session import sessionmaker
 from opencdms.utils.climsoft.stationelement import (
     sync_stationelement_with_observationfinal_sql,
     sync_stationelement_with_observationfinal_sqla,
-    auto_update_end_time
+    auto_update_end_date
 )
 
 DB_URL = get_connection_string(
@@ -43,7 +43,7 @@ session.close()
 
 To update endDate column if there is considerable delay in last updated data and current date. here we used 60 days as considerable delay
 ```python
-auto_update_end_time(session, datetime.timedelta(days=60))
+auto_update_end_date(session, datetime.timedelta(days=60))
 session.close()
 ```
 
