@@ -45,3 +45,8 @@ To update endDate column if there is considerable delay in last updated data and
 auto_update_end_time(session, datetime.timedelta(days=60))
 session.close()
 ```
+
+After running the above code, the `stationelement` table should look like this
+(if we used this database `mariadb_climsoft_test_db_v4` from `opencdms-test-data`)
+
+![synced stationelement table] (./screenshots/synced_stationelement.png)
