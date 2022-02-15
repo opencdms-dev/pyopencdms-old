@@ -1,12 +1,13 @@
 # How to use these utility functions for Climsoft
 
 Create session and import dependencies
+
 ```python
 from opencdms.utils.db import get_connection_string
 from sqlalchemy.engine import create_engine
 from sqlalchemy.orm.session import sessionmaker
 
-from opencdms.utils.climsoft.staionelement import (
+from opencdms.utils.climsoft.stationelement import (
     sync_stationelement_with_observationfinal_sql,
     sync_stationelement_with_observationfinal_sqla,
     auto_update_end_time
