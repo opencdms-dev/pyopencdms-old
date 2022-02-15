@@ -1,3 +1,4 @@
+import datetime
 from sqlalchemy.orm.session import Session
 from sqlalchemy.sql.functions import func
 from opencdms.models.climsoft.v4_1_1_core import (
@@ -6,17 +7,22 @@ from opencdms.models.climsoft.v4_1_1_core import (
 )
 
 
-def group_observation_final_data(db_session: Session):
+def group_observation_final_data(
+    db_session: Session,
+    first_obs_date: bool = True
+):
+    obs_date = func.DATE(Observationfinal.obsDatetime).label("obsDate")
     subquery = db_session.query(
         Observationfinal.recordedFrom,
         Observationfinal.describedBy,
-        func.DATE(Observationfinal.obsDatetime).label("beginDate")
-    ).order_by(
-        "beginDate"
+        obs_date
     ).subquery()
 
     return db_session.query(
-        subquery
+        subquery.c.recordedFrom,
+        subquery.c.describedBy,
+        func.MIN(subquery.c.obsDate) if first_obs_date
+        else func.MAX(subquery.c.obsDate)
     ).group_by(
         "recordedFrom",
         "describedBy"
@@ -32,6 +38,10 @@ def get_station_element_data(db_session: Session):
 
 
 def sync_stationelement_with_observationfinal_sqla(db_session: Session):
+    """
+    Synchronizes stationelement with observationfinal using sqlalchemy
+    api. Only updates/removes new/invalid rows
+    """
     observationfinal_grouped_rows = group_observation_final_data(
         db_session
     )
@@ -74,16 +84,19 @@ def sync_stationelement_with_observationfinal_sqla(db_session: Session):
 
 
 def sync_stationelement_with_observationfinal_sql(db_session: Session):
+    """
+        Synchronizes stationelement with observationfinal using raw SQL.
+        Truncates stationelement and then repopulates again.
+    """
     db_session.execute(f"TRUNCATE {Stationelement.__tablename__}")
     db_session.commit()
 
     sql = f"""
     INSERT INTO {Stationelement.__tablename__}
     (recordedFrom, describedBy, beginDate)
-    SELECT * FROM(
+    SELECT t.recordedFrom, t.describedBy, MIN(t.beginDate) as beginDate FROM(
         SELECT recordedFrom, describedBy, DATE(obsDatetime) as beginDate
         FROM {Observationfinal.__tablename__}
-        ORDER BY beginDate ASC
     ) t GROUP BY t.recordedFrom, t.describedBy
     """
 
@@ -91,22 +104,23 @@ def sync_stationelement_with_observationfinal_sql(db_session: Session):
     db_session.commit()
 
 
-if __name__ == "__main__":
-    from opencdms.utils.db import get_connection_string
-    from sqlalchemy.engine import create_engine
-    from sqlalchemy.orm.session import sessionmaker
-    DB_URL = get_connection_string(
-        "mysql",
-        "mysqldb",
-        "root",
-        "password",
-        "127.0.0.1",
-        "23306",
-        "mariadb_climsoft_test_db_v4"
+def auto_update_end_time(
+    db_session: Session,
+    delay_threshold: datetime.timedelta = None
+):
+    if delay_threshold is None:
+        return
+
+    obsfinal_grouped_data = group_observation_final_data(
+        db_session=db_session,
+        first_obs_date=False
     )
-    db_engine = create_engine(DB_URL)
-    SessionLocal = sessionmaker(bind=db_engine)
-    session = SessionLocal()
-    sync_stationelement_with_observationfinal_sql(session)
-    sync_stationelement_with_observationfinal_sqla(session)
-    session.close()
+
+    for recordedFrom, describedBy, obsDate in obsfinal_grouped_data:
+        if (datetime.datetime.utcnow().date() - obsDate) > delay_threshold:
+            db_session.query(Stationelement).filter_by(
+                recordedFrom=recordedFrom,
+                describedBy=describedBy
+            ).update({"endDate": obsDate})
+            db_session.commit()
+    return
