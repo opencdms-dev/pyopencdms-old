@@ -1,10 +1,16 @@
 from sqlalchemy.orm.session import Session
 from sqlalchemy.sql.functions import func
 from sqlalchemy.sql import select, insert
-from opencdms.models.climsoft.v4_1_1_core import Observationfinal, Stationelement
+from opencdms.models.climsoft.v4_1_1_core import (
+    Observationfinal,
+    Stationelement
+)
 
 
 def sync_stationelement_with_observationfinal_sqla(db_session: Session):
+    db_session.execute(f"TRUNCATE {Stationelement.__tablename__}")
+    db_session.commit()
+
     select_stmt = select(
         Observationfinal.recordedFrom,
         Observationfinal.describedBy,
@@ -19,15 +25,19 @@ def sync_stationelement_with_observationfinal_sqla(db_session: Session):
         Stationelement
     ).from_select(
         ["recordedFrom", "describedBy", "beginDate"], select_stmt
-    ).prefix_with("IGNORE")
+    )
 
-    db_session.execute(insert_stmt)
+    db_session.execute(str(insert_stmt).replace("INSERT INTO", "REPLACE"))
     db_session.commit()
 
 
 def sync_stationelement_with_observationfinal_sql(db_session: Session):
+    db_session.execute(f"TRUNCATE {Stationelement.__tablename__}")
+    db_session.commit()
+
     sql = f"""
-    INSERT IGNORE INTO {Stationelement.__tablename__} (recordedFrom, describedBy, beginDate)
+    REPLACE {Stationelement.__tablename__}
+    (recordedFrom, describedBy, beginDate)
         SELECT recordedFrom, describedBy, DATE(obsDatetime) as beginDate
         FROM {Observationfinal.__tablename__}
         GROUP BY recordedFrom, describedBy
