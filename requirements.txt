@@ -8,3 +8,4 @@ python-dotenv
 faker
 pydantic
 pygeoapi
+alchemyjsonschema
