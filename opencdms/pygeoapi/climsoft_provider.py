@@ -299,10 +299,14 @@ class ClimsoftProvider(BaseProvider):
         if row_data:
             rd = row_data.__dict__
             rd.pop('_sa_instance_state')
+            station = rd.get("station")
+            if station is not None:
+                station = rd.pop("station")
+                station = station.__dict__
+                station.pop("_sa_instance_state")
             rd = {
                 **rd,
-                "station": rd.get("station").__dict__
-                if rd.get("station") else None
+                "station": station
             }
             feature = {
                 'type': 'Feature'
