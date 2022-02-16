@@ -303,7 +303,9 @@ class ClimsoftProvider(BaseProvider):
             if station is not None:
                 station = rd.pop("station")
                 station = station.__dict__
-                station.pop("_sa_instance_state")
+                if station.get('_sa_instance_state'):
+                    station.pop("_sa_instance_state")
+
             rd = {
                 **rd,
                 "station": station
