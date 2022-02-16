@@ -27,7 +27,7 @@ class DatabaseConnection:
     def __init__(
         self,
         conn_dic: Dict,
-        table: str,
+        table: str = None,
         properties: List = None,
         context: str = "query"
     ):
@@ -143,7 +143,6 @@ class ClimsoftProvider(BaseProvider):
         if not self.fields:
             with DatabaseConnection(
                 self.conn_dic,
-                self.table,
                 properties=self.properties
             ) as db:
                 self.fields = db.fields
