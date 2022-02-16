@@ -199,7 +199,6 @@ class ClimsoftProvider(BaseProvider):
         if resulttype == 'hits':
             with DatabaseConnection(
                 conn_dic=self.conn_dic,
-                table=self.table,
                 properties=self.properties,
                 context='hits'
             ) as db:
