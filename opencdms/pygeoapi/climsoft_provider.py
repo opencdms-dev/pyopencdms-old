@@ -107,10 +107,10 @@ class ClimsoftProvider(BaseProvider):
     def __init__(self, provider_def):
         super().__init__(provider_def=provider_def)
 
-        self.table = provider_def['table']
-        self.id_field = provider_def['id_field']
+        # self.table = provider_def['table']
+        # self.id_field = provider_def['id_field']
         self.conn_dic = provider_def['data']
-        self.geom = provider_def.get('geom_field', 'geom')
+        # self.geom = provider_def.get('geom_field', 'geom')
         self.get_fields()
 
     def __apply_filters(
