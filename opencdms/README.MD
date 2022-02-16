@@ -135,13 +135,6 @@ We will be using `feature` type provider for the time being.
 - ***tile:*** https://github.com/opengeospatial/ogcapi-tiles
 - ***edr:*** https://github.com/opengeospatial/ogcapi-environmental-data-retrieval
 
-# Confusion
-`pygeoapi` assumes that features are data types (equivalent to `table` in SQL).
-so, when we add a feature type resource. It is available under collections as a single entity.
+We are going to display data from `observationfinal` using `opencdms.pygeoapi.climsoft_provider.ClimsoftProvider`
 
-So, if we add a feature called `climsoft` in pygeoapi resources. `climsoft
- is expected to be a single table. But in reality, climsoft is a collection of tables
-with internal business logics.
 
-Now, when a user want to add `climsoft` CDMS using opencdms pygeoapi provider plugin,
-should we generate a list of features that will be configured for climsoft tables?

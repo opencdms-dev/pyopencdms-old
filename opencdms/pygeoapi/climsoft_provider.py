@@ -16,6 +16,9 @@ from alchemyjsonschema import SchemaFactory
 from alchemyjsonschema import ForeignKeyWalker
 from opencdms.utils.db import get_connection_string, get_count
 from opencdms.models.climsoft import v4_1_1_core as models
+from opencdms.dtos.climsoft.observationfinal import (
+    Observationfinal as ObservationfinalSchema
+)
 
 
 LOGGER = logging.getLogger(__name__)
@@ -102,11 +105,7 @@ class DatabaseConnection:
 class ClimsoftProvider(BaseProvider):
     def __init__(self, provider_def):
         super().__init__(provider_def=provider_def)
-
-        # self.table = provider_def['table']
-        # self.id_field = provider_def['id_field']
         self.conn_dic = provider_def['data']
-        # self.geom = provider_def.get('geom_field', 'geom')
         self.get_fields()
 
     def __apply_filters(
@@ -143,29 +142,6 @@ class ClimsoftProvider(BaseProvider):
             ) as db:
                 self.fields = db.fields
         return self.fields
-
-    def get_data_path(self, baseurl, urlpath, dirpath):
-        """
-        Gets directory listing or file description or raw file dump
-
-        :param baseurl: base URL of endpoint
-        :param urlpath: base path of URL
-        :param dirpath: directory basepath (equivalent of URL)
-
-        :returns: `dict` of file listing or `dict` of GeoJSON item or raw file
-        """
-
-        raise NotImplementedError()
-
-    def get_metadata(self):
-        """
-        Provide data/file metadata
-
-        :returns: `dict` of metadata construct (format
-                  determined by provider/standard)
-        """
-
-        raise NotImplementedError()
 
     def query(
         self,
@@ -212,36 +188,75 @@ class ClimsoftProvider(BaseProvider):
                     bbox=bbox
                 )
 
+                query = self._apply_sorting(
+                    query=query,
+                    sortby=sortby
+                )
+
                 return self.__response_feature_hits(get_count(query))
 
         with DatabaseConnection(
             conn_dic=self.conn_dic,
             properties=self.properties
         ) as db:
-            row_data = db.session.query(models.Observationfinal).options(
-                joinedload(models.Observationfinal.station)
-            ).all()
+
+            query = db.session.query(
+                models.Observationfinal
+            )
+
+            if not skip_geometry:
+                query = query.options(
+                    joinedload(models.Observationfinal.station)
+                )
+
+            query = self.__apply_filters(
+                query=query,
+                properties=properties,
+                bbox=bbox
+            )
+
+            # query = query.group_by(
+            #     models.Observationfinal.recordedFrom
+            # )
+
+            obs_finals = query.offset(startindex).limit(limit).all()
+
             feature_collection = {
                 "type": "FeatureCollection",
                 "features": []
             }
 
-            for rd in row_data:
+            for obs_final in obs_finals:
                 feature_collection["features"].append(
-                    self.__response_feature(rd)
+                    self.__response_feature(obs_final)
                 )
 
             return feature_collection
 
-    def get(self, identifier):
+    def get(self, identifier, **kwargs):
         """
         query the provider by id
 
         :param identifier: feature id
         :returns: dict of single GeoJSON feature
         """
+        recordedFrom, describedBy, obsDatetime = identifier.split("*")
 
-        raise NotImplementedError()
+        with DatabaseConnection(
+            conn_dic=self.conn_dic,
+            properties=self.properties
+        ) as db:
+            obs_final = db.session.query(
+                models.Observationfinal
+            ).filter_by(
+                recordedFrom=recordedFrom,
+                describedBy=describedBy,
+                obsDatetime=obsDatetime
+            ).options(
+                joinedload(models.Observationfinal.station)
+            ).first()
+
+            return self.__response_feature(obs_final, detail=True)
 
     def create(self, new_feature):
         """Create a new feature
@@ -287,41 +302,39 @@ class ClimsoftProvider(BaseProvider):
     def __repr__(self):
         return '<ClimsoftProvider> {}'.format(self.type)
 
-    def __response_feature(self, row_data):
+    def __response_feature(self, obs_final, detail=False):
         """
         Assembles GeoJSON output from DB query
 
-        :param row_data: DB row result
+        :param obs_final: DB row result
 
         :returns: `dict` of GeoJSON Feature
         """
 
-        if row_data:
-            rd = row_data.__dict__
-            rd.pop('_sa_instance_state')
-            station = rd.get("station")
-            if station is not None:
-                station = rd.pop("station")
-                station = station.__dict__
-                if station.get('_sa_instance_state'):
-                    station.pop("_sa_instance_state")
-
-            rd = {
-                **rd,
-                "station": station
-            }
+        if obs_final:
+            if not detail:
+                include = {
+                    "obsValue": True,
+                    "obsLevel": True,
+                    "obsDatetime": True
+                }
+            else:
+                include = None
+            obsfinal = ObservationfinalSchema.from_orm(obs_final)
             feature = {
-                'type': 'Feature'
-            }
-
-            geom = rd.pop('st_asgeojson') if rd.get('st_asgeojson') else None
-
-            feature['geometry'] = json.loads(
-                geom
-            ) if geom is not None else None  # noqa
-
-            feature['properties'] = rd
-            feature['id'] = feature['properties'].get(self.id_field)
+                'type': 'Feature',
+                'geometry': {
+                    "type": "Point",
+                    "coordinates": [
+                        obsfinal.station.latitude,
+                        obsfinal.station.longitude
+                    ]
+                } if obsfinal.station else None,
+                'properties': obsfinal.dict()
+                if include is None else obsfinal.dict(include=include),
+                'id': f"{obsfinal.recordedFrom}"
+                      f"*{obsfinal.describedBy}"
+                      f"*{obsfinal.obsDatetime}"}
 
             return feature
         else:
