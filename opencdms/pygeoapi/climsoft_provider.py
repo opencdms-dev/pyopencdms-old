@@ -218,7 +218,7 @@ class ClimsoftProvider(BaseProvider):
             conn_dic=self.conn_dic,
             properties=self.properties
         ) as db:
-            row_data = db.session.query(models.Observationfinal).option(
+            row_data = db.session.query(models.Observationfinal).options(
                 joinedload(models.Observationfinal.station)
             ).all()
             feature_collection = {
