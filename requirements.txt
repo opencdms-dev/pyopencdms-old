@@ -9,3 +9,4 @@ faker
 pydantic
 pygeoapi
 alchemyjsonschema
+Flask-CORS
