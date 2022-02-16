@@ -297,7 +297,8 @@ class ClimsoftProvider(BaseProvider):
         """
 
         if row_data:
-            rd = dict(row_data)
+            rd = row_data.__dict__
+            rd.pop('_sa_instance_state')
             feature = {
                 'type': 'Feature'
             }
