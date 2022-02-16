@@ -216,7 +216,6 @@ class ClimsoftProvider(BaseProvider):
 
         with DatabaseConnection(
             conn_dic=self.conn_dic,
-            table=self.table,
             properties=self.properties
         ) as db:
             row_data = db.session.query(models.Observationfinal).option(
