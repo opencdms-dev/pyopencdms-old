@@ -60,8 +60,8 @@ class DatabaseConnection:
         self.context = context
         self.columns = None
         self.fields = {}
-        self.db_session = None
-        self.db_uri = get_connection_string(
+        self.session = None
+        self.uri = get_connection_string(
             "mysql",
             "mysqldb",
             self.conn_dic["user"],
@@ -73,12 +73,12 @@ class DatabaseConnection:
 
     def __enter__(self):
         try:
-            self.db_engine = create_engine(
-                url=self.db_uri
+            self.engine = create_engine(
+                url=self.uri
             )
-            self.db_session = sessionmaker(
-                bind=self.db_engine
-            )
+            self.session = sessionmaker(
+                bind=self.engine
+            )()
         except Exception as e:
             LOGGER.error(e)
             raise ProviderConnectionError()
@@ -86,7 +86,7 @@ class DatabaseConnection:
         if self.context == 'query':
             result = {
                 column.key: column.type.get_dbapi_type(
-                    self.db_engine.dialect.dbapi
+                    self.engine.dialect.dbapi
                 )
                 for column in models.Observationfinal.__table__.columns
             }
@@ -100,7 +100,7 @@ class DatabaseConnection:
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
-        self.db_session.close()
+        self.session.close()
 
 
 class ClimsoftProvider(BaseProvider):
@@ -207,7 +207,7 @@ class ClimsoftProvider(BaseProvider):
                 properties=self.properties,
                 context='hits'
             ) as db:
-                query = db.db_session.query(
+                query = db.session.query(
                     models.Observationfinal
                 )
 
@@ -224,7 +224,7 @@ class ClimsoftProvider(BaseProvider):
             table=self.table,
             properties=self.properties
         ) as db:
-            row_data = db.db_session.query(models.Observationfinal).option(
+            row_data = db.session.query(models.Observationfinal).option(
                 joinedload(models.Observationfinal.station)
             ).all()
             feature_collection = {
