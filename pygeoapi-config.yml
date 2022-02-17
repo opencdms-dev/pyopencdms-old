@@ -62,20 +62,18 @@ resources:
             - climsoft
             - observation
         context:
-            -   datetime: https://schema.org/DateTime
-            -   vocab: https://example.com/vocab#
-                stn_id: "vocab:stn_id"
-                value: "vocab:value"
+            -   schema: https://schema.org/
+                obsDatetime:
+                    "@id": schema:observationDate
+                    "@type": schema:DateTime
+                value:
+                    "@id": schema:value
+                    "@type": schema:Number
         links:
             -   type: text/csv
                 rel: canonical
-                title: data
+                title: example data
                 href: https://github.com/mapserver/mapserver/blob/branch-7-0/msautotest/wxs/data/obs.csv
-                hreflang: en-US
-            -   type: text/csv
-                rel: alternate
-                title: data
-                href: https://raw.githubusercontent.com/mapserver/mapserver/branch-7-0/msautotest/wxs/data/obs.csv
                 hreflang: en-US
         extents:
             spatial:

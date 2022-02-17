@@ -379,3 +379,22 @@ operation and returns a response in the form:
     "climsoft": "a model or list of model/error/None"
 }
 ```
+
+### Running pygeoapi server
+
+There is a `pygeoapi-config.yml` and a `pygeoapi-openapi.yml` file at the root of current directory. You are free to
+modify `pygeoapi-config.yml` and regenerate `pygeoapi-openapi.yml`.
+
+Follow these steps to regenerate `pygeoapi-openapi.yml`
+
+```bash
+$ export $PYGEOAPI_CONFIG='pygeoapi-config.yml'
+$ export $PYGEOAPI_OPENAPI='pygeoapi-openapi.yml'
+$ pygeoapi openapi generate $PYGEOAPI_CONFIG >| $PYGEOAPI_OPENAPI
+```
+
+to run the pygeoapi server
+
+```bash
+$ pygeoapi serve
+```

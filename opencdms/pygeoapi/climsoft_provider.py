@@ -1,7 +1,4 @@
 import logging
-import json
-
-from psycopg2.sql import SQL, Identifier
 from pygeoapi.provider.base import (
     BaseProvider,
     ProviderConnectionError,
@@ -17,7 +14,8 @@ from alchemyjsonschema import ForeignKeyWalker
 from opencdms.utils.db import get_connection_string, get_count
 from opencdms.models.climsoft import v4_1_1_core as models
 from opencdms.dtos.climsoft.observationfinal import (
-    Observationfinal as ObservationfinalSchema
+    Observationfinal as ObservationfinalSchema,
+    field_mapping as obs_final_field_mapping
 )
 
 
@@ -90,12 +88,9 @@ class DatabaseConnection:
 
         if self.context == 'query':
             factory = SchemaFactory(ForeignKeyWalker)
-            self.fields = {
-                k: v['type']
-                for k, v in factory(
+            self.fields = factory(
                     model=models.Observationfinal
-                ).get("properties").items()
-            }
+                ).get("properties")
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
@@ -199,39 +194,54 @@ class ClimsoftProvider(BaseProvider):
             conn_dic=self.conn_dic,
             properties=self.properties
         ) as db:
-
-            query = db.session.query(
-                models.Observationfinal
-            )
-
-            if not skip_geometry:
-                query = query.options(
-                    joinedload(models.Observationfinal.station)
+            try:
+                query = db.session.query(
+                    models.Observationfinal
                 )
 
-            query = self.__apply_filters(
-                query=query,
-                properties=properties,
-                bbox=bbox
-            )
-
-            # query = query.group_by(
-            #     models.Observationfinal.recordedFrom
-            # )
-
-            obs_finals = query.offset(startindex).limit(limit).all()
-
-            feature_collection = {
-                "type": "FeatureCollection",
-                "features": []
-            }
-
-            for obs_final in obs_finals:
-                feature_collection["features"].append(
-                    self.__response_feature(obs_final)
+                query = self.__apply_filters(
+                    query=query,
+                    properties=properties,
+                    bbox=bbox
                 )
 
-            return feature_collection
+                # query = query.group_by(
+                #     models.Observationfinal.recordedFrom
+                # )
+
+                if not skip_geometry:
+                    query = query.options(
+                        joinedload(models.Observationfinal.station)
+                    )
+
+                obs_finals = query.offset(startindex).limit(limit).all()
+
+                include_props = {
+                    "obsValue",
+                    "obsLevel",
+                    "obsDatetime"
+                }
+
+                for p in select_properties:
+                    include_props.add(obs_final_field_mapping.get(p, p))
+
+                feature_collection = {
+                    "type": "FeatureCollection",
+                    "features": []
+                }
+
+                for obs_final in obs_finals:
+                    feature_collection["features"].append(
+                        self.__response_feature(
+                            obs_final,
+                            include=include_props
+                        )
+                    )
+
+                return feature_collection
+            except Exception as e:
+                LOGGER.error(e)
+                raise ProviderQueryError()
 
     def get(self, identifier, **kwargs):
         """
@@ -256,7 +266,10 @@ class ClimsoftProvider(BaseProvider):
                 joinedload(models.Observationfinal.station)
             ).first()
 
-            return self.__response_feature(obs_final, detail=True)
+            if not obs_final:
+                raise ProviderItemNotFoundError()
+
+            return self.__response_feature(obs_final)
 
     def create(self, new_feature):
         """Create a new feature
@@ -302,7 +315,7 @@ class ClimsoftProvider(BaseProvider):
     def __repr__(self):
         return '<ClimsoftProvider> {}'.format(self.type)
 
-    def __response_feature(self, obs_final, detail=False):
+    def __response_feature(self, obs_final, include: set = None):
         """
         Assembles GeoJSON output from DB query
 
@@ -310,35 +323,25 @@ class ClimsoftProvider(BaseProvider):
 
         :returns: `dict` of GeoJSON Feature
         """
+        obsfinal = ObservationfinalSchema.from_orm(obs_final)
 
-        if obs_final:
-            if not detail:
-                include = {
-                    "obsValue": True,
-                    "obsLevel": True,
-                    "obsDatetime": True
-                }
-            else:
-                include = None
-            obsfinal = ObservationfinalSchema.from_orm(obs_final)
-            feature = {
-                'type': 'Feature',
-                'geometry': {
-                    "type": "Point",
-                    "coordinates": [
-                        obsfinal.station.latitude,
-                        obsfinal.station.longitude
-                    ]
-                } if obsfinal.station else None,
-                'properties': obsfinal.dict()
-                if include is None else obsfinal.dict(include=include),
-                'id': f"{obsfinal.recordedFrom}"
-                      f"*{obsfinal.describedBy}"
-                      f"*{obsfinal.obsDatetime}"}
+        feature = {
+            'type': 'Feature',
+            'geometry': {
+                "type": "Point",
+                "coordinates": [
+                    obsfinal.station.latitude,
+                    obsfinal.station.longitude
+                ]
+            } if obsfinal.station else None,
+            'properties': obsfinal.dict(by_alias=True)
+            if include is None
+            else obsfinal.dict(include=include, by_alias=True),
+            'id': f"{obsfinal.recordedFrom}"
+                  f"*{obsfinal.describedBy}"
+                  f"*{obsfinal.obsDatetime}"}
 
-            return feature
-        else:
-            return None
+        return feature
 
     def __response_feature_hits(self, hits):
         """Assembles GeoJSON/Feature number
@@ -355,6 +358,3 @@ class ClimsoftProvider(BaseProvider):
         }
 
         return feature_collection
-
-
-

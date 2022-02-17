@@ -8,7 +8,7 @@ from opencdms.dtos.climsoft.station import Station
 field_mapping = {
     "recordedFrom": "recorded_from",
     "describedBy": "described_by",
-    "obsDatetime": "obsDatetime",
+    "obsDatetime": "obs_datetime",
     "obsLevel": "obs_level",
     "obsValue": "obs_value",
     "qcStatus": "qc_status",
