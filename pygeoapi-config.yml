@@ -8,6 +8,7 @@ server:
     gzip: false
     languages:
         - en-US
+        - fr-CA
     cors: true
     pretty_print: true
     limit: 10
@@ -21,12 +22,18 @@ metadata:
     identification:
         title:
             en: pygeoapi default instance
+            fr: instance par défaut de pygeoapi
         description:
             en: pygeoapi provides an API to geospatial data
+            fr: pygeoapi fournit une API aux données géospatiales
         keywords:
             en:
                 - geospatial
                 - data
+                - api
+            fr:
+                - géospatiale
+                - données
                 - api
         keywords_type: theme
         terms_of_service: https://creativecommons.org/licenses/by/4.0/
@@ -61,6 +68,9 @@ resources:
         keywords:
             - climsoft
             - observation
+        languages:
+            - en-US
+            - fr-CA
         context:
             -   schema: https://schema.org/
                 obsDatetime:
@@ -85,6 +95,9 @@ resources:
         providers:
             -   type: feature
                 name: opencdms.pygeoapi.climsoft_provider.ClimsoftProvider
+                languages:
+                    - en
+                    - fr
                 data:
                     host: 127.0.0.1
                     port: 23306 # Default 3306 if not provided

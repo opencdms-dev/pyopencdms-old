@@ -32,6 +32,7 @@ components:
         default: en-US
         enum:
         - en-US
+        - fr-CA
         type: string
     properties:
       description: The properties that should be included for each feature. The parameter
@@ -229,6 +230,7 @@ paths:
           default: en-US
           enum:
           - en-US
+          - fr-CA
           type: string
       - $ref: http://schemas.opengis.net/ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/parameters/bbox
       - $ref: http://schemas.opengis.net/ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/parameters/limit
