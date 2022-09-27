@@ -1,0 +1,207 @@
+code,abbreviation,element,time_period,element_name,description,element_scale,units,symbol
+109,CEIL,cloud,hourly,Ceiling,Ceiling,1.0,Coded,wi-cloud
+114,CLDTOT,cloud,hourly,Cloud cover; tot,Cloud cover; total,1.0,Octas,wi-cloud
+115,CLDOPC,cloud,hourly,Cloud opacty;tot,Cloud opacity; total,1.0,Octas,wi-cloud
+116,CLDAM1,cloud,hourly,cloudAmountLevel1,Cloud; amount of the lowest layer,1.0,Octas,wi-cloud
+117,TYPCO1,cloud,code,cloudTypeLevel1,Cloud,,,wi-cloud
+118,HTCO1,cloud,code,cloudHeightLevel1,Cloud,,,wi-cloud
+120,CLDAM2,cloud,hourly,cloudAmountLevel2,Cloud; amount of the second layer,1.0,Octas,wi-cloud
+121,CLDTY2,cloud,hourly,cloudTypeLevel2,Cloud; genus of the second layer,1.0,Coded,wi-cloud
+122,CLDHT2,cloud,hourly,cloudHeightLevel2,Cloud; height of the second layer,1.0,Coded,wi-cloud
+124,CLDAM3,cloud,hourly,cloudAmountLevel3,Cloud; amount of the third layer,1.0,Octas,wi-cloud
+125,CLDTY3,cloud,hourly,cloudTypeLevel3,Cloud; genus of the third layer,1.0,Coded,wi-cloud
+126,CLDHT3,cloud,hourly,cloudHeightLevel3,Cloud; height of the third layer,1.0,Coded,wi-cloud
+128,CLDAM4,cloud,hourly,cloudAmountLevel4,Cloud; amount of the fourth layer,1.0,Octas,wi-cloud
+129,CLDTY4,cloud,hourly,cloudTypeLevel4,Cloud; genus of the fourth layer,1.0,Coded,wi-cloud
+130,CLDHT4,cloud,hourly,cloudHeightLevel4,Cloud; height of the fourth layer,1.0,Coded,wi-cloud
+190,CLDTY1,cloud,hourly,Cloud type,lvl 1,,,wi-cloud
+191,LCLOUD,cloud,hourly,Lowest Cloud,Amount of all CsubL or if no CsubL; amount of CsubM,1.0,Octas,wi-cloud
+192,LCHGHT,cloud,,Cloud ht,lvl 1,,,wi-cloud
+193,MCTYPE,cloud,hourly,Cloud,med,,,wi-cloud
+194,MCAMNT,cloud,hourly,Cloud,med ammount,,,wi-cloud
+195,HCTYPE,cloud,hourly,Cloud,high type,,,wi-cloud
+23,HTDD1,days,daily,HTNG Degree Day1,Heating degree days - Base 1,1.0,Unitless,wi-thermometer
+24,HTDD2,days,daily,HTNG Degree Day2,Heating degree days - Base 2,1,Unitless,wi-thermometer
+25,CDD1,days,daily,CLNG Degree Day1,Cooling degree days - Base 1,1,Unitless,wi-thermometer-exterior
+26,CDD2,days,daily,CLNG Degree Day2,Cooling degree days - Base 2,1,Unitless,wi-thermometer-exterior
+27,GDD1,days,daily,GRNG Degree Day1,Growing degree days - Base 1,1,Unitless,wi-thermometer
+28,GDD2,days,daily,GRNG Degree Day2,Growing degree days - Base 2,1,Unitless,wi-thermometer
+29,DYRAIN,days,daily,Day with Rain,Day with rainfall,1.0,Unitless,wi-rain
+30,DYTHND,days,daily,Day with Thunder,Day with thunderstorms,1.0,Unitless,wi-thunderstorm
+31,DYHAIL,days,daily,Day with Hail,Day with hail,1.0,Unitless,wi-hail
+32,DYFOG,days,daily,Day with Fog,Day with fog,1.0,Unitless,wi-fog
+33,DYSAND,days,daily,Day with Dust,Day with blowing sand or dust,1.0,Unitless,wi-sandstorm
+34,DYSMOK,days,daily,Day with Smoke,Day with smoke or thick haze,1.0,Unitless,wi-smoke
+35,DYSNOW,days,daily,Day with Snow,Day with snow,1.0,Unitless,wi-snow
+36,DYBSNW,days,daily,Day with Blw snw,Day with blowing snow,1.0,Unitless,wi-snow-wind
+37,DYWND1,days,daily,Day with wind 10,Day with wind greater than 10 meters/sec,1.0,Unitless,wi-wind-beaufort-6
+38,DYWND5,days,daily,Day with wind 15,Day with wind greater than 15 meters/sec,1.0,Unitless,wi-wind-beaufort-7
+39,DYGLAZ,days,daily,Day with glaze,Day with glazed ice (freezing rain),1.0,Unitless,wi-sleet
+40,DYGDRZ,days,daily,Day with drizzle,Day with drizzle,1.0,Unitless,wi-rain-mix
+41,DYICEP,days,daily,Day with ice plt,Day with ice pellets,1.0,Unitless,wi-sleet
+42,DYTORN,days,daily,Day with tornado,Day with tornado,1.0,Unitless,wi-tornado
+18,EVAPPN1,evap,hourly,Evap; pan1 daily,Evaporation; pan1; daily total,0.1,mm,wi-day-rain-mix
+19,EVAPLK,evap,hourly,Evap; lake daily,Evaporation; lake; daily total,0.1,Millimeters,wi-day-rain-mix
+710,EVPM,evap,,Evapo piche mens,Evaporation as measured by a Piche tube,0.1,Mm,wi-day-rain-mix
+86,PHEN1,FRENCH,,PHENO 1,PHENO 1,1.0,Code,
+350,U-A,FRENCH,,HUMIDITE SONDAGE,HUMIDITE SONDAGE,1.0,Pourcent,
+547,DDVXM,FRENCH,,DD VXM,DD VXM,1.0,Dizaine de Degres,
+548,PS8,FRENCH,,PS8,PS8,0.1,Hectopascals,
+552,EPNGF,FRENCH,,EPAISSEUR NGF,EPAISSEUR NGF,1.0,Cm,
+601,PW1,FRENCH,,PERIODE 1 VAGUES,PERIODE 1 VAGUES,1.0,Code,
+602,HW1,FRENCH,,HAUTEUR VAGUES 1,HAUTEUR VAGUES 1,1.0,Code,
+603,DW1,FRENCH,,DD VAGUES 1,DD VAGUES 1,1.0,Dizaine de Degres,
+604,Is,FRENCH,,ACCU. GLACE,ACCU. GLACE,1.0,Code,
+605,EsEs,FRENCH,,EPAISSEUR GLACE,EPAISSEUR GLACE,1.0,Cm,
+606,Rs,FRENCH,,VITESSE GLACE,VITESSE GLACE,1.0,Code,
+607,Ds,FRENCH,,CAP NAVIRE,CAP NAVIRE,1.0,Code,
+608,Vs,FRENCH,,VITESSE NAVIRE,VITESSE NAVIRE,1.0,Code,
+609,PW2,FRENCH,,PERIODE 2 VAGUES,PERIODE 2 VAGUES,1.0,Code,
+610,HW2,FRENCH,,HAUTEUR VAGUES 2,HAUTEUR VAGUES 2,1.0,Code,
+611,DW2,FRENCH,,DD VAGUES 2,DD VAGUES 2,1.0,Dizaine de Degres,
+612,QC,FRENCH,,QUADRANT GLOBE,QUADRANT GLOBE,1.0,Code,
+615,TMER,FRENCH,,TEMPE. MER,TEMPE. MER,0.1,Degres C,
+616,PW,FRENCH,,PERIODE VAGUES,PERIODE VAGUES,1.0,Code,
+617,HW,FRENCH,,HAUTEUR VAGUES,HAUTEUR VAGUES,1.0,Code,
+641,HTCRA,FRENCH,,HT COURS D'EAU,HT COURS D'EAU,1.0,Cm,
+52,TOPFGL,frozenground,daily,Frozen Ground Tp,Frozen ground layer; depth of the top,1.0,Centimeters,wi-snowflake-cold
+53,BOTFGL,frozenground,daily,Frzen Ground Bt,Frozen ground layer; Depth of the bottom,1.0,Centimeters,wi-snowflake-cold
+54,THKFGL,frozenground,daily,Frozen Ground Th,Frozen ground layer; thickness,1.0,Centimeters,wi-snowflake-cold
+302,HEIGHT,height,monthly,Height of press level,Height of pressure level,1.0,,wi-barometer
+55,ICE,icethickness,daily,Ice Thickness,Ice on water; thickness,0.1,Millimeters,wi-snowflake-cold
+46,INSOL,insolation,daily,Insolation total,Insolation;  total on a horizontal surface over the period,0.1,Megajoules/M**2,wi-day-sunny
+92,24hWB,insolation,daily,Insolation Afternoon,Sunshine; PM,0.1,Hour,wi-day-sunny
+93,PSTWX,insolation,daily,Insolation Morning,Sunshine Hour; AM,0.1,hour,wi-day-sunny
+172,MIXRAT,mixratio,hourly,Mixing ratio,Mixing ratio,1.0,Grams/KG,wi-na
+351,R-A,mixratio,,Rapport melange,Rapport melange,0.1,Grammes/KG,wi-na
+5,PRECIP,precip,daily,Precip; daily,Precipitation; daily total,0.1,Millimeters,wi-rain
+6,PRMX5,precip,daily,PRCP; max 5 min,Precip; greatest amount in 5 minutes,0.1,Millimeters,wi-rain
+7,PRMX10,precip,daily,PRCP; max 10 min,Precip; greatest amount in 10 minutes,0.1,Millimeters,wi-rain
+8,PRMX15,precip,daily,PRCP; max 15 min,Precip; greatest amount in 15 minutes,0.1,Millimeters,wi-rain
+9,PRMX30,precip,daily,PRCP; max 30 min,Precip; greatest amount in 30 minutes,0.1,Millimeters,wi-rain
+10,PRMX60,precip,daily,PRCP; max 60 min,Precip; greatest amount in 60 minutes,0.1,Millimeters,wi-rain
+11,PRMX2H,precip,daily,PRCP; max 2 hour,Precip; greatest amount in 2 hours,0.1,Millimeters,wi-rain
+95,PrInTi,precip,daily,Preciptation; duration; 6 - 18,Precipitation; duration; 6-18H,0.1,Hours,wi-rain
+96,JardIn,precip,daily,Precipiation; total; 18-6,Precipiation; total; 18-6H,0.1,mm,wi-rain
+97,DifRad,precip,daily,Precipiation; total; 6-18,Precip; total 6-18H,0.1,mm,wi-rain
+104,PRECIP,precip,hourly,totalPrecipitation,Total amount of precipitation measured over a defined period.,0.1,Millimeters,wi-rain
+504,PRECIPDR,precip,,durationPrecipitation,Duration of precipitiation during the defined period,0.1,Hours,wi-rain
+892,AWSPRECIP,precip,aws,AWS;Precip Cum,AWS; Precipitation Cumulative,0.1,Millimetres,wi-rain
+47,PRESST,pres,daily,Press; stn avg,Pressure; station; daily average,0.1,Hectopascals,wi-barometer
+48,PRESSL,pres,daily,Press;sea lv;avg,Pressure; reduced to sea level; daily average,0.1,Hectopascals,wi-barometer
+91,24hVPD,pres,daily,24hour VPD,Mean Vapour Pressure Deficit over 24 hours,0.1,Hectopascals,wi-barometer
+106,PRESST,pres,hourly,Pressure; stn,Pressure at station level,0.1,Hectopascals,wi-barometer
+107,PRESSL,pres,hourly,Pressure; sea lv,Pressure reduced to Mean Sea Level,0.1,Hectopascals,wi-barometer
+108,ALTMTR,pres,hourly,Altimeter Settng,Altimeter setting,0.1,Millibars,wi-barometer
+185,PREGPM,pres,hourly,Pressure,GPM,,,wi-barometer
+186,PREQNH,pres,hourly,Pressure,QNH,,,wi-barometer
+301,PRESS,pres,monthly,Pressure level,Pressure level,1.0,Hectopascals,wi-barometer
+399,PRESSTEND,pres,hourly,PressTend; 24hly,Pressure Tendancy; 24 hly,0.1,Hectopascals,wi-barometer
+400,3HRPRESSTEND,pres,hourly,PressTend; 3hly,Pressure Tendancy; 3hly,0.1,Hectopascals,wi-barometer
+852,VPDHly,pres,hourly,VapPressDeficit,Hourly Vapour Pressure Deficit,0.1,Hectopascals,wi-barometer
+884,AWSBARO,pres,aws,AWS; Baro Press,AWS; Barometric Pressure,0.1,Millibars,wi-barometer
+889,AWSQFE,pres,aws,AWS; Station Press,AWS; Station Level Pressure,0.1,Millibars,wi-barometer
+890,AWSQFF,pres,aws,AWS; Actual Sea Lev Press,AWS; Actual Sea Level Pressure,0.1,Millibars,wi-barometer
+891,AWSQNH,pres,aws,AWS; Stand Sea Lev Press,AWS; Standard Sea Level Pressure,0.1,Millibars,wi-barometer
+133,RADGLS,radiation,hourly,Radiation;global,Radiation; global solar,0.1,Megajoules/M**2,wi-day-sunny
+134,RADSKY,radiation,hourly,Radiation; sky,Radiation; sky,0.1,Megajoules/M**2,wi-day-sunny
+135,RADRES,radiation,hourly,Radiation; reflc,Radiation; reflected solar,0.1,Megajoules/M**2,wi-day-sunny
+136,RADNAW,radiation,hourly,Radiation; al wv,Radiation; net all wave,0.1,Megajoules/M**2,wi-day-sunny
+137,RADDWN,radiation,hourly,Radiation; down,Radiation; total downward,0.0,Megajoules/M**2,wi-day-sunny
+138,RADUP,radiation,hourly,Radiation; up,Radiation; total upward,0.1,Megajoules/M**2,wi-day-sunny
+139,RADDSL,radiation,hourly,Radiation;direct,Radiation; direct solar,0.1,Megajoules/M**2,wi-day-sunny
+894,AWSSOLRAD,radiation,aws,AWS; Sol Rad,AWS; Solar Radiation,0.1,Megajoules/M**2,wi-day-sunny
+15,RHMAX,relh,daily,Relative Humidity; daily max,Relative humidity; daily maximum,1.0,Percent,wi-humidity
+16,RHMIN,relh,daily,Relative Humidity; daily min,Relative humidity; daily minimum,1.0,Percent,wi-humidity
+17,RHMEAN,relh,daily,Relative Humidity; daily mean,Relative humidity; daily mean,1.0,Percent,wi-humidity
+105,RELHUM,relh,hourly,Relative Humidity,Relative humidity,1.0,Percent,wi-humidity
+893,AWSRH,relh,aws,AWS; RH,AWS; Relative Humidity,0.1,Percentage,wi-humidity
+43,SKYSUN,sky_cover,daily,Sky Cover;avg SS,Sky cover; average daily sunrise to sunset,1.0,Tenths,wi-sunrise
+44,SKYMID,sky_cover,daily,Sky cover;avg md,Sky cover; daily average midnight to midnight,1.0,Tenths,wi-moonrise
+49,SNOW,snowdepth,daily,Snowfall,Depth of new snow lying,1.0,Centimeters,wi-snowflake-cold
+50,SNWDEP,snowdepth,daily,totalSnowDepth,Depth of lying snow,1.0,Centimeters,wi-snowflake-cold
+51,SNWWEQ,snowdepth,daily,snowDepthWaterEquivalent,Depth of lying snow expressed as measure of equivalent depth of water.,0.1,Millimeters,wi-snowflake-cold
+541,SOILMST005,soilrelh,daily,Soil; moisture daily005,Soil; Moisture daily at 5 cm,0.1,Millimeters,wi-raindrops
+542,SOILMST100,soilrelh,daily,Soil; moisture daily100,Soil; Moisture daily at 100 cm,0.1,Millimeters,wi-raindrops
+543,SOILMST010,soilrelh,daily,Soil; moisture daily 010,Soil; Moisture daily at 10 cm,0.1,Percent,wi-raindrops
+544,SOILMST020,soilrelh,daily,Soil; moisture daily 020,Soil; Moisture daily at 20 cm,0.1,Percent,wi-raindrops
+545,SOILMST030,soilrelh,daily,Soil; moisture daily 030,Soil; Moisture daily at 30 cm,0.1,Percent,wi-raindrops
+546,SOILMST040,soilrelh,daily,Soil; moisture daily 040,Soil; Moisture daily at 40 cm,0.1,Percent,wi-raindrops
+549,SOILMST050,soilrelh,daily,Soil; moisture daily 050,Soil; Moisture daily at 50 cm,0.1,Percent,wi-raindrops
+550,SOILMST060,soilrelh,daily,Soil; moisture daily 060,Soil; Moisture daily at 60 cm,0.1,Percent,wi-raindrops
+62,SOILX1,soiltemp,daily,Temp; soil05 max,Temperature; soil; daily maximum at 5 cm,0.1,Degrees C,wi-thermometer
+63,SOILN1,soiltemp,daily,Temp; soil05 min,Temperature; soil; daily minimum at 5 cm,0.1,Degrees C,wi-thermometer
+64,SOILX2,soiltemp,daily,Temp; soil10 max,Temperature; soil; daily maximum at 10 cm,0.1,Degrees C,wi-thermometer
+65,SOILN2,soiltemp,daily,Temp; soil10 min,Temperature; soil; daily minimum at 10 cm,0.1,Degrees C,wi-thermometer
+66,SOILX3,soiltemp,daily,Temp; soil20 max,Temperature; soil; daily maximum at 20 cm,0.1,Degrees C,wi-thermometer
+67,SOILN3,soiltemp,daily,Temp; soil20 min,Temperature; soil; daily minimum at 20 cm,0.1,Degrees C,wi-thermometer
+68,SOILX4,soiltemp,daily,Temp; soil50 max,Temperature; soil; daily maximum at 50 cm,0.1,Degrees C,wi-thermometer
+69,SOILN4,soiltemp,daily,Temp; soil50 min,Temperature; soil; daily minimum at 50 cm,0.1,Degrees C,wi-thermometer
+70,SOILX5,soiltemp,daily,Temp; soil1M max,Temperature; soil; daily maximum at 100 cm,0.1,Degrees C,wi-thermometer
+71,SOILN5,soiltemp,daily,Temp; soil1M min,Temperature; soil; daily minimum at 100 cm,0.1,Degrees C,wi-thermometer
+72,TTS005,soiltemp,daily,soilTemperature05cm,Temperature,,,wi-thermometer
+73,TTS010,soiltemp,daily,soilTemperature10cm,Temperature,,,wi-thermometer
+74,TTS020,soiltemp,daily,soilTemperature20cm,Temperature,,,wi-thermometer
+75,TTS050,soiltemp,daily,soilTemperature50cm,Temperature,,280,wi-thermometer
+76,TTS100,soiltemp,daily,soilTemperature100cm,Temperature,,280,wi-thermometer
+77,TTS150,soiltemp,daily,soilTemperature150cm,Temperature,,440,wi-thermometer
+78,TTS200,soiltemp,daily,soilTemperature200cm,Temperature,,,wi-thermometer
+79,TTS300,soiltemp,daily,soilTemperature300cm,Temperature,,,wi-thermometer
+80,MXSOIL,soiltemp,daily,Temp;soil dly ma,Temperature; soil; daily maximum,0.1,Degrees C,wi-thermometer
+81,MNSOIL,soiltemp,daily,Temp;soil dly mi,Temperature; soil; daily minimum,0.1,Degrees C,wi-thermometer
+82,DSOIL,soiltemp,daily,Temp; soil daily,Temperature; soil; daily,0.1,Degrees C,wi-thermometer
+178,TTS030,soiltemp,hourly,soilTemperature30cm,Temperature,,,wi-thermometer
+179,TTS060,soiltemp,hourly,soilTemperature60cm,Temperature,,,wi-thermometer
+180,TTS120,soiltemp,hourly,soilTemperature120cm,Temperature,,,wi-thermometer
+286,SOILMIN,soiltemp,monthly,BareSoilMinimumTemperature,Bare Soil Minimum temperature,0.1,Degrees C,wi-thermometer
+900,AWSSOLTEMP,soiltemp,aws,AWS; Soil Temp,AWS Soil Temperature,0.1,deg Centigrade,wi-thermometer
+83,STRMFL,streamflow,daily,Stream Flow,Stream flow; Daily mean,1.0,Meters**3/Second,wi-flood
+45,SUNSHI,sunshine,daily,Percent Poss Sun,Percent of possible sunshine; daily,1.0,Percent,wi-day-sunny
+84,SUNSHN,sunshine,daily,Sunshine; Daily,Sunshine; Daily total,0.1,Hours,wi-day-sunny
+132,SUN,sunshine,hourly,totalSunshine,Total of sunshine measured during the defined period,1.0,Minutes,wi-day-sunny
+888,AWSHRSSUN,sunshine,aws,AWS; Sun Hours,AWS; Sunshine Hours,0.1,Hours,wi-day-sunny
+1,TMPOBS,temp,daily,Temp; daily obs,Temperature; daily observation,0.1,Degrees C,wi-thermometer
+2,TMPMAX,temp,daily,Temp;  max,Temperature;  maximum,0.1,Degrees C,wi-thermometer
+3,TMPMIN,temp,daily,Temp;  min,Temperature;  minimum,0.1,Degrees C,wi-thermometer
+4,TMPMN,temp,daily,Temp;  mean,Temperature;  mean,0.1,Degrees C,wi-thermometer
+12,DPTMAX,temp,daily,Temp; dew pt max,Temperature; dew point; daily maximum,0.1,Degrees C,wi-thermometer
+13,DPTMIN,temp,daily,Temp; dew pt min,Temperature; dew point; daily minimum,0.1,Degrees C,wi-thermometer
+14,DPTMN,temp,daily,Temp; dew pt mn,Temperature; dew point; daily mean,0.1,Degrees C,wi-thermometer
+20,MXTPAN,temp,hourly,Temp; evap pn mx,Temperature; evaporation pan; daily maximum,0.1,Degrees C,wi-thermometer
+21,MNTPAN,temp,daily,Temp; evap pn mn,Temperature; evaporation pan; daily minimum,0.1,Degrees C,wi-thermometer
+22,MTPAN,temp,daily,Temp; evap pn mn,Temperature; evaporation pan; daily mean,0.1,Degrees C,wi-thermometer
+85,GRSMIN,temp,daily,Grasss Min,Temp,,-10,wi-thermometer
+94,MXMNDIFF,temp,daily,Max Min Diff,24 Hr Temperature range,0.1,Degrees C,wi-thermometer
+101,TEMPDB,temp,hourly,airTemperature,Temperature indicated by a thermometer exposed to the air in a place sheltered from direct solar radiation.,0.1,Degrees C,wi-thermometer
+102,TEMPWB,temp,hourly,wetBulbTemperature,Temperature indicated by a thermometer covered by cloth wetted with water exposed to the air in a place sheltered from direct solar radiation.,0.1,Degrees C,wi-thermometer
+103,TEMPDP,temp,hourly,dewPointTemperature,The temperature to which a given air parcel must be cooled at constant pressure and constant water vapor content in order for saturation to occur.,0.1,Degrees C,wi-thermometer
+303,TEMPDB,temp,monthly,Temp at press level,Temperature at pressure level,0.1,,wi-thermometer
+304,DPTDEP,temp,monthly,Dew Pt Depress at press level,Dew point depression at pressure level,0.1,,wi-thermometer
+881,AWSTEMP,temp,aws,AWS; Air Temp,AWS; Air Temperature,0.1,Deg Celcius,wi-thermometer
+882,AWSTMAX,temp,aws,AWS; Max Temp,AWS; Maximum Temperature,0.1,Deg Celcius,wi-thermometer
+883,AWSTMIN,temp,aws,AWS; Min Temp,AWS; Minimum Temperature,0.1,Deg Celcius,wi-thermometer
+885,AWSDP,temp,aws,AWS; Dp Temp,AWS; Dew Point Temperature,0.1,Celcius,wi-thermometer
+981,AWSTEMP2M,temp,aws,AWS; Air Temp 2M,AWS; Air Temp 2M,0.1,deg Centigrade,wi-thermometer
+110,VISBY,visibility,hourly,Visibility,Visibility; horizontal,1.0,Coded,wi-dust
+197,MAXVIS,visibility,hourly,Visibility,Max,,,wi-dust
+198,MINVIS,visibility,hourly,Visibility,min,,,wi-dust
+851,PstWx,weatherpast,hourly,Past Weather W2,Past Weather W2 (WMO Synoptic Code),1.0,Unitless,wi-na
+167,PRSWX,weatherpresent,hourly,Present Weather,Present Weather (WMO Synoptic Code),1.0,Coded,wi-na
+98,WINDTOT20,wind,daily,Wind Totalizer; 18Z,Wind Totalizer at 18Z,0.1,Km,wi-strong-wind
+99,WINDRUN08,wind,daily,Wind Totalizer; 06Z,Wind Totalizer at 06Z,0.1,Km,wi-strong-wind
+59,PKGSTD,winddir,daily,Wind gust; dir,Wind gust; direction of the daily maximum,1.0,Tens of Degrees,wi-towards-ese
+61,WNDMXD,winddir,daily,Wnd Dir;max 1min,Wind; 1 minute; direction of the daily maximum,1.0,Tens of Degrees,wi-towards-ese
+112,WNDDIR,winddir,hourly,windDirection,Direction from which wind is blowing.,1.0,Degrees from North,wi-towards-ese
+305,WNDDIR,winddir,monthly,Wind Direction at press level,Wind direction at pressure level,1.0,Degrees C,wi-towards-ese
+887,AWsGUSTDIR,winddir,aws,AWS; GUST Direction,AWS; Wind Gust Direction,0.1,Degrees,wi-towards-ese
+895,AWSWDA,winddir,aws,AWS; Wind Dir Avg,AWS; Wind Direction Average,1.0,Degrees,wi-towards-ese
+56,WNDSPD,windspeed,daily,Wind Spd;avg dly,Wind speed; daily average,1.0,Meters/Second,wi-strong-wind
+58,PKGUST,windspeed,daily,Wind Gust max sp,Wind gust; speed; daily maximum,1.0,Meters/Second,wi-strong-wind
+60,WNDMX1,windspeed,daily,Wnd spd Max 1Min,Wind; 1 minute; speed; daily maximum,1.0,Meters/Second,wi-strong-wind
+111,WNDSPD,windspeed,hourly,windSpeed,Ratio of the distance covered by the air to the time taken to cover it. The instantaneous speed corresponds to the case of an infinitely small time interval. The mean speed corresponds to the case of,,0,wi-strong-wind
+306,WNDSPD,windspeed,monthly,Wind Speed at pressure leve,Wind speed at pressure level,1.0,Knots,wi-strong-wind
+886,AWSGUSTSPD,windspeed,aws,AWS; GUST Speed,AWS; Wind Gust Speed,0.1,Knots,wi-strong-wind
+896,AWSWDI,windspeed,aws,AWS; Wind Dir Inst,AWS; Wind Direction Instantaneous,1.0,Degrees,wi-strong-wind
+897,AWSWSA,windspeed,aws,AWS; Wind Spd Avg,AWS; Wind Speed Average,0.1,Knots,wi-strong-wind
+898,AWSWSI,windspeed,aws,AWS; Wind Spd Inst,AWS; Wind Speed Instantaneous,0.1,Knots,wi-strong-wind
+57,WNDMIL,,daily,runOfWind,Run of Wind,,0,wi-strong-wind
