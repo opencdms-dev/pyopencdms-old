@@ -271,109 +271,137 @@ paths:
         in: query
         name: recordedFrom
         required: false
-        schema: string
+        schema:
+          maxLength: 255
+          type: string
         style: form
       - explode: false
         in: query
         name: describedBy
         required: false
-        schema: string
+        schema:
+          type: string
         style: form
       - explode: false
         in: query
         name: obsDatetime
         required: false
-        schema: string
+        schema:
+          format: date-time
+          type: string
         style: form
       - explode: false
         in: query
         name: obsLevel
         required: false
-        schema: string
+        schema:
+          maxLength: 255
+          type: string
         style: form
       - explode: false
         in: query
         name: obsValue
         required: false
-        schema: integer
+        schema:
+          type: integer
         style: form
       - explode: false
         in: query
         name: flag
         required: false
-        schema: string
+        schema:
+          maxLength: 255
+          type: string
         style: form
       - explode: false
         in: query
         name: period
         required: false
-        schema: integer
+        schema:
+          type: integer
         style: form
       - explode: false
         in: query
         name: qcStatus
         required: false
-        schema: integer
+        schema:
+          type: integer
         style: form
       - explode: false
         in: query
         name: qcTypeLog
         required: false
-        schema: string
+        schema:
+          type: string
         style: form
       - explode: false
         in: query
         name: acquisitionType
         required: false
-        schema: integer
+        schema:
+          type: integer
         style: form
       - explode: false
         in: query
         name: dataForm
         required: false
-        schema: string
+        schema:
+          maxLength: 255
+          type: string
         style: form
       - explode: false
         in: query
         name: capturedBy
         required: false
-        schema: string
+        schema:
+          maxLength: 255
+          type: string
         style: form
       - explode: false
         in: query
         name: mark
         required: false
-        schema: integer
+        schema:
+          type: integer
         style: form
       - explode: false
         in: query
         name: temperatureUnits
         required: false
-        schema: string
+        schema:
+          maxLength: 255
+          type: string
         style: form
       - explode: false
         in: query
         name: precipitationUnits
         required: false
-        schema: string
+        schema:
+          maxLength: 255
+          type: string
         style: form
       - explode: false
         in: query
         name: cloudHeightUnits
         required: false
-        schema: string
+        schema:
+          maxLength: 255
+          type: string
         style: form
       - explode: false
         in: query
         name: visUnits
         required: false
-        schema: string
+        schema:
+          maxLength: 255
+          type: string
         style: form
       - explode: false
         in: query
         name: dataSourceTimeZone
         required: false
-        schema: integer
+        schema:
+          type: integer
         style: form
       responses:
         '200':
