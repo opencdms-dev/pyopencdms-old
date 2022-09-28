@@ -40,7 +40,7 @@ class Climsoft4Provider(CDMSProvider):
     def __init__(
         self,
         models: ModuleType = climsoft_models,
-        schemas: ModuleType = climsoft_schemas
+        schemas: ModuleType = climsoft_schemas,
     ):
         super().__init__(models, schemas)
 

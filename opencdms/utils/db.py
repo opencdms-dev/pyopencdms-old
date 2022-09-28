@@ -10,7 +10,7 @@ def get_connection_string(
     password: str,
     host: str,
     port: str,
-    db_name: str
+    db_name: str,
 ) -> str:
     return f"{engine}+{driver}://{user}:{password}@{host}:{port}/{db_name}"
 
@@ -23,7 +23,7 @@ def get_clide_connection_string() -> str:
         password=config.CLIDE_DB_PASS,
         host=config.CLIDE_DB_HOST,
         port=config.CLIDE_DB_PORT,
-        db_name=config.CLIDE_DB_NAME
+        db_name=config.CLIDE_DB_NAME,
     )
 
 
@@ -35,7 +35,7 @@ def get_midas_connection_string() -> str:
         password=config.MIDAS_DB_PASS,
         host=config.MIDAS_DB_HOST,
         port=config.MIDAS_DB_PORT,
-        db_name=config.MIDAS_DB_NAME
+        db_name=config.MIDAS_DB_NAME,
     )
 
 
@@ -47,7 +47,7 @@ def get_climsoft_4_1_1_connection_string() -> str:
         password=config.CLIMSOFT_DB_PASS,
         host=config.CLIMSOFT_DB_HOST,
         port=config.CLIMSOFT_DB_PORT,
-        db_name=config.CLIMSOFT_DB_NAME
+        db_name=config.CLIMSOFT_DB_NAME,
     )
 
 
@@ -59,7 +59,7 @@ def get_mch_english_connection_string() -> str:
         password=config.MCH_DB_PASS,
         host=config.MCH_DB_HOST,
         port=config.MCH_DB_PORT,
-        db_name=config.MCH_DB_NAME
+        db_name=config.MCH_DB_NAME,
     )
 
 
@@ -100,8 +100,7 @@ def get_count(q: Query):
     Return the number of rows that matches a query
     """
     count_q = q.statement.with_only_columns(
-        func.count(),
-        maintain_column_froms=True
+        func.count(), maintain_column_froms=True
     ).order_by(None)
     count = q.session.execute(count_q).scalar()
     return count

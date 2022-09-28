@@ -20,7 +20,7 @@ field_mapping = {
     "precipitationUnits": "precipitation_units",
     "cloudHeightUnits": "cloud_height_units",
     "visUnits": "vis_units",
-    "dataSourceTimeZone": "data_source_timezone"
+    "dataSourceTimeZone": "data_source_timezone",
 }
 
 

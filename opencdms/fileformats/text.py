@@ -74,8 +74,7 @@ def read_badc(filepath, *args, **kwargs):
                 # In addition to any data rows already being skipped,
                 # also skip the final row which should contain "end data"
                 skip_footer = kwargs.get("skip_footer", 0) + 1
-                df = pd.read_csv(
-                    file_buffer, *args, skipfooter=skip_footer, **kwargs)
+                df = pd.read_csv(file_buffer, *args, skipfooter=skip_footer, **kwargs)
             if df is not None:
                 # Pandas.read_csv seeks to EOF even with skipfooter
                 # Check the contents of the final line where "end data"

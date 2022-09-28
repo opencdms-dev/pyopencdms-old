@@ -7,7 +7,7 @@ field_mapping = {
     "stationName": "name",
     "adminRegion": "region",
     "openingDatetime": "start_datetime",
-    "closingDatetime": "end_datetime"
+    "closingDatetime": "end_datetime",
 }
 
 

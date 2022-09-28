@@ -1,5 +1,16 @@
 # coding: utf-8
-from sqlalchemy import CHAR, Column, Date, DateTime, Float, Integer, String, Text, Time, text
+from sqlalchemy import (
+    CHAR,
+    Column,
+    Date,
+    DateTime,
+    Float,
+    Integer,
+    String,
+    Text,
+    Time,
+    text,
+)
 from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
@@ -7,7 +18,7 @@ metadata = Base.metadata
 
 
 class Basin(Base):
-    __tablename__ = 'Basins'
+    __tablename__ = "Basins"
 
     Basin = Column(CHAR(5), primary_key=True, server_default=text("''"))
     Basin2 = Column(CHAR(20))
@@ -15,14 +26,14 @@ class Basin(Base):
 
 
 class Code(Base):
-    __tablename__ = 'Codes'
+    __tablename__ = "Codes"
 
     Codee = Column(CHAR(10), primary_key=True, server_default=text("''"))
     Message = Column(CHAR(150))
 
 
 class County(Base):
-    __tablename__ = 'Counties'
+    __tablename__ = "Counties"
 
     County = Column(CHAR(5), primary_key=True, server_default=text("''"))
     County2 = Column(CHAR(20))
@@ -30,19 +41,27 @@ class County(Base):
 
 
 class DataSource(Base):
-    __tablename__ = 'DataSources'
+    __tablename__ = "DataSources"
 
     Source = Column(CHAR(10), primary_key=True, server_default=text("''"))
     SourceDesc = Column(CHAR(150))
 
 
 class Definiclineascontorno(Base):
-    __tablename__ = 'Definiclineascontorno'
+    __tablename__ = "Definiclineascontorno"
 
-    Map = Column(String(30), primary_key=True, nullable=False, server_default=text("''"))
-    StationGroup = Column(String(20), primary_key=True, nullable=False, server_default=text("''"))
-    Variable = Column(String(15), primary_key=True, nullable=False, server_default=text("''"))
-    period = Column(String(15), primary_key=True, nullable=False, server_default=text("''"))
+    Map = Column(
+        String(30), primary_key=True, nullable=False, server_default=text("''")
+    )
+    StationGroup = Column(
+        String(20), primary_key=True, nullable=False, server_default=text("''")
+    )
+    Variable = Column(
+        String(15), primary_key=True, nullable=False, server_default=text("''")
+    )
+    period = Column(
+        String(15), primary_key=True, nullable=False, server_default=text("''")
+    )
     maptype = Column(String(15))
     Colors = Column(String(15))
     Resolucjpg = Column(Integer)
@@ -87,10 +106,14 @@ class Definiclineascontorno(Base):
 
 
 class DisponibDD(Base):
-    __tablename__ = 'DisponibDD'
+    __tablename__ = "DisponibDD"
 
-    Station = Column(CHAR(20), primary_key=True, nullable=False, server_default=text("''"))
-    Variable = Column(CHAR(15), primary_key=True, nullable=False, server_default=text("''"))
+    Station = Column(
+        CHAR(20), primary_key=True, nullable=False, server_default=text("''")
+    )
+    Variable = Column(
+        CHAR(15), primary_key=True, nullable=False, server_default=text("''")
+    )
     Ndatos = Column(Integer)
     BegDate = Column(DateTime)
     EndDate = Column(DateTime)
@@ -101,7 +124,7 @@ class DisponibDD(Base):
 
 
 class Estacautoma(Base):
-    __tablename__ = 'Estacautoma'
+    __tablename__ = "Estacautoma"
 
     SatelliteID = Column(CHAR(8), primary_key=True, server_default=text("''"))
     Name = Column(CHAR(15))
@@ -127,14 +150,14 @@ class Estacautoma(Base):
 
 
 class Ftpbitacproc(Base):
-    __tablename__ = 'Ftpbitacproc'
+    __tablename__ = "Ftpbitacproc"
 
     Filee = Column(CHAR(250), primary_key=True, server_default=text("''"))
     Datee = Column(DateTime)
 
 
 class Hydrregion(Base):
-    __tablename__ = 'Hydrregions'
+    __tablename__ = "Hydrregions"
 
     Reghidr = Column(CHAR(5), primary_key=True, server_default=text("''"))
     RegHidr2 = Column(CHAR(20))
@@ -142,7 +165,7 @@ class Hydrregion(Base):
 
 
 class Isolinbitac(Base):
-    __tablename__ = 'Isolinbitac'
+    __tablename__ = "Isolinbitac"
 
     Opcion = Column(CHAR(60), primary_key=True, server_default=text("''"))
     DateTime_ = Column("DateTime", DateTime)
@@ -151,19 +174,25 @@ class Isolinbitac(Base):
 
 
 class Logbitacproc(Base):
-    __tablename__ = 'Logbitacproc'
+    __tablename__ = "Logbitacproc"
 
     Filee = Column(CHAR(250), primary_key=True, server_default=text("''"))
     Datee = Column(DateTime)
 
 
 class MapasCroqui(Base):
-    __tablename__ = 'MapasCroquis'
+    __tablename__ = "MapasCroquis"
 
     Map = Column(CHAR(30), primary_key=True, nullable=False, server_default=text("''"))
-    Variable = Column(CHAR(15), primary_key=True, nullable=False, server_default=text("''"))
-    Userr = Column(CHAR(20), primary_key=True, nullable=False, server_default=text("''"))
-    period = Column(CHAR(5), primary_key=True, nullable=False, server_default=text("''"))
+    Variable = Column(
+        CHAR(15), primary_key=True, nullable=False, server_default=text("''")
+    )
+    Userr = Column(
+        CHAR(20), primary_key=True, nullable=False, server_default=text("''")
+    )
+    period = Column(
+        CHAR(5), primary_key=True, nullable=False, server_default=text("''")
+    )
     Interv1 = Column(Float(asdecimal=True), nullable=False, server_default=text("'0'"))
     Color1 = Column(Integer, nullable=False, server_default=text("'0'"))
     Interv2 = Column(Float(asdecimal=True), nullable=False, server_default=text("'0'"))
@@ -179,12 +208,16 @@ class MapasCroqui(Base):
 
 
 class MapasGenxCoord(Base):
-    __tablename__ = 'MapasGenxCoord'
+    __tablename__ = "MapasGenxCoord"
 
     Map = Column(CHAR(30), primary_key=True, server_default=text("''"))
-    Longitud1 = Column(Float(asdecimal=True), nullable=False, server_default=text("'0'"))
+    Longitud1 = Column(
+        Float(asdecimal=True), nullable=False, server_default=text("'0'")
+    )
     Latitud1 = Column(Float(asdecimal=True), nullable=False, server_default=text("'0'"))
-    Longitud2 = Column(Float(asdecimal=True), nullable=False, server_default=text("'0'"))
+    Longitud2 = Column(
+        Float(asdecimal=True), nullable=False, server_default=text("'0'")
+    )
     Latitud2 = Column(Float(asdecimal=True), nullable=False, server_default=text("'0'"))
     resoluc = Column(Integer, nullable=False, server_default=text("'0'"))
     costaslinea = Column(Integer, nullable=False, server_default=text("'0'"))
@@ -216,12 +249,16 @@ class MapasGenxCoord(Base):
 
 
 class MapasMchxCoord(Base):
-    __tablename__ = 'MapasMchxCoord'
+    __tablename__ = "MapasMchxCoord"
 
     Map = Column(CHAR(30), primary_key=True, server_default=text("''"))
-    Longitud1 = Column(Float(asdecimal=True), nullable=False, server_default=text("'0'"))
+    Longitud1 = Column(
+        Float(asdecimal=True), nullable=False, server_default=text("'0'")
+    )
     Latitud1 = Column(Float(asdecimal=True), nullable=False, server_default=text("'0'"))
-    Longitud2 = Column(Float(asdecimal=True), nullable=False, server_default=text("'0'"))
+    Longitud2 = Column(
+        Float(asdecimal=True), nullable=False, server_default=text("'0'")
+    )
     Latitud2 = Column(Float(asdecimal=True), nullable=False, server_default=text("'0'"))
     fronteralinea = Column(Integer, nullable=False, server_default=text("'0'"))
     fronteracolor = Column(Integer, nullable=False, server_default=text("'0'"))
@@ -265,7 +302,7 @@ class MapasMchxCoord(Base):
 
 
 class Mapaspixelgeogr(Base):
-    __tablename__ = 'Mapaspixelgeogr'
+    __tablename__ = "Mapaspixelgeogr"
 
     Map = Column(CHAR(30), primary_key=True, server_default=text("''"))
     Longitud1 = Column(Float(asdecimal=True))
@@ -280,11 +317,21 @@ class Mapaspixelgeogr(Base):
 
 
 class Mapaspixelgeogr4(Base):
-    __tablename__ = 'Mapaspixelgeogr4'
+    __tablename__ = "Mapaspixelgeogr4"
 
     Map = Column(CHAR(30), primary_key=True, nullable=False, server_default=text("''"))
-    Longitud1 = Column(Float(asdecimal=True), primary_key=True, nullable=False, server_default=text("'0'"))
-    Latitud1 = Column(Float(asdecimal=True), primary_key=True, nullable=False, server_default=text("'0'"))
+    Longitud1 = Column(
+        Float(asdecimal=True),
+        primary_key=True,
+        nullable=False,
+        server_default=text("'0'"),
+    )
+    Latitud1 = Column(
+        Float(asdecimal=True),
+        primary_key=True,
+        nullable=False,
+        server_default=text("'0'"),
+    )
     Xp1 = Column(Float(asdecimal=True))
     Yp1 = Column(Float(asdecimal=True))
     Longitud2 = Column(Float(asdecimal=True))
@@ -303,12 +350,18 @@ class Mapaspixelgeogr4(Base):
 
 
 class Mapasxcoordclr(Base):
-    __tablename__ = 'Mapasxcoordclrs'
+    __tablename__ = "Mapasxcoordclrs"
 
     Map = Column(CHAR(30), primary_key=True, nullable=False, server_default=text("''"))
-    Variable = Column(CHAR(15), primary_key=True, nullable=False, server_default=text("''"))
-    Userr = Column(CHAR(20), primary_key=True, nullable=False, server_default=text("''"))
-    period = Column(CHAR(5), primary_key=True, nullable=False, server_default=text("''"))
+    Variable = Column(
+        CHAR(15), primary_key=True, nullable=False, server_default=text("''")
+    )
+    Userr = Column(
+        CHAR(20), primary_key=True, nullable=False, server_default=text("''")
+    )
+    period = Column(
+        CHAR(5), primary_key=True, nullable=False, server_default=text("''")
+    )
     Interv1 = Column(Float(asdecimal=True))
     Color1 = Column(Integer)
     Rellen1 = Column(Integer)
@@ -336,54 +389,76 @@ class Mapasxcoordclr(Base):
 
 
 class Mapasxcoordgeogr(Base):
-    __tablename__ = 'Mapasxcoordgeogr'
+    __tablename__ = "Mapasxcoordgeogr"
 
     Map = Column(CHAR(30), primary_key=True, nullable=False, server_default=text("''"))
-    Secuen = Column(Integer, primary_key=True, nullable=False, server_default=text("'0'"))
+    Secuen = Column(
+        Integer, primary_key=True, nullable=False, server_default=text("'0'")
+    )
     CoordX = Column(Float(asdecimal=True))
     CoordY = Column(Float(asdecimal=True))
     Indic = Column(CHAR(1))
 
 
 class Mapasxcoordzona(Base):
-    __tablename__ = 'Mapasxcoordzonas'
+    __tablename__ = "Mapasxcoordzonas"
 
     Map = Column(CHAR(30), primary_key=True, nullable=False, server_default=text("''"))
-    Secuen = Column(Integer, primary_key=True, nullable=False, server_default=text("'0'"))
+    Secuen = Column(
+        Integer, primary_key=True, nullable=False, server_default=text("'0'")
+    )
     zone = Column(CHAR(40))
 
 
 class Map(Base):
-    __tablename__ = 'Maps'
+    __tablename__ = "Maps"
 
     Map = Column(CHAR(30), primary_key=True, server_default=text("''"))
     Ubicacion = Column(CHAR(250))
 
 
 class MensajesMetar(Base):
-    __tablename__ = 'MensajesMetar'
+    __tablename__ = "MensajesMetar"
 
-    Station = Column(CHAR(20), primary_key=True, nullable=False, server_default=text("''"))
-    Datee = Column(DateTime, primary_key=True, nullable=False, server_default=text("'1901-01-01 00:00:00'"))
+    Station = Column(
+        CHAR(20), primary_key=True, nullable=False, server_default=text("''")
+    )
+    Datee = Column(
+        DateTime,
+        primary_key=True,
+        nullable=False,
+        server_default=text("'1901-01-01 00:00:00'"),
+    )
     Tipo = Column(CHAR(5))
     Codee = Column(CHAR(10))
     Message = Column(Text)
 
 
 class MensajesSynop(Base):
-    __tablename__ = 'MensajesSynop'
+    __tablename__ = "MensajesSynop"
 
-    Station = Column(CHAR(20), primary_key=True, nullable=False, server_default=text("''"))
-    Datee = Column(DateTime, primary_key=True, nullable=False, server_default=text("'1901-01-01 00:00:00'"))
+    Station = Column(
+        CHAR(20), primary_key=True, nullable=False, server_default=text("''")
+    )
+    Datee = Column(
+        DateTime,
+        primary_key=True,
+        nullable=False,
+        server_default=text("'1901-01-01 00:00:00'"),
+    )
     Codee = Column(CHAR(10))
     Message = Column(Text)
 
 
 class Opcionesmapasintxxnet(Base):
-    __tablename__ = 'Opcionesmapasintxxnet'
+    __tablename__ = "Opcionesmapasintxxnet"
 
-    Opcion = Column(CHAR(15), primary_key=True, nullable=False, server_default=text("''"))
-    Variable = Column(CHAR(15), primary_key=True, nullable=False, server_default=text("''"))
+    Opcion = Column(
+        CHAR(15), primary_key=True, nullable=False, server_default=text("''")
+    )
+    Variable = Column(
+        CHAR(15), primary_key=True, nullable=False, server_default=text("''")
+    )
     Map = Column(CHAR(30))
     StationGroup = Column(CHAR(20))
     Name = Column(CHAR(30))
@@ -391,31 +466,50 @@ class Opcionesmapasintxxnet(Base):
 
 
 class Opcxvariabautom(Base):
-    __tablename__ = 'Opcxvariabautom'
+    __tablename__ = "Opcxvariabautom"
 
-    Opcion = Column(CHAR(15), primary_key=True, nullable=False, server_default=text("''"))
+    Opcion = Column(
+        CHAR(15), primary_key=True, nullable=False, server_default=text("''")
+    )
     Opcx = Column(Integer, primary_key=True, nullable=False, server_default=text("'0'"))
     Variable = Column(CHAR(15))
     Variable2 = Column(CHAR(15))
 
 
 class Recepdef(Base):
-    __tablename__ = 'Recepdefs'
+    __tablename__ = "Recepdefs"
 
-    Opcion = Column(CHAR(15), primary_key=True, nullable=False, server_default=text("''"))
+    Opcion = Column(
+        CHAR(15), primary_key=True, nullable=False, server_default=text("''")
+    )
     Name = Column(CHAR(25), primary_key=True, nullable=False, server_default=text("''"))
-    StationGroup = Column(CHAR(20), primary_key=True, nullable=False, server_default=text("''"))
-    Variable = Column(CHAR(15), primary_key=True, nullable=False, server_default=text("''"))
+    StationGroup = Column(
+        CHAR(20), primary_key=True, nullable=False, server_default=text("''")
+    )
+    Variable = Column(
+        CHAR(15), primary_key=True, nullable=False, server_default=text("''")
+    )
 
 
 class Recepsdato(Base):
-    __tablename__ = 'Recepsdatos'
+    __tablename__ = "Recepsdatos"
 
-    Opcion = Column(CHAR(15), primary_key=True, nullable=False, server_default=text("''"))
+    Opcion = Column(
+        CHAR(15), primary_key=True, nullable=False, server_default=text("''")
+    )
     Name = Column(CHAR(25), primary_key=True, nullable=False, server_default=text("''"))
-    StationGroup = Column(CHAR(20), primary_key=True, nullable=False, server_default=text("''"))
-    Variable = Column(CHAR(15), primary_key=True, nullable=False, server_default=text("''"))
-    Datee = Column(DateTime, primary_key=True, nullable=False, server_default=text("'1901-01-01 00:00:00'"))
+    StationGroup = Column(
+        CHAR(20), primary_key=True, nullable=False, server_default=text("''")
+    )
+    Variable = Column(
+        CHAR(15), primary_key=True, nullable=False, server_default=text("''")
+    )
+    Datee = Column(
+        DateTime,
+        primary_key=True,
+        nullable=False,
+        server_default=text("'1901-01-01 00:00:00'"),
+    )
     NumEstac = Column(Integer)
     Recep09 = Column(Integer)
     Recep10 = Column(Integer)
@@ -427,10 +521,17 @@ class Recepsdato(Base):
 
 
 class Recepsping(Base):
-    __tablename__ = 'Recepsping'
+    __tablename__ = "Recepsping"
 
-    IPDir = Column(CHAR(120), primary_key=True, nullable=False, server_default=text("''"))
-    Datee = Column(DateTime, primary_key=True, nullable=False, server_default=text("'0000-00-00 00:00:00'"))
+    IPDir = Column(
+        CHAR(120), primary_key=True, nullable=False, server_default=text("''")
+    )
+    Datee = Column(
+        DateTime,
+        primary_key=True,
+        nullable=False,
+        server_default=text("'0000-00-00 00:00:00'"),
+    )
     Med7 = Column(Float(asdecimal=True))
     Min7 = Column(Float(asdecimal=True))
     Max7 = Column(Float(asdecimal=True))
@@ -462,15 +563,19 @@ class Recepsping(Base):
 
 
 class StationGroup(Base):
-    __tablename__ = 'StationGroups'
+    __tablename__ = "StationGroups"
 
-    StationGroup = Column(CHAR(20), primary_key=True, nullable=False, server_default=text("''"))
-    Secuen = Column(Integer, primary_key=True, nullable=False, server_default=text("'0'"))
+    StationGroup = Column(
+        CHAR(20), primary_key=True, nullable=False, server_default=text("''")
+    )
+    Secuen = Column(
+        Integer, primary_key=True, nullable=False, server_default=text("'0'")
+    )
     Station = Column(CHAR(20))
 
 
 class Tablaswebconst(Base):
-    __tablename__ = 'Tablaswebconst'
+    __tablename__ = "Tablaswebconst"
 
     OpcionCons = Column(CHAR(15), primary_key=True, server_default=text("''"))
     Opcion = Column(CHAR(15))
@@ -488,17 +593,21 @@ class Tablaswebconst(Base):
 
 
 class Tablaswebdef(Base):
-    __tablename__ = 'Tablaswebdef'
+    __tablename__ = "Tablaswebdef"
 
-    Opcion = Column(CHAR(15), primary_key=True, nullable=False, server_default=text("''"))
-    Secuen = Column(Integer, primary_key=True, nullable=False, server_default=text("'0'"))
+    Opcion = Column(
+        CHAR(15), primary_key=True, nullable=False, server_default=text("''")
+    )
+    Secuen = Column(
+        Integer, primary_key=True, nullable=False, server_default=text("'0'")
+    )
     StationGroup = Column(CHAR(20))
     Image = Column(CHAR(250))
     Description = Column(CHAR(150))
 
 
 class TimeZone(Base):
-    __tablename__ = 'TimeZones'
+    __tablename__ = "TimeZones"
 
     TimeZone = Column(CHAR(4), primary_key=True, server_default=text("''"))
     Description = Column(CHAR(100))
@@ -507,15 +616,22 @@ class TimeZone(Base):
 
 
 class TransfTable(Base):
-    __tablename__ = 'TransfTables'
+    __tablename__ = "TransfTables"
 
-    TablaTransf = Column(CHAR(15), primary_key=True, nullable=False, server_default=text("''"))
-    ValorX = Column(Float(asdecimal=True), primary_key=True, nullable=False, server_default=text("'0'"))
+    TablaTransf = Column(
+        CHAR(15), primary_key=True, nullable=False, server_default=text("''")
+    )
+    ValorX = Column(
+        Float(asdecimal=True),
+        primary_key=True,
+        nullable=False,
+        server_default=text("'0'"),
+    )
     ValorY = Column(Float(asdecimal=True))
 
 
 class Transftp(Base):
-    __tablename__ = 'Transftp'
+    __tablename__ = "Transftp"
 
     OpcionTrans = Column(CHAR(30), primary_key=True, server_default=text("''"))
     IPAddress = Column(CHAR(90))
@@ -524,28 +640,38 @@ class Transftp(Base):
 
 
 class Transmchamch(Base):
-    __tablename__ = 'Transmchamch'
+    __tablename__ = "Transmchamch"
 
-    OpcionTrans = Column(CHAR(30), primary_key=True, nullable=False, server_default=text("''"))
-    StationGroup = Column(CHAR(20), primary_key=True, nullable=False, server_default=text("''"))
-    Secuenc = Column(Integer, primary_key=True, nullable=False, server_default=text("'0'"))
+    OpcionTrans = Column(
+        CHAR(30), primary_key=True, nullable=False, server_default=text("''")
+    )
+    StationGroup = Column(
+        CHAR(20), primary_key=True, nullable=False, server_default=text("''")
+    )
+    Secuenc = Column(
+        Integer, primary_key=True, nullable=False, server_default=text("'0'")
+    )
     Variable = Column(CHAR(15))
     Tipo = Column(CHAR(2))
     Active = Column(CHAR(2))
 
 
 class Unit(Base):
-    __tablename__ = 'Units'
+    __tablename__ = "Units"
 
     Units = Column(CHAR(10), primary_key=True, server_default=text("''"))
     DescripcionUnidad = Column(CHAR(60))
 
 
 class Valsvariabaut(Base):
-    __tablename__ = 'Valsvariabaut'
+    __tablename__ = "Valsvariabaut"
 
-    Station = Column(CHAR(20), primary_key=True, nullable=False, server_default=text("''"))
-    Variable = Column(CHAR(15), primary_key=True, nullable=False, server_default=text("''"))
+    Station = Column(
+        CHAR(20), primary_key=True, nullable=False, server_default=text("''")
+    )
+    Variable = Column(
+        CHAR(15), primary_key=True, nullable=False, server_default=text("''")
+    )
     Adjust1 = Column(Float(asdecimal=True), nullable=False, server_default=text("'0'"))
     Adjust2 = Column(Float(asdecimal=True), nullable=False, server_default=text("'0'"))
     MaxValue = Column(Float(asdecimal=True))
@@ -556,35 +682,56 @@ class Valsvariabaut(Base):
 
 
 class VariabDeriv2(Base):
-    __tablename__ = 'VariabDeriv2'
+    __tablename__ = "VariabDeriv2"
 
-    Station = Column(CHAR(20), primary_key=True, nullable=False, server_default=text("''"))
-    Variable = Column(CHAR(15), primary_key=True, nullable=False, server_default=text("''"))
+    Station = Column(
+        CHAR(20), primary_key=True, nullable=False, server_default=text("''")
+    )
+    Variable = Column(
+        CHAR(15), primary_key=True, nullable=False, server_default=text("''")
+    )
     FormCalculo = Column(Text)
 
 
 class VariabDeriv3(Base):
-    __tablename__ = 'VariabDeriv3'
+    __tablename__ = "VariabDeriv3"
 
-    Station = Column(CHAR(20), primary_key=True, nullable=False, server_default=text("''"))
-    Variable = Column(CHAR(15), primary_key=True, nullable=False, server_default=text("''"))
+    Station = Column(
+        CHAR(20), primary_key=True, nullable=False, server_default=text("''")
+    )
+    Variable = Column(
+        CHAR(15), primary_key=True, nullable=False, server_default=text("''")
+    )
     FormCalculo = Column(Text)
 
 
 class Variabautomatv(Base):
-    __tablename__ = 'Variabautomatv'
+    __tablename__ = "Variabautomatv"
 
-    Station = Column(CHAR(20), primary_key=True, nullable=False, server_default=text("''"))
-    Variable = Column(CHAR(15), primary_key=True, nullable=False, server_default=text("''"))
+    Station = Column(
+        CHAR(20), primary_key=True, nullable=False, server_default=text("''")
+    )
+    Variable = Column(
+        CHAR(15), primary_key=True, nullable=False, server_default=text("''")
+    )
     period = Column(Integer)
 
 
 class Variabautomaxfecha(Base):
-    __tablename__ = 'Variabautomaxfecha'
+    __tablename__ = "Variabautomaxfecha"
 
-    SatelliteID = Column(CHAR(8), primary_key=True, nullable=False, server_default=text("''"))
-    DateTime = Column(DateTime, primary_key=True, nullable=False, server_default=text("'2001-01-01 00:00:00'"))
-    Secuen = Column(Integer, primary_key=True, nullable=False, server_default=text("'0'"))
+    SatelliteID = Column(
+        CHAR(8), primary_key=True, nullable=False, server_default=text("''")
+    )
+    DateTime = Column(
+        DateTime,
+        primary_key=True,
+        nullable=False,
+        server_default=text("'2001-01-01 00:00:00'"),
+    )
+    Secuen = Column(
+        Integer, primary_key=True, nullable=False, server_default=text("'0'")
+    )
     Area = Column(CHAR(15))
     Name = Column(CHAR(30))
     Variable = Column(CHAR(15))
@@ -592,7 +739,7 @@ class Variabautomaxfecha(Base):
 
 
 class Variable(Base):
-    __tablename__ = 'Variables'
+    __tablename__ = "Variables"
 
     Variable = Column(CHAR(15), primary_key=True, server_default=text("''"))
     ShortName = Column(CHAR(4))
@@ -607,11 +754,20 @@ class Variable(Base):
 
 
 class Variablestransf(Base):
-    __tablename__ = 'Variablestransf'
+    __tablename__ = "Variablestransf"
 
-    Station = Column(CHAR(20), primary_key=True, nullable=False, server_default=text("''"))
-    Variable = Column(CHAR(15), primary_key=True, nullable=False, server_default=text("''"))
-    BegnDate = Column(DateTime, primary_key=True, nullable=False, server_default=text("'1901-01-01 00:00:00'"))
+    Station = Column(
+        CHAR(20), primary_key=True, nullable=False, server_default=text("''")
+    )
+    Variable = Column(
+        CHAR(15), primary_key=True, nullable=False, server_default=text("''")
+    )
+    BegnDate = Column(
+        DateTime,
+        primary_key=True,
+        nullable=False,
+        server_default=text("'1901-01-01 00:00:00'"),
+    )
     Adjust1 = Column(Float(asdecimal=True), nullable=False, server_default=text("'0'"))
     Adjust2 = Column(Float(asdecimal=True), nullable=False, server_default=text("'0'"))
     VariabTransf1 = Column(CHAR(20))
@@ -625,7 +781,7 @@ class Variablestransf(Base):
 
 
 class VerifCerca(Base):
-    __tablename__ = 'VerifCerca'
+    __tablename__ = "VerifCerca"
 
     Station = Column(CHAR(20), primary_key=True, nullable=False)
     Variable = Column(CHAR(15), primary_key=True, nullable=False)
@@ -637,7 +793,7 @@ class VerifCerca(Base):
 
 
 class Verific(Base):
-    __tablename__ = 'Verific'
+    __tablename__ = "Verific"
 
     Variable = Column(CHAR(15), primary_key=True, nullable=False)
     Data = Column(CHAR(1), primary_key=True, nullable=False)
@@ -647,7 +803,7 @@ class Verific(Base):
 
 
 class Webbitacoraproc(Base):
-    __tablename__ = 'Webbitacoraproc'
+    __tablename__ = "Webbitacoraproc"
 
     Tally = Column(Integer, primary_key=True)
     program = Column(CHAR(20))
@@ -658,24 +814,32 @@ class Webbitacoraproc(Base):
 
 
 class Webcontadore(Base):
-    __tablename__ = 'Webcontadores'
+    __tablename__ = "Webcontadores"
 
-    program = Column(CHAR(30), primary_key=True, nullable=False, server_default=text("''"))
-    Userr = Column(CHAR(50), primary_key=True, nullable=False, server_default=text("''"))
-    proctype = Column(CHAR(20), primary_key=True, nullable=False, server_default=text("''"))
-    OpcionProc = Column(CHAR(20), primary_key=True, nullable=False, server_default=text("''"))
+    program = Column(
+        CHAR(30), primary_key=True, nullable=False, server_default=text("''")
+    )
+    Userr = Column(
+        CHAR(50), primary_key=True, nullable=False, server_default=text("''")
+    )
+    proctype = Column(
+        CHAR(20), primary_key=True, nullable=False, server_default=text("''")
+    )
+    OpcionProc = Column(
+        CHAR(20), primary_key=True, nullable=False, server_default=text("''")
+    )
     Tally = Column(Integer)
 
 
 class ZonasArea(Base):
-    __tablename__ = 'ZonasAreas'
+    __tablename__ = "ZonasAreas"
 
     zone = Column(CHAR(50), primary_key=True)
     Area = Column(Float(asdecimal=True))
 
 
 class Estacionesinstrum(Base):
-    __tablename__ = 'estacionesinstrum'
+    __tablename__ = "estacionesinstrum"
 
     Station = Column(CHAR(20), primary_key=True, nullable=False)
     Variable = Column(CHAR(15), primary_key=True, nullable=False)
@@ -686,10 +850,12 @@ class Estacionesinstrum(Base):
 
 
 class Mapasbycoord(Base):
-    __tablename__ = 'mapasbycoord'
+    __tablename__ = "mapasbycoord"
 
     Map = Column(CHAR(30), primary_key=True, nullable=False, server_default=text("''"))
-    Secuen = Column(Integer, primary_key=True, nullable=False, server_default=text("'0'"))
+    Secuen = Column(
+        Integer, primary_key=True, nullable=False, server_default=text("'0'")
+    )
     zone = Column(CHAR(20))
     CoordX = Column(Float(asdecimal=True))
     CoordY = Column(Float(asdecimal=True))
@@ -700,13 +866,19 @@ class Mapasbycoord(Base):
 
 
 class Mapsgroup(Base):
-    __tablename__ = 'mapsgroups'
+    __tablename__ = "mapsgroups"
 
     Map = Column(CHAR(30), primary_key=True, nullable=False, server_default=text("''"))
     Group = Column(CHAR(15), nullable=False, server_default=text("''"))
-    Variable = Column(CHAR(15), primary_key=True, nullable=False, server_default=text("''"))
-    Userr = Column(CHAR(20), primary_key=True, nullable=False, server_default=text("''"))
-    period = Column(CHAR(5), primary_key=True, nullable=False, server_default=text("''"))
+    Variable = Column(
+        CHAR(15), primary_key=True, nullable=False, server_default=text("''")
+    )
+    Userr = Column(
+        CHAR(20), primary_key=True, nullable=False, server_default=text("''")
+    )
+    period = Column(
+        CHAR(5), primary_key=True, nullable=False, server_default=text("''")
+    )
     Interv1 = Column(Float(asdecimal=True), nullable=False, server_default=text("'0'"))
     Color1 = Column(Integer, nullable=False, server_default=text("'0'"))
     Interv2 = Column(Float(asdecimal=True), nullable=False, server_default=text("'0'"))
@@ -722,26 +894,32 @@ class Mapsgroup(Base):
 
 
 class Mapsstation(Base):
-    __tablename__ = 'mapsstations'
+    __tablename__ = "mapsstations"
 
     Map = Column(CHAR(30), primary_key=True, nullable=False, server_default=text("''"))
-    Station = Column(CHAR(20), primary_key=True, nullable=False, server_default=text("''"))
+    Station = Column(
+        CHAR(20), primary_key=True, nullable=False, server_default=text("''")
+    )
     Xp = Column(Float(asdecimal=True))
     Yp = Column(Float(asdecimal=True))
     namemap = Column(CHAR(250))
 
 
 class Metadatastation(Base):
-    __tablename__ = 'metadatastations'
+    __tablename__ = "metadatastations"
 
-    Station = Column(CHAR(20), primary_key=True, nullable=False, server_default=text("''"))
-    MetaDato = Column(CHAR(30), primary_key=True, nullable=False, server_default=text("''"))
+    Station = Column(
+        CHAR(20), primary_key=True, nullable=False, server_default=text("''")
+    )
+    MetaDato = Column(
+        CHAR(30), primary_key=True, nullable=False, server_default=text("''")
+    )
     Datee = Column(Date, primary_key=True, nullable=False)
     Description = Column(CHAR(255))
 
 
 class RegManager(Base):
-    __tablename__ = 'regManager'
+    __tablename__ = "regManager"
 
     RegManagmt = Column(CHAR(5), primary_key=True, server_default=text("''"))
     GerenReg2 = Column(CHAR(20))
@@ -749,7 +927,7 @@ class RegManager(Base):
 
 
 class State(Base):
-    __tablename__ = 'states'
+    __tablename__ = "states"
 
     State = Column(CHAR(5), primary_key=True, server_default=text("''"))
     State2 = Column(CHAR(20))
@@ -757,7 +935,7 @@ class State(Base):
 
 
 class Station(Base):
-    __tablename__ = 'stations'
+    __tablename__ = "stations"
 
     Station = Column(CHAR(20), primary_key=True, server_default=text("''"))
     StationName = Column(CHAR(150))
@@ -820,7 +998,7 @@ class Station(Base):
 
 
 class Subbasin(Base):
-    __tablename__ = 'subbasins'
+    __tablename__ = "subbasins"
 
     SubBasin = Column(CHAR(5), primary_key=True, server_default=text("''"))
     SubBasin2 = Column(CHAR(20))
@@ -828,7 +1006,7 @@ class Subbasin(Base):
 
 
 class Synopcrexdato(Base):
-    __tablename__ = 'synopcrexdatos'
+    __tablename__ = "synopcrexdatos"
 
     elemento = Column(CHAR(6), primary_key=True)
     Units = Column(CHAR(20), nullable=False)
@@ -838,7 +1016,7 @@ class Synopcrexdato(Base):
 
 
 class Synopcrexplant(Base):
-    __tablename__ = 'synopcrexplant'
+    __tablename__ = "synopcrexplant"
 
     template = Column(CHAR(6), primary_key=True, nullable=False)
     Secuen = Column(Integer, primary_key=True, nullable=False)
@@ -846,7 +1024,7 @@ class Synopcrexplant(Base):
 
 
 class TipoEstacionVariable(Base):
-    __tablename__ = 'tipoEstacionVariable'
+    __tablename__ = "tipoEstacionVariable"
 
     stationtype = Column(CHAR(15), primary_key=True, nullable=False)
     Secuen = Column(Integer, primary_key=True, nullable=False)
@@ -854,7 +1032,7 @@ class TipoEstacionVariable(Base):
 
 
 class Typeuser(Base):
-    __tablename__ = 'typeusers'
+    __tablename__ = "typeusers"
 
     TipoUsuario = Column(Integer, primary_key=True, server_default=text("'0'"))
     TypeName = Column(CHAR(50))
@@ -862,7 +1040,7 @@ class Typeuser(Base):
 
 
 class User(Base):
-    __tablename__ = 'users'
+    __tablename__ = "users"
 
     Userr = Column(CHAR(20), primary_key=True, server_default=text("''"))
     Name = Column(CHAR(60))
@@ -872,12 +1050,14 @@ class User(Base):
 
 
 class Validdatum(Base):
-    __tablename__ = 'validdata'
+    __tablename__ = "validdata"
 
     Station = Column(CHAR(20), primary_key=True, nullable=False)
     Variable = Column(CHAR(15), primary_key=True, nullable=False)
     Data = Column(CHAR(1), primary_key=True, nullable=False)
-    Datee = Column(Date, primary_key=True, nullable=False, server_default=text("'1901-01-01'"))
+    Datee = Column(
+        Date, primary_key=True, nullable=False, server_default=text("'1901-01-01'")
+    )
     EndDate = Column(Date)
     IniHour = Column(Time)
     EndHour = Column(Time)

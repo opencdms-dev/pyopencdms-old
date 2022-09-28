@@ -16,29 +16,29 @@ def test_can_convert_common_station_to_midas_station():
 def test_json_to_pydantic_should_match():
 
     input_dict = {
-        'station_id': 3450,
-        'station_no': '1SHFY45485HH',
-        'name': 'Test station',
-        'secondary_name': 'Alt test station',
-        'latitude': 67.111,
-        'longitude': 128.454,
-        'elevation': 30,
-        'region': 'UK',
-        'start_datetime': '2019-01-01',
-        'end_datetime': '2056-12-31',
-        'status_id': 123,
-        'timezone': 0,
-        'country': 'England',
-        'loc_geog_area_id': 'SHEL',
-        'rec_st_ind': 1234
+        "station_id": 3450,
+        "station_no": "1SHFY45485HH",
+        "name": "Test station",
+        "secondary_name": "Alt test station",
+        "latitude": 67.111,
+        "longitude": 128.454,
+        "elevation": 30,
+        "region": "UK",
+        "start_datetime": "2019-01-01",
+        "end_datetime": "2056-12-31",
+        "status_id": 123,
+        "timezone": 0,
+        "country": "England",
+        "loc_geog_area_id": "SHEL",
+        "rec_st_ind": 1234,
     }
 
     output_schema = midas_station.Source(
         src_id=3450,
-        src_name='Test station',
-        high_prcn_lat=Decimal('67.111'),
-        high_prcn_lon=Decimal('128.454'),
-        loc_geog_area_id='SHEL',
+        src_name="Test station",
+        high_prcn_lat=Decimal("67.111"),
+        high_prcn_lon=Decimal("128.454"),
+        loc_geog_area_id="SHEL",
         src_bgn_date=datetime.date(2019, 1, 1),
         rec_st_ind=1234,
         src_type=None,
@@ -48,7 +48,7 @@ def test_json_to_pydantic_should_match():
         wmo_region_code=None,
         zone_time=None,
         drainage_stream_id=None,
-        src_upd_date=None
+        src_upd_date=None,
     )
 
     output_json = json.dumps(output_schema.dict(), default=str)

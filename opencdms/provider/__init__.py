@@ -34,15 +34,9 @@ from enum import Enum
 
 
 def get_session_factory(db_uri: str):
-    db_engine = create_engine(
-        db_uri
-    )
+    db_engine = create_engine(db_uri)
 
-    session_factory = sessionmaker(
-        autocommit=False,
-        autoflush=False,
-        bind=db_engine
-    )
+    session_factory = sessionmaker(autocommit=False, autoflush=False, bind=db_engine)
 
     return session_factory
 

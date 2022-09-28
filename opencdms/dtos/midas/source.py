@@ -11,7 +11,7 @@ field_mapping = {
     "high_prcn_lat": "latitude",
     "high_prcn_lon": "longitude",
     "src_bgn_date": "start_datetime",
-    "src_end_date": "end_datetime"
+    "src_end_date": "end_datetime",
 }
 
 
@@ -26,12 +26,8 @@ class GridRefType(str, enum.Enum):
 class Source(BaseModel):
     src_id: Optional[conint(gt=0)]
     src_name: Optional[str]
-    high_prcn_lat: Optional[
-        condecimal(ge=Decimal("-90.0000"), le=Decimal("90"))
-    ]
-    high_prcn_lon: Optional[
-        condecimal(gt=Decimal("-179.9999"), le=Decimal("180"))
-    ]
+    high_prcn_lat: Optional[condecimal(ge=Decimal("-90.0000"), le=Decimal("90"))]
+    high_prcn_lon: Optional[condecimal(gt=Decimal("-179.9999"), le=Decimal("180"))]
     loc_geog_area_id: Optional[str]
     src_bgn_date: Optional[Union[datetime.date, str]]
     rec_st_ind: Optional[conint(ge=1001)]
@@ -69,12 +65,8 @@ class CreateSource(BaseModel):
 
 class UpdateSource(BaseModel):
     src_name: Optional[str]
-    high_prcn_lat: Optional[
-        condecimal(ge=Decimal("-90.0000"), le=Decimal("90"))
-    ]
-    high_prcn_lon: Optional[
-        condecimal(gt=Decimal("-179.9999"), le=Decimal("180"))
-    ]
+    high_prcn_lat: Optional[condecimal(ge=Decimal("-90.0000"), le=Decimal("90"))]
+    high_prcn_lon: Optional[condecimal(gt=Decimal("-179.9999"), le=Decimal("180"))]
     src_bgn_date: Optional[Union[datetime.date, str]]
     src_end_date: Optional[Union[datetime.date, str]]
     elevation: Optional[float]
