@@ -21,9 +21,9 @@ class Station(BaseModel):
     Latitud: Optional[Decimal]
 
     class Config:
-        allow_population_by_field_name = True
+        # allow_population_by_field_name = True
         orm_mode = True
-        fields = field_mapping
+        # fields = field_mapping
 
 
 class CreateStation(BaseModel):

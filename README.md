@@ -116,8 +116,8 @@ from opencdms.provider.mch import MCHProvider
 db_url = get_mch_english_connection_string()
 db_engine = create_engine(db_url)
 station_data = dict(
-    Station="TEST",
-    StationName="Test Station"
+    station_id="TEST",
+    name="Test Station"
 )
 
 SessionLocal = sessionmaker(bind=db_engine)
@@ -134,22 +134,22 @@ stations = mch_provider.list(db_session, "Station")
 station = mch_provider.get(
     db_session,
     "Station",
-    {"Station": station_data["Station"]}
+    {"station_id": station_data["station_id"]}
 )
 
 # update a station
 mch_provider.update(
     db_session,
     "Station",
-    {"Station": station_data["Station"]},
-    {'StationName': 'Updated Station Name'}
+    {"station_id": station_data["station_id"]},
+    {'name': 'Updated Station Name'}
 )
 
 # delete a station
 deleted = mch_provider.delete(
     db_session,
     "Station",
-    {"Station": station_data["Station"]}
+    {"station_id": station_data["station_id"]}
 )
 ```
 
