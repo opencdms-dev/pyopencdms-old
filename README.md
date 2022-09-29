@@ -33,8 +33,10 @@ It is expected that SQLAlchemy objects, Panda's [DataFrames](https://pandas.pyda
 ## Example
 
 - Create a virtual environment for OpenCDMS development
+- For Linux users, `pyopencdms` requires that you install libmysqlclient-dev. (`sudo  apt install libmysqlclient-dev`)
 - Install dependencies used by `pyopencdms`
 - Clone a copy of the `opencdms-test-data` repository
+
 
 ### Example python commands
 
