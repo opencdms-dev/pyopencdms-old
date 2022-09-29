@@ -94,6 +94,7 @@ resources:
                 end: 2022-10-30T08:57:29Z
         providers:
             -   type: feature
+                editable: true
                 name: opencdms.pygeoapi.climsoft_provider.ClimsoftProvider
                 languages:
                     - en

@@ -1,4 +1,3 @@
-import logging
 from pygeoapi.provider.base import (
     BaseProvider,
     ProviderConnectionError,
@@ -15,10 +14,12 @@ from opencdms.utils.db import get_connection_string, get_count
 from opencdms.models.climsoft import v4_1_1_core as models
 from opencdms.dtos.climsoft.observationfinal import (
     Observationfinal as ObservationfinalSchema,
+    CreateObservationfinal,
+    UpdateObservationfinal,
     field_mapping as obs_final_field_mapping,
 )
+from opencdms.utils.misc import remove_nulls_from_dict
 from pygeoapi.api import LOGGER
-from pygeoapi.api import validate_bbox
 
 
 class DatabaseConnection:
@@ -36,10 +37,10 @@ class DatabaseConnection:
         """
         MySQLProvider Class constructor returning
 
-        :param conn: dictionary with connection parameters
+        :param conn_dic: dictionary with connection parameters
                     to be used by sqlalchemy
             dbname – the database name (database is a deprecated alias)
-            user – user name used to authenticate
+            user – username used to authenticate
             password – password used to authenticate
             host – database host address
              (defaults to UNIX socket if not provided)
@@ -250,19 +251,37 @@ class ClimsoftProvider(BaseProvider):
 
             return self.__response_feature(obs_final)
 
-    def create(self, new_feature):
+    def create(self, data):
         """Create a new feature"""
+        obs_final = CreateObservationfinal.parse_obj(data)
+        with DatabaseConnection(
+            conn_dic=self.conn_dic, properties=self.properties
+        ) as db:
+            db.session.add(models.Observationfinal(**obs_final.dict()))
+            db.session.commit()
+        return (
+            f"{obs_final.recordedFrom}*{obs_final.describedBy}*{obs_final.obsDatetime}"
+        )
 
-        raise NotImplementedError()
-
-    def update(self, identifier, new_feature):
+    def update(self, identifier, data):
         """Updates an existing feature id with new_feature
 
         :param identifier: feature id
-        :param new_feature: new GeoJSON feature dictionary
+        :param data: new GeoJSON feature dictionary
         """
 
-        raise NotImplementedError()
+        recorded_from, described_by, obs_datetime = identifier.split()
+        updates = remove_nulls_from_dict(UpdateObservationfinal.parse_obj(data).dict())
+        with DatabaseConnection(
+            conn_dic=self.conn_dic, properties=self.properties
+        ) as db:
+            db.session.query(models.Observationfinal).filter_by(
+                recordedFrom=recorded_from,
+                describedBy=described_by,
+                obsDatetime=obs_datetime,
+            ).update(updates)
+            db.session.commit()
+        return True
 
     def get_coverage_domainset(self):
         """
@@ -287,8 +306,17 @@ class ClimsoftProvider(BaseProvider):
 
         :param identifier: feature id
         """
-
-        raise NotImplementedError()
+        recorded_from, described_by, obs_datetime = identifier.split()
+        with DatabaseConnection(
+            conn_dic=self.conn_dic, properties=self.properties
+        ) as db:
+            db.session.query(models.Observationfinal).filter_by(
+                recordedFrom=recorded_from,
+                describedBy=described_by,
+                obsDatetime=obs_datetime,
+            ).delete()
+            db.session.commit()
+        return True
 
     def __repr__(self):
         return "<ClimsoftProvider> {}".format(self.type)
