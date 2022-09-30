@@ -114,7 +114,7 @@ MCH_DB_HOST=127.0.0.1
 MCH_DB_PORT=3306
 MCH_DB_USER=root
 MCH_DB_ENGINE=mysql
-MCH_DB_NAME=mysql
+MCH_DB_NAME=test
 MCH_DB_DRIVER= mysqldb
 MCH_DB_PASSWORD=password
 
@@ -124,6 +124,7 @@ On linux you can do that by:
 
 ```
 $ export MCH_DB_PORT=33306
+$ export MCH_DB_NAME=mysql
 
 ```
 
