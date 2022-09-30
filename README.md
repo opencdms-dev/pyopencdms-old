@@ -156,6 +156,25 @@ deleted = mch_provider.delete(
 Similarly, we can use all other providers except `opencdms` provider.
 Here is an example of opencdms provider
 
+First set the required environment variables to point to a running instance of clide database. Below are the default values used in the configuration: 
+
+CLIDE_DB_HOST =  127.0.0.1
+CLIDE_DB_PORT =  5432
+CLIDE_DB_USER =  "postgres"
+CLIDE_DB_PASS = "password"
+CLIDE_DB_NAME = "postgres"
+CLIDE_DB_ENGINE = "postgresql"
+
+If you are using opencdms-test-data, all you need to set is the port number. 
+On linux you can do that by:
+
+```
+$ export CLIDE_DB_PORT=35433
+
+```
+
+Then:
+
 ```python
 from opencdms.provider.opencdms import OpenCDMSProvider, ProviderConfig
 from tests.unit.dtos.data import station_data
