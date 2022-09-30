@@ -245,6 +245,17 @@ defined db session. It will be done automatically in OpenCDMSProvider.
 
 Let us look at an example where multiple provider is enables.
 
+To run this example using the opencdms-test-data, set the required environment variables:
+
+```
+ $ export MCH_DB_PORT=33306
+ $ export MCH_DB_NAME=mysql
+ $ export CLIDE_DB_PORT=35433
+
+```
+
+then:
+
 ```python
 from sqlalchemy import create_engine
 from opencdms.dtos.clide import station as clide_station
@@ -257,16 +268,13 @@ from opencdms.provider.opencdms import OpenCDMSProvider, ProviderConfig
 from opencdms.utils.db import get_clide_connection_string, \
     get_mch_english_connection_string
 
-
 timezone_data = dict(
-    id=1,
     tm_zone="UTC",
     utc_diff=0,
     description="UTC timezone"
 )
 
 station_status_data = dict(
-    id=1,
     status="ACTIVE",
     description="test station status 1"
 )
@@ -354,7 +362,7 @@ station = provider.update(
 )
 
 assert station["clide"].region == 'US'
-assert station["mch"].TimeZone == '0'
+assert station["mch"].TimeZone == 'UTC'
 
 deleted = provider.delete(
     "Station",
@@ -364,6 +372,7 @@ deleted = provider.delete(
 )
 assert deleted["clide"]["station_id"] == station_data['station_id']
 assert deleted["mch"]["station_id"] == station_data['station_id']
+
 ```
 
 Here we have declared some variables for later use. Then we migrated the database
