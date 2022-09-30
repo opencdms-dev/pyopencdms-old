@@ -107,6 +107,28 @@ Currently, `opencdms` package has 5 providers:
 You can manipulate `opencdms.models.mch.english` models using `mch` provider.
 Here are some examples:
 
+
+First set the required environment variables to point to a running instance of mch english database. Below are the default values used in the configuration: 
+
+MCH_DB_HOST=127.0.0.1
+MCH_DB_PORT=3306
+MCH_DB_USER=root
+MCH_DB_ENGINE=mysql
+MCH_DB_NAME=mysql
+MCH_DB_DRIVER= mysqldb
+MCH_DB_PASSWORD=password
+
+If you are using opencdms-test-data, all you need to set is the host port number bound to the docker container on the docker compose file.
+
+On linux you can do that by:
+
+```
+$ export MCH_DB_PORT=33306
+
+```
+
+Then:
+
 ```python
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
@@ -154,9 +176,9 @@ deleted = mch_provider.delete(
 ```
 
 Similarly, we can use all other providers except `opencdms` provider.
-Here is an example of opencdms provider
+Here is an example of opencdms provider 
 
-First set the required environment variables to point to a running instance of clide database. Below are the default values used in the configuration: 
+The default connection parameters are:
 
 CLIDE_DB_HOST =  127.0.0.1
 CLIDE_DB_PORT =  5432
