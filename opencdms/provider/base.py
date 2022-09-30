@@ -258,7 +258,7 @@ class CDMSProvider:
 
             db_session.query(model)\
                 .filter_by(**unique_id_validated_fields)\
-                .update(input_data.dict())
+                .update(input_data)
             db_session.commit()
 
             updated_instance = db_session.query(model)\
