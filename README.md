@@ -163,11 +163,22 @@ from tests.unit.dtos.data import station_data
 # We are instantiating OpenCDMSProvider where we have enabled clide provider
 provider = OpenCDMSProvider(ProviderConfig(enable_clide=True))
 
+# first we create the dependencies StationStatu and StationTimezone Models
+
+station_status = provider.create("StationStatu", {"status": "STATU_123", "description": "Station is active" })
+station_statuses = provider.list("StationStatu")
+
+station_tz = provider.create("StationTimezone", {"tm_zone": "GMT", "utc_diff": "0", "description": "London"})
+station_tz = provider.list("StationTimezone")
+
+
+
 # create station
 station = provider.create("Station", station_data)
 
+
 # get a single station
-station = provider.get("Station", {"id": station_data["id"]})
+station = provider.get("Station", {"station_id": station_data["station_id"]})
 
 # get a list of stations
 stations = provider.list("Station")
@@ -175,14 +186,14 @@ stations = provider.list("Station")
 # update a station
 provider.update(
     "Station",
-    {"id": station_data["id"]},
-    {'region': 'US'}
+    {"station_id": station_data["station_id"]},
+    {'region': 'US' }
 )
 
 # delete a station
 provider.delete(
     "Station",
-    {"id": station_data['id']}
+    {"station_id": station_data["station_id"]}
 )
 ```
 
