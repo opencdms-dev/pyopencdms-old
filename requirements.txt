@@ -7,6 +7,6 @@ mysqlclient~=2.0.3
 python-dotenv
 faker
 pydantic
-pygeoapi
+pygeoapi@git+https://github.com/geopython/pygeoapi@master
 alchemyjsonschema
 Flask-CORS
