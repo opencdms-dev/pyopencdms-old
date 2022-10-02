@@ -50,8 +50,8 @@ from opencdms import MidasOpen
 
 # Instead of using a database connection string, the MIDAS Open
 # provider requires the root directory for the MIDAS Open data.
-connection = os.path.join(
-    Path.home(), 'opencdms-dev', 'git', 'opencdms-test-data')
+
+connection = os.path.join(Path.home(), 'opencdms-dev', 'git', 'opencdms-test-data', 'opencdms_test_data', 'data')
 
 # All instances of CDMS Providers act as an active session
 session = MidasOpen(connection)
