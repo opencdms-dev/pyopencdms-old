@@ -110,6 +110,7 @@ Here are some examples:
 
 First set the required environment variables to point to a running instance of mch english database. Below are the default values used in the configuration: 
 
+```
 MCH_DB_HOST=127.0.0.1
 MCH_DB_PORT=3306
 MCH_DB_USER=root
@@ -117,8 +118,9 @@ MCH_DB_ENGINE=mysql
 MCH_DB_NAME=test
 MCH_DB_DRIVER= mysqldb
 MCH_DB_PASSWORD=password
+```
 
-If you are using opencdms-test-data, all you need to set is the host port number bound to the docker container on the docker compose file.
+If you are using opencdms-test-data, you need to set is the appropriate port number and database as used in the docker-compose file.
 
 On linux you can do that by:
 
@@ -181,12 +183,15 @@ Here is an example of opencdms provider
 
 The default connection parameters are:
 
+```
 CLIDE_DB_HOST =  127.0.0.1
 CLIDE_DB_PORT =  5432
 CLIDE_DB_USER =  "postgres"
 CLIDE_DB_PASS = "password"
 CLIDE_DB_NAME = "postgres"
 CLIDE_DB_ENGINE = "postgresql"
+
+```
 
 If you are using opencdms-test-data, all you need to set is the port number. 
 On linux you can do that by:
