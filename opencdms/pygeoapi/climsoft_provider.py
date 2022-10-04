@@ -144,6 +144,9 @@ class ClimsoftProvider(BaseProvider):
                 self.fields = db.fields
         return self.fields
 
+    def get_schema(self):
+        return ObservationfinalSchema.schema()
+
     def query(
         self,
         startindex: int = 0,
@@ -253,6 +256,8 @@ class ClimsoftProvider(BaseProvider):
 
     def create(self, data):
         """Create a new feature"""
+        print(data)
+        LOGGER.debug(data)
         obs_final = CreateObservationfinal.parse_obj(data)
         with DatabaseConnection(
             conn_dic=self.conn_dic, properties=self.properties
@@ -306,7 +311,7 @@ class ClimsoftProvider(BaseProvider):
 
         :param identifier: feature id
         """
-        recorded_from, described_by, obs_datetime = identifier.split()
+        recorded_from, described_by, obs_datetime = identifier.split("*")
         with DatabaseConnection(
             conn_dic=self.conn_dic, properties=self.properties
         ) as db:
