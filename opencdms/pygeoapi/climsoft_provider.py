@@ -5,7 +5,7 @@ from pygeoapi.provider.base import (
     ProviderItemNotFoundError,
 )
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, Query, joinedload
+from sqlalchemy.orm import sessionmaker, Query, joinedload, Session
 from sqlalchemy.sql import asc, desc
 from typing import Dict, List
 from alchemyjsonschema import SchemaFactory
@@ -63,7 +63,7 @@ class DatabaseConnection:
         self.context = context
         self.columns = None
         self.fields = {}
-        self.session = None
+        self.session: Session = None
         self.uri = get_connection_string(
             "mysql",
             "mysqldb",
@@ -256,13 +256,12 @@ class ClimsoftProvider(BaseProvider):
 
     def create(self, data):
         """Create a new feature"""
-        print(data)
-        LOGGER.debug(data)
-        obs_final = CreateObservationfinal.parse_obj(data)
+        obs_final_data = CreateObservationfinal.parse_raw(data)
         with DatabaseConnection(
             conn_dic=self.conn_dic, properties=self.properties
         ) as db:
-            db.session.add(models.Observationfinal(**obs_final.dict()))
+            obs_final = models.Observationfinal(**obs_final_data.dict())
+            db.session.add(obs_final)
             db.session.commit()
         return (
             f"{obs_final.recordedFrom}*{obs_final.describedBy}*{obs_final.obsDatetime}"
@@ -276,7 +275,7 @@ class ClimsoftProvider(BaseProvider):
         """
 
         recorded_from, described_by, obs_datetime = identifier.split()
-        updates = remove_nulls_from_dict(UpdateObservationfinal.parse_obj(data).dict())
+        updates = remove_nulls_from_dict(UpdateObservationfinal.parse_raw(data).dict())
         with DatabaseConnection(
             conn_dic=self.conn_dic, properties=self.properties
         ) as db:

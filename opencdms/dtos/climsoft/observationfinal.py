@@ -52,7 +52,26 @@ class Observationfinal(BaseModel):
         fields = field_mapping
 
 
-class CreateObservationfinal(Observationfinal):
+class CreateObservationfinal(BaseModel):
+    recordedFrom: str
+    describedBy: int
+    obsDatetime: datetime.datetime
+    obsLevel: Optional[str]
+    obsValue: Optional[float]
+    flag: Optional[str]
+    period: Optional[int]
+    qcStatus: Optional[int]
+    qcTypeLog: Optional[str]
+    acquisitionType: Optional[int]
+    dataForm: Optional[str]
+    capturedBy: Optional[str]
+    mark: Optional[int]
+    temperatureUnits: Optional[str]
+    precipitationUnits: Optional[str]
+    cloudHeightUnits: Optional[str]
+    visUnits: Optional[str]
+    dataSourceTimeZone: Optional[int]
+
     class Config:
         allow_population_by_field_name = True
         fields = field_mapping
