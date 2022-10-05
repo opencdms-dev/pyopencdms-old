@@ -248,6 +248,58 @@ The code above will only manipulate clide models. Notice that, we have not expli
 defined db session. It will be done automatically in OpenCDMSProvider.
 
 
+On climsoft, on set your database connection varibles:
+
+```
+export CLIMSOFT_DB_PORT=33308
+export CLIMSOFT_DB_NAME=mysql
+```
+Then:
+
+```
+from sqlalchemy import create_engine
+from opencdms.utils.db import get_climsoft_4_1_1_connection_string
+from opencdms.models.climsoft import v4_1_1_core as climsoft
+from opencdms.provider.opencdms import OpenCDMSProvider, ProviderConfig
+
+station_data = {
+    "station_id": 3580,
+    "station_no": "1SHFY45485HH",
+    "name": "Test station",
+    "secondary_name": "Alt test station",
+    "latitude": 67.111,
+    "longitude": 128.454,
+    "elevation": 30,
+    "region": "UK",
+    "start_datetime": "2019-01-01",
+    "end_datetime": "2056-12-31",
+    "status_id": 1,
+    "timezone": "UTC",
+    "country": "England",
+    "loc_geog_area_id": "SHEL",
+    "rec_st_ind": 1234
+}
+
+
+climsoft_engine = create_engine(get_climsoft_4_1_1_connection_string())
+climsoft.Base.metadata.drop_all(bind=climsoft_engine)
+climsoft.Base.metadata.create_all(bind=climsoft_engine)
+provider = OpenCDMSProvider(
+    ProviderConfig(enable_climsoft=True)
+)
+station = provider.create("Station", station_data)
+
+stations = provider.list("Station")
+station = provider.get("Station",{"station_id": station_data["station_id"]})
+ 
+station = provider.update("Station",{ "station_id": station_data["station_id"] },{"name": "New name"})
+
+station = provider.delete("Station",{"station_id": station_data["station_id"]})
+
+# Drop all tables
+climsoft.Base.metadata.drop_all(bind=climsoft_engine)
+```
+
 Let us look at an example where multiple provider is enables.
 
 To run this example using the opencdms-test-data, set the required environment variables:
