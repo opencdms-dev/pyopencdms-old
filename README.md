@@ -282,7 +282,6 @@ station_data = {
 
 
 climsoft_engine = create_engine(get_climsoft_4_1_1_connection_string())
-climsoft.Base.metadata.drop_all(bind=climsoft_engine)
 climsoft.Base.metadata.create_all(bind=climsoft_engine)
 provider = OpenCDMSProvider(
     ProviderConfig(enable_climsoft=True)
