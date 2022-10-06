@@ -5,13 +5,13 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.sql import text as sa_text
 
 from opencdms.dtos.midas import source as midas_source_schema
-from opencdms.models.midas import core as midas_models
-from opencdms.provider.midas import MidasProvider
-from opencdms.utils.db import get_midas_connection_string
+from opencdms.models.midas_pg import core as midas_models
+from pyopencdms.opencdms.provider.midas_pg import MidasPgProvider
+from opencdms.utils.db import get_midas_pg_connection_string
 
-DB_URL = get_midas_connection_string()
+DB_URL = get_midas_pg_connection_string()
 fake = Faker()
-midas_provider = MidasProvider(models=midas_models)
+midas_provider = MidasPgProvider(models=midas_models)
 db_engine = create_engine(DB_URL)
 
 source_data = {
