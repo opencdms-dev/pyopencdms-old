@@ -37,4 +37,4 @@ __version__ = "0.1.0"
 from .provider.clide import ClideProvider
 from .provider.climsoft import Climsoft4Provider, Climsoft5
 from .provider.mch import MCHProvider
-from .provider.midas import MidasOpen, MidasProvider
+from .provider.midas_pg import MidasPgOpen, MidasPgProvider
