@@ -33,7 +33,7 @@
 import os
 import logging
 from types import ModuleType
-from opencdms.models.midas import core as midas_models
+from opencdms.models.midas_pg import core as midas_models
 from opencdms.dtos import midas as midas_schemas
 
 from .base import CDMSProvider
@@ -91,8 +91,8 @@ valid_dataset_versions = ["201901", "201908"]
 valid_qc_versions = [0, 1]
 
 
-class MidasOpen(CDMSProvider):
-    """Provider for MIDAS Open data"""
+class MidasPgOpen(CDMSProvider):
+    """Provider for MIDAS (postgres) Open data"""
 
     def __init__(self, connection_string, *args, **kwargs):
         self.connection_string = connection_string
@@ -179,7 +179,7 @@ class MidasOpen(CDMSProvider):
         ])
 
 
-class MidasProvider(CDMSProvider):
+class MidasPgProvider(CDMSProvider):
     def __init__(
         self,
         models: ModuleType = midas_models,
