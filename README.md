@@ -98,7 +98,7 @@ After installing `pyopencdms` the `opencdms` Python package will be available to
 
 Currently, `opencdms` package has 5 providers:
  - mch
- - midas
+ - midas_pg
  - climsoft
  - clide
  - opencdms
@@ -495,7 +495,7 @@ operation and returns a response in the form:
 {
     "clide": "a model or list of model/error/None",
     "mch": "a model or list of model/error/None",
-    "midas": "a model or list of model/error/None",
+    "midas_pg": "a model or list of model/error/None",
     "climsoft": "a model or list of model/error/None"
 }
 ```
