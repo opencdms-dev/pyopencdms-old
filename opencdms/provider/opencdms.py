@@ -2,7 +2,7 @@ from typing import Dict, Union, Any
 from opencdms.provider.clide import ClideProvider
 from opencdms.provider.climsoft import Climsoft4Provider
 from opencdms.provider.mch import MCHProvider
-from opencdms.provider.midas import MidasProvider
+from pyopencdms.opencdms.provider.midas_pg import MidasPgProvider
 from opencdms.utils.db import midas_session,\
     mch_session, clide_session, climsoft_session
 
@@ -13,13 +13,13 @@ class ProviderConfig:
         enable_clide: bool = False,
         enable_climsoft: bool = False,
         enable_mch: bool = False,
-        enable_midas: bool = False,
+        enable_midas_pg: bool = False,
         enable_validation: bool = True
     ):
         self.enable_clide = enable_clide
         self.enable_climsoft = enable_climsoft
         self.enable_mch = enable_mch
-        self.enable_midas = enable_midas
+        self.enable_midas_pg = enable_midas_pg
         self.enable_validation = enable_validation
 
 
@@ -35,7 +35,7 @@ class OpenCDMSProvider:
         self.mch_provider = MCHProvider() \
             if provider_config.enable_mch else None
         self.midas_provider = MidasProvider() \
-            if provider_config.enable_midas else None
+            if provider_config.enable_midas_pg else None
 
     def create(
         self,
