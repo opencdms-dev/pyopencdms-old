@@ -3,7 +3,7 @@ from opencdms.provider.clide import ClideProvider
 from opencdms.provider.climsoft import Climsoft4Provider
 from opencdms.provider.mch import MCHProvider
 from pyopencdms.opencdms.provider.midas_pg import MidasPgProvider
-from opencdms.utils.db import midas_session,\
+from opencdms.utils.db import midas_pg_session,\
     mch_session, clide_session, climsoft_session
 
 
@@ -34,7 +34,7 @@ class OpenCDMSProvider:
             if provider_config.enable_climsoft else None
         self.mch_provider = MCHProvider() \
             if provider_config.enable_mch else None
-        self.midas_provider = MidasProvider() \
+        self.midas_pg_provider = MidasPgProvider() \
             if provider_config.enable_midas_pg else None
 
     def create(
@@ -46,7 +46,7 @@ class OpenCDMSProvider:
             "clide": None,
             "climsoft": None,
             "mch": None,
-            "midas": None
+            "midas_pg": None
         }
         if self.clide_provider is not None:
             with clide_session() as db_session:
@@ -67,9 +67,9 @@ class OpenCDMSProvider:
                     model_name,
                     data
                 )
-        if self.midas_provider is not None:
-            with midas_session() as db_session:
-                response["midas"] = self.midas_provider.create(
+        if self.midas_pg_provider is not None:
+            with midas_pg_session() as db_session:
+                response["midas_pg"] = self.midas_pg_provider.create(
                     db_session,
                     model_name,
                     data
@@ -82,7 +82,7 @@ class OpenCDMSProvider:
             "clide": None,
             "climsoft": None,
             "mch": None,
-            "midas": None
+            "midas_pg": None
         }
 
         if self.clide_provider is not None:
@@ -106,9 +106,9 @@ class OpenCDMSProvider:
                     model_name,
                     unique_id
                 )
-        if self.midas_provider is not None:
-            with midas_session() as db_session:
-                response["midas"] = self.midas_provider.get(
+        if self.midas_pg_provider is not None:
+            with midas_pg_session() as db_session:
+                response["midas_pg"] = self.midas_pg_provider.get(
                     db_session,
                     model_name,
                     unique_id
@@ -127,7 +127,7 @@ class OpenCDMSProvider:
             "clide": None,
             "climsoft": None,
             "mch": None,
-            "midas": None
+            "midas_pg": None
         }
 
         if self.clide_provider is not None:
@@ -157,9 +157,9 @@ class OpenCDMSProvider:
                     limit,
                     offset
                 )
-        if self.midas_provider is not None:
-            with midas_session() as db_session:
-                response["midas"] = self.midas_provider.list(
+        if self.midas_pg_provider is not None:
+            with midas_pg_session() as db_session:
+                response["midas_pg"] = self.midas_pg_provider.list(
                     db_session,
                     model_name,
                     query,
@@ -178,7 +178,7 @@ class OpenCDMSProvider:
             "clide": None,
             "climsoft": None,
             "mch": None,
-            "midas": None
+            "midas_pg": None
         }
 
         if self.clide_provider is not None:
@@ -205,9 +205,9 @@ class OpenCDMSProvider:
                     unique_id,
                     data
                 )
-        if self.midas_provider is not None:
-            with midas_session() as db_session:
-                response["midas"] = self.midas_provider.update(
+        if self.midas_pg_provider is not None:
+            with midas_pg_session() as db_session:
+                response["midas_pg"] = self.midas_pg_provider.update(
                     db_session,
                     model_name,
                     unique_id,
@@ -221,7 +221,7 @@ class OpenCDMSProvider:
             "clide": None,
             "climsoft": None,
             "mch": None,
-            "midas": None
+            "midas_pg": None
         }
 
         if self.clide_provider is not None:
@@ -245,9 +245,9 @@ class OpenCDMSProvider:
                     model_name,
                     unique_id
                 )
-        if self.midas_provider is not None:
-            with midas_session() as db_session:
-                response["midas"] = self.midas_provider.delete(
+        if self.midas_pg_provider is not None:
+            with midas_pg_session() as db_session:
+                response["midas_pg"] = self.midas_pg_provider.delete(
                     db_session,
                     model_name,
                     unique_id
