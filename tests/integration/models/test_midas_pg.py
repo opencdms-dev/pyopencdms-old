@@ -4,10 +4,10 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.sql import text as sa_text
 
-from opencdms.models.midas import core as midas_models
-from opencdms.utils.db import get_midas_connection_string
+from opencdms.models.midas_pg import core as midas_models
+from opencdms.utils.db import get_midas_pg_connection_string
 
-DB_URL = get_midas_connection_string()
+DB_URL = get_midas_pg_connection_string()
 fake = Faker()
 
 db_engine = create_engine(DB_URL)
