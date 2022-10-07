@@ -6,7 +6,7 @@ from sqlalchemy.sql import text as sa_text
 
 from opencdms.dtos.midas import source as midas_source_schema
 from opencdms.models.midas_pg import core as midas_models
-from pyopencdms.opencdms.provider.midas_pg import MidasPgProvider
+from opencdms.provider.midas_pg import MidasPgProvider
 from opencdms.utils.db import get_midas_pg_connection_string
 
 DB_URL = get_midas_pg_connection_string()
