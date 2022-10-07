@@ -4,6 +4,7 @@ from sqlalchemy import CHAR, CheckConstraint, Column, DateTime, Enum, \
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
+import uuid
 
 Base = declarative_base()
 metadata = Base.metadata
@@ -178,8 +179,8 @@ class Source(Base):
                       comment='\nAttribute Description -\n')
     lat_wgs84 = Column(NUMERIC(7, 5, True))
     lon_wgs84 = Column(NUMERIC(8, 5, True))
-    src_guid = Column(UUID, unique=True,
-                      server_default=text("gen_random_uuid()"),
+    src_guid = Column(UUID(as_uuid=True), unique=True, default=uuid.uuid4,
+                    #   server_default=text("gen_random_uuid()"),
                       comment='Global Unique ID - RAW32 - default sys_guid()')
     src_geom = Column(JSON, comment='SRID 8307 geometry (WGS84 lat/lon)')
     src_location_type = Column(VARCHAR(50),
