@@ -9,8 +9,8 @@ station_data = {
     "region": "UK",
     "start_datetime": "2019-01-01",
     "end_datetime": "2056-12-31",
-    "status_id": 123,
-    "timezone": 0,
+    "status_id": 1,
+    "timezone": "GMT",
     "country": "England",
     "loc_geog_area_id": "SHEL",
     "rec_st_ind": 1234

@@ -107,6 +107,28 @@ Currently, `opencdms` package has 5 providers:
 You can manipulate `opencdms.models.mch.english` models using `mch` provider.
 Here are some examples:
 
+
+First set the required environment variables to point to a running instance of mch english database. Below are the default values used in the configuration: 
+
+MCH_DB_HOST=127.0.0.1
+MCH_DB_PORT=3306
+MCH_DB_USER=root
+MCH_DB_ENGINE=mysql
+MCH_DB_NAME=mysql
+MCH_DB_DRIVER= mysqldb
+MCH_DB_PASSWORD=password
+
+If you are using opencdms-test-data, all you need to set is the host port number bound to the docker container on the docker compose file.
+
+On linux you can do that by:
+
+```
+$ export MCH_DB_PORT=33306
+
+```
+
+Then:
+
 ```python
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
@@ -154,7 +176,26 @@ deleted = mch_provider.delete(
 ```
 
 Similarly, we can use all other providers except `opencdms` provider.
-Here is an example of opencdms provider
+Here is an example of opencdms provider 
+
+The default connection parameters are:
+
+CLIDE_DB_HOST =  127.0.0.1
+CLIDE_DB_PORT =  5432
+CLIDE_DB_USER =  "postgres"
+CLIDE_DB_PASS = "password"
+CLIDE_DB_NAME = "postgres"
+CLIDE_DB_ENGINE = "postgresql"
+
+If you are using opencdms-test-data, all you need to set is the port number. 
+On linux you can do that by:
+
+```
+$ export CLIDE_DB_PORT=35433
+
+```
+
+Then:
 
 ```python
 from opencdms.provider.opencdms import OpenCDMSProvider, ProviderConfig
@@ -163,11 +204,22 @@ from tests.unit.dtos.data import station_data
 # We are instantiating OpenCDMSProvider where we have enabled clide provider
 provider = OpenCDMSProvider(ProviderConfig(enable_clide=True))
 
+# first we create the dependencies StationStatu and StationTimezone Models
+
+station_status = provider.create("StationStatu", {"status": "STATU_123", "description": "Station is active" })
+station_statuses = provider.list("StationStatu")
+
+station_tz = provider.create("StationTimezone", {"tm_zone": "GMT", "utc_diff": "0", "description": "London"})
+station_tz = provider.list("StationTimezone")
+
+
+
 # create station
 station = provider.create("Station", station_data)
 
+
 # get a single station
-station = provider.get("Station", {"id": station_data["id"]})
+station = provider.get("Station", {"station_id": station_data["station_id"]})
 
 # get a list of stations
 stations = provider.list("Station")
@@ -175,14 +227,14 @@ stations = provider.list("Station")
 # update a station
 provider.update(
     "Station",
-    {"id": station_data["id"]},
-    {'region': 'US'}
+    {"station_id": station_data["station_id"]},
+    {'region': 'US' }
 )
 
 # delete a station
 provider.delete(
     "Station",
-    {"id": station_data['id']}
+    {"station_id": station_data["station_id"]}
 )
 ```
 
