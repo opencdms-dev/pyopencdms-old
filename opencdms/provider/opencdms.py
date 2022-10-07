@@ -2,7 +2,7 @@ from typing import Dict, Union, Any
 from opencdms.provider.clide import ClideProvider
 from opencdms.provider.climsoft import Climsoft4Provider
 from opencdms.provider.mch import MCHProvider
-from pyopencdms.opencdms.provider.midas_pg import MidasPgProvider
+from opencdms.provider.midas_pg import MidasPgProvider
 from opencdms.utils.db import midas_pg_session,\
     mch_session, clide_session, climsoft_session
 
