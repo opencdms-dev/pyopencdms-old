@@ -1,6 +1,6 @@
 # coding: utf-8
 from sqlalchemy import CHAR, CheckConstraint, Column, DateTime, Enum, \
-    ForeignKey, Index, VARCHAR, text, NUMERIC, JSON, Integer
+    ForeignKey, Index, VARCHAR, text, NUMERIC, JSON, Integer, String
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
@@ -213,7 +213,7 @@ class Deployment(Base):
 
     deployment_id = Column(NUMERIC(6, 0, False), primary_key=True,
                            comment='Unique identifier of each deployment record')
-    src_id = Column(ForeignKey('source.src_id'), nullable=False, index=True,
+    src_id = Column(NUMERIC(6, 0, False),ForeignKey('source.src_id'), nullable=False, index=True,
                     comment='Unique identifier for station in MIDAS  ')
     id = Column(VARCHAR(8), comment='Identifier associated with station')
     id_type = Column(VARCHAR(4), nullable=False,
