@@ -21,10 +21,10 @@ class Equipment(Base):
                    'record calibration validity start and end dates '
                    'respectively.'}
 
-    equipment_id = Column(NUMERIC(6, 0, False), primary_key=True,
+    equipment_id = Column(Integer, primary_key=True,
                           comment='Unique identifier for piece of equipment '
                                   'in Metadata')
-    equipment_type_id = Column(NUMERIC(6, 0, False), nullable=False,
+    equipment_type_id = Column(Integer, nullable=False,
                                comment='Unique identifier for equipment type')
     manufacturer_name = Column(VARCHAR(28), nullable=False,
                                comment='Name of equipment manufacturer')
@@ -57,7 +57,7 @@ class ReportingSchedule(Base):
               'reporting_method', 'public_holiday_flag', unique=True),
     )
 
-    report_schedule_id = Column(NUMERIC(6, 0, False), primary_key=True,
+    report_schedule_id = Column(Integer, primary_key=True,
                                 comment='Unique identifier for each record')
     id = Column(VARCHAR(8), comment='Non unique identifier for station')
     id_type = Column(VARCHAR(4), nullable=False,
@@ -127,7 +127,7 @@ class Source(Base):
             "'BOGUS2','UA')")
     )
 
-    src_id = Column(NUMERIC(6, 0, False), primary_key=True,
+    src_id = Column(Integer, primary_key=True,
                     comment='\nThis is an identifier for each source'
                             ' of meteorological data within the system. '
                             'It acts as a unique identifier when a source may '
@@ -154,7 +154,7 @@ class Source(Base):
                 'reference.\nValue List:\nCI = Channel Islands grid\n'
                 'IRL = Irish grid\nOS = Ordnance Survey British National grid '
                 'reference\nUnspecified, usually over-seas.\n')
-    east_grid_ref = Column(NUMERIC(6, 0, False),
+    east_grid_ref = Column(Integer,
                            comment='\nAs a compound with North Grid reference can indicate a location to within a 100 metre square.\n')
     north_grid_ref = Column(NUMERIC(7, 0, False),
                             comment='\nAs a compound with east grid reference can give a location of a site to a 100 m square.\n')
@@ -167,7 +167,7 @@ class Source(Base):
                        comment='\nHeight of ground surface above mean sea level.  See also height.\n')
     wmo_region_code = Column(CHAR(1),
                              comment='\nWMO Code A1 Code table 0161. WMO Regional Association area in which buoy, drilling rig or oil- or gas-production platform has been deployed.\nValues: 1 = Africa, 2 = Asia, 3 = South America, 4 = North America, 5 = Australasia, 6 = Europe, 7 = Antactica.\n')
-    parent_src_id = Column(NUMERIC(6, 0, False), comment='\n')
+    parent_src_id = Column(Integer, comment='\n')
     zone_time = Column(NUMERIC(2, 0, False),
                        comment='\nDifference from UTC (hours) for overseas stations.\n')
     drainage_stream_id = Column(VARCHAR(4),
@@ -175,7 +175,7 @@ class Source(Base):
     src_upd_date = Column(DateTime, comment='\nsource_updated_date\n')
     mtce_ctre_code = Column(VARCHAR(4),
                             comment='\nAbbreviated form of the maintenance centre name.\n')
-    place_id = Column(NUMERIC(6, 0, False), server_default=text("NULL"),
+    place_id = Column(Integer, server_default=text("NULL"),
                       comment='\nAttribute Description -\n')
     lat_wgs84 = Column(NUMERIC(7, 5, True))
     lon_wgs84 = Column(NUMERIC(8, 5, True))
@@ -190,7 +190,7 @@ class Source(Base):
 class StationReportElement(Base):
     __tablename__ = 'station_report_element'
 
-    stn_rpt_elem_id = Column(NUMERIC(6, 0, False), primary_key=True)
+    stn_rpt_elem_id = Column(Integer, primary_key=True)
     id = Column(VARCHAR(8))
     id_type = Column(VARCHAR(4), nullable=False)
     src_cap_bgn_date = Column(DateTime, nullable=False)
@@ -211,16 +211,16 @@ class Deployment(Base):
             'comment': 'An instance of a piece of equipment being deployed for a purpose. Provision is made for the situation where only the type of equipment is known, by carrying Instrument Type ID as a foreign key, and making the relationship with the Equipment entity optional. Need to ensure that, if a specific piece of equipment is recorded (via Equipment ID), the attribute Equipment Type ID is automatically set to the value of the corresponding attribute in Equipment.'}
     )
 
-    deployment_id = Column(NUMERIC(6, 0, False), primary_key=True,
+    deployment_id = Column(Integer, primary_key=True,
                            comment='Unique identifier of each deployment record')
-    src_id = Column(NUMERIC(6, 0, False),ForeignKey('source.src_id'), nullable=False, index=True,
+    src_id = Column(Integer,ForeignKey('source.src_id'), nullable=False, index=True,
                     comment='Unique identifier for station in MIDAS  ')
     id = Column(VARCHAR(8), comment='Identifier associated with station')
     id_type = Column(VARCHAR(4), nullable=False,
                      comment='Identifier type describing identifier above')
     # equipment_id = Column(ForeignKey('equipment.equipment_id'), index=True,
     #                       comment='Unique identifier of piece of equipment')
-    equipment_type_id = Column(NUMERIC(6, 0, False), nullable=False, index=True,
+    equipment_type_id = Column(Integer, nullable=False, index=True,
                                comment='Unique identifier for equipment type')
     met_office_eqpt_flag = Column(CHAR(1), nullable=False,
                                   comment='Flag describing whether Met Office owns equipment or not (T or F)')
@@ -234,7 +234,7 @@ class Deployment(Base):
                            comment='End date of deployment')
     grid_ref_type = Column(VARCHAR(4),
                            comment='Grid reference type (OS, IRL or CI)')
-    east_grid_ref = Column(NUMERIC(6, 0, False),
+    east_grid_ref = Column(Integer,
                            comment='East grid reference of deployment')
     north_grid_ref = Column(NUMERIC(7, 0, False),
                             comment='North grid reference of deployment')
@@ -285,7 +285,7 @@ class Deployment(Base):
 class EquipmentCalibration(Base):
     __tablename__ = 'equipment_calibration'
 
-    eqpt_calib_id = Column(NUMERIC(6, 0, False), primary_key=True,
+    eqpt_calib_id = Column(Integer, primary_key=True,
                            comment='Unique identifier for calibration of this equipment')
     # equipment_id = Column(Integer, ForeignKey('equipment.equipment_id'),
     #                       nullable=False, index=True,
@@ -316,7 +316,7 @@ class Inspection(Base):
             'comment': 'Provides a record of inspections carried out at stations and related to the midas.source table'}
     )
 
-    inspection_id = Column(NUMERIC(6, 0, False), primary_key=True,
+    inspection_id = Column(Integer, primary_key=True,
                            comment='Unique identifier for the inspection')
     src_id = Column(ForeignKey('source.src_id'), nullable=False, index=True,
                     comment='Unique identifier for the station')
@@ -341,7 +341,7 @@ class ObservingSchedule(Base):
               unique=True),
     )
 
-    ob_schd_id = Column(NUMERIC(6, 0, False), primary_key=True,
+    ob_schd_id = Column(Integer, primary_key=True,
                         comment='Unique number of the record')
     stn_rpt_elem_id = Column(
         ForeignKey('station_report_element.stn_rpt_elem_id',
@@ -378,9 +378,9 @@ class ObservingSystemInstallation(Base):
         CheckConstraint('SRC_ID >= 0'),
     )
 
-    ob_sys_intl_id = Column(NUMERIC(6, 0, False), primary_key=True,
+    ob_sys_intl_id = Column(Integer, primary_key=True,
                             comment='Unique number for each record')
-    ob_sys_vrsn_id = Column(NUMERIC(6, 0, False), nullable=False, index=True,
+    ob_sys_vrsn_id = Column(Integer, nullable=False, index=True,
                             comment='Unique number for observing system version')
     src_id = Column(ForeignKey('source.src_id'), nullable=False, index=True,
                     comment='Unique number for station')
@@ -436,7 +436,7 @@ class SrcCapability(Base):
                               comment='\nFormerly the method of receiving these reports from this source, e.g. GTS, metform, postcard, etc.  This attribute is now used to cross-reference between IDs in use at a SOURCE.  It will be renamed to ID_CROSS_REF at the next convenient opportunity.\n ')
     data_retention_period = Column(NUMERIC(3, 0, False),
                                    comment='\nCharacter string indicating the period for which data are retained in MIDAS.\n')
-    comm_mthd_id = Column(NUMERIC(6, 0, False),
+    comm_mthd_id = Column(Integer,
                           comment='\nAbbreviated code to identify the various communication methods on which data can be sent back to the Office.\n')
 
     src = relationship('Source')
@@ -472,7 +472,7 @@ class SrcCapabilityNodatum(Base):
     db_segment_name = Column(VARCHAR(12))
     rcpt_method_name = Column(VARCHAR(20))
     data_retention_period = Column(NUMERIC(3, 0, False))
-    comm_mthd_id = Column(NUMERIC(6, 0, False))
+    comm_mthd_id = Column(Integer)
 
     src = relationship('Source')
 
@@ -483,7 +483,7 @@ class StationAuthorityHistory(Base):
         CheckConstraint('SRC_ID >= 0'),
     )
 
-    authority_id = Column(NUMERIC(6, 0, False), primary_key=True,
+    authority_id = Column(Integer, primary_key=True,
                           nullable=False,
                           comment='Foreign key to attribute in the AUTHORITY table')
     src_id = Column(ForeignKey('source.src_id'), primary_key=True,
@@ -608,7 +608,7 @@ class StationObserver(Base):
         CheckConstraint('SRC_ID >= 0'),
     )
 
-    observer_id = Column(NUMERIC(6, 0, False), primary_key=True, nullable=False,
+    observer_id = Column(Integer, primary_key=True, nullable=False,
                          index=True, comment='Unique identifier of observer')
     src_id = Column(ForeignKey('source.src_id'), primary_key=True,
                     nullable=False, index=True,
@@ -667,7 +667,7 @@ class DeploymentDetail(Base):
     __table_args__ = {
         'comment': 'The details of attributes associated with deployments of equipment. related to the deplyment and the deployment attribute tables.'}
 
-    depl_attr_id = Column(NUMERIC(6, 0, False), primary_key=True,
+    depl_attr_id = Column(Integer, primary_key=True,
                           nullable=False, index=True,
                           comment='Deployment attribute unique identifier')
     deployment_id = Column(ForeignKey('deployment.deployment_id'),
@@ -686,8 +686,8 @@ class DeploymentDetail(Base):
 class EqptCalibCoeff(Base):
     __tablename__ = 'eqpt_calib_coeff'
 
-    calib_coeff_msrt_id = Column(NUMERIC(6, 0, False), primary_key=True)
-    eqpt_type_calib_coeff_id = Column(NUMERIC(6, 0, False), nullable=False)
+    calib_coeff_msrt_id = Column(Integer, primary_key=True)
+    eqpt_type_calib_coeff_id = Column(Integer, nullable=False)
     eqpt_calib_id = Column(ForeignKey('equipment_calibration.eqpt_calib_id'),
                            nullable=False)
     calib_coeff_val = Column(NUMERIC(10, 2, True))
