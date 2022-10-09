@@ -1,7 +1,24 @@
 # coding: utf-8
-from sqlalchemy import BigInteger, CHAR, Column, DECIMAL, DateTime, Float, \
-    ForeignKey, Index, Integer, String, Text, text
-from sqlalchemy.dialects.mysql import TINYINT, DOUBLE, BIGINT, INTEGER
+from sqlalchemy import (
+    BigInteger,
+    CHAR,
+    Column,
+    DECIMAL,
+    DateTime,
+    Float,
+    ForeignKey,
+    Index,
+    Integer,
+    String,
+    Text,
+    text,
+)
+from sqlalchemy.dialects.mysql import (
+    TINYINT,
+    DOUBLE,
+    BIGINT,
+    INTEGER,
+)
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
 
@@ -43,53 +60,84 @@ TARGET_TABLES = [
     "form_hourly_time_selection",
     "form_monthly",
     "form_synoptic2_tdcf",
-    "form_synoptic_2_ra1"
+    "form_synoptic_2_ra1",
 ]
 
 
 class ClimsoftUser(Base):
-    __tablename__ = 'climsoftusers'
+    __tablename__ = "climsoftusers"
 
-    userName = Column(String(50), primary_key=True, unique=True, nullable=False)
+    userName = Column(
+        String(50),
+        primary_key=True,
+        unique=True,
+        nullable=False,
+    )
     userRole = Column(String(50), nullable=False)
 
 
 class Acquisitiontype(Base):
-    __tablename__ = 'acquisitiontype'
+    __tablename__ = "acquisitiontype"
 
-    code = Column(Integer, primary_key=True, server_default=text("'0'"))
+    code = Column(
+        Integer,
+        primary_key=True,
+        server_default=text("'0'"),
+    )
     description = Column(String(255))
 
 
 class DataForm(Base):
-    __tablename__ = 'data_forms'
+    __tablename__ = "data_forms"
 
-    id = Column(BigInteger, nullable=False, server_default=text("'0'"))
-    order_num = Column(BigInteger, server_default=text("'0'"))
+    id = Column(
+        BigInteger,
+        nullable=False,
+        server_default=text("'0'"),
+    )
+    order_num = Column(
+        BigInteger, server_default=text("'0'")
+    )
     table_name = Column(String(255))
     form_name = Column(String(250), primary_key=True)
     description = Column(Text)
     selected = Column(TINYINT)
-    val_start_position = Column(BigInteger, server_default=text("'0'"))
-    val_end_position = Column(BigInteger, server_default=text("'0'"))
+    val_start_position = Column(
+        BigInteger, server_default=text("'0'")
+    )
+    val_end_position = Column(
+        BigInteger, server_default=text("'0'")
+    )
     elem_code_location = Column(String(255))
     sequencer = Column(String(50))
-    entry_mode = Column(TINYINT(2), nullable=False, server_default=text("'00'"))
+    entry_mode = Column(
+        TINYINT(2),
+        nullable=False,
+        server_default=text("'00'"),
+    )
 
 
 class Flag(Base):
-    __tablename__ = 'flags'
+    __tablename__ = "flags"
 
-    characterSymbol = Column(String(255), primary_key=True, server_default=text("''"))
+    characterSymbol = Column(
+        String(255),
+        primary_key=True,
+        server_default=text("''"),
+    )
     numSymbol = Column(Integer)
     description = Column(String(255))
 
 
 class Obselement(Base):
-    __tablename__ = 'obselement'
-    __table_args__ = ( Index('elementCode', 'elementId'),)
+    __tablename__ = "obselement"
+    __table_args__ = (Index("elementCode", "elementId"),)
 
-    elementId = Column(BigInteger, primary_key=True, server_default=text("'0'"))
+    elementId = Column(
+        BigInteger,
+        primary_key=True,
+        server_default=text("'0'"),
+    )
     abbreviation = Column(String(255))
     elementName = Column(String(255))
     description = Column(String(255))
@@ -98,51 +146,73 @@ class Obselement(Base):
     lowerLimit = Column(String(255))
     units = Column(String(255))
     elementtype = Column(String(50))
-    qcTotalRequired = Column(Integer, server_default=text("'0'"))
-    selected = Column(TINYINT, nullable=False, server_default=text("'0'"))
+    qcTotalRequired = Column(
+        Integer, server_default=text("'0'")
+    )
+    selected = Column(
+        TINYINT, nullable=False, server_default=text("'0'")
+    )
 
 
 class Paperarchivedefinition(Base):
-    __tablename__ = 'paperarchivedefinition'
-    __table_args__ = (Index('paperarchivedef','formId'),)
+    __tablename__ = "paperarchivedefinition"
+    __table_args__ = (Index("paperarchivedef", "formId"),)
 
     formId = Column(String(50), primary_key=True)
     description = Column(String(255))
 
 
 class Qcstatusdefinition(Base):
-    __tablename__ = 'qcstatusdefinition'
+    __tablename__ = "qcstatusdefinition"
 
-    code = Column(Integer, primary_key=True, server_default=text("'0'"))
+    code = Column(
+        Integer,
+        primary_key=True,
+        server_default=text("'0'"),
+    )
     description = Column(String(255))
 
 
 class Qctype(Base):
-    __tablename__ = 'qctype'
+    __tablename__ = "qctype"
 
-    code = Column(Integer, primary_key=True, server_default=text("'0'"))
+    code = Column(
+        Integer,
+        primary_key=True,
+        server_default=text("'0'"),
+    )
     description = Column(String(255))
 
 
 class Regkey(Base):
-    __tablename__ = 'regkeys'
+    __tablename__ = "regkeys"
 
-    keyName = Column(String(255), primary_key=True, server_default=text("''"))
+    keyName = Column(
+        String(255),
+        primary_key=True,
+        server_default=text("''"),
+    )
     keyValue = Column(String(255))
     keyDescription = Column(String(255))
 
 
 class Station(Base):
-    __tablename__ = 'station'
-    __table_args__ = (Index('StationStationId', 'stationId'),)
+    __tablename__ = "station"
+    __table_args__ = (
+        Index("StationStationId", "stationId"),
+    )
 
     stationId = Column(String(255), primary_key=True)
     stationName = Column(String(255))
     wmoid = Column(String(20))
     icaoid = Column(String(20))
-    latitude = Column(DOUBLE(precision=11, scale=6, asdecimal=True))
+    latitude = Column(
+        DOUBLE(precision=11, scale=6, asdecimal=True)
+    )
     qualifier = Column(String(20))
-    longitude = Column(DOUBLE(precision=11, scale=6, asdecimal=True))
+    longitude = Column(
+        DOUBLE(precision=11, scale=6, asdecimal=True)
+    )
     elevation = Column(String(255))
     geoLocationMethod = Column(String(255))
     geoLocationAccuracy = Column(Float(11))
@@ -152,35 +222,56 @@ class Station(Base):
     authority = Column(String(255))
     adminRegion = Column(String(255))
     drainageBasin = Column(String(255))
-    wacaSelection = Column(TINYINT, server_default=text("'0'"))
-    cptSelection = Column(TINYINT, server_default=text("'0'"))
-    stationOperational = Column(TINYINT, server_default=text("'0'"))
+    wacaSelection = Column(
+        TINYINT, server_default=text("'0'")
+    )
+    cptSelection = Column(
+        TINYINT, server_default=text("'0'")
+    )
+    stationOperational = Column(
+        TINYINT, server_default=text("'0'")
+    )
 
 
 class Synopfeature(Base):
-    __tablename__ = 'synopfeature'
+    __tablename__ = "synopfeature"
 
     abbreviation = Column(String(255), primary_key=True)
     description = Column(String(255))
 
 
 class Featuregeographicalposition(Base):
-    __tablename__ = 'featuregeographicalposition'
+    __tablename__ = "featuregeographicalposition"
     __table_args__ = (
-        Index('FK_mysql_climsoft_db_v4_synopfeatureFeatureGeographicalPosition', 'belongsTo', 'observedOn', unique=True),
+        Index(
+            "FK_mysql_climsoft_db_v4_synopfeatureFeatureGeographicalPosition",
+            "belongsTo",
+            "observedOn",
+            unique=True,
+        ),
     )
 
-    belongsTo = Column(ForeignKey('synopfeature.abbreviation'), primary_key=True, nullable=False)
-    observedOn = Column(String(50), primary_key=True, nullable=False)
-    latitude = Column(DOUBLE(precision=11, scale=6, asdecimal=True))
-    longitude = Column(DOUBLE(precision=11, scale=6, asdecimal=True))
+    belongsTo = Column(
+        ForeignKey("synopfeature.abbreviation"),
+        primary_key=True,
+        nullable=False,
+    )
+    observedOn = Column(
+        String(50), primary_key=True, nullable=False
+    )
+    latitude = Column(
+        DOUBLE(precision=11, scale=6, asdecimal=True)
+    )
+    longitude = Column(
+        DOUBLE(precision=11, scale=6, asdecimal=True)
+    )
 
-    synopfeature = relationship('Synopfeature')
+    synopfeature = relationship("Synopfeature")
 
 
 class Instrument(Base):
-    __tablename__ = 'instrument'
-    __table_args__ = (Index('code', 'instrumentId'),)
+    __tablename__ = "instrument"
+    __table_args__ = (Index("code", "instrumentId"),)
 
     instrumentName = Column(String(255))
     instrumentId = Column(String(255), primary_key=True)
@@ -193,29 +284,54 @@ class Instrument(Base):
     deinstallationDatetime = Column(String(50))
     height = Column(String(255))
     instrumentPicture = Column(CHAR(255))
-    installedAt = Column(ForeignKey('station.stationId'))
+    installedAt = Column(ForeignKey("station.stationId"))
 
-    station = relationship('Station')
+    station = relationship("Station")
 
 
 class Observationfinal(Base):
-    __tablename__ = 'observationfinal'
+    __tablename__ = "observationfinal"
     __table_args__ = (
-        Index('obsFinalIdentification', 'recordedFrom', 'describedBy', 'obsDatetime', unique=True),
-        Index('obsElementObservationInitial', 'describedBy'),
-        Index('stationObservationInitial', 'recordedFrom')
+        Index(
+            "obsFinalIdentification",
+            "recordedFrom",
+            "describedBy",
+            "obsDatetime",
+            unique=True,
+        ),
+        Index(
+            "obsElementObservationInitial", "describedBy"
+        ),
+        Index("stationObservationInitial", "recordedFrom"),
     )
 
-    recordedFrom = Column(ForeignKey('station.stationId'), primary_key=True, nullable=False)
-    describedBy = Column(ForeignKey('obselement.elementId'), primary_key=True, nullable=False)
-    obsDatetime = Column(DateTime, primary_key=True, nullable=False)
-    obsLevel = Column(String(255), primary_key=True, nullable=False, server_default=text("'surface'"))
+    recordedFrom = Column(
+        ForeignKey("station.stationId"),
+        primary_key=True,
+        nullable=False,
+    )
+    describedBy = Column(
+        ForeignKey("obselement.elementId"),
+        primary_key=True,
+        nullable=False,
+    )
+    obsDatetime = Column(
+        DateTime, primary_key=True, nullable=False
+    )
+    obsLevel = Column(
+        String(255),
+        primary_key=True,
+        nullable=False,
+        server_default=text("'surface'"),
+    )
     obsValue = Column(DECIMAL(8, 2))
     flag = Column(String(255), server_default=text("'N'"))
     period = Column(Integer)
     qcStatus = Column(Integer, server_default=text("'0'"))
     qcTypeLog = Column(Text)
-    acquisitionType = Column(Integer, server_default=text("'0'"))
+    acquisitionType = Column(
+        Integer, server_default=text("'0'")
+    )
     dataForm = Column(String(255))
     capturedBy = Column(String(255))
     mark = Column(TINYINT)
@@ -223,30 +339,64 @@ class Observationfinal(Base):
     precipitationUnits = Column(String(255))
     cloudHeightUnits = Column(String(255))
     visUnits = Column(String(255))
-    dataSourceTimeZone = Column(Integer, server_default=text("'0'"))
+    dataSourceTimeZone = Column(
+        Integer, server_default=text("'0'")
+    )
 
-    obselement = relationship('Obselement')
-    station = relationship('Station')
+    obselement = relationship("Obselement")
+    station = relationship("Station")
 
 
 class Observationinitial(Base):
-    __tablename__ = 'observationinitial'
+    __tablename__ = "observationinitial"
     __table_args__ = (
-        Index('obsInitialIdentification', 'recordedFrom', 'describedBy', 'obsDatetime', 'qcStatus', 'acquisitionType', unique=True),
-        Index('obsElementObservationInitial', 'describedBy'),
-        Index('stationObservationInitial', 'recordedFrom')
+        Index(
+            "obsInitialIdentification",
+            "recordedFrom",
+            "describedBy",
+            "obsDatetime",
+            "qcStatus",
+            "acquisitionType",
+            unique=True,
+        ),
+        Index(
+            "obsElementObservationInitial", "describedBy"
+        ),
+        Index("stationObservationInitial", "recordedFrom"),
     )
 
-    recordedFrom = Column(ForeignKey('station.stationId'), primary_key=True, nullable=False)
-    describedBy = Column(ForeignKey('obselement.elementId'), primary_key=True, nullable=False)
-    obsDatetime = Column(DateTime, primary_key=True, nullable=False)
-    obsLevel = Column(String(255), primary_key=True, nullable=False)
+    recordedFrom = Column(
+        ForeignKey("station.stationId"),
+        primary_key=True,
+        nullable=False,
+    )
+    describedBy = Column(
+        ForeignKey("obselement.elementId"),
+        primary_key=True,
+        nullable=False,
+    )
+    obsDatetime = Column(
+        DateTime, primary_key=True, nullable=False
+    )
+    obsLevel = Column(
+        String(255), primary_key=True, nullable=False
+    )
     obsValue = Column(String(255))
     flag = Column(String(255))
     period = Column(Integer)
-    qcStatus = Column(Integer, primary_key=True, nullable=False, server_default=text("'0'"))
+    qcStatus = Column(
+        Integer,
+        primary_key=True,
+        nullable=False,
+        server_default=text("'0'"),
+    )
     qcTypeLog = Column(Text)
-    acquisitionType = Column(Integer, primary_key=True, nullable=False, server_default=text("'0'"))
+    acquisitionType = Column(
+        Integer,
+        primary_key=True,
+        nullable=False,
+        server_default=text("'0'"),
+    )
     dataForm = Column(String(255))
     capturedBy = Column(String(255))
     mark = Column(TINYINT)
@@ -254,203 +404,371 @@ class Observationinitial(Base):
     precipitationUnits = Column(String(255))
     cloudHeightUnits = Column(String(255))
     visUnits = Column(String(255))
-    dataSourceTimeZone = Column(Integer, server_default=text("'0'"))
+    dataSourceTimeZone = Column(
+        Integer, server_default=text("'0'")
+    )
 
-    obselement = relationship('Obselement')
-    station = relationship('Station')
+    obselement = relationship("Obselement")
+    station = relationship("Station")
 
 
 class Obsscheduleclas(Base):
-    __tablename__ = 'obsscheduleclass'
-    __table_args__ = (Index('scheduleClassIdeification', 'scheduleClass'),)
+    __tablename__ = "obsscheduleclass"
+    __table_args__ = (
+        Index("scheduleClassIdeification", "scheduleClass"),
+    )
 
-    scheduleClass = Column(String(255), primary_key=True, server_default=text("''"))
+    scheduleClass = Column(
+        String(255),
+        primary_key=True,
+        server_default=text("''"),
+    )
     description = Column(String(255))
-    refersTo = Column(ForeignKey('station.stationId'))
+    refersTo = Column(ForeignKey("station.stationId"))
 
-    station = relationship('Station')
+    station = relationship("Station")
 
 
 class Paperarchive(Base):
-    __tablename__ = 'paperarchive'
+    __tablename__ = "paperarchive"
     __table_args__ = (
-        Index('paper_archive_identification', 'belongsTo', 'formDatetime', 'classifiedInto', unique=True),
+        Index(
+            "paper_archive_identification",
+            "belongsTo",
+            "formDatetime",
+            "classifiedInto",
+            unique=True,
+        ),
     )
 
-    belongsTo = Column(ForeignKey('station.stationId'), primary_key=True, nullable=False)
-    formDatetime = Column(DateTime, primary_key=True, nullable=False)
+    belongsTo = Column(
+        ForeignKey("station.stationId"),
+        primary_key=True,
+        nullable=False,
+    )
+    formDatetime = Column(
+        DateTime, primary_key=True, nullable=False
+    )
     image = Column(String(255))
-    classifiedInto = Column(ForeignKey('paperarchivedefinition.formId'), primary_key=True, nullable=False)
+    classifiedInto = Column(
+        ForeignKey("paperarchivedefinition.formId"),
+        primary_key=True,
+        nullable=False,
+    )
 
-    station = relationship('Station')
-    paperarchivedefinition = relationship('Paperarchivedefinition')
+    station = relationship("Station")
+    paperarchivedefinition = relationship(
+        "Paperarchivedefinition"
+    )
 
 
 class Physicalfeatureclas(Base):
-    __tablename__ = 'physicalfeatureclass'
-    __table_args__ = (Index('stationFeatureClass', 'featureClass'),)
+    __tablename__ = "physicalfeatureclass"
+    __table_args__ = (
+        Index("stationFeatureClass", "featureClass"),
+    )
 
     featureClass = Column(String(255), primary_key=True)
     description = Column(String(255))
-    refersTo = Column(ForeignKey('station.stationId'))
+    refersTo = Column(ForeignKey("station.stationId"))
 
-    station = relationship('Station')
+    station = relationship("Station")
 
 
 class Stationlocationhistory(Base):
-    __tablename__ = 'stationlocationhistory'
+    __tablename__ = "stationlocationhistory"
     __table_args__ = (
-        Index('history', 'belongsTo', 'openingDatetime', unique=True),
+        Index(
+            "history",
+            "belongsTo",
+            "openingDatetime",
+            unique=True,
+        ),
     )
 
-    belongsTo = Column(ForeignKey('station.stationId'), primary_key=True, nullable=False)
+    belongsTo = Column(
+        ForeignKey("station.stationId"),
+        primary_key=True,
+        nullable=False,
+    )
     stationType = Column(String(255))
     geoLocationMethod = Column(String(255))
     geoLocationAccuracy = Column(Float(11))
-    openingDatetime = Column(String(50), primary_key=True, nullable=False)
+    openingDatetime = Column(
+        String(50), primary_key=True, nullable=False
+    )
     closingDatetime = Column(String(50))
-    latitude = Column(DOUBLE(precision=11, scale=6, asdecimal=True))
-    longitude = Column(DOUBLE(precision=11, scale=6, asdecimal=True))
+    latitude = Column(
+        DOUBLE(precision=11, scale=6, asdecimal=True)
+    )
+    longitude = Column(
+        DOUBLE(precision=11, scale=6, asdecimal=True)
+    )
     elevation = Column(BigInteger)
     authority = Column(String(255))
     adminRegion = Column(String(255))
     drainageBasin = Column(String(255))
 
-    station = relationship('Station')
+    station = relationship("Station")
 
 
 class Stationqualifier(Base):
-    __tablename__ = 'stationqualifier'
+    __tablename__ = "stationqualifier"
     __table_args__ = (
-        Index('stationid_qualifier_identification', 'qualifier', 'qualifierBeginDate', 'qualifierEndDate', 'belongsTo', unique=True),
-        Index('stationQualifierIdentification', 'belongsTo')
+        Index(
+            "stationid_qualifier_identification",
+            "qualifier",
+            "qualifierBeginDate",
+            "qualifierEndDate",
+            "belongsTo",
+            unique=True,
+        ),
+        Index(
+            "stationQualifierIdentification", "belongsTo"
+        ),
     )
 
-    qualifier = Column(String(255), primary_key=True, nullable=False)
-    qualifierBeginDate = Column(String(50), primary_key=True, nullable=False)
-    qualifierEndDate = Column(String(50), primary_key=True, nullable=False)
-    stationTimeZone = Column(Integer, server_default=text("'0'"))
+    qualifier = Column(
+        String(255), primary_key=True, nullable=False
+    )
+    qualifierBeginDate = Column(
+        String(50), primary_key=True, nullable=False
+    )
+    qualifierEndDate = Column(
+        String(50), primary_key=True, nullable=False
+    )
+    stationTimeZone = Column(
+        Integer, server_default=text("'0'")
+    )
     stationNetworkType = Column(String(255))
-    belongsTo = Column(ForeignKey('station.stationId'), primary_key=True, nullable=False)
+    belongsTo = Column(
+        ForeignKey("station.stationId"),
+        primary_key=True,
+        nullable=False,
+    )
 
-    station = relationship('Station')
+    station = relationship("Station")
 
 
 class Instrumentfaultreport(Base):
-    __tablename__ = 'instrumentfaultreport'
+    __tablename__ = "instrumentfaultreport"
     __table_args__ = (
-        Index('instrument_report', 'refersTo', 'reportDatetime', 'reportedFrom', unique=True),
-        Index('report_id', 'reportId')
+        Index(
+            "instrument_report",
+            "refersTo",
+            "reportDatetime",
+            "reportedFrom",
+            unique=True,
+        ),
+        Index("report_id", "reportId"),
     )
 
-    refersTo = Column(ForeignKey('instrument.instrumentId'))
+    refersTo = Column(ForeignKey("instrument.instrumentId"))
     reportId = Column(BigInteger, primary_key=True)
     reportDatetime = Column(String(50))
     faultDescription = Column(String(255))
     reportedBy = Column(String(255))
     receivedDatetime = Column(String(50))
     receivedBy = Column(String(255))
-    reportedFrom = Column(ForeignKey('station.stationId'))
+    reportedFrom = Column(ForeignKey("station.stationId"))
 
-    instrument = relationship('Instrument')
-    station = relationship('Station')
+    instrument = relationship("Instrument")
+    station = relationship("Station")
 
 
 class Instrumentinspection(Base):
-    __tablename__ = 'instrumentinspection'
+    __tablename__ = "instrumentinspection"
     __table_args__ = (
-        Index('inspection', 'performedOn', 'inspectionDatetime', unique=True),
+        Index(
+            "inspection",
+            "performedOn",
+            "inspectionDatetime",
+            unique=True,
+        ),
     )
 
-    performedOn = Column(ForeignKey('instrument.instrumentId'), primary_key=True, nullable=False)
-    inspectionDatetime = Column(String(50), primary_key=True, nullable=False)
+    performedOn = Column(
+        ForeignKey("instrument.instrumentId"),
+        primary_key=True,
+        nullable=False,
+    )
+    inspectionDatetime = Column(
+        String(50), primary_key=True, nullable=False
+    )
     performedBy = Column(String(255))
     status = Column(String(255))
     remarks = Column(String(255))
-    performedAt = Column(ForeignKey('station.stationId'))
+    performedAt = Column(ForeignKey("station.stationId"))
 
-    station = relationship('Station')
-    instrument = relationship('Instrument')
+    station = relationship("Station")
+    instrument = relationship("Instrument")
 
 
 class Observationschedule(Base):
-    __tablename__ = 'observationschedule'
+    __tablename__ = "observationschedule"
     __table_args__ = (
-        Index('scheduleIdentification', 'classifiedInto', 'startTime', 'endTime', unique=True),
+        Index(
+            "scheduleIdentification",
+            "classifiedInto",
+            "startTime",
+            "endTime",
+            unique=True,
+        ),
     )
 
-    classifiedInto = Column(ForeignKey('obsscheduleclass.scheduleClass'), primary_key=True, nullable=False)
-    startTime = Column(String(50), primary_key=True, nullable=False)
-    endTime = Column(String(50), primary_key=True, nullable=False)
+    classifiedInto = Column(
+        ForeignKey("obsscheduleclass.scheduleClass"),
+        primary_key=True,
+        nullable=False,
+    )
+    startTime = Column(
+        String(50), primary_key=True, nullable=False
+    )
+    endTime = Column(
+        String(50), primary_key=True, nullable=False
+    )
     interval = Column(String(255))
     additionalObsTime = Column(String(255))
 
-    obsscheduleclas = relationship('Obsscheduleclas')
+    obsscheduleclas = relationship("Obsscheduleclas")
 
 
 class Physicalfeature(Base):
-    __tablename__ = 'physicalfeature'
+    __tablename__ = "physicalfeature"
     __table_args__ = (
-        Index('featureIdentification', 'associatedWith', 'beginDate', 'classifiedInto', 'description', unique=True),
-        Index('physicalFeatureidentification_idx', 'classifiedInto'),
-        Index('stationfeature', 'associatedWith')
+        Index(
+            "featureIdentification",
+            "associatedWith",
+            "beginDate",
+            "classifiedInto",
+            "description",
+            unique=True,
+        ),
+        Index(
+            "physicalFeatureidentification_idx",
+            "classifiedInto",
+        ),
+        Index("stationfeature", "associatedWith"),
     )
 
-    associatedWith = Column(ForeignKey('station.stationId'), primary_key=True, nullable=False)
-    beginDate = Column(String(50), primary_key=True, nullable=False)
+    associatedWith = Column(
+        ForeignKey("station.stationId"),
+        primary_key=True,
+        nullable=False,
+    )
+    beginDate = Column(
+        String(50), primary_key=True, nullable=False
+    )
     endDate = Column(String(50))
     image = Column(String(255))
-    description = Column(String(255), primary_key=True, nullable=False)
-    classifiedInto = Column(ForeignKey('physicalfeatureclass.featureClass'), primary_key=True, nullable=False)
+    description = Column(
+        String(255), primary_key=True, nullable=False
+    )
+    classifiedInto = Column(
+        ForeignKey("physicalfeatureclass.featureClass"),
+        primary_key=True,
+        nullable=False,
+    )
 
-    station = relationship('Station')
-    physicalfeatureclas = relationship('Physicalfeatureclas')
+    station = relationship("Station")
+    physicalfeatureclas = relationship(
+        "Physicalfeatureclas"
+    )
 
 
 class Stationelement(Base):
-    __tablename__ = 'stationelement'
+    __tablename__ = "stationelement"
     __table_args__ = (
-        Index('stationElementIdentification', 'recordedFrom', 'describedBy', 'recordedWith', 'beginDate', unique=True),
-        Index('obsElementobservationInitial', 'describedBy'),
-        Index('stationobservationInitial', 'recordedFrom')
+        Index(
+            "stationElementIdentification",
+            "recordedFrom",
+            "describedBy",
+            "recordedWith",
+            "beginDate",
+            unique=True,
+        ),
+        Index(
+            "obsElementobservationInitial", "describedBy"
+        ),
+        Index("stationobservationInitial", "recordedFrom"),
     )
 
-    recordedFrom = Column(ForeignKey('station.stationId'), primary_key=True, nullable=False)
-    describedBy = Column(ForeignKey('obselement.elementId'), primary_key=True, nullable=False)
-    recordedWith = Column(ForeignKey('instrument.instrumentId'), primary_key=True, nullable=False)
+    recordedFrom = Column(
+        ForeignKey("station.stationId"),
+        primary_key=True,
+        nullable=False,
+    )
+    describedBy = Column(
+        ForeignKey("obselement.elementId"),
+        primary_key=True,
+        nullable=False,
+    )
+    recordedWith = Column(
+        ForeignKey("instrument.instrumentId"),
+        primary_key=True,
+        nullable=False,
+    )
     instrumentcode = Column(String(6))
-    scheduledFor = Column(ForeignKey('obsscheduleclass.scheduleClass'))
+    scheduledFor = Column(
+        ForeignKey("obsscheduleclass.scheduleClass")
+    )
     height = Column(Float(6))
-    beginDate = Column(String(50), primary_key=True, nullable=False)
+    beginDate = Column(
+        String(50), primary_key=True, nullable=False
+    )
     endDate = Column(String(50))
 
-    obselement = relationship('Obselement')
-    station = relationship('Station')
-    instrument = relationship('Instrument')
-    obsscheduleclas = relationship('Obsscheduleclas')
+    obselement = relationship("Obselement")
+    station = relationship("Station")
+    instrument = relationship("Instrument")
+    obsscheduleclas = relationship("Obsscheduleclas")
 
 
 class Faultresolution(Base):
-    __tablename__ = 'faultresolution'
+    __tablename__ = "faultresolution"
     __table_args__ = (
-        Index('solution', 'resolvedDatetime', 'associatedWith', unique=True),
+        Index(
+            "solution",
+            "resolvedDatetime",
+            "associatedWith",
+            unique=True,
+        ),
     )
 
-    resolvedDatetime = Column(String(50), primary_key=True, nullable=False)
+    resolvedDatetime = Column(
+        String(50), primary_key=True, nullable=False
+    )
     resolvedBy = Column(String(255))
-    associatedWith = Column(ForeignKey('instrumentfaultreport.reportId'), primary_key=True, nullable=False)
+    associatedWith = Column(
+        ForeignKey("instrumentfaultreport.reportId"),
+        primary_key=True,
+        nullable=False,
+    )
     remarks = Column(String(255))
 
-    instrumentfaultreport = relationship('Instrumentfaultreport')
+    instrumentfaultreport = relationship(
+        "Instrumentfaultreport"
+    )
 
 
 class FormAgro1(Base):
-    __tablename__ = 'form_agro1'
+    __tablename__ = "form_agro1"
 
-    stationId = Column(String(50), primary_key=True, nullable=False, server_default=text("''"))
-    yyyy = Column(INTEGER(11), primary_key=True, nullable=False)
-    mm = Column(INTEGER(11), primary_key=True, nullable=False)
-    dd = Column(INTEGER(11), primary_key=True, nullable=False)
+    stationId = Column(
+        String(50),
+        primary_key=True,
+        nullable=False,
+        server_default=text("''"),
+    )
+    yyyy = Column(
+        INTEGER(11), primary_key=True, nullable=False
+    )
+    mm = Column(
+        INTEGER(11), primary_key=True, nullable=False
+    )
+    dd = Column(
+        INTEGER(11), primary_key=True, nullable=False
+    )
     Val_Elem101 = Column(String(6))
     Val_Elem102 = Column(String(6))
     Val_Elem103 = Column(String(6))
@@ -524,13 +842,23 @@ class FormAgro1(Base):
 
 
 class FormDaily2(Base):
-    __tablename__ = 'form_daily2'
+    __tablename__ = "form_daily2"
 
-    stationId = Column(String(50), primary_key=True, nullable=False)
-    elementId = Column(INTEGER(11), primary_key=True, nullable=False)
-    yyyy = Column(INTEGER(11), primary_key=True, nullable=False)
-    mm = Column(INTEGER(11), primary_key=True, nullable=False)
-    hh = Column(INTEGER(11), primary_key=True, nullable=False)
+    stationId = Column(
+        String(50), primary_key=True, nullable=False
+    )
+    elementId = Column(
+        INTEGER(11), primary_key=True, nullable=False
+    )
+    yyyy = Column(
+        INTEGER(11), primary_key=True, nullable=False
+    )
+    mm = Column(
+        INTEGER(11), primary_key=True, nullable=False
+    )
+    hh = Column(
+        INTEGER(11), primary_key=True, nullable=False
+    )
     day01 = Column(String(45))
     day02 = Column(String(45))
     day03 = Column(String(45))
@@ -634,13 +962,23 @@ class FormDaily2(Base):
 
 
 class FormHourly(Base):
-    __tablename__ = 'form_hourly'
+    __tablename__ = "form_hourly"
 
-    stationId = Column(String(50), primary_key=True, nullable=False)
-    elementId = Column(INTEGER(11), primary_key=True, nullable=False)
-    yyyy = Column(INTEGER(11), primary_key=True, nullable=False)
-    mm = Column(INTEGER(11), primary_key=True, nullable=False)
-    dd = Column(INTEGER(11), primary_key=True, nullable=False)
+    stationId = Column(
+        String(50), primary_key=True, nullable=False
+    )
+    elementId = Column(
+        INTEGER(11), primary_key=True, nullable=False
+    )
+    yyyy = Column(
+        INTEGER(11), primary_key=True, nullable=False
+    )
+    mm = Column(
+        INTEGER(11), primary_key=True, nullable=False
+    )
+    dd = Column(
+        INTEGER(11), primary_key=True, nullable=False
+    )
     hh_00 = Column(String(50))
     hh_01 = Column(String(50))
     hh_02 = Column(String(50))
@@ -695,19 +1033,27 @@ class FormHourly(Base):
 
 
 class FormHourlyTimeSelection(Base):
-    __tablename__ = 'form_hourly_time_selection'
+    __tablename__ = "form_hourly_time_selection"
 
     hh = Column(INTEGER(11), primary_key=True)
     hh_selection = Column(TINYINT(4))
 
 
 class FormHourlywind(Base):
-    __tablename__ = 'form_hourlywind'
+    __tablename__ = "form_hourlywind"
 
-    stationId = Column(String(255), primary_key=True, nullable=False)
-    yyyy = Column(INTEGER(11), primary_key=True, nullable=False)
-    mm = Column(INTEGER(11), primary_key=True, nullable=False)
-    dd = Column(INTEGER(11), primary_key=True, nullable=False)
+    stationId = Column(
+        String(255), primary_key=True, nullable=False
+    )
+    yyyy = Column(
+        INTEGER(11), primary_key=True, nullable=False
+    )
+    mm = Column(
+        INTEGER(11), primary_key=True, nullable=False
+    )
+    dd = Column(
+        INTEGER(11), primary_key=True, nullable=False
+    )
     elem_112_00 = Column(String(255))
     elem_112_01 = Column(String(255))
     elem_112_02 = Column(String(255))
@@ -786,11 +1132,17 @@ class FormHourlywind(Base):
 
 
 class FormMonthly(Base):
-    __tablename__ = 'form_monthly'
+    __tablename__ = "form_monthly"
 
-    stationId = Column(String(255), primary_key=True, nullable=False)
-    elementId = Column(INTEGER(11), primary_key=True, nullable=False)
-    yyyy = Column(INTEGER(11), primary_key=True, nullable=False)
+    stationId = Column(
+        String(255), primary_key=True, nullable=False
+    )
+    elementId = Column(
+        INTEGER(11), primary_key=True, nullable=False
+    )
+    yyyy = Column(
+        INTEGER(11), primary_key=True, nullable=False
+    )
     mm_01 = Column(String(255))
     mm_02 = Column(String(255))
     mm_03 = Column(String(255))
@@ -832,61 +1184,77 @@ class FormMonthly(Base):
 
 
 class FormSynoptic2Tdcf(Base):
-    __tablename__ = 'form_synoptic2_tdcf'
+    __tablename__ = "form_synoptic2_tdcf"
     __table_args__ = (
-        Index('Identification', 'stationId', 'yyyy', 'mm', 'dd', 'hh', unique=True),
+        Index(
+            "Identification",
+            "stationId",
+            "yyyy",
+            "mm",
+            "dd",
+            "hh",
+            unique=True,
+        ),
     )
 
-    stationId = Column(String(10), primary_key=True, nullable=False)
-    yyyy = Column(BIGINT(20), primary_key=True, nullable=False)
-    mm = Column(BIGINT(20), primary_key=True, nullable=False)
-    dd = Column(BIGINT(20), primary_key=True, nullable=False)
+    stationId = Column(
+        String(10), primary_key=True, nullable=False
+    )
+    yyyy = Column(
+        BIGINT(20), primary_key=True, nullable=False
+    )
+    mm = Column(
+        BIGINT(20), primary_key=True, nullable=False
+    )
+    dd = Column(
+        BIGINT(20), primary_key=True, nullable=False
+    )
     hh = Column(String(5), primary_key=True, nullable=False)
-    _106 = Column('106', String(6))
-    _107 = Column('107', String(6))
-    _399 = Column('399', String(5))
-    _301 = Column('301', String(8))
-    _185 = Column('185', String(6))
-    _101 = Column('101', String(5))
-    _103 = Column('103', String(5))
-    _105 = Column('105', String(50))
-    _110 = Column('110', String(5))
-    _114 = Column('114', String(5))
-    _115 = Column('115', String(5))
-    _168 = Column('168', String(5))
-    _192 = Column('192', String(5))
-    _169 = Column('169', String(5))
-    _170 = Column('170', String(5))
-    _171 = Column('171', String(5))
-    _119 = Column('119', String(5))
-    _116 = Column('116', String(5))
-    _117 = Column('117', String(5))
-    _118 = Column('118', String(5))
-    _123 = Column('123', String(5))
-    _120 = Column('120', String(5))
-    _121 = Column('121', String(5))
-    _122 = Column('122', String(5))
-    _127 = Column('127', String(5))
-    _124 = Column('124', String(5))
-    _125 = Column('125', String(5))
-    _126 = Column('126', String(5))
-    _131 = Column('131', String(5))
-    _128 = Column('128', String(5))
-    _129 = Column('129', String(5))
-    _130 = Column('130', String(5))
-    _167 = Column('167', String(5))
-    _197 = Column('197', String(50))
-    _193 = Column('193', String(5))
-    _18 = Column('18', String(6))
-    _532 = Column('532', String(6))
-    _132 = Column('132', String(6))
-    _5 = Column('5', String(6))
-    _174 = Column('174', String(50))
-    _3 = Column('3', String(5))
-    _2 = Column('2', String(5))
-    _112 = Column('112', String(5))
-    _111 = Column('111', String(5))
-    _85 = Column('85', String(50))
+    _106 = Column("106", String(6))
+    _107 = Column("107", String(6))
+    _399 = Column("399", String(5))
+    _301 = Column("301", String(8))
+    _185 = Column("185", String(6))
+    _101 = Column("101", String(5))
+    _103 = Column("103", String(5))
+    _105 = Column("105", String(50))
+    _110 = Column("110", String(5))
+    _114 = Column("114", String(5))
+    _115 = Column("115", String(5))
+    _168 = Column("168", String(5))
+    _192 = Column("192", String(5))
+    _169 = Column("169", String(5))
+    _170 = Column("170", String(5))
+    _171 = Column("171", String(5))
+    _119 = Column("119", String(5))
+    _116 = Column("116", String(5))
+    _117 = Column("117", String(5))
+    _118 = Column("118", String(5))
+    _123 = Column("123", String(5))
+    _120 = Column("120", String(5))
+    _121 = Column("121", String(5))
+    _122 = Column("122", String(5))
+    _127 = Column("127", String(5))
+    _124 = Column("124", String(5))
+    _125 = Column("125", String(5))
+    _126 = Column("126", String(5))
+    _131 = Column("131", String(5))
+    _128 = Column("128", String(5))
+    _129 = Column("129", String(5))
+    _130 = Column("130", String(5))
+    _167 = Column("167", String(5))
+    _197 = Column("197", String(50))
+    _193 = Column("193", String(5))
+    _18 = Column("18", String(6))
+    _532 = Column("532", String(6))
+    _132 = Column("132", String(6))
+    _5 = Column("5", String(6))
+    _174 = Column("174", String(50))
+    _3 = Column("3", String(5))
+    _2 = Column("2", String(5))
+    _112 = Column("112", String(5))
+    _111 = Column("111", String(5))
+    _85 = Column("85", String(50))
     flag1 = Column(String(1))
     flag2 = Column(String(1))
     flag3 = Column(String(1))
@@ -937,13 +1305,26 @@ class FormSynoptic2Tdcf(Base):
 
 
 class FormSynoptic2Ra1(Base):
-    __tablename__ = 'form_synoptic_2_ra1'
+    __tablename__ = "form_synoptic_2_ra1"
 
-    stationId = Column(String(50), primary_key=True, nullable=False, server_default=text("''"))
-    yyyy = Column(INTEGER(11), primary_key=True, nullable=False)
-    mm = Column(INTEGER(11), primary_key=True, nullable=False)
-    dd = Column(INTEGER(11), primary_key=True, nullable=False)
-    hh = Column(INTEGER(11), primary_key=True, nullable=False)
+    stationId = Column(
+        String(50),
+        primary_key=True,
+        nullable=False,
+        server_default=text("''"),
+    )
+    yyyy = Column(
+        INTEGER(11), primary_key=True, nullable=False
+    )
+    mm = Column(
+        INTEGER(11), primary_key=True, nullable=False
+    )
+    dd = Column(
+        INTEGER(11), primary_key=True, nullable=False
+    )
+    hh = Column(
+        INTEGER(11), primary_key=True, nullable=False
+    )
     Val_Elem106 = Column(String(6))
     Val_Elem107 = Column(String(6))
     Val_Elem400 = Column(String(6))

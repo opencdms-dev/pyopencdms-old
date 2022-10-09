@@ -3737,7 +3737,8 @@ class StationFile(Base):
             "station_id",
         ),
         {
-            "comment": "Stores address of files such as images, pdfs, Word docs, etc. for station."
+            "comment": "Stores address of files such as images, pdfs,\
+                        Word docs, etc. for station."
         },
     )
 

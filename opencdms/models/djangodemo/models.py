@@ -1,2 +1,2 @@
-from .keyentry import *
-from .metadata import *
+from .keyentry import * # noqa
+from .metadata import * # noqa
