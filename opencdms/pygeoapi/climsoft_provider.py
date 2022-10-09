@@ -264,7 +264,7 @@ class ClimsoftProvider(BaseProvider):
             db.session.add(obs_final)
             db.session.commit()
         return (
-            f"{obs_final.recordedFrom}*{obs_final.describedBy}*{obs_final.obsDatetime}"
+            f"{obs_final_data.recordedFrom}*{obs_final_data.describedBy}*{obs_final_data.obsDatetime}"
         )
 
     def update(self, identifier, data):
@@ -274,7 +274,7 @@ class ClimsoftProvider(BaseProvider):
         :param data: new GeoJSON feature dictionary
         """
 
-        recorded_from, described_by, obs_datetime = identifier.split()
+        recorded_from, described_by, obs_datetime = identifier.split("*")
         updates = remove_nulls_from_dict(UpdateObservationfinal.parse_raw(data).dict())
         with DatabaseConnection(
             conn_dic=self.conn_dic, properties=self.properties
@@ -339,7 +339,7 @@ class ClimsoftProvider(BaseProvider):
             "type": "Feature",
             "geometry": {
                 "type": "Point",
-                "coordinates": [obsfinal.station.latitude, obsfinal.station.longitude],
+                "coordinates": [obsfinal.station.longitude, obsfinal.station.latitude],
             }
             if obsfinal.station
             else None,
