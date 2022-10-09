@@ -35,7 +35,7 @@ UPDATE_DATA = {
 }
 
 
-def test_should_create_update_get_and_delete_record_sequentially():
+def test_should_create_query_get_update_and_delete_record_sequentially():
     # create
     response = requests.post(
         url=f"{BASE_URL}/collections/climsoft/items",
