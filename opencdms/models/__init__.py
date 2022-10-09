@@ -1,4 +1,3 @@
-from pprint import pprint
 from typing import Callable, List, Optional, Sequence
 from alembic import migration
 from sqlalchemy import MetaData, create_engine, Table, Index
@@ -42,7 +41,8 @@ def filter_in_included_tables(
     Parameters
     -----
     `tables`: Sequence[str]
-        Table names to be included, other tables not in this list would be ignored.
+        Table names to be included, other tables not
+        in this list would be ignored.
 
     Return
     ------
@@ -87,13 +87,29 @@ def get_schema_diff(
 
     """
     engine = create_engine(database_url)
-    mc = migration.MigrationContext.configure(engine.connect())
+    mc = migration.MigrationContext.configure(
+        engine.connect()
+    )
     diff = compare_metadata(mc, metadata)
-    if include_tables is not None and exclude_tables is not None:
-        raise Exception("`include_tables` and `exclude_tables` must not be used together") #TODO define custom error class
+    if (
+        include_tables is not None
+        and exclude_tables is not None
+    ):
+        raise Exception(
+            "`include_tables` and `exclude_tables` must not be used together"
+        )  # TODO define custom error class
     if exclude_tables is not None:
-        diff = list(filter(filter_out_excluded_tables(exclude_tables), diff))
+        diff = list(
+            filter(
+                filter_out_excluded_tables(exclude_tables),
+                diff,
+            )
+        )
     if include_tables is not None:
-        diff = list(filter(filter_in_included_tables(include_tables), diff))
+        diff = list(
+            filter(
+                filter_in_included_tables(include_tables),
+                diff,
+            )
+        )
     return list(diff)
-
