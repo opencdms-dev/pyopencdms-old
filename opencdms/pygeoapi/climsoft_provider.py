@@ -20,6 +20,7 @@ from opencdms.dtos.climsoft.observationfinal import (
 )
 from opencdms.utils.misc import remove_nulls_from_dict
 from pygeoapi.api import LOGGER
+from pygeoapi.provider.base import SchemaType
 
 
 class DatabaseConnection:
@@ -144,8 +145,13 @@ class ClimsoftProvider(BaseProvider):
                 self.fields = db.fields
         return self.fields
 
-    def get_schema(self):
-        return ObservationfinalSchema.schema()
+    def get_schema(self, schema_type: SchemaType = SchemaType.item):
+        if schema_type == SchemaType.update:
+            return UpdateObservationfinal.schema()
+        elif schema_type == SchemaType.create:
+            return CreateObservationfinal.schema()
+        else:
+            return ObservationfinalSchema.schema()
 
     def query(
         self,
