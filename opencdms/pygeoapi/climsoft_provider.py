@@ -14,6 +14,7 @@ from opencdms.utils.db import get_connection_string, get_count
 from opencdms.models.climsoft import v4_1_1_core as models
 from opencdms.dtos.climsoft.observationfinal import (
     Observationfinal as ObservationfinalSchema,
+    ObservationfinalPygeoapiSchema,
     CreateObservationfinal,
     UpdateObservationfinal,
     field_mapping as obs_final_field_mapping,
@@ -147,11 +148,11 @@ class ClimsoftProvider(BaseProvider):
 
     def get_schema(self, schema_type: SchemaType = SchemaType.item):
         if schema_type == SchemaType.update:
-            return UpdateObservationfinal.schema()
+            return "application/json", UpdateObservationfinal.schema()
         elif schema_type == SchemaType.create:
-            return CreateObservationfinal.schema()
+            return "application/json", CreateObservationfinal.schema()
         else:
-            return ObservationfinalSchema.schema()
+            return "application/json", ObservationfinalPygeoapiSchema.schema()
 
     def query(
         self,

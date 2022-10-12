@@ -59,7 +59,7 @@ def test_should_create_query_get_update_and_delete_record_sequentially():
 
     # get
     response = requests.get(
-        url=f"{BASE_URL}/collections/climsoft/items/67774010*4*{datetime.datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S')}",
+        url=f"{BASE_URL}/collections/climsoft/items/67774010*4*{INSERT_DATA['obsDatetime']}",
         headers={
             "Content-Type": "application/geo+json"
         }
@@ -69,7 +69,7 @@ def test_should_create_query_get_update_and_delete_record_sequentially():
 
     # update
     response = requests.put(
-        url=f"{BASE_URL}/collections/climsoft/items/67774010*4*{datetime.datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S')}",
+        url=f"{BASE_URL}/collections/climsoft/items/67774010*4*{INSERT_DATA['obsDatetime']}",
         headers={
             "Content-Type": "application/geo+json"
         },
@@ -80,7 +80,7 @@ def test_should_create_query_get_update_and_delete_record_sequentially():
 
     # delete
     response = requests.delete(
-        url=f"{BASE_URL}/collections/climsoft/items/67774010*4*{datetime.datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S')}",
+        url=f"{BASE_URL}/collections/climsoft/items/67774010*4*{INSERT_DATA['obsDatetime']}",
         headers={
             "Content-Type": "application/geo+json"
         }

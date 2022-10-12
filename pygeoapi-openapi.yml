@@ -205,7 +205,7 @@ paths:
       description: Climsoft observations
       operationId: getClimsoftFeatures
       parameters:
-      - &id001
+      - &id002
         description: The optional f parameter indicates the output format which the
           server shall provide as part of the response document.  The default format
           is GeoJSON.
@@ -222,7 +222,7 @@ paths:
           - csv
           type: string
         style: form
-      - &id002
+      - &id003
         description: The optional lang parameter instructs the server return a response
           in a certain language, if supported.  If the language is not among the available
           values, the Accept-Language header language will be used if it is supported.
@@ -430,7 +430,69 @@ paths:
       requestBody:
         content:
           application/json:
-            schema: {}
+            schema:
+              properties:
+                acquisition_type:
+                  title: Acquisition Type
+                  type: integer
+                captured_by:
+                  title: Captured By
+                  type: string
+                cloud_height_units:
+                  title: Cloud Height Units
+                  type: string
+                data_form:
+                  title: Data Form
+                  type: string
+                data_source_timezone:
+                  title: Data Source Timezone
+                  type: integer
+                described_by:
+                  title: Described By
+                  type: integer
+                flag:
+                  title: Flag
+                  type: string
+                mark:
+                  title: Mark
+                  type: integer
+                obs_datetime:
+                  format: date-time
+                  title: Obs Datetime
+                  type: string
+                obs_level:
+                  title: Obs Level
+                  type: string
+                obs_value:
+                  title: Obs Value
+                  type: number
+                period:
+                  title: Period
+                  type: integer
+                precipitation_units:
+                  title: Precipitation Units
+                  type: string
+                qc_status:
+                  title: Qc Status
+                  type: integer
+                qc_type_log:
+                  title: Qc Type Log
+                  type: string
+                recorded_from:
+                  title: Recorded From
+                  type: string
+                temperature_units:
+                  title: Temperature Units
+                  type: string
+                vis_units:
+                  title: Vis Units
+                  type: string
+              required:
+              - recorded_from
+              - described_by
+              - obs_datetime
+              title: CreateObservationfinal
+              type: object
         description: Adds item to collection
         required: true
       responses:
@@ -468,7 +530,145 @@ paths:
       - $ref: '#/components/parameters/lang'
       responses:
         '200':
-          $ref: https://schemas.opengis.net/ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/Feature
+          content:
+            application/json:
+              schema: &id001
+                definitions:
+                  GeometrySchema:
+                    properties:
+                      coordinates:
+                        items:
+                          type: number
+                        title: Coordinates
+                        type: array
+                      type:
+                        default: Point
+                        title: Type
+                        type: string
+                    required:
+                    - coordinates
+                    title: GeometrySchema
+                    type: object
+                  Observationfinal:
+                    properties:
+                      acquisition_type:
+                        title: Acquisition Type
+                        type: integer
+                      captured_by:
+                        title: Captured By
+                        type: string
+                      cloud_height_units:
+                        title: Cloud Height Units
+                        type: string
+                      data_form:
+                        title: Data Form
+                        type: string
+                      data_source_timezone:
+                        title: Data Source Timezone
+                        type: integer
+                      described_by:
+                        title: Described By
+                        type: integer
+                      flag:
+                        title: Flag
+                        type: string
+                      mark:
+                        title: Mark
+                        type: integer
+                      obs_datetime:
+                        format: date-time
+                        title: Obs Datetime
+                        type: string
+                      obs_level:
+                        title: Obs Level
+                        type: string
+                      obs_value:
+                        title: Obs Value
+                        type: number
+                      period:
+                        title: Period
+                        type: integer
+                      precipitation_units:
+                        title: Precipitation Units
+                        type: string
+                      qc_status:
+                        title: Qc Status
+                        type: integer
+                      qc_type_log:
+                        title: Qc Type Log
+                        type: string
+                      recorded_from:
+                        title: Recorded From
+                        type: string
+                      station:
+                        $ref: '#/definitions/Station'
+                      temperature_units:
+                        title: Temperature Units
+                        type: string
+                      vis_units:
+                        title: Vis Units
+                        type: string
+                    required:
+                    - recorded_from
+                    title: Observationfinal
+                    type: object
+                  Station:
+                    properties:
+                      country:
+                        title: Country
+                        type: string
+                      elevation:
+                        title: Elevation
+                        type: number
+                      end_datetime:
+                        title: End Datetime
+                        type: string
+                      latitude:
+                        title: Latitude
+                        type: number
+                      longitude:
+                        title: Longitude
+                        type: number
+                      name:
+                        title: Name
+                        type: string
+                      region:
+                        title: Region
+                        type: string
+                      start_datetime:
+                        title: Start Datetime
+                        type: string
+                      station_id:
+                        title: Station Id
+                        type: string
+                    title: Station
+                    type: object
+                properties:
+                  geometry:
+                    $ref: '#/definitions/GeometrySchema'
+                  id:
+                    title: Id
+                    type: string
+                  links:
+                    items:
+                      additionalProperties:
+                        type: string
+                      type: object
+                    title: Links
+                    type: array
+                  properties:
+                    $ref: '#/definitions/Observationfinal'
+                  type:
+                    default: Feature
+                    title: Type
+                    type: string
+                required:
+                - geometry
+                - properties
+                - id
+                - links
+                title: ObservationfinalPygeoapiSchema
+                type: object
         '400':
           $ref: https://schemas.opengis.net/ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/InvalidParameter
         '404':
@@ -486,7 +686,7 @@ paths:
       requestBody:
         content:
           application/json:
-            schema: {}
+            schema: *id001
         description: Updates item in collection
         required: true
       responses:
@@ -504,8 +704,8 @@ paths:
       description: Climsoft observations
       operationId: getClimsoftQueryables
       parameters:
-      - *id001
       - *id002
+      - *id003
       responses:
         '200':
           $ref: '#/components/responses/Queryables'

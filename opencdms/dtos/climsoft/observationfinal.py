@@ -1,7 +1,7 @@
 import datetime
 
 from pydantic import BaseModel
-from typing import Optional
+from typing import Optional, List, Dict
 from opencdms.dtos.climsoft.station import Station
 
 
@@ -107,3 +107,16 @@ class UniqueId(BaseModel):
     class Config:
         allow_population_by_field_name = True
         fields = field_mapping
+
+
+class GeometrySchema(BaseModel):
+    type: str = "Point"
+    coordinates: List[float]
+
+
+class ObservationfinalPygeoapiSchema(BaseModel):
+    type: str = "Feature"
+    geometry: GeometrySchema
+    properties: Observationfinal
+    id: str
+    links: List[Dict[str, str]]
