@@ -42,10 +42,10 @@ class CreateStation(BaseModel):
 
 
 class UpdateStation(BaseModel):
-    station_no: Optional[str]
-    status_id: Optional[int]
-    time_zone: Optional[str]
-    region: Optional[str]
+    station_no: Optional[str] = None
+    status_id: Optional[int] = None
+    time_zone: Optional[str] = None
+    region: Optional[str] = None
 
     class Config:
         fields = field_mapping

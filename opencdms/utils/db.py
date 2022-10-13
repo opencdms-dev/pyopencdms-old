@@ -27,15 +27,15 @@ def get_clide_connection_string() -> str:
     )
 
 
-def get_midas_connection_string() -> str:
+def get_midas_pg_connection_string() -> str:
     return get_connection_string(
-        engine=config.MIDAS_DB_ENGINE,
-        driver=config.MIDAS_DB_DRIVER,
-        user=config.MIDAS_DB_USER,
-        password=config.MIDAS_DB_PASS,
-        host=config.MIDAS_DB_HOST,
-        port=config.MIDAS_DB_PORT,
-        db_name=config.MIDAS_DB_NAME,
+        engine=config.MIDAS_PG_DB_ENGINE,
+        driver=config.MIDAS_PG_DB_DRIVER,
+        user=config.MIDAS_PG_DB_USER,
+        password=config.MIDAS_PG_DB_PASS,
+        host=config.MIDAS_PG_DB_HOST,
+        port=config.MIDAS_PG_DB_PORT,
+        db_name=config.MIDAS_PG_DB_NAME
     )
 
 
@@ -71,8 +71,8 @@ def clide_session():
     return session
 
 
-def midas_session():
-    DB_URL = get_midas_connection_string()
+def midas_pg_session():
+    DB_URL = get_midas_pg_connection_string()
     db_engine = create_engine(DB_URL)
     SessionLocal = sessionmaker(bind=db_engine)
     session = SessionLocal()

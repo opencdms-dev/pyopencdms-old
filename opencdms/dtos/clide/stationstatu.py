@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-
+from typing import Optional
 
 class StationStatu(BaseModel):
     id: int
@@ -11,6 +11,6 @@ class StationStatu(BaseModel):
 
 
 class CreateStationStatu(BaseModel):
-    id: int
+    id: Optional[int] = None
     status: str
-    description: str
+    description: Optional[str] = ""

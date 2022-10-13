@@ -252,10 +252,10 @@ class CDMSProvider:
                 ),
                 "from_orm",
             )
-
             db_session.query(model).filter_by(**unique_id_validated_fields).update(
                 input_data.dict()
             )
+
             db_session.commit()
 
             updated_instance = (

@@ -33,8 +33,10 @@ It is expected that SQLAlchemy objects, Panda's [DataFrames](https://pandas.pyda
 ## Example
 
 - Create a virtual environment for OpenCDMS development
+- For Linux users, `pyopencdms` requires that you install libmysqlclient-dev. (`sudo  apt install libmysqlclient-dev`)
 - Install dependencies used by `pyopencdms`
 - Clone a copy of the `opencdms-test-data` repository
+
 
 ### Example python commands
 
@@ -48,8 +50,8 @@ from opencdms import MidasOpen
 
 # Instead of using a database connection string, the MIDAS Open
 # provider requires the root directory for the MIDAS Open data.
-connection = os.path.join(
-    Path.home(), 'opencdms-dev', 'git', 'opencdms-test-data')
+
+connection = os.path.join(Path.home(), 'opencdms-dev', 'git', 'opencdms-test-data', 'opencdms_test_data', 'data')
 
 # All instances of CDMS Providers act as an active session
 session = MidasOpen(connection)
@@ -96,7 +98,7 @@ After installing `pyopencdms` the `opencdms` Python package will be available to
 
 Currently, `opencdms` package has 5 providers:
  - mch
- - midas
+ - midas_pg
  - climsoft
  - clide
  - opencdms
@@ -104,6 +106,31 @@ Currently, `opencdms` package has 5 providers:
 ##### `mch` Provider
 You can manipulate `opencdms.models.mch.english` models using `mch` provider.
 Here are some examples:
+
+
+First set the required environment variables to point to a running instance of mch english database. Below are the default values used in the configuration: 
+
+```
+MCH_DB_HOST=127.0.0.1
+MCH_DB_PORT=3306
+MCH_DB_USER=root
+MCH_DB_ENGINE=mysql
+MCH_DB_NAME=test
+MCH_DB_DRIVER= mysqldb
+MCH_DB_PASSWORD=password
+```
+
+If you are using opencdms-test-data, you need to set is the appropriate port number and database as used in the docker-compose file.
+
+On linux you can do that by:
+
+```
+$ export MCH_DB_PORT=33306
+$ export MCH_DB_NAME=mysql
+
+```
+
+Then:
 
 ```python
 from sqlalchemy import create_engine
@@ -114,8 +141,8 @@ from opencdms.provider.mch import MCHProvider
 db_url = get_mch_english_connection_string()
 db_engine = create_engine(db_url)
 station_data = dict(
-    Station="TEST",
-    StationName="Test Station"
+    station_id="TEST",
+    name="Test Station"
 )
 
 SessionLocal = sessionmaker(bind=db_engine)
@@ -132,27 +159,49 @@ stations = mch_provider.list(db_session, "Station")
 station = mch_provider.get(
     db_session,
     "Station",
-    {"Station": station_data["Station"]}
+    {"station_id": station_data["station_id"]}
 )
 
 # update a station
 mch_provider.update(
     db_session,
     "Station",
-    {"Station": station_data["Station"]},
-    {'StationName': 'Updated Station Name'}
+    {"station_id": station_data["station_id"]},
+    {'name': 'Updated Station Name'}
 )
 
 # delete a station
 deleted = mch_provider.delete(
     db_session,
     "Station",
-    {"Station": station_data["Station"]}
+    {"station_id": station_data["station_id"]}
 )
 ```
 
 Similarly, we can use all other providers except `opencdms` provider.
-Here is an example of opencdms provider
+Here is an example of opencdms provider 
+
+The default connection parameters are:
+
+```
+CLIDE_DB_HOST =  127.0.0.1
+CLIDE_DB_PORT =  5432
+CLIDE_DB_USER =  "postgres"
+CLIDE_DB_PASS = "password"
+CLIDE_DB_NAME = "postgres"
+CLIDE_DB_ENGINE = "postgresql"
+
+```
+
+If you are using opencdms-test-data, all you need to set is the port number. 
+On linux you can do that by:
+
+```
+$ export CLIDE_DB_PORT=35433
+
+```
+
+Then:
 
 ```python
 from opencdms.provider.opencdms import OpenCDMSProvider, ProviderConfig
@@ -161,11 +210,22 @@ from tests.unit.dtos.data import station_data
 # We are instantiating OpenCDMSProvider where we have enabled clide provider
 provider = OpenCDMSProvider(ProviderConfig(enable_clide=True))
 
+# first we create the dependencies StationStatu and StationTimezone Models
+
+station_status = provider.create("StationStatu", {"status": "STATU_123", "description": "Station is active" })
+station_statuses = provider.list("StationStatu")
+
+station_tz = provider.create("StationTimezone", {"tm_zone": "GMT", "utc_diff": "0", "description": "London"})
+station_tz = provider.list("StationTimezone")
+
+
+
 # create station
 station = provider.create("Station", station_data)
 
+
 # get a single station
-station = provider.get("Station", {"id": station_data["id"]})
+station = provider.get("Station", {"station_id": station_data["station_id"]})
 
 # get a list of stations
 stations = provider.list("Station")
@@ -173,14 +233,14 @@ stations = provider.list("Station")
 # update a station
 provider.update(
     "Station",
-    {"id": station_data["id"]},
-    {'region': 'US'}
+    {"station_id": station_data["station_id"]},
+    {'region': 'US' }
 )
 
 # delete a station
 provider.delete(
     "Station",
-    {"id": station_data['id']}
+    {"station_id": station_data["station_id"]}
 )
 ```
 
@@ -188,7 +248,69 @@ The code above will only manipulate clide models. Notice that, we have not expli
 defined db session. It will be done automatically in OpenCDMSProvider.
 
 
+On climsoft, on set your database connection varibles:
+
+```
+export CLIMSOFT_DB_PORT=33308
+export CLIMSOFT_DB_NAME=mysql
+```
+Then:
+
+```
+from sqlalchemy import create_engine
+from opencdms.utils.db import get_climsoft_4_1_1_connection_string
+from opencdms.models.climsoft import v4_1_1_core as climsoft
+from opencdms.provider.opencdms import OpenCDMSProvider, ProviderConfig
+
+station_data = {
+    "station_id": 3580,
+    "station_no": "1SHFY45485HH",
+    "name": "Test station",
+    "secondary_name": "Alt test station",
+    "latitude": 67.111,
+    "longitude": 128.454,
+    "elevation": 30,
+    "region": "UK",
+    "start_datetime": "2019-01-01",
+    "end_datetime": "2056-12-31",
+    "status_id": 1,
+    "timezone": "UTC",
+    "country": "England",
+    "loc_geog_area_id": "SHEL",
+    "rec_st_ind": 1234
+}
+
+
+climsoft_engine = create_engine(get_climsoft_4_1_1_connection_string())
+climsoft.Base.metadata.create_all(bind=climsoft_engine)
+provider = OpenCDMSProvider(
+    ProviderConfig(enable_climsoft=True)
+)
+station = provider.create("Station", station_data)
+
+stations = provider.list("Station")
+station = provider.get("Station",{"station_id": station_data["station_id"]})
+ 
+station = provider.update("Station",{ "station_id": station_data["station_id"] },{"name": "New name"})
+
+station = provider.delete("Station",{"station_id": station_data["station_id"]})
+
+# Drop all tables
+climsoft.Base.metadata.drop_all(bind=climsoft_engine)
+```
+
 Let us look at an example where multiple provider is enables.
+
+To run this example using the opencdms-test-data, set the required environment variables:
+
+```
+ $ export MCH_DB_PORT=33306
+ $ export MCH_DB_NAME=mysql
+ $ export CLIDE_DB_PORT=35433
+
+```
+
+then:
 
 ```python
 from sqlalchemy import create_engine
@@ -202,16 +324,13 @@ from opencdms.provider.opencdms import OpenCDMSProvider, ProviderConfig
 from opencdms.utils.db import get_clide_connection_string, \
     get_mch_english_connection_string
 
-
 timezone_data = dict(
-    id=1,
     tm_zone="UTC",
     utc_diff=0,
     description="UTC timezone"
 )
 
 station_status_data = dict(
-    id=1,
     status="ACTIVE",
     description="test station status 1"
 )
@@ -299,7 +418,7 @@ station = provider.update(
 )
 
 assert station["clide"].region == 'US'
-assert station["mch"].TimeZone == '0'
+assert station["mch"].TimeZone == 'UTC'
 
 deleted = provider.delete(
     "Station",
@@ -309,6 +428,7 @@ deleted = provider.delete(
 )
 assert deleted["clide"]["station_id"] == station_data['station_id']
 assert deleted["mch"]["station_id"] == station_data['station_id']
+
 ```
 
 Here we have declared some variables for later use. Then we migrated the database
@@ -375,7 +495,7 @@ operation and returns a response in the form:
 {
     "clide": "a model or list of model/error/None",
     "mch": "a model or list of model/error/None",
-    "midas": "a model or list of model/error/None",
+    "midas_pg": "a model or list of model/error/None",
     "climsoft": "a model or list of model/error/None"
 }
 ```
