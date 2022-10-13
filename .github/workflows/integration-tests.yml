@@ -53,7 +53,7 @@ jobs:
                     sleep 3
                     pytest tests/integration/models/test_mch_english.py
                     sleep 3
-                    pytest tests/integration/models/test_midas.py
+                    pytest tests/integration/models/test_midas_pg.py
                     sleep 3
                     pytest tests/integration/providers/test_clide.py
                     sleep 3
@@ -61,7 +61,7 @@ jobs:
                     sleep 3
                     pytest tests/integration/providers/test_mch_english.py
                     sleep 3
-                    pytest tests/integration/providers/test_midas.py
+                    pytest tests/integration/providers/test_midas_pg.py
                     sleep 3
                     pytest tests/integration/providers/test_opencdms.py
                     sleep 3
