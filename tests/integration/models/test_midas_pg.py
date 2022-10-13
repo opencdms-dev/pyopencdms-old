@@ -3,7 +3,7 @@ from faker import Faker
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.sql import text as sa_text
-
+import decimal
 from opencdms.models.midas_pg import core as midas_models
 from opencdms.utils.db import get_midas_pg_connection_string
 
@@ -13,7 +13,7 @@ fake = Faker()
 db_engine = create_engine(DB_URL)
 
 source_data = {
-    "src_id": 1605,
+    "src_id": decimal.Decimal("1605"),
     "src_name": "BOTTOMS WOOD, ST HELENA",
     "high_prcn_lat": -15.9422,
     "high_prcn_lon": -5.6676,
