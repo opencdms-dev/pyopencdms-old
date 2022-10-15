@@ -35,7 +35,7 @@ def get_midas_pg_connection_string() -> str:
         password=config.MIDAS_PG_DB_PASS,
         host=config.MIDAS_PG_DB_HOST,
         port=config.MIDAS_PG_DB_PORT,
-        db_name=config.MIDAS_PG_DB_NAME
+        db_name=config.MIDAS_PG_DB_NAME,
     )
 
 

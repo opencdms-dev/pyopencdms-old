@@ -13,7 +13,7 @@ from alchemyjsonschema import ForeignKeyWalker
 from opencdms.utils.db import get_connection_string, get_count
 from opencdms.models.climsoft import v4_1_1_core as models
 from opencdms.dtos.climsoft.observationfinal import (
-    Observationfinal as ObservationfinalSchema,
+    ObservationfinalWithStation,
     ObservationfinalPygeoapiSchema,
     CreateObservationfinal,
     UpdateObservationfinal,
@@ -22,6 +22,7 @@ from opencdms.dtos.climsoft.observationfinal import (
 from opencdms.utils.misc import remove_nulls_from_dict
 from pygeoapi.api import LOGGER
 from pygeoapi.provider.base import SchemaType
+import jsonref
 
 
 class DatabaseConnection:
@@ -147,7 +148,7 @@ class ClimsoftProvider(BaseProvider):
         return self.fields
 
     def get_schema(self, schema_type: SchemaType = SchemaType.item):
-        if schema_type == SchemaType.update:
+        if schema_type in {SchemaType.update, SchemaType.replace}:
             return "application/json", UpdateObservationfinal.schema()
         elif schema_type == SchemaType.create:
             return "application/json", CreateObservationfinal.schema()
@@ -270,9 +271,7 @@ class ClimsoftProvider(BaseProvider):
             obs_final = models.Observationfinal(**obs_final_data.dict())
             db.session.add(obs_final)
             db.session.commit()
-        return (
-            f"{obs_final_data.recordedFrom}*{obs_final_data.describedBy}*{obs_final_data.obsDatetime}"
-        )
+        return f"{obs_final_data.recordedFrom}*{obs_final_data.describedBy}*{obs_final_data.obsDatetime}"
 
     def update(self, identifier, data):
         """Updates an existing feature id with new_feature
@@ -340,7 +339,7 @@ class ClimsoftProvider(BaseProvider):
 
         :returns: `dict` of GeoJSON Feature
         """
-        obsfinal = ObservationfinalSchema.from_orm(obs_final)
+        obsfinal = ObservationfinalWithStation.from_orm(obs_final)
 
         feature = {
             "type": "Feature",

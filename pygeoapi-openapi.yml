@@ -129,6 +129,116 @@ components:
       required:
       - queryables
       type: object
+definitions:
+  GeometrySchema: &id001
+    properties:
+      coordinates:
+        items:
+          type: number
+        title: Coordinates
+        type: array
+      type:
+        default: Point
+        title: Type
+        type: string
+    required:
+    - coordinates
+    title: GeometrySchema
+    type: object
+  ObservationfinalWithStation: &id002
+    properties:
+      acquisition_type:
+        title: Acquisition Type
+        type: integer
+      captured_by:
+        title: Captured By
+        type: string
+      cloud_height_units:
+        title: Cloud Height Units
+        type: string
+      data_form:
+        title: Data Form
+        type: string
+      data_source_timezone:
+        title: Data Source Timezone
+        type: integer
+      described_by:
+        title: Described By
+        type: integer
+      flag:
+        title: Flag
+        type: string
+      mark:
+        title: Mark
+        type: integer
+      obs_datetime:
+        format: date-time
+        title: Obs Datetime
+        type: string
+      obs_level:
+        title: Obs Level
+        type: string
+      obs_value:
+        title: Obs Value
+        type: number
+      period:
+        title: Period
+        type: integer
+      precipitation_units:
+        title: Precipitation Units
+        type: string
+      qc_status:
+        title: Qc Status
+        type: integer
+      qc_type_log:
+        title: Qc Type Log
+        type: string
+      recorded_from:
+        title: Recorded From
+        type: string
+      station:
+        $ref: '#/definitions/Station'
+      temperature_units:
+        title: Temperature Units
+        type: string
+      vis_units:
+        title: Vis Units
+        type: string
+    required:
+    - recorded_from
+    title: ObservationfinalWithStation
+    type: object
+  Station: &id003
+    properties:
+      country:
+        title: Country
+        type: string
+      elevation:
+        title: Elevation
+        type: number
+      end_datetime:
+        title: End Datetime
+        type: string
+      latitude:
+        title: Latitude
+        type: number
+      longitude:
+        title: Longitude
+        type: number
+      name:
+        title: Name
+        type: string
+      region:
+        title: Region
+        type: string
+      start_datetime:
+        title: Start Datetime
+        type: string
+      station_id:
+        title: Station Id
+        type: string
+    title: Station
+    type: object
 info:
   contact:
     email: info@opencdms.org
@@ -205,7 +315,7 @@ paths:
       description: Climsoft observations
       operationId: getClimsoftFeatures
       parameters:
-      - &id002
+      - &id004
         description: The optional f parameter indicates the output format which the
           server shall provide as part of the response document.  The default format
           is GeoJSON.
@@ -222,7 +332,7 @@ paths:
           - csv
           type: string
         style: form
-      - &id003
+      - &id005
         description: The optional lang parameter instructs the server return a response
           in a certain language, if supported.  If the language is not among the available
           values, the Accept-Language header language will be used if it is supported.
@@ -532,117 +642,11 @@ paths:
         '200':
           content:
             application/json:
-              schema: &id001
+              schema:
                 definitions:
-                  GeometrySchema:
-                    properties:
-                      coordinates:
-                        items:
-                          type: number
-                        title: Coordinates
-                        type: array
-                      type:
-                        default: Point
-                        title: Type
-                        type: string
-                    required:
-                    - coordinates
-                    title: GeometrySchema
-                    type: object
-                  Observationfinal:
-                    properties:
-                      acquisition_type:
-                        title: Acquisition Type
-                        type: integer
-                      captured_by:
-                        title: Captured By
-                        type: string
-                      cloud_height_units:
-                        title: Cloud Height Units
-                        type: string
-                      data_form:
-                        title: Data Form
-                        type: string
-                      data_source_timezone:
-                        title: Data Source Timezone
-                        type: integer
-                      described_by:
-                        title: Described By
-                        type: integer
-                      flag:
-                        title: Flag
-                        type: string
-                      mark:
-                        title: Mark
-                        type: integer
-                      obs_datetime:
-                        format: date-time
-                        title: Obs Datetime
-                        type: string
-                      obs_level:
-                        title: Obs Level
-                        type: string
-                      obs_value:
-                        title: Obs Value
-                        type: number
-                      period:
-                        title: Period
-                        type: integer
-                      precipitation_units:
-                        title: Precipitation Units
-                        type: string
-                      qc_status:
-                        title: Qc Status
-                        type: integer
-                      qc_type_log:
-                        title: Qc Type Log
-                        type: string
-                      recorded_from:
-                        title: Recorded From
-                        type: string
-                      station:
-                        $ref: '#/definitions/Station'
-                      temperature_units:
-                        title: Temperature Units
-                        type: string
-                      vis_units:
-                        title: Vis Units
-                        type: string
-                    required:
-                    - recorded_from
-                    title: Observationfinal
-                    type: object
-                  Station:
-                    properties:
-                      country:
-                        title: Country
-                        type: string
-                      elevation:
-                        title: Elevation
-                        type: number
-                      end_datetime:
-                        title: End Datetime
-                        type: string
-                      latitude:
-                        title: Latitude
-                        type: number
-                      longitude:
-                        title: Longitude
-                        type: number
-                      name:
-                        title: Name
-                        type: string
-                      region:
-                        title: Region
-                        type: string
-                      start_datetime:
-                        title: Start Datetime
-                        type: string
-                      station_id:
-                        title: Station Id
-                        type: string
-                    title: Station
-                    type: object
+                  GeometrySchema: *id001
+                  ObservationfinalWithStation: *id002
+                  Station: *id003
                 properties:
                   geometry:
                     $ref: '#/definitions/GeometrySchema'
@@ -657,7 +661,7 @@ paths:
                     title: Links
                     type: array
                   properties:
-                    $ref: '#/definitions/Observationfinal'
+                    $ref: '#/definitions/ObservationfinalWithStation'
                   type:
                     default: Feature
                     title: Type
@@ -686,7 +690,55 @@ paths:
       requestBody:
         content:
           application/json:
-            schema: *id001
+            schema:
+              properties:
+                acquisition_type:
+                  title: Acquisition Type
+                  type: integer
+                captured_by:
+                  title: Captured By
+                  type: string
+                cloud_height_units:
+                  title: Cloud Height Units
+                  type: string
+                data_form:
+                  title: Data Form
+                  type: string
+                data_source_timezone:
+                  title: Data Source Timezone
+                  type: integer
+                flag:
+                  title: Flag
+                  type: string
+                mark:
+                  title: Mark
+                  type: integer
+                obs_level:
+                  title: Obs Level
+                  type: string
+                obs_value:
+                  title: Obs Value
+                  type: number
+                period:
+                  title: Period
+                  type: integer
+                precipitation_units:
+                  title: Precipitation Units
+                  type: string
+                qc_status:
+                  title: Qc Status
+                  type: integer
+                qc_type_log:
+                  title: Qc Type Log
+                  type: string
+                temperature_units:
+                  title: Temperature Units
+                  type: string
+                vis_units:
+                  title: Vis Units
+                  type: string
+              title: UpdateObservationfinal
+              type: object
         description: Updates item in collection
         required: true
       responses:
@@ -704,8 +756,8 @@ paths:
       description: Climsoft observations
       operationId: getClimsoftQueryables
       parameters:
-      - *id002
-      - *id003
+      - *id004
+      - *id005
       responses:
         '200':
           $ref: '#/components/responses/Queryables'
@@ -777,4 +829,3 @@ tags:
   name: stac
 - description: Climsoft observations
   name: climsoft
-

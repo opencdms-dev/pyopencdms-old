@@ -44,12 +44,15 @@ class Observationfinal(BaseModel):
     visUnits: Optional[str]
     dataSourceTimeZone: Optional[int]
 
-    station: Optional[Station]
-
     class Config:
         orm_mode = True
         allow_population_by_field_name = True
         fields = field_mapping
+
+
+class ObservationfinalWithStation(Observationfinal):
+
+    station: Optional[Station]
 
 
 class CreateObservationfinal(BaseModel):
@@ -117,6 +120,6 @@ class GeometrySchema(BaseModel):
 class ObservationfinalPygeoapiSchema(BaseModel):
     type: str = "Feature"
     geometry: GeometrySchema
-    properties: Observationfinal
+    properties: ObservationfinalWithStation
     id: str
     links: List[Dict[str, str]]
