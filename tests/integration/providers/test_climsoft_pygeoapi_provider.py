@@ -1,5 +1,6 @@
 """
-Running these tests requires pygeoapi server (configured with climsoft pygeoapi provider) running
+Running these tests requires pygeoapi server
+(configured with climsoft pygeoapi provider) running
 """
 import requests
 import random
@@ -53,7 +54,8 @@ def test_should_create_query_get_update_and_delete_record_sequentially():
 
     # get
     response = requests.get(
-        url=f"{BASE_URL}/collections/climsoft/items/67774010*4*{INSERT_DATA['obsDatetime']}",
+        url=f"{BASE_URL}/collections/climsoft"
+            f"/items/67774010*4*{INSERT_DATA['obsDatetime']}",
         headers={"Content-Type": "application/geo+json"},
     )
 
@@ -61,7 +63,8 @@ def test_should_create_query_get_update_and_delete_record_sequentially():
 
     # update
     response = requests.put(
-        url=f"{BASE_URL}/collections/climsoft/items/67774010*4*{INSERT_DATA['obsDatetime']}",
+        url=f"{BASE_URL}/collections/climsoft"
+            f"/items/67774010*4*{INSERT_DATA['obsDatetime']}",
         headers={"Content-Type": "application/geo+json"},
         json=UPDATE_DATA,
     )
@@ -70,7 +73,8 @@ def test_should_create_query_get_update_and_delete_record_sequentially():
 
     # delete
     response = requests.delete(
-        url=f"{BASE_URL}/collections/climsoft/items/67774010*4*{INSERT_DATA['obsDatetime']}",
+        url=f"{BASE_URL}/collections/climsoft"
+            f"/items/67774010*4*{INSERT_DATA['obsDatetime']}",
         headers={"Content-Type": "application/geo+json"},
     )
 

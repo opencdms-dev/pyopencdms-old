@@ -2,7 +2,6 @@
 import pathlib
 import sys
 import click
-import json
 import yaml
 
 

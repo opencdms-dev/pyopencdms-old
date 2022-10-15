@@ -22,7 +22,6 @@ from opencdms.dtos.climsoft.observationfinal import (
 from opencdms.utils.misc import remove_nulls_from_dict
 from pygeoapi.api import LOGGER
 from pygeoapi.provider.base import SchemaType
-import jsonref
 
 
 class DatabaseConnection:
