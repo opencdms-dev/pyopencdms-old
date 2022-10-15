@@ -284,7 +284,9 @@ class ClimsoftProvider(BaseProvider):
             obs_final = models.Observationfinal(**obs_final_data.dict())
             db.session.add(obs_final)
             db.session.commit()
-        return f"{obs_final_data.recordedFrom}*{obs_final_data.describedBy}*{obs_final_data.obsDatetime}"
+        return f"{obs_final_data.recordedFrom}" \
+               f"*{obs_final_data.describedBy}*" \
+               f"{obs_final_data.obsDatetime}"
 
     def update(self, identifier, data):
         """Updates an existing feature id with new_feature
