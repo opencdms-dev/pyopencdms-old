@@ -14,9 +14,13 @@ DB_URL = get_clide_connection_string()
 
 db_engine = create_engine(DB_URL)
 
-station_status_data = dict(id=1, status="ACTIVE", description="test station status 1")
+station_status_data = dict(
+    id=1, status="ACTIVE", description="test station status 1"
+)
 
-timezone_data = dict(id=1, tm_zone="UTC", utc_diff=0, description="UTC timezone")
+timezone_data = dict(
+    id=1, tm_zone="UTC", utc_diff=0, description="UTC timezone"
+)
 
 station_data = dict(
     id=random.randint(11000, 22000),

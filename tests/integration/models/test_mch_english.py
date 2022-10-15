@@ -61,7 +61,9 @@ def test_should_read_all_stations(db_session):
 
 @pytest.mark.order(1402)
 def test_should_return_a_single_station(db_session):
-    station = db_session.query(mch_english.Station).get(station_data["Station"])
+    station = db_session.query(mch_english.Station).get(
+        station_data["Station"]
+    )
 
     assert station.Station == station_data["Station"]
 
@@ -73,7 +75,9 @@ def test_should_update_station(db_session):
     ).update({"StationName": "Updated Station Name"})
     db_session.commit()
 
-    updated_station = db_session.query(mch_english.Station).get(station_data["Station"])
+    updated_station = db_session.query(mch_english.Station).get(
+        station_data["Station"]
+    )
 
     assert updated_station.StationName == "Updated Station Name"
 
@@ -85,6 +89,8 @@ def test_should_delete_station(db_session):
     ).delete()
     db_session.commit()
 
-    deleted_station = db_session.query(mch_english.Station).get(station_data["Station"])
+    deleted_station = db_session.query(mch_english.Station).get(
+        station_data["Station"]
+    )
 
     assert deleted_station is None

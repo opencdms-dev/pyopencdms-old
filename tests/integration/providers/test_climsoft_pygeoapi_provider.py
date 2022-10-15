@@ -30,9 +30,7 @@ INSERT_DATA = dict(
     dataSourceTimeZone=random.randint(1, 180),
 )
 
-UPDATE_DATA = {
-    "flag": "abcd"
-}
+UPDATE_DATA = {"flag": "abcd"}
 
 
 def test_should_create_query_get_update_and_delete_record_sequentially():
@@ -40,9 +38,7 @@ def test_should_create_query_get_update_and_delete_record_sequentially():
     response = requests.post(
         url=f"{BASE_URL}/collections/climsoft/items",
         json=INSERT_DATA,
-        headers={
-            "Content-Type": "application/geo+json"
-        }
+        headers={"Content-Type": "application/geo+json"},
     )
 
     assert response.status_code == 201
@@ -50,19 +46,15 @@ def test_should_create_query_get_update_and_delete_record_sequentially():
     # query
     response = requests.get(
         url=f"{BASE_URL}/collections/climsoft/items",
-        headers={
-            "Content-Type": "application/geo+json"
-        }
+        headers={"Content-Type": "application/geo+json"},
     )
 
-    assert type(response.json()['features']) == list
+    assert type(response.json()["features"]) == list
 
     # get
     response = requests.get(
         url=f"{BASE_URL}/collections/climsoft/items/67774010*4*{INSERT_DATA['obsDatetime']}",
-        headers={
-            "Content-Type": "application/geo+json"
-        }
+        headers={"Content-Type": "application/geo+json"},
     )
 
     assert response.status_code == 200
@@ -70,10 +62,8 @@ def test_should_create_query_get_update_and_delete_record_sequentially():
     # update
     response = requests.put(
         url=f"{BASE_URL}/collections/climsoft/items/67774010*4*{INSERT_DATA['obsDatetime']}",
-        headers={
-            "Content-Type": "application/geo+json"
-        },
-        json=UPDATE_DATA
+        headers={"Content-Type": "application/geo+json"},
+        json=UPDATE_DATA,
     )
 
     assert response.status_code == 204
@@ -81,9 +71,7 @@ def test_should_create_query_get_update_and_delete_record_sequentially():
     # delete
     response = requests.delete(
         url=f"{BASE_URL}/collections/climsoft/items/67774010*4*{INSERT_DATA['obsDatetime']}",
-        headers={
-            "Content-Type": "application/geo+json"
-        }
+        headers={"Content-Type": "application/geo+json"},
     )
 
     assert response.status_code == 200

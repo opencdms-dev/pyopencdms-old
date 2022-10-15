@@ -62,7 +62,9 @@ TARGET_TABLES = [
 class ClimsoftUser(Base):
     __tablename__ = "climsoftusers"
 
-    userName = Column(String(50), primary_key=True, unique=True, nullable=False)
+    userName = Column(
+        String(50), primary_key=True, unique=True, nullable=False
+    )
     userRole = Column(String(50), nullable=False)
 
 
@@ -86,13 +88,17 @@ class DataForm(Base):
     val_end_position = Column(BigInteger, server_default=text("'0'"))
     elem_code_location = Column(String(255))
     sequencer = Column(String(50))
-    entry_mode = Column(TINYINT(2), nullable=False, server_default=text("'00'"))
+    entry_mode = Column(
+        TINYINT(2), nullable=False, server_default=text("'00'")
+    )
 
 
 class Flag(Base):
     __tablename__ = "flags"
 
-    characterSymbol = Column(String(255), primary_key=True, server_default=text("''"))
+    characterSymbol = Column(
+        String(255), primary_key=True, server_default=text("''")
+    )
     numSymbol = Column(Integer)
     description = Column(String(255))
 
@@ -101,7 +107,9 @@ class Obselement(Base):
     __tablename__ = "obselement"
     __table_args__ = (Index("elementCode", "elementId"),)
 
-    elementId = Column(BigInteger, primary_key=True, server_default=text("'0'"))
+    elementId = Column(
+        BigInteger, primary_key=True, server_default=text("'0'")
+    )
     abbreviation = Column(String(255))
     elementName = Column(String(255))
     description = Column(String(255))
@@ -188,7 +196,9 @@ class Featuregeographicalposition(Base):
     )
 
     belongsTo = Column(
-        ForeignKey("synopfeature.abbreviation"), primary_key=True, nullable=False
+        ForeignKey("synopfeature.abbreviation"),
+        primary_key=True,
+        nullable=False,
     )
     observedOn = Column(String(50), primary_key=True, nullable=False)
     latitude = Column(DOUBLE(precision=11, scale=6, asdecimal=True))
@@ -239,7 +249,10 @@ class Observationfinal(Base):
     )
     obsDatetime = Column(DateTime, primary_key=True, nullable=False)
     obsLevel = Column(
-        String(255), primary_key=True, nullable=False, server_default=text("'surface'")
+        String(255),
+        primary_key=True,
+        nullable=False,
+        server_default=text("'surface'"),
     )
     obsValue = Column(DECIMAL(8, 2))
     flag = Column(String(255), server_default=text("'N'"))
@@ -311,7 +324,9 @@ class Obsscheduleclas(Base):
     __tablename__ = "obsscheduleclass"
     __table_args__ = (Index("scheduleClassIdeification", "scheduleClass"),)
 
-    scheduleClass = Column(String(255), primary_key=True, server_default=text("''"))
+    scheduleClass = Column(
+        String(255), primary_key=True, server_default=text("''")
+    )
     description = Column(String(255))
     refersTo = Column(ForeignKey("station.stationId"))
 
@@ -336,7 +351,9 @@ class Paperarchive(Base):
     formDatetime = Column(DateTime, primary_key=True, nullable=False)
     image = Column(String(255))
     classifiedInto = Column(
-        ForeignKey("paperarchivedefinition.formId"), primary_key=True, nullable=False
+        ForeignKey("paperarchivedefinition.formId"),
+        primary_key=True,
+        nullable=False,
     )
 
     station = relationship("Station")
@@ -356,7 +373,9 @@ class Physicalfeatureclas(Base):
 
 class Stationlocationhistory(Base):
     __tablename__ = "stationlocationhistory"
-    __table_args__ = (Index("history", "belongsTo", "openingDatetime", unique=True),)
+    __table_args__ = (
+        Index("history", "belongsTo", "openingDatetime", unique=True),
+    )
 
     belongsTo = Column(
         ForeignKey("station.stationId"), primary_key=True, nullable=False
@@ -460,7 +479,9 @@ class Observationschedule(Base):
     )
 
     classifiedInto = Column(
-        ForeignKey("obsscheduleclass.scheduleClass"), primary_key=True, nullable=False
+        ForeignKey("obsscheduleclass.scheduleClass"),
+        primary_key=True,
+        nullable=False,
     )
     startTime = Column(String(50), primary_key=True, nullable=False)
     endTime = Column(String(50), primary_key=True, nullable=False)
@@ -547,7 +568,9 @@ class Faultresolution(Base):
     resolvedDatetime = Column(String(50), primary_key=True, nullable=False)
     resolvedBy = Column(String(255))
     associatedWith = Column(
-        ForeignKey("instrumentfaultreport.reportId"), primary_key=True, nullable=False
+        ForeignKey("instrumentfaultreport.reportId"),
+        primary_key=True,
+        nullable=False,
     )
     remarks = Column(String(255))
 
@@ -946,7 +969,15 @@ class FormMonthly(Base):
 class FormSynoptic2Tdcf(Base):
     __tablename__ = "form_synoptic2_tdcf"
     __table_args__ = (
-        Index("Identification", "stationId", "yyyy", "mm", "dd", "hh", unique=True),
+        Index(
+            "Identification",
+            "stationId",
+            "yyyy",
+            "mm",
+            "dd",
+            "hh",
+            unique=True,
+        ),
     )
 
     stationId = Column(String(10), primary_key=True, nullable=False)

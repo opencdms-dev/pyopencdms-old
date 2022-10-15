@@ -38,6 +38,8 @@ LOGGER = logging.getLogger(__name__)
 
 class MCHProvider(CDMSProvider):
     def __init__(
-        self, models: ModuleType = mch_models, schemas: ModuleType = mch_schemas
+        self,
+        models: ModuleType = mch_models,
+        schemas: ModuleType = mch_schemas,
     ):
         super().__init__(models, schemas)

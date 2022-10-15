@@ -14,9 +14,13 @@ from opencdms.utils.db import (
 )
 from tests.unit.dtos.data import station_data
 
-timezone_data = dict(id=1, tm_zone="UTC", utc_diff=0, description="UTC timezone")
+timezone_data = dict(
+    id=1, tm_zone="UTC", utc_diff=0, description="UTC timezone"
+)
 
-station_status_data = dict(id=1, status="ACTIVE", description="test station status 1")
+station_status_data = dict(
+    id=1, status="ACTIVE", description="test station status 1"
+)
 
 
 def test_clide_provider():
@@ -49,10 +53,14 @@ def test_clide_provider():
     provider = OpenCDMSProvider(ProviderConfig(enable_clide=True))
 
     station_status = provider.create("StationStatu", station_status_data)
-    assert isinstance(station_status["clide"], clide_station_status.StationStatu)
+    assert isinstance(
+        station_status["clide"], clide_station_status.StationStatu
+    )
 
     timezone = provider.create("StationTimezone", timezone_data)
-    assert isinstance(timezone["clide"], clide_station_timezone.StationTimezone)
+    assert isinstance(
+        timezone["clide"], clide_station_timezone.StationTimezone
+    )
 
     station_data["timezone"] = timezone["clide"].tm_zone
     station_data["status_id"] = station_status["clide"].id
@@ -109,7 +117,9 @@ def test_mch_provider():
     station = provider.create("Station", station_data)
     assert isinstance(station["mch"], mch_station.Station)
 
-    station = provider.get("Station", {"station_id": station_data["station_id"]})
+    station = provider.get(
+        "Station", {"station_id": station_data["station_id"]}
+    )
     assert isinstance(station["mch"], mch_station.Station)
 
     stations = provider.list("Station")
@@ -117,7 +127,9 @@ def test_mch_provider():
         assert isinstance(station, mch_station.Station)
 
     station = provider.update(
-        "Station", {"station_id": station_data["station_id"]}, {"name": "Updated Name"}
+        "Station",
+        {"station_id": station_data["station_id"]},
+        {"name": "Updated Name"},
     )
 
     assert station["mch"].StationName == "Updated Name"
@@ -178,13 +190,19 @@ def test_clide_and_mch_provider_together():
         connection.execute("SET FOREIGN_KEY_CHECKS = 1;")
         trans.commit()
 
-    provider = OpenCDMSProvider(ProviderConfig(enable_mch=True, enable_clide=True))
+    provider = OpenCDMSProvider(
+        ProviderConfig(enable_mch=True, enable_clide=True)
+    )
 
     station_status = provider.create("StationStatu", station_status_data)
-    assert isinstance(station_status["clide"], clide_station_status.StationStatu)
+    assert isinstance(
+        station_status["clide"], clide_station_status.StationStatu
+    )
 
     timezone = provider.create("StationTimezone", timezone_data)
-    assert isinstance(timezone["clide"], clide_station_timezone.StationTimezone)
+    assert isinstance(
+        timezone["clide"], clide_station_timezone.StationTimezone
+    )
 
     station_data["timezone"] = timezone["clide"].tm_zone
     station_data["status_id"] = station_status["clide"].id
@@ -193,7 +211,9 @@ def test_clide_and_mch_provider_together():
     assert isinstance(station["clide"], clide_station.Station)
     assert isinstance(station["mch"], mch_station.Station)
 
-    station = provider.get("Station", {"station_id": station_data["station_id"]})
+    station = provider.get(
+        "Station", {"station_id": station_data["station_id"]}
+    )
     assert isinstance(station["clide"], clide_station.Station)
     assert isinstance(station["mch"], mch_station.Station)
 
@@ -221,6 +241,8 @@ def test_clide_and_mch_provider_together():
     assert station["clide"].region == "US"
     assert station["mch"].TimeZone == "UTC"
 
-    deleted = provider.delete("Station", {"station_id": station_data["station_id"]})
+    deleted = provider.delete(
+        "Station", {"station_id": station_data["station_id"]}
+    )
     assert deleted["clide"]["station_id"] == station_data["station_id"]
     assert deleted["mch"]["station_id"] == station_data["station_id"]

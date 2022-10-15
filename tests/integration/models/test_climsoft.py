@@ -12,7 +12,9 @@ DB_URL = get_climsoft_4_1_1_connection_string()
 db_engine = create_engine(DB_URL)
 
 station_data = dict(
-    stationId=str(random.randint(1000, 12000)), stationName="Test Station", country="UK"
+    stationId=str(random.randint(1000, 12000)),
+    stationName="Test Station",
+    country="UK",
 )
 
 
@@ -77,7 +79,9 @@ def test_should_update_station(db_session):
     ).update({"country": "US"})
     db_session.commit()
 
-    updated_station = db_session.query(climsoft.Station).get(station_data["stationId"])
+    updated_station = db_session.query(climsoft.Station).get(
+        station_data["stationId"]
+    )
 
     assert updated_station.country == "US"
 
@@ -89,6 +93,8 @@ def test_should_delete_station(db_session):
     ).delete()
     db_session.commit()
 
-    deleted_station = db_session.query(climsoft.Station).get(station_data["stationId"])
+    deleted_station = db_session.query(climsoft.Station).get(
+        station_data["stationId"]
+    )
 
     assert deleted_station is None

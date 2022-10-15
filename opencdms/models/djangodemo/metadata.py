@@ -13,7 +13,11 @@ class Obselement(models.Model):
     )  # Field name made lowercase.
     description = models.CharField(max_length=255, blank=True, null=True)
     elementscale = models.DecimalField(
-        db_column="elementScale", max_digits=8, decimal_places=2, blank=True, null=True
+        db_column="elementScale",
+        max_digits=8,
+        decimal_places=2,
+        blank=True,
+        null=True,
     )  # Field name made lowercase.
     upperlimit = models.CharField(
         db_column="upperLimit", max_length=255, blank=True, null=True

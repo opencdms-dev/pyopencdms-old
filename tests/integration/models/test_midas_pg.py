@@ -101,7 +101,9 @@ def test_should_update_source(db_session):
     ).update({"wmo_region_code": "2"})
     db_session.commit()
 
-    updated_source = db_session.query(midas_models.Source).get(source_data["src_id"])
+    updated_source = db_session.query(midas_models.Source).get(
+        source_data["src_id"]
+    )
 
     assert updated_source.wmo_region_code == "2"
 
@@ -113,6 +115,8 @@ def test_should_delete_source(db_session):
     ).delete()
     db_session.commit()
 
-    deleted_source = db_session.query(midas_models.Source).get(source_data["src_id"])
+    deleted_source = db_session.query(midas_models.Source).get(
+        source_data["src_id"]
+    )
 
     assert deleted_source is None

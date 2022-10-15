@@ -87,7 +87,9 @@ class DatabaseConnection:
 
         if self.context == "query":
             factory = SchemaFactory(ForeignKeyWalker)
-            self.fields = factory(model=models.Observationfinal).get("properties")
+            self.fields = factory(model=models.Observationfinal).get(
+                "properties"
+            )
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
@@ -117,7 +119,8 @@ class ClimsoftProvider(BaseProvider):
             query = (
                 query.join(
                     models.Station,
-                    models.Observationfinal.recordedFrom == models.Station.stationId,
+                    models.Observationfinal.recordedFrom
+                    == models.Station.stationId,
                 )
                 .filter(models.Station.longitude >= min_lng)
                 .filter(models.Station.longitude <= max_lng)
@@ -143,7 +146,9 @@ class ClimsoftProvider(BaseProvider):
         :returns: dict of fields
         """
         if not self.fields:
-            with DatabaseConnection(self.conn_dic, properties=self.properties) as db:
+            with DatabaseConnection(
+                self.conn_dic, properties=self.properties
+            ) as db:
                 self.fields = db.fields
         return self.fields
 
@@ -186,7 +191,9 @@ class ClimsoftProvider(BaseProvider):
 
         if resulttype == "hits":
             with DatabaseConnection(
-                conn_dic=self.conn_dic, properties=self.properties, context="hits"
+                conn_dic=self.conn_dic,
+                properties=self.properties,
+                context="hits",
             ) as db:
                 query = db.session.query(models.Observationfinal)
 
@@ -213,7 +220,9 @@ class ClimsoftProvider(BaseProvider):
                 # )
 
                 if not skip_geometry:
-                    query = query.options(joinedload(models.Observationfinal.station))
+                    query = query.options(
+                        joinedload(models.Observationfinal.station)
+                    )
 
                 obs_finals = query.offset(startindex).limit(limit).all()
 
@@ -222,11 +231,16 @@ class ClimsoftProvider(BaseProvider):
                 for p in select_properties:
                     include_props.add(obs_final_field_mapping.get(p, p))
 
-                feature_collection = {"type": "FeatureCollection", "features": []}
+                feature_collection = {
+                    "type": "FeatureCollection",
+                    "features": [],
+                }
 
                 for obs_final in obs_finals:
                     feature_collection["features"].append(
-                        self.__response_feature(obs_final, include=include_props)
+                        self.__response_feature(
+                            obs_final, include=include_props
+                        )
                     )
 
                 return feature_collection
@@ -281,7 +295,9 @@ class ClimsoftProvider(BaseProvider):
         """
 
         recorded_from, described_by, obs_datetime = identifier.split("*")
-        updates = remove_nulls_from_dict(UpdateObservationfinal.parse_raw(data).dict())
+        updates = remove_nulls_from_dict(
+            UpdateObservationfinal.parse_raw(data).dict()
+        )
         with DatabaseConnection(
             conn_dic=self.conn_dic, properties=self.properties
         ) as db:
@@ -345,7 +361,10 @@ class ClimsoftProvider(BaseProvider):
             "type": "Feature",
             "geometry": {
                 "type": "Point",
-                "coordinates": [obsfinal.station.longitude, obsfinal.station.latitude],
+                "coordinates": [
+                    obsfinal.station.longitude,
+                    obsfinal.station.latitude,
+                ],
             }
             if obsfinal.station
             else None,

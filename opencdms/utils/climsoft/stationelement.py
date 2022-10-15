@@ -1,10 +1,15 @@
 import datetime
 from sqlalchemy.orm.session import Session
 from sqlalchemy.sql.functions import func
-from opencdms.models.climsoft.v4_1_1_core import Observationfinal, Stationelement
+from opencdms.models.climsoft.v4_1_1_core import (
+    Observationfinal,
+    Stationelement,
+)
 
 
-def group_observation_final_data(db_session: Session, first_obs_date: bool = True):
+def group_observation_final_data(
+    db_session: Session, first_obs_date: bool = True
+):
     obs_date = func.DATE(Observationfinal.obsDatetime).label("obsDate")
     subquery = db_session.query(
         Observationfinal.recordedFrom, Observationfinal.describedBy, obs_date
@@ -70,7 +75,9 @@ def sync_stationelement_with_observationfinal_sqla(db_session: Session):
     for item in to_delete_set:
         recordedFrom, describedBy, beginDate = item.split("#-#")
         db_session.query(Stationelement).filter_by(
-            recordedFrom=recordedFrom, describedBy=int(describedBy), beginDate=beginDate
+            recordedFrom=recordedFrom,
+            describedBy=int(describedBy),
+            beginDate=beginDate,
         ).delete()
         db_session.commit()
 
