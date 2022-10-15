@@ -16,6 +16,7 @@ from sqlalchemy import (
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
+import uuid
 
 Base = declarative_base()
 metadata = Base.metadata
@@ -24,123 +25,83 @@ metadata = Base.metadata
 class Equipment(Base):
     __tablename__ = "equipment"
     __table_args__ = {
-        "comment": "The details of the items of equipment deployed at a "
-        "station. Related by the equipment ID to the deployment "
-        "table. The EQPT_PRCT_DATE and EQPT_DSPL_DATE are for "
-        "equipment procurement and equipment disposal dates "
-        "respectively.\nHowever, they are more often used to "
-        "record calibration validity start and end dates "
-        "respectively."
-    }
+        'comment': 'The details of the items of equipment deployed at a '
+                   'station. Related by the equipment ID to the deployment '
+                   'table. The EQPT_PRCT_DATE and EQPT_DSPL_DATE are for '
+                   'equipment procurement and equipment disposal dates '
+                   'respectively.\nHowever, they are more often used to '
+                   'record calibration validity start and end dates '
+                   'respectively.'}
 
-    equipment_id = Column(
-        NUMERIC(6, 0, False),
-        primary_key=True,
-        comment="Unique identifier for piece of equipment " "in Metadata",
-    )
-    equipment_type_id = Column(
-        NUMERIC(6, 0, False),
-        nullable=False,
-        comment="Unique identifier for equipment type",
-    )
-    manufacturer_name = Column(
-        VARCHAR(28), nullable=False, comment="Name of equipment manufacturer"
-    )
-    manufacturer_sn_txt = Column(
-        VARCHAR(24),
-        nullable=False,
-        comment="Manufacturer serial number or SI " "database Sensor_serial_no ",
-    )
-    met_ref_txt = Column(
-        VARCHAR(24), comment="Met Office reference number or SI database " "Asset_id"
-    )
-    eqpt_prct_date = Column(
-        DateTime, comment="Equipment procurement date, or date of " "calibration"
-    )
-    equipment_cost = Column(NUMERIC(6, 2, True), comment="Cost of equipment")
-    eqpt_dspl_date = Column(
-        DateTime, comment="Equipment disposal date, or date " "calibration expires."
-    )
-    eqpt_dspl_rmrk = Column(VARCHAR(200), comment="Equipment disposal remark")
-    eqpt_last_updated_date = Column(
-        DateTime, comment="Date at which this equipment was " "inserted or last updated"
-    )
-
+    equipment_id = Column(Integer, primary_key=True,
+                          comment='Unique identifier for piece of equipment '
+                                  'in Metadata')
+    equipment_type_id = Column(Integer, nullable=False,
+                               comment='Unique identifier for equipment type')
+    manufacturer_name = Column(VARCHAR(28), nullable=False,
+                               comment='Name of equipment manufacturer')
+    manufacturer_sn_txt = Column(VARCHAR(24), nullable=False,
+                                 comment='Manufacturer serial number or SI '
+                                         'database Sensor_serial_no ')
+    met_ref_txt = Column(VARCHAR(24),
+                         comment='Met Office reference number or SI database '
+                                 'Asset_id')
+    eqpt_prct_date = Column(DateTime,
+                            comment='Equipment procurement date, or date of '
+                                    'calibration')
+    equipment_cost = Column(NUMERIC(6, 2, True), comment='Cost of equipment')
+    eqpt_dspl_date = Column(DateTime,
+                            comment='Equipment disposal date, or date '
+                                    'calibration expires.')
+    eqpt_dspl_rmrk = Column(VARCHAR(200), comment='Equipment disposal remark')
+    eqpt_last_updated_date = Column(DateTime,
+                                    comment='Date at which this equipment was '
+                                            'inserted or last updated')
 
 class ReportingSchedule(Base):
     __tablename__ = "reporting_schedule"
     __table_args__ = (
-        Index(
-            "c_rps_unq",
-            "id",
-            "id_type",
-            "met_domain_name",
-            "src_cap_bgn_date",
-            "rpt_schd_bgn_date",
-            "rpt_schd_end_date",
-            "year_date_bgn",
-            "year_date_end",
-            "week_day_bgn",
-            "week_day_end",
-            "time_of_day_bgn",
-            "time_of_day_end",
-            "reporting_interval",
-            "reporting_method",
-            "public_holiday_flag",
-            unique=True,
-        ),
+        Index('c_rps_unq', 'id', 'id_type', 'met_domain_name',
+              'src_cap_bgn_date', 'rpt_schd_bgn_date', 'rpt_schd_end_date',
+              'year_date_bgn', 'year_date_end', 'week_day_bgn', 'week_day_end',
+              'time_of_day_bgn', 'time_of_day_end', 'reporting_interval',
+              'reporting_method', 'public_holiday_flag', unique=True),
     )
 
-    report_schedule_id = Column(
-        NUMERIC(6, 0, False),
-        primary_key=True,
-        comment="Unique identifier for each record",
-    )
-    id = Column(VARCHAR(8), comment="Non unique identifier for station")
-    id_type = Column(VARCHAR(4), nullable=False, comment="Type of identifier above")
-    met_domain_name = Column(
-        VARCHAR(8),
-        nullable=False,
-        comment="Describes the route from which the data " "came",
-    )
-    src_cap_bgn_date = Column(
-        DateTime, nullable=False, comment="Start date of the SRC_CAPABILITY record"
-    )
-    rpt_schd_bgn_date = Column(DateTime, nullable=False, comment="Start date of record")
-    rpt_schd_end_date = Column(DateTime, nullable=False, comment="End date of record")
-    year_date_bgn = Column(
-        CHAR(5), nullable=False, comment="First month/year of report (format mm/yy)"
-    )
-    year_date_end = Column(
-        CHAR(5), nullable=False, comment="Last month/year of report (format mm/yy)"
-    )
-    week_day_bgn = Column(
-        NUMERIC(1, 0, False), nullable=False, comment="First day of week of report"
-    )
-    week_day_end = Column(
-        NUMERIC(1, 0, False), nullable=False, comment="Last day of week of report"
-    )
-    time_of_day_bgn = Column(
-        NUMERIC(4, 0, False), nullable=False, comment="First time of day of report"
-    )
-    time_of_day_end = Column(
-        NUMERIC(4, 0, False), nullable=False, comment="Last time of day of report"
-    )
-    reporting_interval = Column(
-        NUMERIC(4, 0, False),
-        nullable=False,
-        comment="Number of minutes between each report",
-    )
-    reporting_method = Column(
-        VARCHAR(9), nullable=False, comment="Either Manual or Automatic"
-    )
-    public_holiday_flag = Column(
-        CHAR(1),
-        nullable=False,
-        comment="T or F. Shows whether the report" " comes in on a bank holiday",
-    )
-    rpt_schd_rmrk = Column(VARCHAR(200), comment="Remark for the record")
-
+    report_schedule_id = Column(Integer, primary_key=True,
+                                comment='Unique identifier for each record')
+    id = Column(VARCHAR(8), comment='Non unique identifier for station')
+    id_type = Column(VARCHAR(4), nullable=False,
+                     comment='Type of identifier above')
+    met_domain_name = Column(VARCHAR(8), nullable=False,
+                             comment='Describes the route from which the data '
+                                     'came')
+    src_cap_bgn_date = Column(DateTime, nullable=False,
+                              comment='Start date of the SRC_CAPABILITY record')
+    rpt_schd_bgn_date = Column(DateTime, nullable=False,
+                               comment='Start date of record')
+    rpt_schd_end_date = Column(DateTime, nullable=False,
+                               comment='End date of record')
+    year_date_bgn = Column(CHAR(5), nullable=False,
+                           comment='First month/year of report (format mm/yy)')
+    year_date_end = Column(CHAR(5), nullable=False,
+                           comment='Last month/year of report (format mm/yy)')
+    week_day_bgn = Column(NUMERIC(1, 0, False), nullable=False,
+                          comment='First day of week of report')
+    week_day_end = Column(NUMERIC(1, 0, False), nullable=False,
+                          comment='Last day of week of report')
+    time_of_day_bgn = Column(NUMERIC(4, 0, False), nullable=False,
+                             comment='First time of day of report')
+    time_of_day_end = Column(NUMERIC(4, 0, False), nullable=False,
+                             comment='Last time of day of report')
+    reporting_interval = Column(NUMERIC(4, 0, False), nullable=False,
+                                comment='Number of minutes between each report')
+    reporting_method = Column(VARCHAR(9), nullable=False,
+                              comment='Either Manual or Automatic')
+    public_holiday_flag = Column(CHAR(1), nullable=False,
+                                 comment='T or F. Shows whether the report'
+                                         ' comes in on a bank holiday')
+    rpt_schd_rmrk = Column(VARCHAR(200), comment='Remark for the record')
 
 class Source(Base):
     __tablename__ = "source"
@@ -180,17 +141,14 @@ class Source(Base):
         ),
     )
 
-    src_id = Column(
-        NUMERIC(6, 0, False),
-        primary_key=True,
-        comment="\nThis is an identifier for each source"
-        " of meteorological data within the system. "
-        "It acts as a unique identifier when a source may "
-        "be of various types.  It consists of a 6 digit "
-        "integer, assigned from a high-number record, "
-        "and has no external significance.\n",
-    )
-    src_name = Column(VARCHAR(40), nullable=False, comment="\nName of source\n")
+    src_id = Column(Integer, primary_key=True,
+                    comment='\nThis is an identifier for each source'
+                            ' of meteorological data within the system. '
+                            'It acts as a unique identifier when a source may '
+                            'be of various types.  It consists of a 6 digit '
+                            'integer, assigned from a high-number record, '
+                            'and has no external significance.\n')
+    src_name = Column(VARCHAR(40), nullable=False, comment='\nName of source\n')
     high_prcn_lat = Column(NUMERIC(7, 5, True), nullable=False)
     high_prcn_lon = Column(NUMERIC(8, 5, True), nullable=False)
     loc_geog_area_id = Column(
@@ -208,74 +166,49 @@ class Source(Base):
     )
     src_type = Column(VARCHAR(15))
     grid_ref_type = Column(
-        Enum("CI", "IRL", "OS", "XX", "ROI", name="grid_ref_type_enum"),
-        nullable=False,
-        server_default=text("'XX'"),
-        comment="\nThis attribute describes the type of grid "
-        "reference.\nValue List:\nCI = Channel Islands grid\n"
-        "IRL = Irish grid\nOS = Ordnance Survey British National grid "
-        "reference\nUnspecified, usually over-seas.\n",
-    )
-    east_grid_ref = Column(
-        NUMERIC(6, 0, False),
-        comment="\nAs a compound with North Grid reference can indicate a location to within a 100 metre square.\n",
-    )
-    north_grid_ref = Column(
-        NUMERIC(7, 0, False),
-        comment="\nAs a compound with east grid reference can give a location of a site to a 100 m square.\n",
-    )
-    hydr_area_id = Column(
-        NUMERIC(4, 0, False),
-        comment="\nHydrometric area identification number.  Rainfall stations are located in a hydrometric area assigned clockwise round the country starting in North Scotland.\nHydrometric area numbers are in the HHHh format, where HHH is the original number allocated in the 1930s, and h is the sub-division resulting from water authority re-organizations.  Thus, when h=0 the boundary remains that defined n the 1930s.\nIn MIDAS, it links an area to sources.\n",
-    )
+        Enum('CI', 'IRL', 'OS', 'XX', 'ROI', name="grid_ref_type_enum"),
+        nullable=False, server_default=text("'XX'"),
+        comment='\nThis attribute describes the type of grid '
+                'reference.\nValue List:\nCI = Channel Islands grid\n'
+                'IRL = Irish grid\nOS = Ordnance Survey British National grid '
+                'reference\nUnspecified, usually over-seas.\n')
+    east_grid_ref = Column(Integer,
+                           comment='\nAs a compound with North Grid reference can indicate a location to within a 100 metre square.\n')
+    north_grid_ref = Column(NUMERIC(7, 0, False),
+                            comment='\nAs a compound with east grid reference can give a location of a site to a 100 m square.\n')
+    hydr_area_id = Column(NUMERIC(4, 0, False),
+                          comment='\nHydrometric area identification number.  Rainfall stations are located in a hydrometric area assigned clockwise round the country starting in North Scotland.\nHydrometric area numbers are in the HHHh format, where HHH is the original number allocated in the 1930s, and h is the sub-division resulting from water authority re-organizations.  Thus, when h=0 the boundary remains that defined n the 1930s.\nIn MIDAS, it links an area to sources.\n')
     post_code = Column(VARCHAR(9))
-    src_end_date = Column(
-        DateTime, comment="\nsource.src_end_date is the date when the station closed\n"
-    )
-    elevation = Column(
-        NUMERIC(6, 2, True),
-        comment="\nHeight of ground surface above mean sea level.  See also height.\n",
-    )
-    wmo_region_code = Column(
-        CHAR(1),
-        comment="\nWMO Code A1 Code table 0161. WMO Regional Association area in which buoy, drilling rig or oil- or gas-production platform has been deployed.\nValues: 1 = Africa, 2 = Asia, 3 = South America, 4 = North America, 5 = Australasia, 6 = Europe, 7 = Antactica.\n",
-    )
-    parent_src_id = Column(NUMERIC(6, 0, False), comment="\n")
-    zone_time = Column(
-        NUMERIC(2, 0, False),
-        comment="\nDifference from UTC (hours) for overseas stations.\n",
-    )
-    drainage_stream_id = Column(
-        VARCHAR(4),
-        comment="\nDrainage streams or coastal name identification number to link area to source information. New item but drainage stream information from ML.HYDROSET\n",
-    )
-    src_upd_date = Column(DateTime, comment="\nsource_updated_date\n")
-    mtce_ctre_code = Column(
-        VARCHAR(4), comment="\nAbbreviated form of the maintenance centre name.\n"
-    )
-    place_id = Column(
-        NUMERIC(6, 0, False),
-        server_default=text("NULL"),
-        comment="\nAttribute Description -\n",
-    )
+    src_end_date = Column(DateTime,
+                          comment='\nsource.src_end_date is the date when the station closed\n')
+    elevation = Column(NUMERIC(6, 2, True),
+                       comment='\nHeight of ground surface above mean sea level.  See also height.\n')
+    wmo_region_code = Column(CHAR(1),
+                             comment='\nWMO Code A1 Code table 0161. WMO Regional Association area in which buoy, drilling rig or oil- or gas-production platform has been deployed.\nValues: 1 = Africa, 2 = Asia, 3 = South America, 4 = North America, 5 = Australasia, 6 = Europe, 7 = Antactica.\n')
+    parent_src_id = Column(Integer, comment='\n')
+    zone_time = Column(NUMERIC(2, 0, False),
+                       comment='\nDifference from UTC (hours) for overseas stations.\n')
+    drainage_stream_id = Column(VARCHAR(4),
+                                comment='\nDrainage streams or coastal name identification number to link area to source information. New item but drainage stream information from ML.HYDROSET\n')
+    src_upd_date = Column(DateTime, comment='\nsource_updated_date\n')
+    mtce_ctre_code = Column(VARCHAR(4),
+                            comment='\nAbbreviated form of the maintenance centre name.\n')
+    place_id = Column(Integer, server_default=text("NULL"),
+                      comment='\nAttribute Description -\n')
     lat_wgs84 = Column(NUMERIC(7, 5, True))
     lon_wgs84 = Column(NUMERIC(8, 5, True))
-    src_guid = Column(
-        UUID,
-        unique=True,
-        server_default=text("gen_random_uuid()"),
-        comment="Global Unique ID - RAW32 - default sys_guid()",
-    )
-    src_geom = Column(JSON, comment="SRID 8307 geometry (WGS84 lat/lon)")
-    src_location_type = Column(
-        VARCHAR(50), comment="Categorisation of location e.g. UKMO_SURFACE_LAND"
-    )
+    src_guid = Column(UUID(as_uuid=True), unique=True, default=uuid.uuid4,
+                    #   server_default=text("gen_random_uuid()"),
+                      comment='Global Unique ID - RAW32 - default sys_guid()')
+    src_geom = Column(JSON, comment='SRID 8307 geometry (WGS84 lat/lon)')
+    src_location_type = Column(VARCHAR(50),
+                               comment='Categorisation of location e.g. UKMO_SURFACE_LAND')
 
 
 class StationReportElement(Base):
     __tablename__ = "station_report_element"
 
-    stn_rpt_elem_id = Column(NUMERIC(6, 0, False), primary_key=True)
+    stn_rpt_elem_id = Column(Integer, primary_key=True)
     id = Column(VARCHAR(8))
     id_type = Column(VARCHAR(4), nullable=False)
     src_cap_bgn_date = Column(DateTime, nullable=False)
@@ -297,75 +230,46 @@ class Deployment(Base):
         },
     )
 
-    deployment_id = Column(
-        NUMERIC(6, 0, False),
-        primary_key=True,
-        comment="Unique identifier of each deployment record",
-    )
-    src_id = Column(
-        ForeignKey("source.src_id"),
-        nullable=False,
-        index=True,
-        comment="Unique identifier for station in MIDAS  ",
-    )
-    id = Column(VARCHAR(8), comment="Identifier associated with station")
-    id_type = Column(
-        VARCHAR(4),
-        nullable=False,
-        comment="Identifier type describing identifier above",
-    )
+
+    deployment_id = Column(Integer, primary_key=True,
+                           comment='Unique identifier of each deployment record')
+    src_id = Column(Integer,ForeignKey('source.src_id'), nullable=False, index=True,
+                    comment='Unique identifier for station in MIDAS  ')
+    id = Column(VARCHAR(8), comment='Identifier associated with station')
+    id_type = Column(VARCHAR(4), nullable=False,
+                     comment='Identifier type describing identifier above')
     # equipment_id = Column(ForeignKey('equipment.equipment_id'), index=True,
     #                       comment='Unique identifier of piece of equipment')
-    equipment_type_id = Column(
-        NUMERIC(6, 0, False),
-        nullable=False,
-        index=True,
-        comment="Unique identifier for equipment type",
-    )
-    met_office_eqpt_flag = Column(
-        CHAR(1),
-        nullable=False,
-        comment="Flag describing whether Met Office owns equipment or not (T or F)",
-    )
-    ob_sys_name = Column(
-        VARCHAR(12), index=True, comment="Name of observing system if present"
-    )
-    met_role_id = Column(
-        NUMERIC(3, 0, False),
-        index=True,
-        comment="Identifier describing the purpose of the equipment",
-    )
-    depl_bgn_date = Column(DateTime, nullable=False, comment="Begin date of deployment")
-    depl_end_date = Column(DateTime, nullable=False, comment="End date of deployment")
-    grid_ref_type = Column(VARCHAR(4), comment="Grid reference type (OS, IRL or CI)")
-    east_grid_ref = Column(
-        NUMERIC(6, 0, False), comment="East grid reference of deployment"
-    )
-    north_grid_ref = Column(
-        NUMERIC(7, 0, False), comment="North grid reference of deployment"
-    )
-    high_prcn_lat = Column(
-        NUMERIC(7, 5, True),
-        comment="Latitude of deployment in degrees to 5 decimal places",
-    )
-    high_prcn_lon = Column(
-        NUMERIC(8, 5, True),
-        comment="Longitude of deployment in degrees to 5 decimal places",
-    )
-    elevation = Column(NUMERIC(6, 2, True), comment="Elevation of deployment")
-    deployment_remark = Column(VARCHAR(250), comment="Remark about deployment")
-    lat_wgs84 = Column(
-        NUMERIC(7, 5, True),
-        comment="WGS84 Latitude of deployment in degrees to 5 decimal places",
-    )
-    lon_wgs84 = Column(
-        NUMERIC(8, 5, True),
-        comment="WGS84 Longitude of deployment in degrees to 5 decimal places",
-    )
-    ipr_owner = Column(
-        VARCHAR(12),
-        comment="Code identifying who owns the intellectual property rights of the deployed equipment.",
-    )
+    equipment_type_id = Column(Integer, nullable=False, index=True,
+                               comment='Unique identifier for equipment type')
+    met_office_eqpt_flag = Column(CHAR(1), nullable=False,
+                                  comment='Flag describing whether Met Office owns equipment or not (T or F)')
+    ob_sys_name = Column(VARCHAR(12), index=True,
+                         comment='Name of observing system if present')
+    met_role_id = Column(NUMERIC(3, 0, False), index=True,
+                         comment='Identifier describing the purpose of the equipment')
+    depl_bgn_date = Column(DateTime, nullable=False,
+                           comment='Begin date of deployment')
+    depl_end_date = Column(DateTime, nullable=False,
+                           comment='End date of deployment')
+    grid_ref_type = Column(VARCHAR(4),
+                           comment='Grid reference type (OS, IRL or CI)')
+    east_grid_ref = Column(Integer,
+                           comment='East grid reference of deployment')
+    north_grid_ref = Column(NUMERIC(7, 0, False),
+                            comment='North grid reference of deployment')
+    high_prcn_lat = Column(NUMERIC(7, 5, True),
+                           comment='Latitude of deployment in degrees to 5 decimal places')
+    high_prcn_lon = Column(NUMERIC(8, 5, True),
+                           comment='Longitude of deployment in degrees to 5 decimal places')
+    elevation = Column(NUMERIC(6, 2, True), comment='Elevation of deployment')
+    deployment_remark = Column(VARCHAR(250), comment='Remark about deployment')
+    lat_wgs84 = Column(NUMERIC(7, 5, True),
+                       comment='WGS84 Latitude of deployment in degrees to 5 decimal places')
+    lon_wgs84 = Column(NUMERIC(8, 5, True),
+                       comment='WGS84 Longitude of deployment in degrees to 5 decimal places')
+    ipr_owner = Column(VARCHAR(12),
+                       comment='Code identifying who owns the intellectual property rights of the deployed equipment.')
     egm96_elevation = Column(NUMERIC(6, 2, True))
 
     # equipment = relationship('Equipment')
@@ -402,11 +306,8 @@ class Deployment(Base):
 class EquipmentCalibration(Base):
     __tablename__ = "equipment_calibration"
 
-    eqpt_calib_id = Column(
-        NUMERIC(6, 0, False),
-        primary_key=True,
-        comment="Unique identifier for calibration of this equipment",
-    )
+    eqpt_calib_id = Column(Integer, primary_key=True,
+                           comment='Unique identifier for calibration of this equipment')
     # equipment_id = Column(Integer, ForeignKey('equipment.equipment_id'),
     #                       nullable=False, index=True,
     #                       comment='Unique identifier of equipment')
@@ -441,23 +342,17 @@ class Inspection(Base):
         },
     )
 
-    inspection_id = Column(
-        NUMERIC(6, 0, False),
-        primary_key=True,
-        comment="Unique identifier for the inspection",
-    )
-    src_id = Column(
-        ForeignKey("source.src_id"),
-        nullable=False,
-        index=True,
-        comment="Unique identifier for the station",
-    )
-    inspection_date = Column(DateTime, nullable=False, comment="Date of inspection")
-    inspectors_name = Column(VARCHAR(70), nullable=False, comment="Name of inspector")
-    review_date = Column(
-        DateTime, comment="Date on which inspection should be reviewed"
-    )
-    inspection_remark = Column(VARCHAR(700), comment="Remark on inspection")
+    inspection_id = Column(Integer, primary_key=True,
+                           comment='Unique identifier for the inspection')
+    src_id = Column(ForeignKey('source.src_id'), nullable=False, index=True,
+                    comment='Unique identifier for the station')
+    inspection_date = Column(DateTime, nullable=False,
+                             comment='Date of inspection')
+    inspectors_name = Column(VARCHAR(70), nullable=False,
+                             comment='Name of inspector')
+    review_date = Column(DateTime,
+                         comment='Date on which inspection should be reviewed')
+    inspection_remark = Column(VARCHAR(700), comment='Remark on inspection')
 
     src = relationship("Source")
 
@@ -482,9 +377,9 @@ class ObservingSchedule(Base):
         ),
     )
 
-    ob_schd_id = Column(
-        NUMERIC(6, 0, False), primary_key=True, comment="Unique number of the record"
-    )
+    ob_schd_id = Column(Integer, primary_key=True,
+                        comment='Unique number of the record')
+
     stn_rpt_elem_id = Column(
         ForeignKey("station_report_element.stn_rpt_elem_id", ondelete="CASCADE"),
         nullable=False,
@@ -529,31 +424,16 @@ class ObservingSystemInstallation(Base):
     __tablename__ = "observing_system_installation"
     __table_args__ = (CheckConstraint("SRC_ID >= 0"),)
 
-    ob_sys_intl_id = Column(
-        NUMERIC(6, 0, False), primary_key=True, comment="Unique number for each record"
-    )
-    ob_sys_vrsn_id = Column(
-        NUMERIC(6, 0, False),
-        nullable=False,
-        index=True,
-        comment="Unique number for observing system version",
-    )
-    src_id = Column(
-        ForeignKey("source.src_id"),
-        nullable=False,
-        index=True,
-        comment="Unique number for station",
-    )
-    ob_sys_intl_bgn_date = Column(
-        DateTime,
-        nullable=False,
-        comment="Start date of installation of observing sys at station",
-    )
-    ob_sys_intl_end_date = Column(
-        DateTime,
-        nullable=False,
-        comment="End date of installation of observing sys at station",
-    )
+    ob_sys_intl_id = Column(Integer, primary_key=True,
+                            comment='Unique number for each record')
+    ob_sys_vrsn_id = Column(Integer, nullable=False, index=True,
+                            comment='Unique number for observing system version')
+    src_id = Column(ForeignKey('source.src_id'), nullable=False, index=True,
+                    comment='Unique number for station')
+    ob_sys_intl_bgn_date = Column(DateTime, nullable=False,
+                                  comment='Start date of installation of observing sys at station')
+    ob_sys_intl_end_date = Column(DateTime, nullable=False,
+                                  comment='End date of installation of observing sys at station')
 
     src = relationship("Source")
 
@@ -628,22 +508,15 @@ class SrcCapability(Base):
         comment="\nsrc_capability.src_end_date is the last date for which we have observations of the id_ type / met_domain_name combination.\n",
     )
     first_online_ob_yr = Column(NUMERIC(4, 0, False))
-    db_segment_name = Column(
-        VARCHAR(12),
-        comment="\nThe name of a database segment, e.g. source, raindrnl, etc.\n",
-    )
-    rcpt_method_name = Column(
-        VARCHAR(20),
-        comment="\nFormerly the method of receiving these reports from this source, e.g. GTS, metform, postcard, etc.  This attribute is now used to cross-reference between IDs in use at a SOURCE.  It will be renamed to ID_CROSS_REF at the next convenient opportunity.\n ",
-    )
-    data_retention_period = Column(
-        NUMERIC(3, 0, False),
-        comment="\nCharacter string indicating the period for which data are retained in MIDAS.\n",
-    )
-    comm_mthd_id = Column(
-        NUMERIC(6, 0, False),
-        comment="\nAbbreviated code to identify the various communication methods on which data can be sent back to the Office.\n",
-    )
+
+    db_segment_name = Column(VARCHAR(12),
+                             comment='\nThe name of a database segment, e.g. source, raindrnl, etc.\n')
+    rcpt_method_name = Column(VARCHAR(20),
+                              comment='\nFormerly the method of receiving these reports from this source, e.g. GTS, metform, postcard, etc.  This attribute is now used to cross-reference between IDs in use at a SOURCE.  It will be renamed to ID_CROSS_REF at the next convenient opportunity.\n ')
+    data_retention_period = Column(NUMERIC(3, 0, False),
+                                   comment='\nCharacter string indicating the period for which data are retained in MIDAS.\n')
+    comm_mthd_id = Column(Integer,
+                          comment='\nAbbreviated code to identify the various communication methods on which data can be sent back to the Office.\n')
 
     src = relationship("Source")
 
@@ -687,7 +560,7 @@ class SrcCapabilityNodatum(Base):
     db_segment_name = Column(VARCHAR(12))
     rcpt_method_name = Column(VARCHAR(20))
     data_retention_period = Column(NUMERIC(3, 0, False))
-    comm_mthd_id = Column(NUMERIC(6, 0, False))
+    comm_mthd_id = Column(Integer)
 
     src = relationship("Source")
 
@@ -696,32 +569,19 @@ class StationAuthorityHistory(Base):
     __tablename__ = "station_authority_history"
     __table_args__ = (CheckConstraint("SRC_ID >= 0"),)
 
-    authority_id = Column(
-        NUMERIC(6, 0, False),
-        primary_key=True,
-        nullable=False,
-        comment="Foreign key to attribute in the AUTHORITY table",
-    )
-    src_id = Column(
-        ForeignKey("source.src_id"),
-        primary_key=True,
-        nullable=False,
-        comment="Foreign key to attribute in the SOURCE table",
-    )
-    stn_auth_bgn_date = Column(
-        DateTime,
-        primary_key=True,
-        nullable=False,
-        comment="Start date of relationship between station and authority",
-    )
-    stn_auth_end_date = Column(
-        DateTime,
-        nullable=False,
-        comment="End date of relationship between station and authority",
-    )
-    auth_hist_rmrk = Column(VARCHAR(200), comment="Remark on relationship")
+    authority_id = Column(Integer, primary_key=True,
+                          nullable=False,
+                          comment='Foreign key to attribute in the AUTHORITY table')
+    src_id = Column(ForeignKey('source.src_id'), primary_key=True,
+                    nullable=False,
+                    comment='Foreign key to attribute in the SOURCE table')
+    stn_auth_bgn_date = Column(DateTime, primary_key=True, nullable=False,
+                               comment='Start date of relationship between station and authority')
+    stn_auth_end_date = Column(DateTime, nullable=False,
+                               comment='End date of relationship between station and authority')
+    auth_hist_rmrk = Column(VARCHAR(200), comment='Remark on relationship')
 
-    src = relationship("Source")
+    src = relationship('Source')
 
 
 class StationGeography(Base):
@@ -890,37 +750,19 @@ class StationObserver(Base):
     __tablename__ = "station_observer"
     __table_args__ = (CheckConstraint("SRC_ID >= 0"),)
 
-    observer_id = Column(
-        NUMERIC(6, 0, False),
-        primary_key=True,
-        nullable=False,
-        index=True,
-        comment="Unique identifier of observer",
-    )
-    src_id = Column(
-        ForeignKey("source.src_id"),
-        primary_key=True,
-        nullable=False,
-        index=True,
-        comment="Unique identifier of station",
-    )
-    stn_obsr_bgn_date = Column(
-        DateTime,
-        primary_key=True,
-        nullable=False,
-        comment="Date at which observer started at station",
-    )
-    stn_obsr_end_date = Column(
-        DateTime, nullable=False, comment="Date at which observer ended at station"
-    )
-    observer_role_code = Column(
-        CHAR(4),
-        nullable=False,
-        index=True,
-        comment="Code describing the role of the observer at the station",
-    )
+    observer_id = Column(Integer, primary_key=True, nullable=False,
+                         index=True, comment='Unique identifier of observer')
+    src_id = Column(ForeignKey('source.src_id'), primary_key=True,
+                    nullable=False, index=True,
+                    comment='Unique identifier of station')
+    stn_obsr_bgn_date = Column(DateTime, primary_key=True, nullable=False,
+                               comment='Date at which observer started at station')
+    stn_obsr_end_date = Column(DateTime, nullable=False,
+                               comment='Date at which observer ended at station')
+    observer_role_code = Column(CHAR(4), nullable=False, index=True,
+                                comment='Code describing the role of the observer at the station')
 
-    src = relationship("Source")
+    src = relationship('Source')
 
 
 class StationRole(Base):
@@ -991,35 +833,20 @@ class StationStatu(Base):
 class DeploymentDetail(Base):
     __tablename__ = "deployment_detail"
     __table_args__ = {
-        "comment": "The details of attributes associated with deployments of equipment. related to the deplyment and the deployment attribute tables."
-    }
+        'comment': 'The details of attributes associated with deployments of equipment. related to the deplyment and the deployment attribute tables.'}
 
-    depl_attr_id = Column(
-        NUMERIC(6, 0, False),
-        primary_key=True,
-        nullable=False,
-        index=True,
-        comment="Deployment attribute unique identifier",
-    )
-    deployment_id = Column(
-        ForeignKey("deployment.deployment_id"),
-        primary_key=True,
-        nullable=False,
-        index=True,
-        comment="Deployment record unique identifier",
-    )
-    depl_attr_bgn_date = Column(
-        DateTime,
-        primary_key=True,
-        nullable=False,
-        comment="Begin date for which attribute value is valid",
-    )
-    depl_dtl_val = Column(
-        NUMERIC(4, 0, False), nullable=False, comment="Value associated with attribute"
-    )
-    depl_attr_end_date = Column(
-        DateTime, nullable=False, comment="End date for which attribute value is valid"
-    )
+    depl_attr_id = Column(Integer, primary_key=True,
+                          nullable=False, index=True,
+                          comment='Deployment attribute unique identifier')
+    deployment_id = Column(ForeignKey('deployment.deployment_id'),
+                           primary_key=True, nullable=False, index=True,
+                           comment='Deployment record unique identifier')
+    depl_attr_bgn_date = Column(DateTime, primary_key=True, nullable=False,
+                                comment='Begin date for which attribute value is valid')
+    depl_dtl_val = Column(NUMERIC(4, 0, False), nullable=False,
+                          comment='Value associated with attribute')
+    depl_attr_end_date = Column(DateTime, nullable=False,
+                                comment='End date for which attribute value is valid')
 
     deployment = relationship("Deployment")
 
@@ -1027,11 +854,10 @@ class DeploymentDetail(Base):
 class EqptCalibCoeff(Base):
     __tablename__ = "eqpt_calib_coeff"
 
-    calib_coeff_msrt_id = Column(NUMERIC(6, 0, False), primary_key=True)
-    eqpt_type_calib_coeff_id = Column(NUMERIC(6, 0, False), nullable=False)
-    eqpt_calib_id = Column(
-        ForeignKey("equipment_calibration.eqpt_calib_id"), nullable=False
-    )
+    calib_coeff_msrt_id = Column(Integer, primary_key=True)
+    eqpt_type_calib_coeff_id = Column(Integer, nullable=False)
+    eqpt_calib_id = Column(ForeignKey('equipment_calibration.eqpt_calib_id'),
+                           nullable=False)
     calib_coeff_val = Column(NUMERIC(10, 2, True))
 
     eqpt_calib = relationship("EquipmentCalibration")
