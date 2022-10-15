@@ -108,7 +108,7 @@ You can manipulate `opencdms.models.mch.english` models using `mch` provider.
 Here are some examples:
 
 
-First set the required environment variables to point to a running instance of mch english database. Below are the default values used in the configuration: 
+First set the required environment variables to point to a running instance of mch english database. Below are the default values used in the configuration:
 
 ```
 MCH_DB_HOST=127.0.0.1
@@ -179,7 +179,7 @@ deleted = mch_provider.delete(
 ```
 
 Similarly, we can use all other providers except `opencdms` provider.
-Here is an example of opencdms provider 
+Here is an example of opencdms provider
 
 The default connection parameters are:
 
@@ -193,7 +193,7 @@ CLIDE_DB_ENGINE = "postgresql"
 
 ```
 
-If you are using opencdms-test-data, all you need to set is the port number. 
+If you are using opencdms-test-data, all you need to set is the port number.
 On linux you can do that by:
 
 ```
@@ -290,7 +290,7 @@ station = provider.create("Station", station_data)
 
 stations = provider.list("Station")
 station = provider.get("Station",{"station_id": station_data["station_id"]})
- 
+
 station = provider.update("Station",{ "station_id": station_data["station_id"] },{"name": "New name"})
 
 station = provider.delete("Station",{"station_id": station_data["station_id"]})
@@ -512,8 +512,13 @@ $ export $PYGEOAPI_CONFIG='pygeoapi-config.yml'
 $ export $PYGEOAPI_OPENAPI='pygeoapi-openapi.yml'
 $ pygeoapi openapi generate $PYGEOAPI_CONFIG >| $PYGEOAPI_OPENAPI
 ```
+When we generate OpenAPI config file, pygeoapi provider cannot reference the proper schema definition for climsoft provider.
+To fix this, we can use `opendms` cli tool like below
 
-to run the pygeoapi server
+```bash
+opencdms relocate-schema pygeoapi-openapi.yml climsoft # where pygeoapi-openapi.yml is location of OpenAPI config file
+```
+Run this and then to run the pygeoapi server
 
 ```bash
 $ pygeoapi serve
