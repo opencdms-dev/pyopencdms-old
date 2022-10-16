@@ -111,7 +111,7 @@ class ClimsoftProvider(BaseProvider):
             bbox = []
 
         for k, v in properties:
-            query = query.filter_by(k=v)
+            query = query.filter(getattr(models.Observationfinal, k) == v)
 
         if type(bbox) == list and len(bbox) == 4:
             min_lng, min_lat, max_lng, max_lat = bbox
@@ -130,11 +130,13 @@ class ClimsoftProvider(BaseProvider):
         return query
 
     def _apply_sorting(self, query: Query, sortby: List[Dict]):
+        LOGGER.error(sortby)
         for item in sortby:
+            LOGGER.error(item)
             query.order_by(
-                asc(item["property"])
+                asc(getattr(models.Observationfinal, item["property"]))
                 if item["order"] == "+"
-                else desc(item["property"])
+                else desc(getattr(models.Observationfinal, item["property"]))
             )
         return query
 
@@ -187,7 +189,7 @@ class ClimsoftProvider(BaseProvider):
             sortby = []
         if select_properties is None:
             select_properties = []
-
+        LOGGER.error(sortby)
         if resulttype == "hits":
             with DatabaseConnection(
                 conn_dic=self.conn_dic,
@@ -214,9 +216,7 @@ class ClimsoftProvider(BaseProvider):
                     query=query, properties=properties, bbox=bbox
                 )
 
-                # query = query.group_by(
-                #     models.Observationfinal.recordedFrom
-                # )
+                query = self._apply_sorting(query=query, sortby=sortby)
 
                 if not skip_geometry:
                     query = query.options(
