@@ -22,6 +22,9 @@ from opencdms.dtos.climsoft.observationfinal import (
 from opencdms.utils.misc import remove_nulls_from_dict
 from pygeoapi.api import LOGGER
 from pygeoapi.provider.base import SchemaType
+from collections import OrderedDict
+
+obs_reverse_field_mapping = {v: k for k, v in obs_final_field_mapping.items()}
 
 
 class DatabaseConnection:
@@ -111,7 +114,13 @@ class ClimsoftProvider(BaseProvider):
             bbox = []
 
         for k, v in properties:
-            query = query.filter(getattr(models.Observationfinal, k) == v)
+            query = query.filter(
+                getattr(
+                    models.Observationfinal,
+                    obs_reverse_field_mapping.get(k, k),
+                )
+                == v
+            )
 
         if type(bbox) == list and len(bbox) == 4:
             min_lng, min_lat, max_lng, max_lat = bbox
@@ -130,13 +139,14 @@ class ClimsoftProvider(BaseProvider):
         return query
 
     def _apply_sorting(self, query: Query, sortby: List[Dict]):
-        LOGGER.error(sortby)
         for item in sortby:
-            LOGGER.error(item)
-            query.order_by(
-                asc(getattr(models.Observationfinal, item["property"]))
+            sort_attr = obs_reverse_field_mapping.get(
+                item["property"], item["property"]
+            )
+            query = query.order_by(
+                asc(getattr(models.Observationfinal, sort_attr))
                 if item["order"] == "+"
-                else desc(getattr(models.Observationfinal, item["property"]))
+                else desc(getattr(models.Observationfinal, sort_attr))
             )
         return query
 
@@ -150,7 +160,9 @@ class ClimsoftProvider(BaseProvider):
             with DatabaseConnection(
                 self.conn_dic, properties=self.properties
             ) as db:
-                self.fields = db.fields
+                self.fields = OrderedDict()
+                for k, v in db.fields.items():
+                    self.fields[obs_final_field_mapping.get(k, k)] = v
         return self.fields
 
     def get_schema(self, schema_type: SchemaType = SchemaType.item):
@@ -189,7 +201,7 @@ class ClimsoftProvider(BaseProvider):
             sortby = []
         if select_properties is None:
             select_properties = []
-        LOGGER.error(sortby)
+
         if resulttype == "hits":
             with DatabaseConnection(
                 conn_dic=self.conn_dic,
@@ -284,9 +296,11 @@ class ClimsoftProvider(BaseProvider):
             obs_final = models.Observationfinal(**obs_final_data.dict())
             db.session.add(obs_final)
             db.session.commit()
-        return f"{obs_final_data.recordedFrom}" \
-               f"*{obs_final_data.describedBy}*" \
-               f"{obs_final_data.obsDatetime}"
+        return (
+            f"{obs_final_data.recordedFrom}"
+            f"*{obs_final_data.describedBy}*"
+            f"{obs_final_data.obsDatetime}"
+        )
 
     def update(self, identifier, data):
         """Updates an existing feature id with new_feature
