@@ -13,5 +13,5 @@ station_data = {
     "timezone": "GMT",
     "country": "England",
     "loc_geog_area_id": "SHEL",
-    "rec_st_ind": 1234
+    "rec_st_ind": 1234,
 }

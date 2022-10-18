@@ -59,15 +59,15 @@ DEFAULT_QC_VERSION = 1
 element_lookup = {
     "wind_speed": {"hourly": "uk-hourly-weather-obs"},
     "wind_direction": {"hourly": "uk-hourly-weather-obs"},
-    'mean_wind_speed': {'hourly': 'uk-mean-wind-obs'},
-    'mean_wind_dir': {'hourly': 'uk-mean-wind-obs'},
-    'prcp_amt': {'hourly': 'uk-hourly-rain-obs', 'daily': 'uk-daily-rain-obs'},
-    'max_air_temp': {'daily': 'uk-daily-temperature-obs'},
-    'min_air_temp': {'daily': 'uk-daily-temperature-obs'},
-    'glbl_irad_amt': {'daily': 'uk-radiation-obs'},
-    'difu_irad_amt': {'daily': 'uk-radiation-obs'},
-    'q5cm_soil_temp': {'daily': 'uk-soil-temperature-obs'},
-    'q10cm_soil_temp': {'daily': 'uk-soil-temperature-obs'},
+    "mean_wind_speed": {"hourly": "uk-mean-wind-obs"},
+    "mean_wind_dir": {"hourly": "uk-mean-wind-obs"},
+    "prcp_amt": {"hourly": "uk-hourly-rain-obs", "daily": "uk-daily-rain-obs"},
+    "max_air_temp": {"daily": "uk-daily-temperature-obs"},
+    "min_air_temp": {"daily": "uk-daily-temperature-obs"},
+    "glbl_irad_amt": {"daily": "uk-radiation-obs"},
+    "difu_irad_amt": {"daily": "uk-radiation-obs"},
+    "q5cm_soil_temp": {"daily": "uk-soil-temperature-obs"},
+    "q10cm_soil_temp": {"daily": "uk-soil-temperature-obs"},
 }
 station_county_lookup = {
     838: "berkshire",
@@ -77,14 +77,14 @@ station_filename_lookup = {
 }
 
 date_time_column_lookup = {
-    'uk-daily-rain-obs': 'ob_date',
-    'uk-daily-temperature-obs': 'ob_end_time',
-    'uk-daily-weather-obs': 'ob_end_time',
-    'uk-hourly-rain-obs': 'ob_end_time',
-    'uk-hourly-weather-obs': 'ob_time',
-    'uk-mean-wind-obs': 'ob_end_time',
-    'uk-radiation-obs': 'ob_end_time',
-    'uk-soil-temperature-obs': 'ob_time'
+    "uk-daily-rain-obs": "ob_date",
+    "uk-daily-temperature-obs": "ob_end_time",
+    "uk-daily-weather-obs": "ob_end_time",
+    "uk-hourly-rain-obs": "ob_end_time",
+    "uk-hourly-weather-obs": "ob_time",
+    "uk-mean-wind-obs": "ob_end_time",
+    "uk-radiation-obs": "ob_end_time",
+    "uk-soil-temperature-obs": "ob_time",
 }
 
 valid_dataset_versions = ["201901", "201908"]
@@ -112,7 +112,8 @@ class MidasPgOpen(CDMSProvider):
         """
         if "year" not in kwargs.keys():
             raise ValueError(
-               "NOTE: Currently you must supply a year, e.g. year=1991")
+                "NOTE: Currently you must supply a year, e.g. year=1991"
+            )
 
         year = kwargs["year"]
 
@@ -122,14 +123,18 @@ class MidasPgOpen(CDMSProvider):
 
         qc_version = DEFAULT_QC_VERSION if qc_version is None else qc_version
         dataset_version = kwargs.get(
-            "dataset_version", DEFAULT_DATASET_VERSION)
+            "dataset_version", DEFAULT_DATASET_VERSION
+        )
 
         if src_id not in station_county_lookup:
             raise ValueError("Station ID not recognised")
 
         if period not in element_lookup[element]:
-            raise ValueError('"{} period not available for {} element'.format(
-                period, element))
+            raise ValueError(
+                '"{} period not available for {} element'.format(
+                    period, element
+                )
+            )
 
         if qc_version not in valid_qc_versions:
             raise ValueError(
@@ -172,17 +177,20 @@ class MidasPgOpen(CDMSProvider):
 
         filepath = os.path.join(self.connection_string, directory, filename)
 
-        return read_badc(filepath, usecols=[
-            "src_id",
-            date_time_column_lookup[element_lookup[element][period]],
-            *elements
-        ])
+        return read_badc(
+            filepath,
+            usecols=[
+                "src_id",
+                date_time_column_lookup[element_lookup[element][period]],
+                *elements,
+            ],
+        )
 
 
 class MidasPgProvider(CDMSProvider):
     def __init__(
         self,
         models: ModuleType = midas_models,
-        schemas: ModuleType = midas_schemas
+        schemas: ModuleType = midas_schemas,
     ):
         super().__init__(models, schemas)

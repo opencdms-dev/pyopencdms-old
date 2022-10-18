@@ -40,6 +40,6 @@ class ClideProvider(CDMSProvider):
     def __init__(
         self,
         models: ModuleType = clide_models,
-        schemas: ModuleType = clide_schemas
+        schemas: ModuleType = clide_schemas,
     ):
         super().__init__(models, schemas)

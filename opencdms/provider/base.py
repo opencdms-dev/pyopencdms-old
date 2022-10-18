@@ -62,36 +62,33 @@ class FailedSoftDeletingModel(Exception):
 class CDMSProvider:
     """Generic CDMS Provider Abstract Base Class"""
 
-    def __init__(
-        self,
-        models: ModuleType,
-        schemas: ModuleType
-    ):
+    def __init__(self, models: ModuleType, schemas: ModuleType):
         self.models = models
         self.schemas = schemas
 
-    def create(
-        self,
-        db_session: Session,
-        model_name: str,
-        data: Dict
-    ) -> Any:
+    def create(self, db_session: Session, model_name: str, data: Dict) -> Any:
 
         try:
             model = getattr(self.models, model_name)
-            input_data = getattr(getattr(
-                import_module(
-                    f"{self.schemas.__name__}.{model_name.lower()}"
+            input_data = getattr(
+                getattr(
+                    import_module(
+                        f"{self.schemas.__name__}.{model_name.lower()}"
+                    ),
+                    f"Create{model_name}",
                 ),
-                f"Create{model_name}"
-            ), "parse_obj")(data)
-        
-            orm_parser = getattr(getattr(
-                import_module(
-                    f"{self.schemas.__name__}.{model_name.lower()}"
+                "parse_obj",
+            )(data)
+
+            orm_parser = getattr(
+                getattr(
+                    import_module(
+                        f"{self.schemas.__name__}.{model_name.lower()}"
+                    ),
+                    model_name,
                 ),
-                model_name
-            ), "from_orm")
+                "from_orm",
+            )
 
             instance = model(**input_data.dict())
             db_session.add(instance)
@@ -113,30 +110,36 @@ class CDMSProvider:
         self,
         db_session: Session,
         model_name: str,
-        unique_id: Dict[str, Union[str, int]]
+        unique_id: Dict[str, Union[str, int]],
     ):
         # validate required unique id
 
         unique_id_validated_fields = getattr(
             getattr(
                 import_module(f"{self.schemas.__name__}.{model_name.lower()}"),
-                "UniqueId"
+                "UniqueId",
             ),
-            "parse_obj"
+            "parse_obj",
         )(unique_id).dict()
 
         try:
             model = getattr(self.models, model_name)
 
-            orm_parser = getattr(getattr(
-                import_module(
-                    f"{self.schemas.__name__}.{model_name.lower()}"
+            orm_parser = getattr(
+                getattr(
+                    import_module(
+                        f"{self.schemas.__name__}.{model_name.lower()}"
+                    ),
+                    model_name,
                 ),
-                model_name
-            ), "from_orm")
+                "from_orm",
+            )
 
-            instance = db_session.query(model) \
-                .filter_by(**unique_id_validated_fields).first()
+            instance = (
+                db_session.query(model)
+                .filter_by(**unique_id_validated_fields)
+                .first()
+            )
             return orm_parser(instance)
         except AttributeError as e:
             return e
@@ -156,18 +159,21 @@ class CDMSProvider:
         model_name: str,
         query: Dict[str, Dict[str, Any]] = None,
         limit: int = 25,
-        offset: int = 0
+        offset: int = 0,
     ):
 
         try:
             model = getattr(self.models, model_name)
 
-            orm_parser = getattr(getattr(
-                import_module(
-                    f"{self.schemas.__name__}.{model_name.lower()}"
+            orm_parser = getattr(
+                getattr(
+                    import_module(
+                        f"{self.schemas.__name__}.{model_name.lower()}"
+                    ),
+                    model_name,
                 ),
-                model_name
-            ), "from_orm")
+                "from_orm",
+            )
 
             q = db_session.query(model)
 
@@ -177,33 +183,38 @@ class CDMSProvider:
                     operator = v["operator"]
                     value = v.get("value")
 
-                    if operator in {"__gt__", "__lt__", "__ge__",
-                                    "__le__", "__eq__", "__ne__"}:
+                    if operator in {
+                        "__gt__",
+                        "__lt__",
+                        "__ge__",
+                        "__le__",
+                        "__eq__",
+                        "__ne__",
+                    }:
                         q = q.filter(
-                            getattr(
-                                getattr(model, column),
-                                operator
-                            )(value))  # Model.column.operator(value)
+                            getattr(getattr(model, column), operator)(value)
+                        )  # Model.column.operator(value)
                     elif operator == "contains":
                         q = q.filter(
-                            getattr(
-                                getattr(model, column),
-                                "ilike"
-                            )(f"%{value}%")  # Model.column.ilike(%value%)
+                            getattr(getattr(model, column), "ilike")(
+                                f"%{value}%"
+                            )  # Model.column.ilike(%value%)
                         )
                     elif operator == "starts_with":
                         q = q.filter(
                             getattr(
-                                getattr(model, column),  # Model.column
-                                "ilike"
-                            )(f"{value}%")  # Model.column.ilike(value%)
+                                getattr(model, column), "ilike"
+                            )(  # Model.column
+                                f"{value}%"
+                            )  # Model.column.ilike(value%)
                         )
                     elif operator == "ends_with":
                         q = q.filter(
                             getattr(
-                                getattr(model, column),  # Model.column
-                                "ilike"
-                            )(f"%{value}")  # Model.column.ilike(%value)
+                                getattr(model, column), "ilike"
+                            )(  # Model.column
+                                f"%{value}"
+                            )  # Model.column.ilike(%value)
                         )
                     else:
                         raise NotImplementedError
@@ -227,43 +238,51 @@ class CDMSProvider:
         db_session: Session,
         model_name: str,
         unique_id: Dict[str, Union[str, int]],
-        data: dict
+        data: dict,
     ):
         # validate required unique id
         unique_id_validated_fields = getattr(
             getattr(
                 import_module(f"{self.schemas.__name__}.{model_name.lower()}"),
-                "UniqueId"
+                "UniqueId",
             ),
-            "parse_obj"
+            "parse_obj",
         )(unique_id).dict()
 
         data = dict(filter(lambda kv: kv[1] is not None, data.items()))
 
         try:
             model = getattr(self.models, model_name)
-            input_data = getattr(getattr(
-                import_module(
-                    f"{self.schemas.__name__}.{model_name.lower()}"
+            input_data = getattr(
+                getattr(
+                    import_module(
+                        f"{self.schemas.__name__}.{model_name.lower()}"
+                    ),
+                    f"Update{model_name}",
                 ),
-                f"Update{model_name}"
-            ), "parse_obj")(data)
-            input_data = input_data.dict(exclude_unset=True)
-            orm_parser = getattr(getattr(
-                import_module(
-                    f"{self.schemas.__name__}.{model_name.lower()}"
-                ),
-                model_name
-            ), "from_orm")
+                "parse_obj",
+            )(data)
 
-            db_session.query(model)\
-                .filter_by(**unique_id_validated_fields)\
-                .update(input_data)
+            orm_parser = getattr(
+                getattr(
+                    import_module(
+                        f"{self.schemas.__name__}.{model_name.lower()}"
+                    ),
+                    model_name,
+                ),
+                "from_orm",
+            )
+            db_session.query(model).filter_by(
+                **unique_id_validated_fields
+            ).update(input_data.dict())
+
             db_session.commit()
 
-            updated_instance = db_session.query(model)\
-                .filter_by(**unique_id_validated_fields)\
+            updated_instance = (
+                db_session.query(model)
+                .filter_by(**unique_id_validated_fields)
                 .first()
+            )
 
             return orm_parser(updated_instance)
         except AttributeError as e:
@@ -283,21 +302,22 @@ class CDMSProvider:
         self,
         db_session: Session,
         model_name: str,
-        unique_id: Dict[str, Union[str, int]]
+        unique_id: Dict[str, Union[str, int]],
     ):
         # validate required unique id
         unique_id_validated_fields = getattr(
             getattr(
                 import_module(f"{self.schemas.__name__}.{model_name.lower()}"),
-                "UniqueId"
+                "UniqueId",
             ),
-            "parse_obj"
+            "parse_obj",
         )(unique_id).dict()
 
         try:
             model = getattr(self.models, model_name)
-            db_session.query(model)\
-                .filter_by(**unique_id_validated_fields).delete()
+            db_session.query(model).filter_by(
+                **unique_id_validated_fields
+            ).delete()
             db_session.commit()
             return unique_id
         except Exception as e:

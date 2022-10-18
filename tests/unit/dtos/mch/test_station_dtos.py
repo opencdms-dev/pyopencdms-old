@@ -14,30 +14,30 @@ def test_can_convert_common_station_to_mch_station():
 
 def test_json_to_pydantic_should_match():
     input_dict = {
-        'station_id': 3450,
-        'station_no': '1SHFY45485HH',
-        'name': 'Test station',
-        'secondary_name': 'Alt test station',
-        'latitude': 67.111,
-        'longitude': 128.454,
-        'elevation': 30,
-        'region': 'UK',
-        'start_datetime': '2019-01-01',
-        'end_datetime': '2056-12-31',
-        'status_id': 123,
-        'timezone': 0,
-        'country': 'England',
-        'loc_geog_area_id': 'SHEL',
-        'rec_st_ind': 1234
+        "station_id": 3450,
+        "station_no": "1SHFY45485HH",
+        "name": "Test station",
+        "secondary_name": "Alt test station",
+        "latitude": 67.111,
+        "longitude": 128.454,
+        "elevation": 30,
+        "region": "UK",
+        "start_datetime": "2019-01-01",
+        "end_datetime": "2056-12-31",
+        "status_id": 123,
+        "timezone": 0,
+        "country": "England",
+        "loc_geog_area_id": "SHEL",
+        "rec_st_ind": 1234,
     }
 
     output_schema = mch_station.Station(
-        Station='3450',
-        StationName='Test station',
-        StationName2='Alt test station',
-        TimeZone='0',
-        Longitud=Decimal('128.454'),
-        Latitud=Decimal('67.111')
+        Station="3450",
+        StationName="Test station",
+        StationName2="Alt test station",
+        TimeZone="0",
+        Longitud=Decimal("128.454"),
+        Latitud=Decimal("67.111"),
     )
 
     output_json = json.dumps(output_schema.dict(), default=str)

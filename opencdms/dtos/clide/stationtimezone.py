@@ -1,6 +1,7 @@
 from pydantic import BaseModel
 from typing import Optional
 
+
 class StationTimezone(BaseModel):
     id: int
     tm_zone: str
@@ -12,7 +13,7 @@ class StationTimezone(BaseModel):
 
 
 class CreateStationTimezone(BaseModel):
-    id:  Optional[int] = None
+    id: Optional[int] = None
     tm_zone: str
     utc_diff: int
     description: str

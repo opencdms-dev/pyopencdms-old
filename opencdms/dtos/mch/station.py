@@ -8,7 +8,7 @@ field_mapping = {
     "StationName2": "secondary_name",
     "TimeZone": "timezone",
     "Longitud": "longitude",
-    "Latitud": "latitude"
+    "Latitud": "latitude",
 }
 
 

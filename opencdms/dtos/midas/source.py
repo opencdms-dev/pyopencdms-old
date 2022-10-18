@@ -11,7 +11,7 @@ field_mapping = {
     "high_prcn_lat": "latitude",
     "high_prcn_lon": "longitude",
     "src_bgn_date": "start_datetime",
-    "src_end_date": "end_datetime"
+    "src_end_date": "end_datetime",
 }
 
 

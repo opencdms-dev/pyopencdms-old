@@ -3,8 +3,12 @@ from opencdms.provider.clide import ClideProvider
 from opencdms.provider.climsoft import Climsoft4Provider
 from opencdms.provider.mch import MCHProvider
 from opencdms.provider.midas_pg import MidasPgProvider
-from opencdms.utils.db import midas_pg_session,\
-    mch_session, clide_session, climsoft_session
+from opencdms.utils.db import (
+    midas_pg_session,
+    mch_session,
+    clide_session,
+    climsoft_session,
+)
 
 
 class ProviderConfig:
@@ -14,7 +18,7 @@ class ProviderConfig:
         enable_climsoft: bool = False,
         enable_mch: bool = False,
         enable_midas_pg: bool = False,
-        enable_validation: bool = True
+        enable_validation: bool = True,
     ):
         self.enable_clide = enable_clide
         self.enable_climsoft = enable_climsoft
@@ -24,29 +28,26 @@ class ProviderConfig:
 
 
 class OpenCDMSProvider:
-    def __init__(
-        self,
-        provider_config: ProviderConfig
-    ):
-        self.clide_provider = ClideProvider() \
-            if provider_config.enable_clide else None
-        self.climsoft_provider = Climsoft4Provider() \
-            if provider_config.enable_climsoft else None
-        self.mch_provider = MCHProvider() \
-            if provider_config.enable_mch else None
-        self.midas_pg_provider = MidasPgProvider() \
-            if provider_config.enable_midas_pg else None
+    def __init__(self, provider_config: ProviderConfig):
+        self.clide_provider = (
+            ClideProvider() if provider_config.enable_clide else None
+        )
+        self.climsoft_provider = (
+            Climsoft4Provider() if provider_config.enable_climsoft else None
+        )
+        self.mch_provider = (
+            MCHProvider() if provider_config.enable_mch else None
+        )
+        self.midas_pg_provider = (
+            MidasPgProvider() if provider_config.enable_midas_pg else None
+        )
 
-    def create(
-        self,
-        model_name: str,
-        data: Dict
-    ):
+    def create(self, model_name: str, data: Dict):
         response = {
             "clide": None,
             "climsoft": None,
             "mch": None,
-            "midas_pg": None
+            "midas_pg": None,
         }
         if self.clide_provider is not None:
             with clide_session() as db_session:
@@ -56,23 +57,17 @@ class OpenCDMSProvider:
         if self.climsoft_provider is not None:
             with climsoft_session() as db_session:
                 response["climsoft"] = self.climsoft_provider.create(
-                    db_session,
-                    model_name,
-                    data
+                    db_session, model_name, data
                 )
         if self.mch_provider is not None:
             with mch_session() as db_session:
                 response["mch"] = self.mch_provider.create(
-                    db_session,
-                    model_name,
-                    data
+                    db_session, model_name, data
                 )
         if self.midas_pg_provider is not None:
             with midas_pg_session() as db_session:
                 response["midas_pg"] = self.midas_pg_provider.create(
-                    db_session,
-                    model_name,
-                    data
+                    db_session, model_name, data
                 )
 
         return response
@@ -82,36 +77,28 @@ class OpenCDMSProvider:
             "clide": None,
             "climsoft": None,
             "mch": None,
-            "midas_pg": None
+            "midas_pg": None,
         }
 
         if self.clide_provider is not None:
             with clide_session() as db_session:
                 response["clide"] = self.clide_provider.get(
-                    db_session,
-                    model_name,
-                    unique_id
+                    db_session, model_name, unique_id
                 )
         if self.climsoft_provider is not None:
             with climsoft_session() as db_session:
                 response["climsoft"] = self.climsoft_provider.get(
-                    db_session,
-                    model_name,
-                    unique_id
+                    db_session, model_name, unique_id
                 )
         if self.mch_provider is not None:
             with mch_session() as db_session:
                 response["mch"] = self.mch_provider.get(
-                    db_session,
-                    model_name,
-                    unique_id
+                    db_session, model_name, unique_id
                 )
         if self.midas_pg_provider is not None:
             with midas_pg_session() as db_session:
                 response["midas_pg"] = self.midas_pg_provider.get(
-                    db_session,
-                    model_name,
-                    unique_id
+                    db_session, model_name, unique_id
                 )
 
         return response
@@ -121,50 +108,35 @@ class OpenCDMSProvider:
         model_name: str,
         query: Dict[str, Dict[str, Any]] = None,
         limit: int = 25,
-        offset: int = 0
+        offset: int = 0,
     ):
         response = {
             "clide": None,
             "climsoft": None,
             "mch": None,
-            "midas_pg": None
+            "midas_pg": None,
         }
 
         if self.clide_provider is not None:
             with clide_session() as db_session:
                 response["clide"] = self.clide_provider.list(
-                    db_session,
-                    model_name,
-                    query,
-                    limit,
-                    offset
+                    db_session, model_name, query, limit, offset
                 )
         if self.climsoft_provider is not None:
             with climsoft_session() as db_session:
                 response["climsoft"] = self.climsoft_provider.list(
-                    db_session,
-                    model_name,
-                    query,
-                    limit,
-                    offset
+                    db_session, model_name, query, limit, offset
                 )
         if self.mch_provider is not None:
             with mch_session() as db_session:
                 response["mch"] = self.mch_provider.list(
-                    db_session,
-                    model_name,
-                    query,
-                    limit,
-                    offset
+                    db_session, model_name, query, limit, offset
                 )
+
         if self.midas_pg_provider is not None:
             with midas_pg_session() as db_session:
                 response["midas_pg"] = self.midas_pg_provider.list(
-                    db_session,
-                    model_name,
-                    query,
-                    limit,
-                    offset
+                    db_session, model_name, query, limit, offset
                 )
         return response
 
@@ -172,46 +144,35 @@ class OpenCDMSProvider:
         self,
         model_name: str,
         unique_id: Dict[str, Union[str, int]],
-        data: dict
+        data: dict,
     ):
         response = {
             "clide": None,
             "climsoft": None,
             "mch": None,
-            "midas_pg": None
+            "midas_pg": None,
         }
 
         if self.clide_provider is not None:
             with clide_session() as db_session:
                 response["clide"] = self.clide_provider.update(
-                    db_session,
-                    model_name,
-                    unique_id,
-                    data
+                    db_session, model_name, unique_id, data
                 )
         if self.climsoft_provider is not None:
             with climsoft_session() as db_session:
                 response["climsoft"] = self.climsoft_provider.update(
-                    db_session,
-                    model_name,
-                    unique_id,
-                    data
+                    db_session, model_name, unique_id, data
                 )
         if self.mch_provider is not None:
             with mch_session() as db_session:
                 response["mch"] = self.mch_provider.update(
-                    db_session,
-                    model_name,
-                    unique_id,
-                    data
+                    db_session, model_name, unique_id, data
                 )
+
         if self.midas_pg_provider is not None:
             with midas_pg_session() as db_session:
                 response["midas_pg"] = self.midas_pg_provider.update(
-                    db_session,
-                    model_name,
-                    unique_id,
-                    data
+                    db_session, model_name, unique_id, data
                 )
 
         return response
@@ -221,36 +182,28 @@ class OpenCDMSProvider:
             "clide": None,
             "climsoft": None,
             "mch": None,
-            "midas_pg": None
+            "midas_pg": None,
         }
 
         if self.clide_provider is not None:
             with clide_session() as db_session:
                 response["clide"] = self.clide_provider.delete(
-                    db_session,
-                    model_name,
-                    unique_id
+                    db_session, model_name, unique_id
                 )
         if self.climsoft_provider is not None:
             with climsoft_session() as db_session:
                 response["climsoft"] = self.climsoft_provider.delete(
-                    db_session,
-                    model_name,
-                    unique_id
+                    db_session, model_name, unique_id
                 )
         if self.mch_provider is not None:
             with mch_session() as db_session:
                 response["mch"] = self.mch_provider.delete(
-                    db_session,
-                    model_name,
-                    unique_id
+                    db_session, model_name, unique_id
                 )
         if self.midas_pg_provider is not None:
             with midas_pg_session() as db_session:
                 response["midas_pg"] = self.midas_pg_provider.delete(
-                    db_session,
-                    model_name,
-                    unique_id
+                    db_session, model_name, unique_id
                 )
 
         return response

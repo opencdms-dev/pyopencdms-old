@@ -7,7 +7,7 @@ field_mapping = {
     "time_zone": "timezone",
     "ht_elev": "elevation",
     "start_date": "start_datetime",
-    "end_date": "end_datetime"
+    "end_date": "end_datetime",
 }
 
 

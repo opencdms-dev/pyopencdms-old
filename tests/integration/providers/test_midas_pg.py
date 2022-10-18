@@ -15,21 +15,21 @@ midas_provider = MidasPgProvider(models=midas_models)
 db_engine = create_engine(DB_URL)
 
 source_data = {
-    'station_id': 1605,
-    'src_name': 'BOTTOMS WOOD, ST HELENA',
-    'high_prcn_lat': -15.9422,
-    'high_prcn_lon': -5.6676,
-    'loc_geog_area_id': 'SHEL',
-    'src_bgn_date': '01-Jan-1958',
-    'rec_st_ind': 1001,
-    'src_type': 'SFC UA',
-    'grid_ref_type': 'XX',
-    'src_end_date': '31-Dec-3999',
-    'elevation': 435,
-    'wmo_region_code': 1,
-    'zone_time': 0,
-    'drainage_stream_id': '1866',
-    'src_upd_date': '04-Nov-2019 16:03:40'
+    "station_id": 1605,
+    "src_name": "BOTTOMS WOOD, ST HELENA",
+    "high_prcn_lat": -15.9422,
+    "high_prcn_lon": -5.6676,
+    "loc_geog_area_id": "SHEL",
+    "src_bgn_date": "01-Jan-1958",
+    "rec_st_ind": 1001,
+    "src_type": "SFC UA",
+    "grid_ref_type": "XX",
+    "src_end_date": "31-Dec-3999",
+    "elevation": 435,
+    "wmo_region_code": 1,
+    "zone_time": 0,
+    "drainage_stream_id": "1866",
+    "src_upd_date": "04-Nov-2019 16:03:40",
 }
 
 
@@ -50,10 +50,10 @@ def setup_module(module):
         with connection.begin():
             db_engine.execute(
                 sa_text(
-                    f'''
+                    f"""
                     TRUNCATE TABLE {midas_models.Source.__tablename__}
                     RESTART IDENTITY CASCADE
-                    '''
+                    """
                 ).execution_options(autocommit=True)
             )
 
@@ -67,8 +67,8 @@ def teardown_module(module):
         with connection.begin():
             db_engine.execute(
                 sa_text(
-                    f'''TRUNCATE TABLE {midas_models.Source.__tablename__}
-                     RESTART IDENTITY CASCADE'''
+                    f"""TRUNCATE TABLE {midas_models.Source.__tablename__}
+                     RESTART IDENTITY CASCADE"""
                 ).execution_options(autocommit=True)
             )
 
@@ -76,7 +76,7 @@ def teardown_module(module):
 @pytest.mark.order(2500)
 def test_should_create_a_source(db_session):
     source = midas_provider.create(db_session, "Source", source_data)
-    assert source.src_id == source_data['station_id']
+    assert source.src_id == source_data["station_id"]
 
 
 @pytest.mark.order(2501)
@@ -90,18 +90,17 @@ def test_should_read_all_sources(db_session):
 @pytest.mark.order(2502)
 def test_should_return_a_single_source(db_session):
     source = midas_provider.get(
-        db_session,
-        "Source",
-        {"station_id": source_data["station_id"]}
+        db_session, "Source", {"station_id": source_data["station_id"]}
     )
 
-    assert source.src_id == source_data['station_id']
+    assert source.src_id == source_data["station_id"]
 
 
 @pytest.mark.order(2503)
 def test_should_update_source(db_session):
     updated_source = midas_provider.update(
-        db_session, "Source",
+        db_session,
+        "Source",
         {"station_id": source_data["station_id"]},
         {
             "name": "Test station",
@@ -110,7 +109,7 @@ def test_should_update_source(db_session):
             "elevation": 45,
             "start_datetime": "2019-01-01",
             "end_datetime": "2056-12-31",
-        }
+        },
     )
 
     assert updated_source.elevation == 45
@@ -119,9 +118,7 @@ def test_should_update_source(db_session):
 @pytest.mark.order(2504)
 def test_should_delete_source(db_session):
     deleted = midas_provider.delete(
-        db_session,
-        "Source",
-        {"station_id": source_data["station_id"]}
+        db_session, "Source", {"station_id": source_data["station_id"]}
     )
 
     assert deleted == {"station_id": source_data["station_id"]}
