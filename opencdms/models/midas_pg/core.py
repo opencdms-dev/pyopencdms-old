@@ -48,8 +48,7 @@ class Equipment(Base):
     manufacturer_sn_txt = Column(
         VARCHAR(24),
         nullable=False,
-        comment="Manufacturer serial number or SI "
-        "database Sensor_serial_no ",
+        comment="Manufacturer serial number or SI " "database Sensor_serial_no ",
     )
     met_ref_txt = Column(
         VARCHAR(24),
@@ -99,9 +98,7 @@ class ReportingSchedule(Base):
         Integer, primary_key=True, comment="Unique identifier for each record"
     )
     id = Column(VARCHAR(8), comment="Non unique identifier for station")
-    id_type = Column(
-        VARCHAR(4), nullable=False, comment="Type of identifier above"
-    )
+    id_type = Column(VARCHAR(4), nullable=False, comment="Type of identifier above")
     met_domain_name = Column(
         VARCHAR(8),
         nullable=False,
@@ -112,12 +109,8 @@ class ReportingSchedule(Base):
         nullable=False,
         comment="Start date of the SRC_CAPABILITY record",
     )
-    rpt_schd_bgn_date = Column(
-        DateTime, nullable=False, comment="Start date of record"
-    )
-    rpt_schd_end_date = Column(
-        DateTime, nullable=False, comment="End date of record"
-    )
+    rpt_schd_bgn_date = Column(DateTime, nullable=False, comment="Start date of record")
+    rpt_schd_end_date = Column(DateTime, nullable=False, comment="End date of record")
     year_date_bgn = Column(
         CHAR(5),
         nullable=False,
@@ -159,8 +152,7 @@ class ReportingSchedule(Base):
     public_holiday_flag = Column(
         CHAR(1),
         nullable=False,
-        comment="T or F. Shows whether the report"
-        " comes in on a bank holiday",
+        comment="T or F. Shows whether the report" " comes in on a bank holiday",
     )
     rpt_schd_rmrk = Column(VARCHAR(200), comment="Remark for the record")
 
@@ -213,9 +205,7 @@ class Source(Base):
         "integer, assigned from a high-number record, "
         "and has no external significance.\n",
     )
-    src_name = Column(
-        VARCHAR(40), nullable=False, comment="\nName of source\n"
-    )
+    src_name = Column(VARCHAR(40), nullable=False, comment="\nName of source\n")
     high_prcn_lat = Column(NUMERIC(7, 5, True), nullable=False)
     high_prcn_lon = Column(NUMERIC(8, 5, True), nullable=False)
     loc_geog_area_id = Column(
@@ -229,8 +219,7 @@ class Source(Base):
     rec_st_ind = Column(NUMERIC(4, 0, False), nullable=False)
     src_bgn_date = Column(
         DateTime,
-        comment="\nsource.src_bgn_date "
-        "is the date when the station opened.\n",
+        comment="\nsource.src_bgn_date " "is the date when the station opened.\n",
     )
     src_type = Column(VARCHAR(15))
     grid_ref_type = Column(
@@ -366,18 +355,10 @@ class Deployment(Base):
         index=True,
         comment="Identifier describing the purpose of the equipment",
     )
-    depl_bgn_date = Column(
-        DateTime, nullable=False, comment="Begin date of deployment"
-    )
-    depl_end_date = Column(
-        DateTime, nullable=False, comment="End date of deployment"
-    )
-    grid_ref_type = Column(
-        VARCHAR(4), comment="Grid reference type (OS, IRL or CI)"
-    )
-    east_grid_ref = Column(
-        Integer, comment="East grid reference of deployment"
-    )
+    depl_bgn_date = Column(DateTime, nullable=False, comment="Begin date of deployment")
+    depl_end_date = Column(DateTime, nullable=False, comment="End date of deployment")
+    grid_ref_type = Column(VARCHAR(4), comment="Grid reference type (OS, IRL or CI)")
+    east_grid_ref = Column(Integer, comment="East grid reference of deployment")
     north_grid_ref = Column(
         NUMERIC(7, 0, False), comment="North grid reference of deployment"
     )
@@ -491,12 +472,8 @@ class Inspection(Base):
         index=True,
         comment="Unique identifier for the station",
     )
-    inspection_date = Column(
-        DateTime, nullable=False, comment="Date of inspection"
-    )
-    inspectors_name = Column(
-        VARCHAR(70), nullable=False, comment="Name of inspector"
-    )
+    inspection_date = Column(DateTime, nullable=False, comment="Date of inspection")
+    inspectors_name = Column(VARCHAR(70), nullable=False, comment="Name of inspector")
     review_date = Column(
         DateTime, comment="Date on which inspection should be reviewed"
     )
@@ -530,18 +507,12 @@ class ObservingSchedule(Base):
     )
 
     stn_rpt_elem_id = Column(
-        ForeignKey(
-            "station_report_element.stn_rpt_elem_id", ondelete="CASCADE"
-        ),
+        ForeignKey("station_report_element.stn_rpt_elem_id", ondelete="CASCADE"),
         nullable=False,
         comment="Unique identifier of the element for the station",
     )
-    ob_schd_bgn_date = Column(
-        DateTime, nullable=False, comment="Start date of record"
-    )
-    ob_schd_end_date = Column(
-        DateTime, nullable=False, comment="End date of record"
-    )
+    ob_schd_bgn_date = Column(DateTime, nullable=False, comment="Start date of record")
+    ob_schd_end_date = Column(DateTime, nullable=False, comment="End date of record")
     year_date_bgn = Column(
         CHAR(5),
         nullable=False,
@@ -838,9 +809,7 @@ class StationGeography(Base):
         NUMERIC(3, 0, False),
         comment="Upward direction of ground slope (0-360)",
     )
-    gradient = Column(
-        NUMERIC(3, 0, False), comment="Gradient of ground slope (0-90)"
-    )
+    gradient = Column(NUMERIC(3, 0, False), comment="Gradient of ground slope (0-90)")
     prc_man_wthn_10m = Column(
         NUMERIC(3, 0, False),
         comment="Percentage manmade ground cover within 10m radius",

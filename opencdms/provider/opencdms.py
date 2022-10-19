@@ -29,15 +29,11 @@ class ProviderConfig:
 
 class OpenCDMSProvider:
     def __init__(self, provider_config: ProviderConfig):
-        self.clide_provider = (
-            ClideProvider() if provider_config.enable_clide else None
-        )
+        self.clide_provider = ClideProvider() if provider_config.enable_clide else None
         self.climsoft_provider = (
             Climsoft4Provider() if provider_config.enable_climsoft else None
         )
-        self.mch_provider = (
-            MCHProvider() if provider_config.enable_mch else None
-        )
+        self.mch_provider = MCHProvider() if provider_config.enable_mch else None
         self.midas_pg_provider = (
             MidasPgProvider() if provider_config.enable_midas_pg else None
         )
@@ -61,9 +57,7 @@ class OpenCDMSProvider:
                 )
         if self.mch_provider is not None:
             with mch_session() as db_session:
-                response["mch"] = self.mch_provider.create(
-                    db_session, model_name, data
-                )
+                response["mch"] = self.mch_provider.create(db_session, model_name, data)
         if self.midas_pg_provider is not None:
             with midas_pg_session() as db_session:
                 response["midas_pg"] = self.midas_pg_provider.create(

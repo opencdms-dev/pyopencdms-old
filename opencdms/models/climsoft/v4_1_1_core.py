@@ -62,9 +62,7 @@ TARGET_TABLES = [
 class ClimsoftUser(Base):
     __tablename__ = "climsoftusers"
 
-    userName = Column(
-        String(50), primary_key=True, unique=True, nullable=False
-    )
+    userName = Column(String(50), primary_key=True, unique=True, nullable=False)
     userRole = Column(String(50), nullable=False)
 
 
@@ -88,17 +86,13 @@ class DataForm(Base):
     val_end_position = Column(BigInteger, server_default=text("'0'"))
     elem_code_location = Column(String(255))
     sequencer = Column(String(50))
-    entry_mode = Column(
-        TINYINT(2), nullable=False, server_default=text("'00'")
-    )
+    entry_mode = Column(TINYINT(2), nullable=False, server_default=text("'00'"))
 
 
 class Flag(Base):
     __tablename__ = "flags"
 
-    characterSymbol = Column(
-        String(255), primary_key=True, server_default=text("''")
-    )
+    characterSymbol = Column(String(255), primary_key=True, server_default=text("''"))
     numSymbol = Column(Integer)
     description = Column(String(255))
 
@@ -107,9 +101,7 @@ class Obselement(Base):
     __tablename__ = "obselement"
     __table_args__ = (Index("elementCode", "elementId"),)
 
-    elementId = Column(
-        BigInteger, primary_key=True, server_default=text("'0'")
-    )
+    elementId = Column(BigInteger, primary_key=True, server_default=text("'0'"))
     abbreviation = Column(String(255))
     elementName = Column(String(255))
     description = Column(String(255))
@@ -324,9 +316,7 @@ class Obsscheduleclas(Base):
     __tablename__ = "obsscheduleclass"
     __table_args__ = (Index("scheduleClassIdeification", "scheduleClass"),)
 
-    scheduleClass = Column(
-        String(255), primary_key=True, server_default=text("''")
-    )
+    scheduleClass = Column(String(255), primary_key=True, server_default=text("''"))
     description = Column(String(255))
     refersTo = Column(ForeignKey("station.stationId"))
 
@@ -373,9 +363,7 @@ class Physicalfeatureclas(Base):
 
 class Stationlocationhistory(Base):
     __tablename__ = "stationlocationhistory"
-    __table_args__ = (
-        Index("history", "belongsTo", "openingDatetime", unique=True),
-    )
+    __table_args__ = (Index("history", "belongsTo", "openingDatetime", unique=True),)
 
     belongsTo = Column(
         ForeignKey("station.stationId"), primary_key=True, nullable=False

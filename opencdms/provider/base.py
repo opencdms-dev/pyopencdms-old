@@ -72,9 +72,7 @@ class CDMSProvider:
             model = getattr(self.models, model_name)
             input_data = getattr(
                 getattr(
-                    import_module(
-                        f"{self.schemas.__name__}.{model_name.lower()}"
-                    ),
+                    import_module(f"{self.schemas.__name__}.{model_name.lower()}"),
                     f"Create{model_name}",
                 ),
                 "parse_obj",
@@ -82,9 +80,7 @@ class CDMSProvider:
 
             orm_parser = getattr(
                 getattr(
-                    import_module(
-                        f"{self.schemas.__name__}.{model_name.lower()}"
-                    ),
+                    import_module(f"{self.schemas.__name__}.{model_name.lower()}"),
                     model_name,
                 ),
                 "from_orm",
@@ -127,18 +123,14 @@ class CDMSProvider:
 
             orm_parser = getattr(
                 getattr(
-                    import_module(
-                        f"{self.schemas.__name__}.{model_name.lower()}"
-                    ),
+                    import_module(f"{self.schemas.__name__}.{model_name.lower()}"),
                     model_name,
                 ),
                 "from_orm",
             )
 
             instance = (
-                db_session.query(model)
-                .filter_by(**unique_id_validated_fields)
-                .first()
+                db_session.query(model).filter_by(**unique_id_validated_fields).first()
             )
             return orm_parser(instance)
         except AttributeError as e:
@@ -167,9 +159,7 @@ class CDMSProvider:
 
             orm_parser = getattr(
                 getattr(
-                    import_module(
-                        f"{self.schemas.__name__}.{model_name.lower()}"
-                    ),
+                    import_module(f"{self.schemas.__name__}.{model_name.lower()}"),
                     model_name,
                 ),
                 "from_orm",
@@ -202,26 +192,20 @@ class CDMSProvider:
                         )
                     elif operator == "starts_with":
                         q = q.filter(
-                            getattr(
-                                getattr(model, column), "ilike"
-                            )(  # Model.column
+                            getattr(getattr(model, column), "ilike")(  # Model.column
                                 f"{value}%"
                             )  # Model.column.ilike(value%)
                         )
                     elif operator == "ends_with":
                         q = q.filter(
-                            getattr(
-                                getattr(model, column), "ilike"
-                            )(  # Model.column
+                            getattr(getattr(model, column), "ilike")(  # Model.column
                                 f"%{value}"
                             )  # Model.column.ilike(%value)
                         )
                     else:
                         raise NotImplementedError
 
-            return [
-                orm_parser(li) for li in q.offset(offset).limit(limit).all()
-            ]
+            return [orm_parser(li) for li in q.offset(offset).limit(limit).all()]
         except AttributeError as e:
             return e
         except Exception as e:
@@ -255,9 +239,7 @@ class CDMSProvider:
             model = getattr(self.models, model_name)
             input_data = getattr(
                 getattr(
-                    import_module(
-                        f"{self.schemas.__name__}.{model_name.lower()}"
-                    ),
+                    import_module(f"{self.schemas.__name__}.{model_name.lower()}"),
                     f"Update{model_name}",
                 ),
                 "parse_obj",
@@ -265,23 +247,19 @@ class CDMSProvider:
 
             orm_parser = getattr(
                 getattr(
-                    import_module(
-                        f"{self.schemas.__name__}.{model_name.lower()}"
-                    ),
+                    import_module(f"{self.schemas.__name__}.{model_name.lower()}"),
                     model_name,
                 ),
                 "from_orm",
             )
-            db_session.query(model).filter_by(
-                **unique_id_validated_fields
-            ).update(input_data.dict())
+            db_session.query(model).filter_by(**unique_id_validated_fields).update(
+                input_data.dict()
+            )
 
             db_session.commit()
 
             updated_instance = (
-                db_session.query(model)
-                .filter_by(**unique_id_validated_fields)
-                .first()
+                db_session.query(model).filter_by(**unique_id_validated_fields).first()
             )
 
             return orm_parser(updated_instance)
@@ -315,9 +293,7 @@ class CDMSProvider:
 
         try:
             model = getattr(self.models, model_name)
-            db_session.query(model).filter_by(
-                **unique_id_validated_fields
-            ).delete()
+            db_session.query(model).filter_by(**unique_id_validated_fields).delete()
             db_session.commit()
             return unique_id
         except Exception as e:

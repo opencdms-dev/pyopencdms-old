@@ -111,9 +111,7 @@ class MidasPgOpen(CDMSProvider):
 
         """
         if "year" not in kwargs.keys():
-            raise ValueError(
-                "NOTE: Currently you must supply a year, e.g. year=1991"
-            )
+            raise ValueError("NOTE: Currently you must supply a year, e.g. year=1991")
 
         year = kwargs["year"]
 
@@ -122,18 +120,14 @@ class MidasPgOpen(CDMSProvider):
                 raise ValueError('"{}" element not recognised'.format(element))
 
         qc_version = DEFAULT_QC_VERSION if qc_version is None else qc_version
-        dataset_version = kwargs.get(
-            "dataset_version", DEFAULT_DATASET_VERSION
-        )
+        dataset_version = kwargs.get("dataset_version", DEFAULT_DATASET_VERSION)
 
         if src_id not in station_county_lookup:
             raise ValueError("Station ID not recognised")
 
         if period not in element_lookup[element]:
             raise ValueError(
-                '"{} period not available for {} element'.format(
-                    period, element
-                )
+                '"{} period not available for {} element'.format(period, element)
             )
 
         if qc_version not in valid_qc_versions:

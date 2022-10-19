@@ -838,16 +838,12 @@ class CodesSimple(Base):
         primary_key=True,
         autoincrement=True,
     )
-    code_type = Column(
-        String(40), nullable=False, comment="Character code type"
-    )
+    code_type = Column(String(40), nullable=False, comment="Character code type")
     code = Column(String(40), nullable=False)
     description = Column(String(400), comment="Description of code")
     change_user = Column(String(10), comment="User of last change")
     change_datetime = Column(DateTime, comment="Timestamp of last change")
-    insert_datetime = Column(
-        DateTime, nullable=False, comment="Timestamp of insert"
-    )
+    insert_datetime = Column(DateTime, nullable=False, comment="Timestamp of insert")
 
 
 class Datum(Base):
@@ -883,9 +879,7 @@ class GuiUser(Base):
         autoincrement=True,
         comment="Surrogate Key",
     )
-    username = Column(
-        String(20), nullable=False, unique=True, comment="Login user id"
-    )
+    username = Column(String(20), nullable=False, unique=True, comment="Login user id")
     css_filename = Column(String(120), comment="Name of style sheet selected")
     layout = Column(
         CHAR(4),
@@ -895,32 +889,18 @@ class GuiUser(Base):
     key = Column(String(64))
     disabled = Column(CHAR(1))
     disable_date = Column(DateTime(True))
-    station_maint = Column(
-        CHAR(1), nullable=False, server_default=text("'N'::bpchar")
-    )
-    codes_maint = Column(
-        CHAR(1), nullable=False, server_default=text("'N'::bpchar")
-    )
-    user_admin = Column(
-        CHAR(1), nullable=False, server_default=text("'N'::bpchar")
-    )
-    file_ingest = Column(
-        CHAR(1), nullable=False, server_default=text("'N'::bpchar")
-    )
-    key_entry = Column(
-        CHAR(1), nullable=False, server_default=text("'N'::bpchar")
-    )
+    station_maint = Column(CHAR(1), nullable=False, server_default=text("'N'::bpchar"))
+    codes_maint = Column(CHAR(1), nullable=False, server_default=text("'N'::bpchar"))
+    user_admin = Column(CHAR(1), nullable=False, server_default=text("'N'::bpchar"))
+    file_ingest = Column(CHAR(1), nullable=False, server_default=text("'N'::bpchar"))
+    key_entry = Column(CHAR(1), nullable=False, server_default=text("'N'::bpchar"))
     qa = Column(CHAR(1), nullable=False, server_default=text("'N'::bpchar"))
-    products = Column(
-        CHAR(1), nullable=False, server_default=text("'N'::bpchar")
-    )
+    products = Column(CHAR(1), nullable=False, server_default=text("'N'::bpchar"))
 
 
 class IngestMonitor(Base):
     __tablename__ = "ingest_monitor"
-    __table_args__ = {
-        "comment": "Stores file ingestion stats for data ingests"
-    }
+    __table_args__ = {"comment": "Stores file ingestion stats for data ingests"}
 
     id = Column(
         Integer,
@@ -928,9 +908,7 @@ class IngestMonitor(Base):
         autoincrement=True,
         comment="Surrogate Key",
     )
-    username = Column(
-        String(20), nullable=False, comment="User that started ingest"
-    )
+    username = Column(String(20), nullable=False, comment="User that started ingest")
     ip_addr = Column(
         String(20), comment="Client IP address where ingest was invoked from"
     )
@@ -943,9 +921,7 @@ class IngestMonitor(Base):
     )
     ingest_end = Column(DateTime, comment="Ingest end time")
     file_recs = Column(Integer, comment="Count of all input file records")
-    ingested_recs = Column(
-        Integer, comment="Count of all ingested input file records"
-    )
+    ingested_recs = Column(Integer, comment="Count of all ingested input file records")
     ok_count = Column(Integer)
     err_count = Column(Integer)
     cancel_flag = Column(CHAR(1))
@@ -969,9 +945,7 @@ class KeySetting(Base):
     profile = Column(String(20), nullable=False, comment="profile name")
     obs_type = Column(String(20), comment="obsservation type: daily, subdaily")
     element = Column(String(120), comment="observation element")
-    default_unit = Column(
-        String(20), comment="Default unit in key entry forms"
-    )
+    default_unit = Column(String(20), comment="Default unit in key entry forms")
     disable_flag = Column(CHAR(1), comment="Y=disable in entry forms")
     change_user = Column(String(20))
     change_datetime = Column(DateTime)
@@ -979,9 +953,7 @@ class KeySetting(Base):
 
 class LandUse(Base):
     __tablename__ = "land_use"
-    __table_args__ = {
-        "comment": "Stores allowed values for stations.soil_type_id"
-    }
+    __table_args__ = {"comment": "Stores allowed values for stations.soil_type_id"}
 
     id = Column(
         Integer,
@@ -1009,9 +981,7 @@ class ObsAudit(Base):
         autoincrement=True,
         comment="Surrogate Key",
     )
-    table_name = Column(
-        String(100), comment="Observation table where data is changed"
-    )
+    table_name = Column(String(100), comment="Observation table where data is changed")
     row_id = Column(Integer, comment="Row id of changed data")
     column_name = Column(String(100), comment="Column that has been changed")
     column_value = Column(String(4000))
@@ -1023,9 +993,7 @@ class ObsAverage(Base):
     __tablename__ = "obs_averages"
     __table_args__ = (
         UniqueConstraint("name", "station_no", "month"),
-        {
-            "comment": "Normals and other monthly long term averages of observations."
-        },
+        {"comment": "Normals and other monthly long term averages of observations."},
     )
 
     id = Column(
@@ -1033,16 +1001,12 @@ class ObsAverage(Base):
         primary_key=True,
         autoincrement=True,
     )
-    insert_datetime = Column(
-        DateTime, nullable=False, server_default=text("now()")
-    )
+    insert_datetime = Column(DateTime, nullable=False, server_default=text("now()"))
     change_datetime = Column(DateTime)
     change_user = Column(String(20))
     station_no = Column(String(20), nullable=False)
     month = Column(SmallInteger, nullable=False, comment="Month of averages")
-    name = Column(
-        String(60), nullable=False, comment="Name of this set of averages"
-    )
+    name = Column(String(60), nullable=False, comment="Name of this set of averages")
     active_normal = Column(CHAR(1))
     from_date = Column(
         Date,
@@ -1113,9 +1077,7 @@ class ObsAverage(Base):
         SmallInteger,
         comment="Number of years missing from the record of normal daily sunshine hours",
     )
-    air_temp_stddev = Column(
-        Numeric(7, 1), comment="Std Deviation of air temp"
-    )
+    air_temp_stddev = Column(Numeric(7, 1), comment="Std Deviation of air temp")
 
 
 class ObsClicomElementMap(Base):
@@ -1132,9 +1094,7 @@ class ObsClicomElementMap(Base):
     cldb_column = Column(String(80), nullable=False)
     associated_col = Column(String(80))
     associated_value = Column(String(100))
-    column_type = Column(
-        String(4), server_default=text("'num'::character varying")
-    )
+    column_type = Column(String(4), server_default=text("'num'::character varying"))
     nominal_value = Column(String(20))
 
 
@@ -1152,9 +1112,7 @@ class ObsMonthly(Base):
         autoincrement=True,
         comment="Surrogate Key",
     )
-    station_no = Column(
-        String(15), nullable=False, comment="Local Station identifier"
-    )
+    station_no = Column(String(15), nullable=False, comment="Local Station identifier")
     lsd = Column(Date, nullable=False, comment="Local System Year and Month")
     data_source = Column(
         CHAR(2),
@@ -1165,9 +1123,7 @@ class ObsMonthly(Base):
     change_user = Column(String(20), comment="User who added/changed row")
     qa_flag = Column(CHAR(1), comment="QA flag for row Y/N")
     comments = Column(String(1000), comment="User comments")
-    dly_max_rain = Column(
-        Numeric(8, 1), comment="Highest Daily precipitation mm"
-    )
+    dly_max_rain = Column(Numeric(8, 1), comment="Highest Daily precipitation mm")
     dly_max_rain_inches = Column(
         Numeric(8, 1), comment="Highest Daily precipitation (inches to .001)"
     )
@@ -1206,12 +1162,8 @@ class ObsMonthly(Base):
         String(120),
         comment="Date(s) of lowest daily ground min as dd,dd,dd,...",
     )
-    mn_air_temp = Column(
-        Numeric(7, 1), comment="Mean air temperature (C to 0.1)"
-    )
-    mn_air_temp_f = Column(
-        Numeric(7, 1), comment="Mean air temperature (F to 0.1)"
-    )
+    mn_air_temp = Column(Numeric(7, 1), comment="Mean air temperature (C to 0.1)")
+    mn_air_temp_f = Column(Numeric(7, 1), comment="Mean air temperature (F to 0.1)")
     mn_air_temp_qa = Column(CHAR(2))
     mn_max_air_temp = Column(
         Numeric(7, 1), comment="Mean of maximum daily air temp (C to 0.1)"
@@ -1241,9 +1193,7 @@ class ObsMonthly(Base):
         Numeric(7, 1), comment="Mean of minimum daily ground temp (F to 0.1)"
     )
     mn_min_ground_temp_qa = Column(CHAR(2))
-    mn_asread_pres = Column(
-        Numeric(7, 1), comment="Mean as read pressure (hPa to 0.1)"
-    )
+    mn_asread_pres = Column(Numeric(7, 1), comment="Mean as read pressure (hPa to 0.1)")
     mn_asread_pres_inches = Column(
         Numeric(8, 3), comment="Mean as read pressure (inches to 0.001)"
     )
@@ -1251,15 +1201,11 @@ class ObsMonthly(Base):
         Numeric(7, 2), comment="Mean as read pressure (mmHg to 0.01)"
     )
     mn_asread_pres_qa = Column(CHAR(2))
-    mn_msl_pres = Column(
-        Numeric(7, 1), comment="Mean MSL pressure (hPa to 0.1)"
-    )
+    mn_msl_pres = Column(Numeric(7, 1), comment="Mean MSL pressure (hPa to 0.1)")
     mn_msl_pres_inches = Column(
         Numeric(8, 3), comment="Mean MSL pressure (inches to 0.001)"
     )
-    mn_msl_pres_mmhg = Column(
-        Numeric(7, 2), comment="Mean MSL pressure (mmHg to 0.01)"
-    )
+    mn_msl_pres_mmhg = Column(Numeric(7, 2), comment="Mean MSL pressure (mmHg to 0.01)")
     mn_msl_pres_qa = Column(CHAR(2))
     mn_station_pres = Column(
         Numeric(7, 1), comment="Mean station level pressure (hPa to 0.1)"
@@ -1271,9 +1217,7 @@ class ObsMonthly(Base):
         Numeric(7, 2), comment="Mean station level pressure (mmHg to 0.01)"
     )
     mn_station_pres_qa = Column(CHAR(2))
-    mn_vapour_pres = Column(
-        Numeric(7, 1), comment="Mean Vapour Pressure (hPa to 0.1)"
-    )
+    mn_vapour_pres = Column(Numeric(7, 1), comment="Mean Vapour Pressure (hPa to 0.1)")
     mn_vapour_pres_inches = Column(
         Numeric(8, 3), comment="Mean Vapour Pressure (Inches to 0.001)"
     )
@@ -1288,9 +1232,7 @@ class ObsMonthly(Base):
         Numeric(6, 3), comment="Mean of daily evaporation (Inches to 0.001)"
     )
     mn_evaporation_qa = Column(CHAR(2))
-    mn_rel_humidity = Column(
-        Numeric(4, 1), comment="Mean Relative Humidity (% to 0.1)"
-    )
+    mn_rel_humidity = Column(Numeric(4, 1), comment="Mean Relative Humidity (% to 0.1)")
     mn_rel_humidity_qa = Column(CHAR(2))
     mn_sun_hours = Column(
         Numeric(4, 2), comment="Mean of daily bright sunshine (hours to 0.01)"
@@ -1310,9 +1252,7 @@ class ObsMonthly(Base):
         Numeric(9, 3), comment="Total Monthly evaporation (Inches to 0.001)"
     )
     tot_evaporation_qa = Column(CHAR(2))
-    tot_rain = Column(
-        Numeric(8, 1), comment="Total monthly precipitation  (mm to 0.1)"
-    )
+    tot_rain = Column(Numeric(8, 1), comment="Total monthly precipitation  (mm to 0.1)")
     tot_rain_inches = Column(
         Numeric(9, 3), comment="Total monthly precipitation  (Inches to 0.001)"
     )
@@ -1343,23 +1283,13 @@ class ObsSubdailySoilTemp(Base):
         nullable=False,
         comment="Surrogate key of parent sub daily row",
     )
-    data_source = Column(
-        CHAR(2), nullable=False, server_default=text("'1'::bpchar")
-    )
-    insert_datetime = Column(
-        DateTime, nullable=False, server_default=text("now()")
-    )
+    data_source = Column(CHAR(2), nullable=False, server_default=text("'1'::bpchar"))
+    insert_datetime = Column(DateTime, nullable=False, server_default=text("now()"))
     change_datetime = Column(DateTime)
     change_user = Column(String(20))
-    qa_flag = Column(
-        CHAR(1), nullable=False, server_default=text("'N'::bpchar")
-    )
-    aws_flag = Column(
-        CHAR(1), nullable=False, server_default=text("'N'::bpchar")
-    )
-    soil_depth = Column(
-        Numeric(5, 0), nullable=False, comment="Soil depth in cm"
-    )
+    qa_flag = Column(CHAR(1), nullable=False, server_default=text("'N'::bpchar"))
+    aws_flag = Column(CHAR(1), nullable=False, server_default=text("'N'::bpchar"))
+    soil_depth = Column(Numeric(5, 0), nullable=False, comment="Soil depth in cm")
     soil_temp = Column(Numeric(7, 1), comment="Soil Temperature (C to 0.1)")
     soil_temp_f = Column(Numeric(7, 1), comment="Soil Temperature (F to 0.1)")
     soil_temp_qa = Column(CHAR(2), comment="Quality Code for soil_temp")
@@ -1383,9 +1313,7 @@ class ObscodesCloudAmtConv(Base):
     oktas = Column(CHAR(1), comment="Oktas (1-9)")
     change_user = Column(String(10), comment="User of last change")
     change_datetime = Column(DateTime, comment="Timestamp of last change")
-    insert_datetime = Column(
-        DateTime, nullable=False, comment="Timestamp of insert"
-    )
+    insert_datetime = Column(DateTime, nullable=False, comment="Timestamp of insert")
 
 
 class ObscodesCloudConv1677(Base):
@@ -1435,9 +1363,7 @@ class ObscodesCloudTypeConv(Base):
     )
     code_0500 = Column(CHAR(1))
     code_figure = Column(CHAR(1), comment="WMO Code figure")
-    wmo_table = Column(
-        CHAR(4), comment="WMO Table no (0513 Low, 0515 Mid, 0509 High)"
-    )
+    wmo_table = Column(CHAR(4), comment="WMO Table no (0513 Low, 0515 Mid, 0509 High)")
     layer = Column(String(4), comment="Cloud Layer: Low, Mid, High")
     types = Column(String(10), comment="Acceptable Cloud types")
     change_user = Column(String(10), comment="User of last change")
@@ -1461,9 +1387,7 @@ class ObscodesVisibility(Base):
     )
     distance_km = Column(Numeric(5, 2), comment="Distance in Km")
     distance_yards = Column(Numeric(7, 0), comment="Distance in Yards")
-    valid_aero_codes = Column(
-        String(100), comment="Valid Aero codes, comma sep"
-    )
+    valid_aero_codes = Column(String(100), comment="Valid Aero codes, comma sep")
     code = Column(CHAR(1))
     change_user = Column(String(10), comment="User of last change")
     change_datetime = Column(DateTime, comment="Timestamp of last change")
@@ -1481,9 +1405,7 @@ class ObscodesWindDir(Base):
         primary_key=True,
         autoincrement=True,
     )
-    compass = Column(
-        String(6), nullable=False, comment="Compass points: NNE, SE, CLM,"
-    )
+    compass = Column(String(6), nullable=False, comment="Compass points: NNE, SE, CLM,")
     degrees = Column(Numeric(3, 0), comment="Degrees (0-360)")
     low_degrees = Column(Numeric(5, 2), comment="Lower bound in degrees (>)")
     high_degrees = Column(Numeric(5, 2), comment="Upper bound in degrees (<=)")
@@ -1494,9 +1416,7 @@ class ObscodesWindDir(Base):
 
 class ObscodesWindSpeed(Base):
     __tablename__ = "obscodes_wind_speed"
-    __table_args__ = {
-        "comment": "Wind speed conversions: Beaufort, m/s, knots"
-    }
+    __table_args__ = {"comment": "Wind speed conversions: Beaufort, m/s, knots"}
 
     id = Column(
         Integer,
@@ -1545,9 +1465,7 @@ class ObsconvFactor(Base):
         nullable=False,
         comment="From unit (eg. Fahrenheit, Inches)",
     )
-    to_type = Column(
-        String(20), nullable=False, comment="To unit (eg. Celsius, mm)"
-    )
+    to_type = Column(String(20), nullable=False, comment="To unit (eg. Celsius, mm)")
     pre_sum = Column(
         Numeric(5, 2),
         comment="Value to add prior to multiplying conversion factor",
@@ -1563,9 +1481,7 @@ class ObsconvFactor(Base):
     )
     change_user = Column(String(10), comment="User of last change")
     change_datetime = Column(DateTime, comment="Timestamp of last change")
-    insert_datetime = Column(
-        DateTime, nullable=False, comment="Timestamp of insert"
-    )
+    insert_datetime = Column(DateTime, nullable=False, comment="Timestamp of insert")
 
 
 class Pivot(Base):
@@ -1577,9 +1493,7 @@ class Pivot(Base):
 
 class SoilType(Base):
     __tablename__ = "soil_types"
-    __table_args__ = {
-        "comment": "Stores allowed values for stations.soil_type_id"
-    }
+    __table_args__ = {"comment": "Stores allowed values for stations.soil_type_id"}
 
     id = Column(
         Integer,
@@ -1593,9 +1507,7 @@ class SoilType(Base):
 
 class SpatialRefSy(Base):
     __tablename__ = "spatial_ref_sys"
-    __table_args__ = {
-        "comment": "Spatial reference system definitions from PostGIS"
-    }
+    __table_args__ = {"comment": "Spatial reference system definitions from PostGIS"}
 
     srid = Column(Integer, primary_key=True)
     auth_name = Column(String(256))
@@ -1606,9 +1518,7 @@ class SpatialRefSy(Base):
 
 class StationAuditType(Base):
     __tablename__ = "station_audit_types"
-    __table_args__ = {
-        "comment": "Stores allowed values for station_audit.type_id"
-    }
+    __table_args__ = {"comment": "Stores allowed values for station_audit.type_id"}
 
     id = Column(
         Integer,
@@ -1620,16 +1530,12 @@ class StationAuditType(Base):
         String(10), nullable=False, unique=True, comment="Audit type code"
     )
     description = Column(String(50), comment="Description of audit type")
-    system_type = Column(
-        CHAR(1), nullable=False, server_default=text("'N'::bpchar")
-    )
+    system_type = Column(CHAR(1), nullable=False, server_default=text("'N'::bpchar"))
 
 
 class StationCountry(Base):
     __tablename__ = "station_countries"
-    __table_args__ = {
-        "comment": "Stores countries that stations can belong to."
-    }
+    __table_args__ = {"comment": "Stores countries that stations can belong to."}
 
     id = Column(
         Integer,
@@ -1648,9 +1554,7 @@ class StationCountry(Base):
 
 class StationStatu(Base):
     __tablename__ = "station_status"
-    __table_args__ = {
-        "comment": "Stores allowed values for stations.status_id"
-    }
+    __table_args__ = {"comment": "Stores allowed values for stations.status_id"}
 
     id = Column(
         Integer,
@@ -1672,9 +1576,7 @@ class StationTimezone(Base):
         autoincrement=True,
         comment="Surrogate Key",
     )
-    tm_zone = Column(
-        String(3), nullable=False, unique=True, comment="Time zone code"
-    )
+    tm_zone = Column(String(3), nullable=False, unique=True, comment="Time zone code")
     utc_diff = Column(
         Numeric(4, 1),
         nullable=False,
@@ -1693,17 +1595,13 @@ class StationType(Base):
         autoincrement=True,
         comment="Surrogate Key",
     )
-    station_type = Column(
-        String(10), nullable=False, comment="Station type code"
-    )
+    station_type = Column(String(10), nullable=False, comment="Station type code")
     description = Column(String(50), comment="Station type description")
 
 
 class SurfaceType(Base):
     __tablename__ = "surface_types"
-    __table_args__ = {
-        "comment": "Stores allowed values for stations.surface_type_id"
-    }
+    __table_args__ = {"comment": "Stores allowed values for stations.surface_type_id"}
 
     id = Column(
         Integer,
@@ -1711,9 +1609,7 @@ class SurfaceType(Base):
         autoincrement=True,
         comment="Surrogate Key",
     )
-    surface_type = Column(
-        String(10), nullable=False, comment="Surface type code"
-    )
+    surface_type = Column(String(10), nullable=False, comment="Surface type code")
     description = Column(String(50), comment="Surface type description")
 
 
@@ -1800,25 +1696,15 @@ class Station(Base):
     critical_river_height = Column(
         Numeric(7, 3), comment="Critical River height (eg. Flood level) in M"
     )
-    location_datum = Column(
-        ForeignKey("datums.datum_name", onupdate="CASCADE")
-    )
-    location_epsg = Column(
-        ForeignKey("spatial_ref_sys.srid", onupdate="CASCADE")
-    )
+    location_datum = Column(ForeignKey("datums.datum_name", onupdate="CASCADE"))
+    location_epsg = Column(ForeignKey("spatial_ref_sys.srid", onupdate="CASCADE"))
 
     station_country = relationship("StationCountry")
     datum = relationship("Datum")
     spatial_ref_sy = relationship("SpatialRefSy")
-    land_use = relationship(
-        "LandUse", primaryjoin="Station.lu_0_100m == LandUse.id"
-    )
-    land_use1 = relationship(
-        "LandUse", primaryjoin="Station.lu_100m_1km == LandUse.id"
-    )
-    land_use2 = relationship(
-        "LandUse", primaryjoin="Station.lu_1km_10km == LandUse.id"
-    )
+    land_use = relationship("LandUse", primaryjoin="Station.lu_0_100m == LandUse.id")
+    land_use1 = relationship("LandUse", primaryjoin="Station.lu_100m_1km == LandUse.id")
+    land_use2 = relationship("LandUse", primaryjoin="Station.lu_1km_10km == LandUse.id")
     soil_type1 = relationship("SoilType")
     status = relationship("StationStatu")
     surface_type1 = relationship("SurfaceType")
@@ -1972,9 +1858,7 @@ class ObsAero(Base):
     cloud_type_6_qa = Column(CHAR(2))
     cloud_height_code_6 = Column(CHAR(3), comment="Code (WMO Code 1690)")
     cloud_height_6_qa = Column(CHAR(2))
-    ceiling_clear_flag = Column(
-        Numeric(1, 0), comment="Code (0,1=\x94CLR BLW 125\x94)"
-    )
+    ceiling_clear_flag = Column(Numeric(1, 0), comment="Code (0,1=\x94CLR BLW 125\x94)")
     ceiling_clear_flag_qa = Column(CHAR(2))
     air_temp = Column(Numeric(4, 1), comment="C to 0.1")
     air_temp_f = Column(Numeric(4, 1), comment="F to 0.1")
@@ -2066,9 +1950,7 @@ class ObsAw(Base):
         SmallInteger, comment="(10 min) mean direction in degrees. (0-360)"
     )
     mn_wind_dir_qa = Column(CHAR(2))
-    mn_wind_dir_stddev = Column(
-        Numeric(3, 1), comment="(10 min) mean dir Std Dev"
-    )
+    mn_wind_dir_stddev = Column(Numeric(3, 1), comment="(10 min) mean dir Std Dev")
     mn_wind_dir_stddev_qa = Column(CHAR(2))
     mn_wind_speed = Column(
         Numeric(7, 1), comment="(10 min) mean wind speed (m/s to 0.1)"
@@ -2108,24 +1990,18 @@ class ObsAw(Base):
     inst_gust_dir_qa = Column(CHAR(2))
     mn_temp = Column(Numeric(7, 1), comment="(10 min) mean. (C to 0.1)")
     mn_temp_qa = Column(CHAR(2))
-    mn_temp_subaveraging = Column(
-        Numeric(7, 1), comment="Sub-averaged temp (C to 0.1)"
-    )
+    mn_temp_subaveraging = Column(Numeric(7, 1), comment="Sub-averaged temp (C to 0.1)")
     mn_temp_subaveraging_period = Column(
         SmallInteger, comment="Sub-averaging period (minutes)"
     )
     mn_temp_subaveraging_qa = Column(CHAR(2))
     max_temp = Column(Numeric(7, 1), comment="(10 min) maximum. (C to 0.1)")
-    max_temp_time = Column(
-        String(8), comment="Time of max temperature. (hh:mm:ss)"
-    )
+    max_temp_time = Column(String(8), comment="Time of max temperature. (hh:mm:ss)")
     max_temp_time_qa = Column(CHAR(2))
     max_temp_qa = Column(CHAR(2))
     min_temp = Column(Numeric(7, 1), comment="(10 min) minimum. (C to 0.1)")
     min_temp_qa = Column(CHAR(2))
-    min_temp_time = Column(
-        String(8), comment="Time of min temperature.  (hh:mm:ss)"
-    )
+    min_temp_time = Column(String(8), comment="Time of min temperature.  (hh:mm:ss)")
     min_temp_time_qa = Column(CHAR(2))
     min_grass_temp = Column(
         Numeric(7, 1), comment="(10 min) minimum grass temp. (C to 0.1)"
@@ -2135,21 +2011,15 @@ class ObsAw(Base):
         String(8), comment="Time of min grass temp.  (hh:mm:ss)"
     )
     min_grass_temp_time_qa = Column(CHAR(2))
-    mn_humidity = Column(
-        Numeric(4, 1), comment="(10 min)average humidity (% to 0.1)"
-    )
+    mn_humidity = Column(Numeric(4, 1), comment="(10 min)average humidity (% to 0.1)")
     mn_humidity_qa = Column(CHAR(2))
-    max_humidity = Column(
-        Numeric(4, 1), comment="(10 min) maximum humidity (% to 0.1)"
-    )
+    max_humidity = Column(Numeric(4, 1), comment="(10 min) maximum humidity (% to 0.1)")
     max_humidity_qa = Column(CHAR(2))
     max_humidity_time = Column(
         String(8), comment="Time of maximum humidity.  (hh:mm:ss)"
     )
     max_humidity_time_qa = Column(CHAR(2))
-    min_humidity = Column(
-        Numeric(4, 1), comment="(10 min) minimum humidity (% to 0.1)"
-    )
+    min_humidity = Column(Numeric(4, 1), comment="(10 min) minimum humidity (% to 0.1)")
     min_humidity_qa = Column(CHAR(2))
     min_humidity_time = Column(
         String(8), comment="Time of minimum humidity.  (hh:mm:ss)"
@@ -2165,28 +2035,20 @@ class ObsAw(Base):
     mn_sea_level_pres_qa = Column(CHAR(2))
     max_pres = Column(Numeric(5, 1), comment="Maximum pressure (hPa to 0.1)")
     max_pres_qa = Column(CHAR(2))
-    max_pres_time = Column(
-        String(8), comment="Time of maximum pressure.  (hh:mm:ss)"
-    )
+    max_pres_time = Column(String(8), comment="Time of maximum pressure.  (hh:mm:ss)")
     max_pres_time_qa = Column(CHAR(2))
     min_pres = Column(Numeric(5, 1), comment="Minimum pressure (hPa to 0.1)")
     min_pres_qa = Column(CHAR(2))
-    min_pres_time = Column(
-        String(8), comment="Time of minimum pressure.  (hh:mm:ss)"
-    )
+    min_pres_time = Column(String(8), comment="Time of minimum pressure.  (hh:mm:ss)")
     min_pres_time_qa = Column(CHAR(2))
-    tot_rain = Column(
-        Numeric(6, 1), comment="(10 min) total rainfall (mm to 0.1)"
-    )
+    tot_rain = Column(Numeric(6, 1), comment="(10 min) total rainfall (mm to 0.1)")
     tot_rain_qa = Column(CHAR(2))
     tot_rain_two = Column(
         Numeric(6, 1),
         comment="(10 min) total rainfall instrument #2 (mm to 0.1)",
     )
     tot_rain_two_qa = Column(CHAR(2))
-    tot_sun = Column(
-        Integer, comment="(10 min) total sunshine (secs, max 600)"
-    )
+    tot_sun = Column(Integer, comment="(10 min) total sunshine (secs, max 600)")
     tot_sun_qa = Column(CHAR(2))
     tot_insolation = Column(
         Numeric(7, 2), comment="(10 min) insolation (Mj/m2 to 0.01)"
@@ -2297,9 +2159,7 @@ class ObsDaily(Base):
     rain_24h_inches = Column(
         Numeric(7, 3), comment="LCT 0900 to 0900 (inches to 0.001)"
     )
-    rain_24h_period = Column(
-        Numeric(2, 0), comment="Period of data: Normally 1 day"
-    )
+    rain_24h_period = Column(Numeric(2, 0), comment="Period of data: Normally 1 day")
     rain_24h_type = Column(
         String(10), comment="rain,frost,fog,dew,trace,snow,other, n/a"
     )
@@ -2336,34 +2196,22 @@ class ObsDaily(Base):
     reg_max_air_temp = Column(
         Numeric(7, 1), comment="Maximum air temperature (0.1C). Regional."
     )
-    reg_max_air_temp_qa = Column(
-        CHAR(2), comment="Quality code for max_air_temp_reg"
-    )
+    reg_max_air_temp_qa = Column(CHAR(2), comment="Quality code for max_air_temp_reg")
     reg_min_air_temp = Column(
         Numeric(7, 1), comment="Minimum air temperature (0.1C). Regional."
     )
-    reg_min_air_temp_qa = Column(
-        CHAR(2), comment="Quality code for min_air_temp"
-    )
+    reg_min_air_temp_qa = Column(CHAR(2), comment="Quality code for min_air_temp")
     ground_temp = Column(Numeric(5, 1), comment="Ground surface temp (0.1C)")
     ground_temp_f = Column(Numeric(5, 1), comment="Ground surface temp (0.1F)")
     ground_temp_qa = Column(CHAR(2), comment="Quality code for ground_temp")
     max_gust_dir = Column(Numeric(3, 0), comment="Degrees (0-360)")
     max_gust_dir_qa = Column(CHAR(2), comment="Quality code for max_gust_dir")
-    max_gust_speed = Column(
-        Numeric(4, 1), comment="Speed of max wind gust M/s (0.1)"
-    )
+    max_gust_speed = Column(Numeric(4, 1), comment="Speed of max wind gust M/s (0.1)")
     max_gust_speed_kts = Column(Numeric(3, 0))
-    max_gust_speed_bft = Column(
-        String(2), comment="Speed of max wind gust Beaufort"
-    )
-    max_gust_speed_qa = Column(
-        CHAR(2), comment="Quality code for max_gust_speed"
-    )
+    max_gust_speed_bft = Column(String(2), comment="Speed of max wind gust Beaufort")
+    max_gust_speed_qa = Column(CHAR(2), comment="Quality code for max_gust_speed")
     max_gust_time = Column(String(5), comment="Time of max wind gust")
-    max_gust_time_qa = Column(
-        CHAR(2), comment="Quality code for max_gust_time"
-    )
+    max_gust_time_qa = Column(CHAR(2), comment="Quality code for max_gust_time")
     wind_run_lt10 = Column(
         Numeric(6, 2), comment="Wind run taken from <10M (evaporation) Km"
     )
@@ -2373,9 +2221,7 @@ class ObsDaily(Base):
     wind_run_lt10_period = Column(
         Numeric(3, 0), comment="Period in hours for Wind run <10"
     )
-    wind_run_lt10_qa = Column(
-        CHAR(2), comment="Quality code for wind_run_lt10"
-    )
+    wind_run_lt10_qa = Column(CHAR(2), comment="Quality code for wind_run_lt10")
     wind_run_gt10 = Column(
         Numeric(6, 2), comment="Wind run taken from >10M anemometer Km"
     )
@@ -2385,42 +2231,22 @@ class ObsDaily(Base):
     wind_run_gt10_period = Column(
         Numeric(3, 0), comment="Period in hours for Wind run >10"
     )
-    wind_run_gt10_qa = Column(
-        CHAR(2), comment="Quality code for wind_run_gt10"
-    )
+    wind_run_gt10_qa = Column(CHAR(2), comment="Quality code for wind_run_gt10")
     evaporation = Column(Numeric(4, 1), comment="Evaporation in mm (0.1)")
-    evaporation_inches = Column(
-        Numeric(5, 3), comment="Evaporation in inches (0.001)"
-    )
+    evaporation_inches = Column(Numeric(5, 3), comment="Evaporation in inches (0.001)")
     evaporation_period = Column(
         Numeric(3, 0), comment="Period in hours for evaporation"
     )
     evaporation_qa = Column(CHAR(2), comment="Quality code for evaporation")
-    evap_water_max_temp = Column(
-        Numeric(5, 1), comment="Max water temp (0.1C)"
-    )
-    evap_water_max_temp_f = Column(
-        Numeric(5, 1), comment="Max water temp (0.1F)"
-    )
-    evap_water_max_temp_qa = Column(
-        CHAR(2), comment="Quality code for evap_max_temp"
-    )
-    evap_water_min_temp = Column(
-        Numeric(5, 1), comment="Min water temp (0.1C)"
-    )
-    evap_water_min_temp_f = Column(
-        Numeric(5, 1), comment="Min water temp (0.1F)"
-    )
-    evap_water_min_temp_qa = Column(
-        CHAR(2), comment="Quality code for evap_min_temp"
-    )
+    evap_water_max_temp = Column(Numeric(5, 1), comment="Max water temp (0.1C)")
+    evap_water_max_temp_f = Column(Numeric(5, 1), comment="Max water temp (0.1F)")
+    evap_water_max_temp_qa = Column(CHAR(2), comment="Quality code for evap_max_temp")
+    evap_water_min_temp = Column(Numeric(5, 1), comment="Min water temp (0.1C)")
+    evap_water_min_temp_f = Column(Numeric(5, 1), comment="Min water temp (0.1F)")
+    evap_water_min_temp_qa = Column(CHAR(2), comment="Quality code for evap_min_temp")
     sunshine_duration = Column(Numeric(3, 1), comment="Decimal Hours to (0.1)")
-    sunshine_duration_qa = Column(
-        CHAR(2), comment="Quality code for sunshine_duration"
-    )
-    river_height = Column(
-        Numeric(5, 1), comment="Daily river height reading (0.1M)"
-    )
+    sunshine_duration_qa = Column(CHAR(2), comment="Quality code for sunshine_duration")
+    river_height = Column(Numeric(5, 1), comment="Daily river height reading (0.1M)")
     river_height_in = Column(Numeric(8, 1))
     river_height_qa = Column(CHAR(2), comment="Quality code for river_height")
     radiation = Column(Numeric(6, 1), comment="Daily radiation Mj/M to 0.1")
@@ -2436,9 +2262,7 @@ class ObsDaily(Base):
     fog_flag = Column(CHAR(1), comment="Y/N for fog")
     fog_flag_qa = Column(CHAR(2), comment="Quality code for fog_flag")
     strong_wind_flag = Column(CHAR(1), comment="Y/N for strong wind")
-    strong_wind_flag_qa = Column(
-        CHAR(2), comment="Quality code for strong_wind_flag"
-    )
+    strong_wind_flag_qa = Column(CHAR(2), comment="Quality code for strong_wind_flag")
     gale_flag = Column(CHAR(1), comment="Y/N for gale")
     gale_flag_qa = Column(CHAR(2), comment="Quality code for gale_flag")
     hail_flag = Column(CHAR(1), comment="Y/N for hail")
@@ -2446,9 +2270,7 @@ class ObsDaily(Base):
     snow_flag = Column(CHAR(1), comment="Y/N for snow")
     snow_flag_qa = Column(CHAR(2), comment="Quality code for snow_flag")
     lightning_flag = Column(CHAR(1), comment="Y/N for lightning")
-    lightning_flag_qa = Column(
-        CHAR(2), comment="Quality code for lightning_flag"
-    )
+    lightning_flag_qa = Column(CHAR(2), comment="Quality code for lightning_flag")
     shower_flag = Column(CHAR(1), comment="Y/N for shower")
     shower_flag_qa = Column(CHAR(2), comment="Quality code for shower_flag")
     rain_flag = Column(CHAR(1), comment="Y/N for rain")
@@ -2507,9 +2329,7 @@ class ObsSubdaily(Base):
     )
     comments = Column(String(1000), comment="User comments")
     air_temp = Column(Numeric(7, 1), comment="Current Air temperature (0.1C)")
-    air_temp_f = Column(
-        Numeric(7, 1), comment="Current Air Temp in Fahrenheit (0.1F)"
-    )
+    air_temp_f = Column(Numeric(7, 1), comment="Current Air Temp in Fahrenheit (0.1F)")
     air_temp_qa = Column(CHAR(2), comment="Quality Code for air_temp")
     sea_water_temp = Column(
         Numeric(7, 1), comment="Current Sea water Temperature (0.1C)"
@@ -2517,31 +2337,19 @@ class ObsSubdaily(Base):
     sea_water_temp_f = Column(
         Numeric(7, 1), comment="Current Sea water Temp in Fahrenheit (0.1F)"
     )
-    sea_water_temp_qa = Column(
-        CHAR(2), comment="Quality Code for sea_water_temp"
-    )
+    sea_water_temp_qa = Column(CHAR(2), comment="Quality Code for sea_water_temp")
     wet_bulb = Column(Numeric(7, 1), comment="Current Wet bulb reading (0.1C)")
     wet_bulb_f = Column(
         Numeric(7, 1), comment="Current Wet bulb reading in Fahrenheit (0.1F)"
     )
     wet_bulb_qa = Column(CHAR(2), comment="Quality Code for wet_bulb")
-    dew_point = Column(
-        Numeric(7, 1), comment="Current Dew Point Temperature (0.1C)"
-    )
-    dew_point_f = Column(
-        Numeric(7, 1), comment="Current Dew Point Fahrenheit (0.1F)"
-    )
+    dew_point = Column(Numeric(7, 1), comment="Current Dew Point Temperature (0.1C)")
+    dew_point_f = Column(Numeric(7, 1), comment="Current Dew Point Fahrenheit (0.1F)")
     dew_point_qa = Column(CHAR(2), comment="Quality Code for dew_point")
-    rel_humidity = Column(
-        Numeric(4, 1), comment="Relative humidity  (% to 0.1)"
-    )
+    rel_humidity = Column(Numeric(4, 1), comment="Relative humidity  (% to 0.1)")
     rel_humidity_qa = Column(CHAR(2), comment="Quality Code for rel_humidity")
-    baro_temp = Column(
-        Numeric(7, 1), comment="Current Barometer Temperature (0.1C)"
-    )
-    baro_temp_f = Column(
-        Numeric(7, 1), comment="Current Barometer Fahrenheit (0.1F)"
-    )
+    baro_temp = Column(Numeric(7, 1), comment="Current Barometer Temperature (0.1C)")
+    baro_temp_f = Column(Numeric(7, 1), comment="Current Barometer Fahrenheit (0.1F)")
     baro_temp_qa = Column(CHAR(2), comment="Quality Code for baro_temp")
     pres_as_read = Column(
         Numeric(7, 1), comment="Pressure as read from barometer (hPa to 0.1)"
@@ -2551,16 +2359,12 @@ class ObsSubdaily(Base):
         comment="Pressure as read from barometer (Inches to 0.001)",
     )
     pres_as_read_qa = Column(CHAR(2), comment="Quality Code for pres_as_read")
-    station_pres = Column(
-        Numeric(7, 1), comment="Station Pressure (hPa to 0.1)"
-    )
+    station_pres = Column(Numeric(7, 1), comment="Station Pressure (hPa to 0.1)")
     station_pres_inches = Column(
         Numeric(8, 3), comment="Station Pressure (Inches to 0.001)"
     )
     station_pres_qa = Column(CHAR(2), comment="Quality Code for station_pres")
-    msl_pres = Column(
-        Numeric(7, 1), comment="Mean Sea Level Pressure (hPa to 0.1)"
-    )
+    msl_pres = Column(Numeric(7, 1), comment="Mean Sea Level Pressure (hPa to 0.1)")
     msl_pres_inches = Column(
         Numeric(8, 3), comment="Mean Sea Level Pressure (Inches to 0.001)"
     )
@@ -2572,9 +2376,7 @@ class ObsSubdaily(Base):
     vapour_pres_qa = Column(CHAR(2), comment="Quality Code for vapour_pres")
     qnh = Column(Numeric(7, 1), comment="Local QNH (hPa to 0.1)")
     qnh_qa = Column(CHAR(2), comment="Quality Code for qnh")
-    visibility = Column(
-        Numeric(7, 3), comment="Visibility in Km (Km to 0.001)"
-    )
+    visibility = Column(Numeric(7, 3), comment="Visibility in Km (Km to 0.001)")
     visibility_miles = Column(
         Numeric(7, 3), comment="Visibility in Miles (Miles to 0.001)"
     )
@@ -2586,9 +2388,7 @@ class ObsSubdaily(Base):
     )
     rain_3h_qa = Column(CHAR(2), comment="Quality Code for rain_3h")
     rain_3h_hours = Column(Numeric(3, 0), server_default=text("3"))
-    rain_cum = Column(
-        Numeric(7, 1), comment="Cumulative since 0900 (mm to 0.1)"
-    )
+    rain_cum = Column(Numeric(7, 1), comment="Cumulative since 0900 (mm to 0.1)")
     rain_cum_inches = Column(
         Numeric(7, 3), comment="Cumulative since 0900 (Inches to 0.001)"
     )
@@ -2600,33 +2400,19 @@ class ObsSubdaily(Base):
     wind_dir_std_dev = Column(
         Numeric(3, 0), comment="10 min Avg Wind direction standard deviation"
     )
-    wind_dir_std_dev_qa = Column(
-        CHAR(2), comment="Quality Code for wind_dir_std_dev"
-    )
-    wind_speed = Column(
-        Numeric(5, 1), comment="10 min Avg Wind Speed (M/S to 0.1)"
-    )
+    wind_dir_std_dev_qa = Column(CHAR(2), comment="Quality Code for wind_dir_std_dev")
+    wind_speed = Column(Numeric(5, 1), comment="10 min Avg Wind Speed (M/S to 0.1)")
     wind_speed_knots = Column(
         Numeric(5, 1), comment="10 min Avg Wind Speed (Knots to 0.1)"
     )
-    wind_speed_mph = Column(
-        Numeric(5, 1), comment="10 min Avg Wind Speed (MPH to 0.1)"
-    )
-    wind_speed_bft = Column(
-        CHAR(2), comment="10 min Avg Beaufort code for wind speed"
-    )
+    wind_speed_mph = Column(Numeric(5, 1), comment="10 min Avg Wind Speed (MPH to 0.1)")
+    wind_speed_bft = Column(CHAR(2), comment="10 min Avg Beaufort code for wind speed")
     wind_speed_qa = Column(CHAR(2), comment="Quality Code for wind_speed")
-    pres_weather_code = Column(
-        String(2), comment="WMO Code 4677 for present weather."
-    )
-    pres_weather_bft = Column(
-        String(20), comment="Beaufort Code for present weather"
-    )
+    pres_weather_code = Column(String(2), comment="WMO Code 4677 for present weather.")
+    pres_weather_bft = Column(String(20), comment="Beaufort Code for present weather")
     pres_weather_qa = Column(CHAR(2), comment="Quality Code for pres_weather")
     past_weather_code = Column(String(2), comment="WMO Code 4561")
-    past_weather_bft = Column(
-        String(20), comment="Beaufort Code for past weather"
-    )
+    past_weather_bft = Column(String(20), comment="Beaufort Code for past weather")
     past_weather_qa = Column(CHAR(2), comment="Quality Code for past_weather")
     tot_cloud_oktas = Column(
         SmallInteger, comment="Total amount of sky covered by cloud (0-9)"
@@ -2642,25 +2428,17 @@ class ObsSubdaily(Base):
         SmallInteger, comment="Total amount of sky covered by Low cloud (0-10)"
     )
     tot_low_cloud_height = Column(Integer)
-    tot_low_cloud_qa = Column(
-        CHAR(2), comment="Quality Code for tot_low_cloud"
-    )
-    state_of_sea = Column(
-        String(2), comment="State of Sea (Douglas Scale WMO 3700)"
-    )
+    tot_low_cloud_qa = Column(CHAR(2), comment="Quality Code for tot_low_cloud")
+    state_of_sea = Column(String(2), comment="State of Sea (Douglas Scale WMO 3700)")
     state_of_sea_qa = Column(CHAR(2), comment="Quality Code for state_of_sea")
     state_of_swell = Column(
         String(2), comment="State open sea swell (Douglas Scale WMO 3700)"
     )
-    state_of_swell_qa = Column(
-        CHAR(2), comment="Quality Code for state_of_swell"
-    )
+    state_of_swell_qa = Column(CHAR(2), comment="Quality Code for state_of_swell")
     swell_direction = Column(
         String(3), comment="Direction of Swell (16 Compass Points)"
     )
-    swell_direction_qa = Column(
-        CHAR(2), comment="Quality Code for swell_direction"
-    )
+    swell_direction_qa = Column(CHAR(2), comment="Quality Code for swell_direction")
     sea_level = Column(
         Numeric(5, 3), comment="Sea level (M to 0.001) above tide gauge zero"
     )
@@ -2739,18 +2517,14 @@ class ObsUpperAir(Base):
         server_default=text("'N'::bpchar"),
         comment="QA flag for row (Y/N)",
     )
-    pressure = Column(
-        Numeric(7, 1), nullable=False, comment="Pressure (hPa to 0.1)"
-    )
+    pressure = Column(Numeric(7, 1), nullable=False, comment="Pressure (hPa to 0.1)")
     pressure_qa = Column(CHAR(2))
     level_type = Column(Numeric(2, 0), comment="Level type (0,1,n)")
     geo_height = Column(Numeric(8, 1), comment="Meters")
     geo_height_qa = Column(CHAR(2))
     air_temp = Column(Numeric(7, 1), comment="Temperature (C to 0.1)")
     air_temp_qa = Column(CHAR(2))
-    dew_point = Column(
-        Numeric(4, 1), comment="Dew Point Temperature (C to 0.1)"
-    )
+    dew_point = Column(Numeric(4, 1), comment="Dew Point Temperature (C to 0.1)")
     dew_point_qa = Column(CHAR(2))
     wind_direction = Column(Numeric(4, 0), comment="Direction (0-360 degrees)")
     wind_direction_qa = Column(CHAR(2))
@@ -2774,12 +2548,8 @@ class StationAudit(Base):
         autoincrement=True,
         comment="Surrogate Key",
     )
-    station_id = Column(
-        ForeignKey("stations.id"), comment="Station ID of audit record"
-    )
-    datetime = Column(
-        DateTime(True), comment="Date/Time of event being recorded"
-    )
+    station_id = Column(ForeignKey("stations.id"), comment="Station ID of audit record")
+    datetime = Column(DateTime(True), comment="Date/Time of event being recorded")
     event_datetime = Column(DateTime(True), server_default=text("now()"))
     audit_type_id = Column(
         ForeignKey("station_audit_types.id"),
@@ -2787,9 +2557,7 @@ class StationAudit(Base):
         comment="Audit Type ID. Joins to station_audit_type",
     )
     description = Column(String(1000), comment="Description of audit event")
-    event_user = Column(
-        String(40), comment="User performing the auditable event"
-    )
+    event_user = Column(String(40), comment="User performing the auditable event")
 
     audit_type = relationship("StationAuditType")
     station = relationship("Station")
@@ -2818,12 +2586,8 @@ class StationClas(Base):
         ForeignKey("station_types.id"), comment="ID of Type for this class"
     )
     description = Column(String(80))
-    class_start = Column(
-        DateTime, comment="Date this class started for the station."
-    )
-    class_end = Column(
-        DateTime, comment="Date this class ended for the station."
-    )
+    class_start = Column(DateTime, comment="Date this class started for the station.")
+    class_end = Column(DateTime, comment="Date this class ended for the station.")
 
     station = relationship("Station")
     type = relationship("StationType")
@@ -2928,9 +2692,7 @@ class StationFile(Base):
 class ObsSubdailyCloudLayer(Base):
     __tablename__ = "obs_subdaily_cloud_layers"
     __table_args__ = (
-        Index(
-            "fki_obs_subdaily_cloud_layers_subdaily_id_fkey", "sub_daily_id"
-        ),
+        Index("fki_obs_subdaily_cloud_layers_subdaily_id_fkey", "sub_daily_id"),
         {"comment": "Sub Daily surface observations"},
     )
 
@@ -2944,41 +2706,25 @@ class ObsSubdailyCloudLayer(Base):
         nullable=False,
         comment="Surrogate key of parent sub daily row",
     )
-    data_source = Column(
-        CHAR(2), nullable=False, server_default=text("'1'::bpchar")
-    )
-    insert_datetime = Column(
-        DateTime, nullable=False, server_default=text("now()")
-    )
+    data_source = Column(CHAR(2), nullable=False, server_default=text("'1'::bpchar"))
+    insert_datetime = Column(DateTime, nullable=False, server_default=text("now()"))
     change_datetime = Column(DateTime)
     change_user = Column(String(20))
-    qa_flag = Column(
-        CHAR(1), nullable=False, server_default=text("'N'::bpchar")
-    )
-    aws_flag = Column(
-        CHAR(1), nullable=False, server_default=text("'N'::bpchar")
-    )
-    layer_no = Column(
-        Integer, nullable=False, comment="layer number. (1,2,3,n)"
-    )
+    qa_flag = Column(CHAR(1), nullable=False, server_default=text("'N'::bpchar"))
+    aws_flag = Column(CHAR(1), nullable=False, server_default=text("'N'::bpchar"))
+    layer_no = Column(Integer, nullable=False, comment="layer number. (1,2,3,n)")
     layer_type = Column(String(6), comment="Low, Mid, High")
     cloud_oktas = Column(SmallInteger, comment="Cloud  amount in octas (0-9)")
-    cloud_tenths = Column(
-        SmallInteger, comment="Cloud  amount in tenths (0-10)"
-    )
+    cloud_tenths = Column(SmallInteger, comment="Cloud  amount in tenths (0-10)")
     cloud_amt_qa = Column(CHAR(2), comment="Quality Code for clout_amt")
     cloud_type = Column(String(2), comment="Cloud type, WMO code")
     cloud_type_qa = Column(CHAR(2), comment="Quality Code for cloud_type")
-    cloud_height = Column(
-        Numeric(6, 0), comment="Cloud height in Meters (M to 1.0)"
-    )
+    cloud_height = Column(Numeric(6, 0), comment="Cloud height in Meters (M to 1.0)")
     cloud_height_feet = Column(
         Numeric(7, 0), comment="Cloud height in feet (feet to 1.0)"
     )
     cloud_height_qa = Column(CHAR(2), comment="Quality Code for cloud_height")
-    cloud_dir = Column(
-        Numeric(3, 0), comment="Cloud movement Direction (0-360)"
-    )
+    cloud_dir = Column(Numeric(3, 0), comment="Cloud movement Direction (0-360)")
     cloud_dir_qa = Column(CHAR(2), comment="Quality Code for cloud_dir")
 
     sub_daily = relationship("ObsSubdaily")

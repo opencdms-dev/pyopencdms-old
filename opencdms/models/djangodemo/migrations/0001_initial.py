@@ -1976,9 +1976,7 @@ class Migration(migrations.Migration):
             options={
                 "db_table": "form_hourly",
                 "managed": True,
-                "unique_together": {
-                    ("stationid", "elementid", "yyyy", "mm", "dd")
-                },
+                "unique_together": {("stationid", "elementid", "yyyy", "mm", "dd")},
             },
         ),
         migrations.CreateModel(
@@ -2808,9 +2806,7 @@ class Migration(migrations.Migration):
             options={
                 "db_table": "form_daily2",
                 "managed": True,
-                "unique_together": {
-                    ("stationid", "elementid", "yyyy", "mm", "hh")
-                },
+                "unique_together": {("stationid", "elementid", "yyyy", "mm", "hh")},
             },
         ),
     ]
