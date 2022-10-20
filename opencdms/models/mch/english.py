@@ -183,7 +183,9 @@ class Logbitacproc(Base):
 class MapasCroqui(Base):
     __tablename__ = "MapasCroquis"
 
-    Map = Column(CHAR(30), primary_key=True, nullable=False, server_default=text("''"))
+    Map = Column(
+        CHAR(30), primary_key=True, nullable=False, server_default=text("''")
+    )
     Variable = Column(
         CHAR(15), primary_key=True, nullable=False, server_default=text("''")
     )
@@ -193,17 +195,29 @@ class MapasCroqui(Base):
     period = Column(
         CHAR(5), primary_key=True, nullable=False, server_default=text("''")
     )
-    Interv1 = Column(Float(asdecimal=True), nullable=False, server_default=text("'0'"))
+    Interv1 = Column(
+        Float(asdecimal=True), nullable=False, server_default=text("'0'")
+    )
     Color1 = Column(Integer, nullable=False, server_default=text("'0'"))
-    Interv2 = Column(Float(asdecimal=True), nullable=False, server_default=text("'0'"))
+    Interv2 = Column(
+        Float(asdecimal=True), nullable=False, server_default=text("'0'")
+    )
     Color2 = Column(Integer, nullable=False, server_default=text("'0'"))
-    Interv3 = Column(Float(asdecimal=True), nullable=False, server_default=text("'0'"))
+    Interv3 = Column(
+        Float(asdecimal=True), nullable=False, server_default=text("'0'")
+    )
     Color3 = Column(Integer, nullable=False, server_default=text("'0'"))
-    Interv4 = Column(Float(asdecimal=True), nullable=False, server_default=text("'0'"))
+    Interv4 = Column(
+        Float(asdecimal=True), nullable=False, server_default=text("'0'")
+    )
     Color4 = Column(Integer, nullable=False, server_default=text("'0'"))
-    Interv5 = Column(Float(asdecimal=True), nullable=False, server_default=text("'0'"))
+    Interv5 = Column(
+        Float(asdecimal=True), nullable=False, server_default=text("'0'")
+    )
     Color5 = Column(Integer, nullable=False, server_default=text("'0'"))
-    Interv6 = Column(Float(asdecimal=True), nullable=False, server_default=text("'0'"))
+    Interv6 = Column(
+        Float(asdecimal=True), nullable=False, server_default=text("'0'")
+    )
     Color6 = Column(Integer, nullable=False, server_default=text("'0'"))
 
 
@@ -214,11 +228,15 @@ class MapasGenxCoord(Base):
     Longitud1 = Column(
         Float(asdecimal=True), nullable=False, server_default=text("'0'")
     )
-    Latitud1 = Column(Float(asdecimal=True), nullable=False, server_default=text("'0'"))
+    Latitud1 = Column(
+        Float(asdecimal=True), nullable=False, server_default=text("'0'")
+    )
     Longitud2 = Column(
         Float(asdecimal=True), nullable=False, server_default=text("'0'")
     )
-    Latitud2 = Column(Float(asdecimal=True), nullable=False, server_default=text("'0'"))
+    Latitud2 = Column(
+        Float(asdecimal=True), nullable=False, server_default=text("'0'")
+    )
     resoluc = Column(Integer, nullable=False, server_default=text("'0'"))
     costaslinea = Column(Integer, nullable=False, server_default=text("'0'"))
     costascolor = Column(Integer, nullable=False, server_default=text("'0'"))
@@ -228,23 +246,53 @@ class MapasGenxCoord(Base):
     rioscolor = Column(Integer, nullable=False, server_default=text("'0'"))
     projection = Column(CHAR(10), nullable=False, server_default=text("''"))
     elipsoide = Column(CHAR(10), nullable=False, server_default=text("''"))
-    lat0 = Column(Float(asdecimal=True), nullable=False, server_default=text("'0'"))
-    lon0 = Column(Float(asdecimal=True), nullable=False, server_default=text("'0'"))
-    xm = Column(Float(asdecimal=True), nullable=False, server_default=text("'0'"))
-    yn = Column(Float(asdecimal=True), nullable=False, server_default=text("'0'"))
-    lat1 = Column(Float(asdecimal=True), nullable=False, server_default=text("'0'"))
-    lon1 = Column(Float(asdecimal=True), nullable=False, server_default=text("'0'"))
-    lat2 = Column(Float(asdecimal=True), nullable=False, server_default=text("'0'"))
-    lon2 = Column(Float(asdecimal=True), nullable=False, server_default=text("'0'"))
-    lat3 = Column(Float(asdecimal=True), nullable=False, server_default=text("'0'"))
-    lon3 = Column(Float(asdecimal=True), nullable=False, server_default=text("'0'"))
+    lat0 = Column(
+        Float(asdecimal=True), nullable=False, server_default=text("'0'")
+    )
+    lon0 = Column(
+        Float(asdecimal=True), nullable=False, server_default=text("'0'")
+    )
+    xm = Column(
+        Float(asdecimal=True), nullable=False, server_default=text("'0'")
+    )
+    yn = Column(
+        Float(asdecimal=True), nullable=False, server_default=text("'0'")
+    )
+    lat1 = Column(
+        Float(asdecimal=True), nullable=False, server_default=text("'0'")
+    )
+    lon1 = Column(
+        Float(asdecimal=True), nullable=False, server_default=text("'0'")
+    )
+    lat2 = Column(
+        Float(asdecimal=True), nullable=False, server_default=text("'0'")
+    )
+    lon2 = Column(
+        Float(asdecimal=True), nullable=False, server_default=text("'0'")
+    )
+    lat3 = Column(
+        Float(asdecimal=True), nullable=False, server_default=text("'0'")
+    )
+    lon3 = Column(
+        Float(asdecimal=True), nullable=False, server_default=text("'0'")
+    )
     zone = Column(Integer, nullable=False, server_default=text("'1'"))
     sur = Column(Integer, nullable=False, server_default=text("'0'"))
-    x0 = Column(Float(asdecimal=True), nullable=False, server_default=text("'0'"))
-    y0 = Column(Float(asdecimal=True), nullable=False, server_default=text("'0'"))
-    h = Column(Float(asdecimal=True), nullable=False, server_default=text("'0'"))
-    r = Column(Float(asdecimal=True), nullable=False, server_default=text("'6350'"))
-    latts = Column(Float(asdecimal=True), nullable=False, server_default=text("'0'"))
+    x0 = Column(
+        Float(asdecimal=True), nullable=False, server_default=text("'0'")
+    )
+    y0 = Column(
+        Float(asdecimal=True), nullable=False, server_default=text("'0'")
+    )
+    h = Column(
+        Float(asdecimal=True), nullable=False, server_default=text("'0'")
+    )
+    r = Column(
+        Float(asdecimal=True), nullable=False, server_default=text("'6350'")
+    )
+    latts = Column(
+        Float(asdecimal=True), nullable=False, server_default=text("'0'")
+    )
     poligperim = Column(CHAR(30), nullable=False, server_default=text("''"))
 
 
@@ -255,11 +303,15 @@ class MapasMchxCoord(Base):
     Longitud1 = Column(
         Float(asdecimal=True), nullable=False, server_default=text("'0'")
     )
-    Latitud1 = Column(Float(asdecimal=True), nullable=False, server_default=text("'0'"))
+    Latitud1 = Column(
+        Float(asdecimal=True), nullable=False, server_default=text("'0'")
+    )
     Longitud2 = Column(
         Float(asdecimal=True), nullable=False, server_default=text("'0'")
     )
-    Latitud2 = Column(Float(asdecimal=True), nullable=False, server_default=text("'0'"))
+    Latitud2 = Column(
+        Float(asdecimal=True), nullable=False, server_default=text("'0'")
+    )
     fronteralinea = Column(Integer, nullable=False, server_default=text("'0'"))
     fronteracolor = Column(Integer, nullable=False, server_default=text("'0'"))
     estadoslinea = Column(Integer, nullable=False, server_default=text("'0'"))
@@ -282,23 +334,53 @@ class MapasMchxCoord(Base):
     poligperim = Column(CHAR(30), nullable=False, server_default=text("''"))
     projection = Column(CHAR(10), nullable=False, server_default=text("''"))
     elipsoide = Column(CHAR(10), nullable=False, server_default=text("''"))
-    lat0 = Column(Float(asdecimal=True), nullable=False, server_default=text("'0'"))
-    lon0 = Column(Float(asdecimal=True), nullable=False, server_default=text("'0'"))
-    xm = Column(Float(asdecimal=True), nullable=False, server_default=text("'0'"))
-    yn = Column(Float(asdecimal=True), nullable=False, server_default=text("'0'"))
-    lat1 = Column(Float(asdecimal=True), nullable=False, server_default=text("'0'"))
-    lon1 = Column(Float(asdecimal=True), nullable=False, server_default=text("'0'"))
-    lat2 = Column(Float(asdecimal=True), nullable=False, server_default=text("'0'"))
-    lon2 = Column(Float(asdecimal=True), nullable=False, server_default=text("'0'"))
-    lat3 = Column(Float(asdecimal=True), nullable=False, server_default=text("'0'"))
-    lon3 = Column(Float(asdecimal=True), nullable=False, server_default=text("'0'"))
+    lat0 = Column(
+        Float(asdecimal=True), nullable=False, server_default=text("'0'")
+    )
+    lon0 = Column(
+        Float(asdecimal=True), nullable=False, server_default=text("'0'")
+    )
+    xm = Column(
+        Float(asdecimal=True), nullable=False, server_default=text("'0'")
+    )
+    yn = Column(
+        Float(asdecimal=True), nullable=False, server_default=text("'0'")
+    )
+    lat1 = Column(
+        Float(asdecimal=True), nullable=False, server_default=text("'0'")
+    )
+    lon1 = Column(
+        Float(asdecimal=True), nullable=False, server_default=text("'0'")
+    )
+    lat2 = Column(
+        Float(asdecimal=True), nullable=False, server_default=text("'0'")
+    )
+    lon2 = Column(
+        Float(asdecimal=True), nullable=False, server_default=text("'0'")
+    )
+    lat3 = Column(
+        Float(asdecimal=True), nullable=False, server_default=text("'0'")
+    )
+    lon3 = Column(
+        Float(asdecimal=True), nullable=False, server_default=text("'0'")
+    )
     zone = Column(Integer, nullable=False, server_default=text("'1'"))
     sur = Column(Integer, nullable=False, server_default=text("'0'"))
-    x0 = Column(Float(asdecimal=True), nullable=False, server_default=text("'0'"))
-    y0 = Column(Float(asdecimal=True), nullable=False, server_default=text("'0'"))
-    h = Column(Float(asdecimal=True), nullable=False, server_default=text("'0'"))
-    r = Column(Float(asdecimal=True), nullable=False, server_default=text("'6350'"))
-    latts = Column(Float(asdecimal=True), nullable=False, server_default=text("'0'"))
+    x0 = Column(
+        Float(asdecimal=True), nullable=False, server_default=text("'0'")
+    )
+    y0 = Column(
+        Float(asdecimal=True), nullable=False, server_default=text("'0'")
+    )
+    h = Column(
+        Float(asdecimal=True), nullable=False, server_default=text("'0'")
+    )
+    r = Column(
+        Float(asdecimal=True), nullable=False, server_default=text("'6350'")
+    )
+    latts = Column(
+        Float(asdecimal=True), nullable=False, server_default=text("'0'")
+    )
 
 
 class Mapaspixelgeogr(Base):
@@ -319,7 +401,9 @@ class Mapaspixelgeogr(Base):
 class Mapaspixelgeogr4(Base):
     __tablename__ = "Mapaspixelgeogr4"
 
-    Map = Column(CHAR(30), primary_key=True, nullable=False, server_default=text("''"))
+    Map = Column(
+        CHAR(30), primary_key=True, nullable=False, server_default=text("''")
+    )
     Longitud1 = Column(
         Float(asdecimal=True),
         primary_key=True,
@@ -352,7 +436,9 @@ class Mapaspixelgeogr4(Base):
 class Mapasxcoordclr(Base):
     __tablename__ = "Mapasxcoordclrs"
 
-    Map = Column(CHAR(30), primary_key=True, nullable=False, server_default=text("''"))
+    Map = Column(
+        CHAR(30), primary_key=True, nullable=False, server_default=text("''")
+    )
     Variable = Column(
         CHAR(15), primary_key=True, nullable=False, server_default=text("''")
     )
@@ -391,7 +477,9 @@ class Mapasxcoordclr(Base):
 class Mapasxcoordgeogr(Base):
     __tablename__ = "Mapasxcoordgeogr"
 
-    Map = Column(CHAR(30), primary_key=True, nullable=False, server_default=text("''"))
+    Map = Column(
+        CHAR(30), primary_key=True, nullable=False, server_default=text("''")
+    )
     Secuen = Column(
         Integer, primary_key=True, nullable=False, server_default=text("'0'")
     )
@@ -403,7 +491,9 @@ class Mapasxcoordgeogr(Base):
 class Mapasxcoordzona(Base):
     __tablename__ = "Mapasxcoordzonas"
 
-    Map = Column(CHAR(30), primary_key=True, nullable=False, server_default=text("''"))
+    Map = Column(
+        CHAR(30), primary_key=True, nullable=False, server_default=text("''")
+    )
     Secuen = Column(
         Integer, primary_key=True, nullable=False, server_default=text("'0'")
     )
@@ -471,7 +561,9 @@ class Opcxvariabautom(Base):
     Opcion = Column(
         CHAR(15), primary_key=True, nullable=False, server_default=text("''")
     )
-    Opcx = Column(Integer, primary_key=True, nullable=False, server_default=text("'0'"))
+    Opcx = Column(
+        Integer, primary_key=True, nullable=False, server_default=text("'0'")
+    )
     Variable = Column(CHAR(15))
     Variable2 = Column(CHAR(15))
 
@@ -482,7 +574,9 @@ class Recepdef(Base):
     Opcion = Column(
         CHAR(15), primary_key=True, nullable=False, server_default=text("''")
     )
-    Name = Column(CHAR(25), primary_key=True, nullable=False, server_default=text("''"))
+    Name = Column(
+        CHAR(25), primary_key=True, nullable=False, server_default=text("''")
+    )
     StationGroup = Column(
         CHAR(20), primary_key=True, nullable=False, server_default=text("''")
     )
@@ -497,7 +591,9 @@ class Recepsdato(Base):
     Opcion = Column(
         CHAR(15), primary_key=True, nullable=False, server_default=text("''")
     )
-    Name = Column(CHAR(25), primary_key=True, nullable=False, server_default=text("''"))
+    Name = Column(
+        CHAR(25), primary_key=True, nullable=False, server_default=text("''")
+    )
     StationGroup = Column(
         CHAR(20), primary_key=True, nullable=False, server_default=text("''")
     )
@@ -672,8 +768,12 @@ class Valsvariabaut(Base):
     Variable = Column(
         CHAR(15), primary_key=True, nullable=False, server_default=text("''")
     )
-    Adjust1 = Column(Float(asdecimal=True), nullable=False, server_default=text("'0'"))
-    Adjust2 = Column(Float(asdecimal=True), nullable=False, server_default=text("'0'"))
+    Adjust1 = Column(
+        Float(asdecimal=True), nullable=False, server_default=text("'0'")
+    )
+    Adjust2 = Column(
+        Float(asdecimal=True), nullable=False, server_default=text("'0'")
+    )
     MaxValue = Column(Float(asdecimal=True))
     MinValue = Column(Float(asdecimal=True))
     ValorNoHayDato = Column(Float(asdecimal=True))
@@ -768,8 +868,12 @@ class Variablestransf(Base):
         nullable=False,
         server_default=text("'1901-01-01 00:00:00'"),
     )
-    Adjust1 = Column(Float(asdecimal=True), nullable=False, server_default=text("'0'"))
-    Adjust2 = Column(Float(asdecimal=True), nullable=False, server_default=text("'0'"))
+    Adjust1 = Column(
+        Float(asdecimal=True), nullable=False, server_default=text("'0'")
+    )
+    Adjust2 = Column(
+        Float(asdecimal=True), nullable=False, server_default=text("'0'")
+    )
     VariabTransf1 = Column(CHAR(20))
     TablaTransf1 = Column(CHAR(15))
     VariabTransf2 = Column(CHAR(20))
@@ -852,7 +956,9 @@ class Estacionesinstrum(Base):
 class Mapasbycoord(Base):
     __tablename__ = "mapasbycoord"
 
-    Map = Column(CHAR(30), primary_key=True, nullable=False, server_default=text("''"))
+    Map = Column(
+        CHAR(30), primary_key=True, nullable=False, server_default=text("''")
+    )
     Secuen = Column(
         Integer, primary_key=True, nullable=False, server_default=text("'0'")
     )
@@ -868,7 +974,9 @@ class Mapasbycoord(Base):
 class Mapsgroup(Base):
     __tablename__ = "mapsgroups"
 
-    Map = Column(CHAR(30), primary_key=True, nullable=False, server_default=text("''"))
+    Map = Column(
+        CHAR(30), primary_key=True, nullable=False, server_default=text("''")
+    )
     Group = Column(CHAR(15), nullable=False, server_default=text("''"))
     Variable = Column(
         CHAR(15), primary_key=True, nullable=False, server_default=text("''")
@@ -879,24 +987,38 @@ class Mapsgroup(Base):
     period = Column(
         CHAR(5), primary_key=True, nullable=False, server_default=text("''")
     )
-    Interv1 = Column(Float(asdecimal=True), nullable=False, server_default=text("'0'"))
+    Interv1 = Column(
+        Float(asdecimal=True), nullable=False, server_default=text("'0'")
+    )
     Color1 = Column(Integer, nullable=False, server_default=text("'0'"))
-    Interv2 = Column(Float(asdecimal=True), nullable=False, server_default=text("'0'"))
+    Interv2 = Column(
+        Float(asdecimal=True), nullable=False, server_default=text("'0'")
+    )
     Color2 = Column(Integer, nullable=False, server_default=text("'0'"))
-    Interv3 = Column(Float(asdecimal=True), nullable=False, server_default=text("'0'"))
+    Interv3 = Column(
+        Float(asdecimal=True), nullable=False, server_default=text("'0'")
+    )
     Color3 = Column(Integer, nullable=False, server_default=text("'0'"))
-    Interv4 = Column(Float(asdecimal=True), nullable=False, server_default=text("'0'"))
+    Interv4 = Column(
+        Float(asdecimal=True), nullable=False, server_default=text("'0'")
+    )
     Color4 = Column(Integer, nullable=False, server_default=text("'0'"))
-    Interv5 = Column(Float(asdecimal=True), nullable=False, server_default=text("'0'"))
+    Interv5 = Column(
+        Float(asdecimal=True), nullable=False, server_default=text("'0'")
+    )
     Color5 = Column(Integer, nullable=False, server_default=text("'0'"))
-    Interv6 = Column(Float(asdecimal=True), nullable=False, server_default=text("'0'"))
+    Interv6 = Column(
+        Float(asdecimal=True), nullable=False, server_default=text("'0'")
+    )
     Color6 = Column(Integer, nullable=False, server_default=text("'0'"))
 
 
 class Mapsstation(Base):
     __tablename__ = "mapsstations"
 
-    Map = Column(CHAR(30), primary_key=True, nullable=False, server_default=text("''"))
+    Map = Column(
+        CHAR(30), primary_key=True, nullable=False, server_default=text("''")
+    )
     Station = Column(
         CHAR(20), primary_key=True, nullable=False, server_default=text("''")
     )

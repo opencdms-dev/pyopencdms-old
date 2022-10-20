@@ -7,7 +7,9 @@ from opencdms.models.climsoft.v4_1_1_core import (
 )
 
 
-def group_observation_final_data(db_session: Session, first_obs_date: bool = True):
+def group_observation_final_data(
+    db_session: Session, first_obs_date: bool = True
+):
     obs_date = func.DATE(Observationfinal.obsDatetime).label("obsDate")
     subquery = db_session.query(
         Observationfinal.recordedFrom, Observationfinal.describedBy, obs_date

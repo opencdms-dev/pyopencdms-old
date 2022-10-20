@@ -89,7 +89,9 @@ class DatabaseConnection:
 
         if self.context == "query":
             factory = SchemaFactory(ForeignKeyWalker)
-            self.fields = factory(model=models.Observationfinal).get("properties")
+            self.fields = factory(model=models.Observationfinal).get(
+                "properties"
+            )
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
@@ -125,7 +127,8 @@ class ClimsoftProvider(BaseProvider):
             query = (
                 query.join(
                     models.Station,
-                    models.Observationfinal.recordedFrom == models.Station.stationId,
+                    models.Observationfinal.recordedFrom
+                    == models.Station.stationId,
                 )
                 .filter(models.Station.longitude >= min_lng)
                 .filter(models.Station.longitude <= max_lng)
@@ -154,7 +157,9 @@ class ClimsoftProvider(BaseProvider):
         :returns: dict of fields
         """
         if not self.fields:
-            with DatabaseConnection(self.conn_dic, properties=self.properties) as db:
+            with DatabaseConnection(
+                self.conn_dic, properties=self.properties
+            ) as db:
                 self.fields = OrderedDict()
                 for k, v in db.fields.items():
                     self.fields[obs_final_field_mapping.get(k, k)] = v
@@ -226,7 +231,9 @@ class ClimsoftProvider(BaseProvider):
                 query = self._apply_sorting(query=query, sortby=sortby)
 
                 if not skip_geometry:
-                    query = query.options(joinedload(models.Observationfinal.station))
+                    query = query.options(
+                        joinedload(models.Observationfinal.station)
+                    )
 
                 obs_finals = query.offset(startindex).limit(limit).all()
 
@@ -242,7 +249,9 @@ class ClimsoftProvider(BaseProvider):
 
                 for obs_final in obs_finals:
                     feature_collection["features"].append(
-                        self.__response_feature(obs_final, include=include_props)
+                        self.__response_feature(
+                            obs_final, include=include_props
+                        )
                     )
 
                 return feature_collection
@@ -301,7 +310,9 @@ class ClimsoftProvider(BaseProvider):
         """
 
         recorded_from, described_by, obs_datetime = identifier.split("*")
-        updates = remove_nulls_from_dict(UpdateObservationfinal.parse_raw(data).dict())
+        updates = remove_nulls_from_dict(
+            UpdateObservationfinal.parse_raw(data).dict()
+        )
         with DatabaseConnection(
             conn_dic=self.conn_dic, properties=self.properties
         ) as db:

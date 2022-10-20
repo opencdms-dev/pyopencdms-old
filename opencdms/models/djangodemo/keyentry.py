@@ -67,12 +67,16 @@ class KeyEntryModel(models.Model):
 
 class FormHourly(KeyEntryModel):
     id = models.AutoField(primary_key=True)
-    user = models.ForeignKey(User, blank=True, null=True, on_delete=models.SET_NULL)
+    user = models.ForeignKey(
+        User, blank=True, null=True, on_delete=models.SET_NULL
+    )
 
     stationid = models.CharField(
         db_column="stationId", max_length=50
     )  # Field name made lowercase.
-    elementid = models.IntegerField(db_column="elementId")  # Field name made lowercase.
+    elementid = models.IntegerField(
+        db_column="elementId"
+    )  # Field name made lowercase.
     yyyy = models.IntegerField()
     mm = models.IntegerField()
     dd = models.IntegerField()
@@ -101,30 +105,78 @@ class FormHourly(KeyEntryModel):
     hh_21 = models.CharField(max_length=50, blank=True, null=True)
     hh_22 = models.CharField(max_length=50, blank=True, null=True)
     hh_23 = models.CharField(max_length=50, blank=True, null=True)
-    flag00 = models.CharField(max_length=50, blank=True, null=True, choices=FLAGS)
-    flag01 = models.CharField(max_length=50, blank=True, null=True, choices=FLAGS)
-    flag02 = models.CharField(max_length=50, blank=True, null=True, choices=FLAGS)
-    flag03 = models.CharField(max_length=50, blank=True, null=True, choices=FLAGS)
-    flag04 = models.CharField(max_length=50, blank=True, null=True, choices=FLAGS)
-    flag05 = models.CharField(max_length=50, blank=True, null=True, choices=FLAGS)
-    flag06 = models.CharField(max_length=50, blank=True, null=True, choices=FLAGS)
-    flag07 = models.CharField(max_length=50, blank=True, null=True, choices=FLAGS)
-    flag08 = models.CharField(max_length=50, blank=True, null=True, choices=FLAGS)
-    flag09 = models.CharField(max_length=50, blank=True, null=True, choices=FLAGS)
-    flag10 = models.CharField(max_length=50, blank=True, null=True, choices=FLAGS)
-    flag11 = models.CharField(max_length=50, blank=True, null=True, choices=FLAGS)
-    flag12 = models.CharField(max_length=50, blank=True, null=True, choices=FLAGS)
-    flag13 = models.CharField(max_length=50, blank=True, null=True, choices=FLAGS)
-    flag14 = models.CharField(max_length=50, blank=True, null=True, choices=FLAGS)
-    flag15 = models.CharField(max_length=50, blank=True, null=True, choices=FLAGS)
-    flag16 = models.CharField(max_length=50, blank=True, null=True, choices=FLAGS)
-    flag17 = models.CharField(max_length=50, blank=True, null=True, choices=FLAGS)
-    flag18 = models.CharField(max_length=50, blank=True, null=True, choices=FLAGS)
-    flag19 = models.CharField(max_length=50, blank=True, null=True, choices=FLAGS)
-    flag20 = models.CharField(max_length=50, blank=True, null=True, choices=FLAGS)
-    flag21 = models.CharField(max_length=50, blank=True, null=True, choices=FLAGS)
-    flag22 = models.CharField(max_length=50, blank=True, null=True, choices=FLAGS)
-    flag23 = models.CharField(max_length=50, blank=True, null=True, choices=FLAGS)
+    flag00 = models.CharField(
+        max_length=50, blank=True, null=True, choices=FLAGS
+    )
+    flag01 = models.CharField(
+        max_length=50, blank=True, null=True, choices=FLAGS
+    )
+    flag02 = models.CharField(
+        max_length=50, blank=True, null=True, choices=FLAGS
+    )
+    flag03 = models.CharField(
+        max_length=50, blank=True, null=True, choices=FLAGS
+    )
+    flag04 = models.CharField(
+        max_length=50, blank=True, null=True, choices=FLAGS
+    )
+    flag05 = models.CharField(
+        max_length=50, blank=True, null=True, choices=FLAGS
+    )
+    flag06 = models.CharField(
+        max_length=50, blank=True, null=True, choices=FLAGS
+    )
+    flag07 = models.CharField(
+        max_length=50, blank=True, null=True, choices=FLAGS
+    )
+    flag08 = models.CharField(
+        max_length=50, blank=True, null=True, choices=FLAGS
+    )
+    flag09 = models.CharField(
+        max_length=50, blank=True, null=True, choices=FLAGS
+    )
+    flag10 = models.CharField(
+        max_length=50, blank=True, null=True, choices=FLAGS
+    )
+    flag11 = models.CharField(
+        max_length=50, blank=True, null=True, choices=FLAGS
+    )
+    flag12 = models.CharField(
+        max_length=50, blank=True, null=True, choices=FLAGS
+    )
+    flag13 = models.CharField(
+        max_length=50, blank=True, null=True, choices=FLAGS
+    )
+    flag14 = models.CharField(
+        max_length=50, blank=True, null=True, choices=FLAGS
+    )
+    flag15 = models.CharField(
+        max_length=50, blank=True, null=True, choices=FLAGS
+    )
+    flag16 = models.CharField(
+        max_length=50, blank=True, null=True, choices=FLAGS
+    )
+    flag17 = models.CharField(
+        max_length=50, blank=True, null=True, choices=FLAGS
+    )
+    flag18 = models.CharField(
+        max_length=50, blank=True, null=True, choices=FLAGS
+    )
+    flag19 = models.CharField(
+        max_length=50, blank=True, null=True, choices=FLAGS
+    )
+    flag20 = models.CharField(
+        max_length=50, blank=True, null=True, choices=FLAGS
+    )
+    flag21 = models.CharField(
+        max_length=50, blank=True, null=True, choices=FLAGS
+    )
+    flag22 = models.CharField(
+        max_length=50, blank=True, null=True, choices=FLAGS
+    )
+    flag23 = models.CharField(
+        max_length=50, blank=True, null=True, choices=FLAGS
+    )
     total = models.CharField(max_length=50, blank=True, null=True)
     signature = models.CharField(max_length=50, blank=True, null=True)
     entrydatetime = models.DateTimeField(
@@ -142,12 +194,16 @@ class FormHourly(KeyEntryModel):
 
 class FormDaily2(KeyEntryModel):
     id = models.AutoField(primary_key=True)
-    user = models.ForeignKey(User, blank=True, null=True, on_delete=models.SET_NULL)
+    user = models.ForeignKey(
+        User, blank=True, null=True, on_delete=models.SET_NULL
+    )
 
     stationid = models.CharField(
         db_column="stationId", max_length=50
     )  # Field name made lowercase.
-    elementid = models.IntegerField(db_column="elementId")  # Field name made lowercase.
+    elementid = models.IntegerField(
+        db_column="elementId"
+    )  # Field name made lowercase.
     yyyy = models.IntegerField()
     mm = models.IntegerField()
     hh = models.IntegerField()
@@ -182,37 +238,99 @@ class FormDaily2(KeyEntryModel):
     day29 = models.CharField(max_length=45, blank=True, null=True)
     day30 = models.CharField(max_length=45, blank=True, null=True)
     day31 = models.CharField(max_length=45, blank=True, null=True)
-    flag01 = models.CharField(max_length=1, blank=True, null=True, choices=FLAGS)
-    flag02 = models.CharField(max_length=1, blank=True, null=True, choices=FLAGS)
-    flag03 = models.CharField(max_length=1, blank=True, null=True, choices=FLAGS)
-    flag04 = models.CharField(max_length=1, blank=True, null=True, choices=FLAGS)
-    flag05 = models.CharField(max_length=1, blank=True, null=True, choices=FLAGS)
-    flag06 = models.CharField(max_length=1, blank=True, null=True, choices=FLAGS)
-    flag07 = models.CharField(max_length=1, blank=True, null=True, choices=FLAGS)
-    flag08 = models.CharField(max_length=1, blank=True, null=True, choices=FLAGS)
-    flag09 = models.CharField(max_length=1, blank=True, null=True, choices=FLAGS)
-    flag10 = models.CharField(max_length=1, blank=True, null=True, choices=FLAGS)
-    flag11 = models.CharField(max_length=1, blank=True, null=True, choices=FLAGS)
-    flag12 = models.CharField(max_length=1, blank=True, null=True, choices=FLAGS)
-    flag13 = models.CharField(max_length=1, blank=True, null=True, choices=FLAGS)
-    flag14 = models.CharField(max_length=1, blank=True, null=True, choices=FLAGS)
-    flag15 = models.CharField(max_length=1, blank=True, null=True, choices=FLAGS)
-    flag16 = models.CharField(max_length=1, blank=True, null=True, choices=FLAGS)
-    flag17 = models.CharField(max_length=1, blank=True, null=True, choices=FLAGS)
-    flag18 = models.CharField(max_length=1, blank=True, null=True, choices=FLAGS)
-    flag19 = models.CharField(max_length=1, blank=True, null=True, choices=FLAGS)
-    flag20 = models.CharField(max_length=1, blank=True, null=True, choices=FLAGS)
-    flag21 = models.CharField(max_length=1, blank=True, null=True, choices=FLAGS)
-    flag22 = models.CharField(max_length=1, blank=True, null=True, choices=FLAGS)
-    flag23 = models.CharField(max_length=1, blank=True, null=True, choices=FLAGS)
-    flag24 = models.CharField(max_length=1, blank=True, null=True, choices=FLAGS)
-    flag25 = models.CharField(max_length=1, blank=True, null=True, choices=FLAGS)
-    flag26 = models.CharField(max_length=1, blank=True, null=True, choices=FLAGS)
-    flag27 = models.CharField(max_length=1, blank=True, null=True, choices=FLAGS)
-    flag28 = models.CharField(max_length=1, blank=True, null=True, choices=FLAGS)
-    flag29 = models.CharField(max_length=1, blank=True, null=True, choices=FLAGS)
-    flag30 = models.CharField(max_length=1, blank=True, null=True, choices=FLAGS)
-    flag31 = models.CharField(max_length=1, blank=True, null=True, choices=FLAGS)
+    flag01 = models.CharField(
+        max_length=1, blank=True, null=True, choices=FLAGS
+    )
+    flag02 = models.CharField(
+        max_length=1, blank=True, null=True, choices=FLAGS
+    )
+    flag03 = models.CharField(
+        max_length=1, blank=True, null=True, choices=FLAGS
+    )
+    flag04 = models.CharField(
+        max_length=1, blank=True, null=True, choices=FLAGS
+    )
+    flag05 = models.CharField(
+        max_length=1, blank=True, null=True, choices=FLAGS
+    )
+    flag06 = models.CharField(
+        max_length=1, blank=True, null=True, choices=FLAGS
+    )
+    flag07 = models.CharField(
+        max_length=1, blank=True, null=True, choices=FLAGS
+    )
+    flag08 = models.CharField(
+        max_length=1, blank=True, null=True, choices=FLAGS
+    )
+    flag09 = models.CharField(
+        max_length=1, blank=True, null=True, choices=FLAGS
+    )
+    flag10 = models.CharField(
+        max_length=1, blank=True, null=True, choices=FLAGS
+    )
+    flag11 = models.CharField(
+        max_length=1, blank=True, null=True, choices=FLAGS
+    )
+    flag12 = models.CharField(
+        max_length=1, blank=True, null=True, choices=FLAGS
+    )
+    flag13 = models.CharField(
+        max_length=1, blank=True, null=True, choices=FLAGS
+    )
+    flag14 = models.CharField(
+        max_length=1, blank=True, null=True, choices=FLAGS
+    )
+    flag15 = models.CharField(
+        max_length=1, blank=True, null=True, choices=FLAGS
+    )
+    flag16 = models.CharField(
+        max_length=1, blank=True, null=True, choices=FLAGS
+    )
+    flag17 = models.CharField(
+        max_length=1, blank=True, null=True, choices=FLAGS
+    )
+    flag18 = models.CharField(
+        max_length=1, blank=True, null=True, choices=FLAGS
+    )
+    flag19 = models.CharField(
+        max_length=1, blank=True, null=True, choices=FLAGS
+    )
+    flag20 = models.CharField(
+        max_length=1, blank=True, null=True, choices=FLAGS
+    )
+    flag21 = models.CharField(
+        max_length=1, blank=True, null=True, choices=FLAGS
+    )
+    flag22 = models.CharField(
+        max_length=1, blank=True, null=True, choices=FLAGS
+    )
+    flag23 = models.CharField(
+        max_length=1, blank=True, null=True, choices=FLAGS
+    )
+    flag24 = models.CharField(
+        max_length=1, blank=True, null=True, choices=FLAGS
+    )
+    flag25 = models.CharField(
+        max_length=1, blank=True, null=True, choices=FLAGS
+    )
+    flag26 = models.CharField(
+        max_length=1, blank=True, null=True, choices=FLAGS
+    )
+    flag27 = models.CharField(
+        max_length=1, blank=True, null=True, choices=FLAGS
+    )
+    flag28 = models.CharField(
+        max_length=1, blank=True, null=True, choices=FLAGS
+    )
+    flag29 = models.CharField(
+        max_length=1, blank=True, null=True, choices=FLAGS
+    )
+    flag30 = models.CharField(
+        max_length=1, blank=True, null=True, choices=FLAGS
+    )
+    flag31 = models.CharField(
+        max_length=1, blank=True, null=True, choices=FLAGS
+    )
     period01 = models.CharField(max_length=45, blank=True, null=True)
     period02 = models.CharField(max_length=45, blank=True, null=True)
     period03 = models.CharField(max_length=45, blank=True, null=True)
@@ -293,12 +411,16 @@ class FormDaily2(KeyEntryModel):
 
 class FormMonthly(KeyEntryModel):
     id = models.AutoField(primary_key=True)
-    user = models.ForeignKey(User, blank=True, null=True, on_delete=models.SET_NULL)
+    user = models.ForeignKey(
+        User, blank=True, null=True, on_delete=models.SET_NULL
+    )
 
     stationid = models.CharField(
         db_column="stationId", max_length=255
     )  # Field name made lowercase.
-    elementid = models.IntegerField(db_column="elementId")  # Field name made lowercase.
+    elementid = models.IntegerField(
+        db_column="elementId"
+    )  # Field name made lowercase.
     yyyy = models.IntegerField()
     mm_01 = models.CharField(max_length=255, blank=True, null=True)
     mm_02 = models.CharField(max_length=255, blank=True, null=True)
@@ -312,18 +434,42 @@ class FormMonthly(KeyEntryModel):
     mm_10 = models.CharField(max_length=255, blank=True, null=True)
     mm_11 = models.CharField(max_length=255, blank=True, null=True)
     mm_12 = models.CharField(max_length=255, blank=True, null=True)
-    flag01 = models.CharField(max_length=255, blank=True, null=True, choices=FLAGS)
-    flag02 = models.CharField(max_length=255, blank=True, null=True, choices=FLAGS)
-    flag03 = models.CharField(max_length=255, blank=True, null=True, choices=FLAGS)
-    flag04 = models.CharField(max_length=255, blank=True, null=True, choices=FLAGS)
-    flag05 = models.CharField(max_length=255, blank=True, null=True, choices=FLAGS)
-    flag06 = models.CharField(max_length=255, blank=True, null=True, choices=FLAGS)
-    flag07 = models.CharField(max_length=255, blank=True, null=True, choices=FLAGS)
-    flag08 = models.CharField(max_length=255, blank=True, null=True, choices=FLAGS)
-    flag09 = models.CharField(max_length=255, blank=True, null=True, choices=FLAGS)
-    flag10 = models.CharField(max_length=255, blank=True, null=True, choices=FLAGS)
-    flag11 = models.CharField(max_length=255, blank=True, null=True, choices=FLAGS)
-    flag12 = models.CharField(max_length=255, blank=True, null=True, choices=FLAGS)
+    flag01 = models.CharField(
+        max_length=255, blank=True, null=True, choices=FLAGS
+    )
+    flag02 = models.CharField(
+        max_length=255, blank=True, null=True, choices=FLAGS
+    )
+    flag03 = models.CharField(
+        max_length=255, blank=True, null=True, choices=FLAGS
+    )
+    flag04 = models.CharField(
+        max_length=255, blank=True, null=True, choices=FLAGS
+    )
+    flag05 = models.CharField(
+        max_length=255, blank=True, null=True, choices=FLAGS
+    )
+    flag06 = models.CharField(
+        max_length=255, blank=True, null=True, choices=FLAGS
+    )
+    flag07 = models.CharField(
+        max_length=255, blank=True, null=True, choices=FLAGS
+    )
+    flag08 = models.CharField(
+        max_length=255, blank=True, null=True, choices=FLAGS
+    )
+    flag09 = models.CharField(
+        max_length=255, blank=True, null=True, choices=FLAGS
+    )
+    flag10 = models.CharField(
+        max_length=255, blank=True, null=True, choices=FLAGS
+    )
+    flag11 = models.CharField(
+        max_length=255, blank=True, null=True, choices=FLAGS
+    )
+    flag12 = models.CharField(
+        max_length=255, blank=True, null=True, choices=FLAGS
+    )
     period01 = models.CharField(max_length=255, blank=True, null=True)
     period02 = models.CharField(max_length=255, blank=True, null=True)
     period03 = models.CharField(max_length=255, blank=True, null=True)
@@ -352,7 +498,9 @@ class FormMonthly(KeyEntryModel):
 
 class FormSynoptic2Ra1(models.Model):
     id = models.AutoField(primary_key=True)
-    user = models.ForeignKey(User, blank=True, null=True, on_delete=models.SET_NULL)
+    user = models.ForeignKey(
+        User, blank=True, null=True, on_delete=models.SET_NULL
+    )
 
     stationid = models.CharField(
         db_column="stationId", max_length=255

@@ -12,8 +12,8 @@ from django.utils.timezone import now
 
 
 class FlashTypeEnum(Enum):
-    CG = 'CG'
-    IC = 'IC'
+    CG = "CG"
+    IC = "IC"
 
 
 class BaseModel(models.Model):
@@ -79,7 +79,9 @@ class PhysicalQuantity(BaseModel):
 class MeasurementVariable(BaseModel):
     name = models.CharField(max_length=40, unique=True)
 
-    physical_quantity = models.ForeignKey(PhysicalQuantity, on_delete=models.DO_NOTHING)
+    physical_quantity = models.ForeignKey(
+        PhysicalQuantity, on_delete=models.DO_NOTHING
+    )
 
     class Meta:
         ordering = ("name",)
@@ -303,7 +305,9 @@ class AdministrativeRegion(BaseModel):
 class StationType(BaseModel):
     name = models.CharField(max_length=45)
     description = models.CharField(max_length=256)
-    parent_type = models.ForeignKey("self", on_delete=models.DO_NOTHING, null=True)
+    parent_type = models.ForeignKey(
+        "self", on_delete=models.DO_NOTHING, null=True
+    )
 
     class Meta:
         verbose_name = "station type"
@@ -383,10 +387,14 @@ class Station(BaseModel):
     z = models.FloatField(null=True, blank=True)
     datum = models.CharField(max_length=256, null=True, blank=True)
     zone = models.CharField(max_length=256, null=True, blank=True)
-    ground_water_province = models.CharField(max_length=256, null=True, blank=True)
+    ground_water_province = models.CharField(
+        max_length=256, null=True, blank=True
+    )
     river_code = models.IntegerField(null=True, blank=True)
     river_course = models.CharField(max_length=64, null=True, blank=True)
-    catchment_area_station = models.CharField(max_length=256, null=True, blank=True)
+    catchment_area_station = models.CharField(
+        max_length=256, null=True, blank=True
+    )
     river_origin = models.CharField(max_length=256, null=True, blank=True)
     easting = models.FloatField(null=True, blank=True)
     northing = models.FloatField(null=True, blank=True)
@@ -403,7 +411,9 @@ class Station(BaseModel):
     casing_type = models.CharField(max_length=256, null=True, blank=True)
     casing_diameter = models.FloatField(null=True, blank=True)
     existing_gauges = models.CharField(max_length=256, null=True, blank=True)
-    flow_direction_at_station = models.CharField(max_length=256, null=True, blank=True)
+    flow_direction_at_station = models.CharField(
+        max_length=256, null=True, blank=True
+    )
     flow_direction_above_station = models.CharField(
         max_length=256, null=True, blank=True
     )
@@ -413,17 +423,25 @@ class Station(BaseModel):
     bank_full_stage = models.CharField(max_length=256, null=True, blank=True)
     bridge_level = models.CharField(max_length=256, null=True, blank=True)
     access_point = models.CharField(max_length=256, null=True, blank=True)
-    temporary_benchmark = models.CharField(max_length=256, null=True, blank=True)
+    temporary_benchmark = models.CharField(
+        max_length=256, null=True, blank=True
+    )
     mean_sea_level = models.CharField(max_length=256, null=True, blank=True)
     data_type = models.CharField(max_length=256, null=True, blank=True)
-    frequency_observation = models.CharField(max_length=256, null=True, blank=True)
+    frequency_observation = models.CharField(
+        max_length=256, null=True, blank=True
+    )
     historic_events = models.CharField(max_length=256, null=True, blank=True)
     other_information = models.CharField(max_length=256, null=True, blank=True)
     profile = models.ForeignKey(
         StationProfile, on_delete=models.DO_NOTHING, null=True, blank=True
     )
-    hydrology_station_type = models.CharField(max_length=64, null=True, blank=True)
-    is_surface = models.BooleanField(default=True)  # options are surface or ground
+    hydrology_station_type = models.CharField(
+        max_length=64, null=True, blank=True
+    )
+    is_surface = models.BooleanField(
+        default=True
+    )  # options are surface or ground
     station_details = models.CharField(max_length=256, null=True, blank=True)
     remarks = models.CharField(max_length=256, null=True, blank=True)
     country = models.ForeignKey(
@@ -434,7 +452,10 @@ class Station(BaseModel):
         DataSource, on_delete=models.DO_NOTHING, null=True, blank=True
     )
     communication_type = models.ForeignKey(
-        StationCommunication, on_delete=models.DO_NOTHING, null=True, blank=True
+        StationCommunication,
+        on_delete=models.DO_NOTHING,
+        null=True,
+        blank=True,
     )
     utc_offset_minutes = models.IntegerField(
         validators=[MaxValueValidator(720), MinValueValidator(-720)]
@@ -449,7 +470,9 @@ class Station(BaseModel):
     wmo_program = models.ForeignKey(
         WMOProgram, on_delete=models.DO_NOTHING, null=True, blank=True
     )
-    wmo_station_plataform = models.CharField(max_length=256, null=True, blank=True)
+    wmo_station_plataform = models.CharField(
+        max_length=256, null=True, blank=True
+    )
     operation_status = models.BooleanField(default=True)
 
     class Meta:
@@ -495,7 +518,9 @@ class QualityFlag(BaseModel):
 def document_directory_path(instance, filename):
     # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
     path_to_file = "documents/{0}_{1}.{2}".format(
-        instance.station.code, time.strftime("%Y%m%d_%H%M%S"), filename.split(".")[-1]
+        instance.station.code,
+        time.strftime("%Y%m%d_%H%M%S"),
+        filename.split(".")[-1],
     )
     logging.info(f"Saving file {filename} in {path_to_file}")
     return path_to_file
@@ -719,7 +744,9 @@ class NoaaDcpsStation(BaseModel):
 class Flash(BaseModel):
     type = models.CharField(
         max_length=60,
-        choices=[(flashType.name, flashType.value) for flashType in FlashTypeEnum],
+        choices=[
+            (flashType.name, flashType.value) for flashType in FlashTypeEnum
+        ],
     )
     datetime = models.DateTimeField()
     latitude = models.FloatField()
@@ -737,7 +764,9 @@ class Flash(BaseModel):
     lr_longitude = models.FloatField()
 
     def __str__(self):
-        return "{} {} - {}".format(self.latitude, self.longitude, self.datetime)
+        return "{} {} - {}".format(
+            self.latitude, self.longitude, self.datetime
+        )
 
 
 class QcRangeThreshold(BaseModel):
@@ -840,7 +869,9 @@ class StationDataFileStatus(BaseModel):
 class StationDataFile(BaseModel):
     station = models.ForeignKey(Station, on_delete=models.DO_NOTHING)
     decoder = models.ForeignKey(Decoder, on_delete=models.DO_NOTHING)
-    status = models.ForeignKey(StationDataFileStatus, on_delete=models.DO_NOTHING)
+    status = models.ForeignKey(
+        StationDataFileStatus, on_delete=models.DO_NOTHING
+    )
     utc_offset_minutes = models.IntegerField()
     filepath = models.CharField(max_length=1024)
     file_hash = models.CharField(max_length=128, db_index=True)
@@ -928,7 +959,11 @@ class DcpMessages(BaseModel):
         data_source = header[30:32]
         data_source_obj, created = DataSource.objects.get_or_create(
             symbol=data_source,
-            defaults={"name": data_source, "created_at": now(), "updated_at": now()},
+            defaults={
+                "name": data_source,
+                "created_at": now(),
+                "updated_at": now(),
+            },
         )
         message_data_length = header[32:37]
 
@@ -1036,7 +1071,9 @@ class Neighborhood(BaseModel):
 
 class StationNeighborhood(BaseModel):
     neighborhood = models.ForeignKey(
-        Neighborhood, related_name="neighborhood_stations", on_delete=models.DO_NOTHING
+        Neighborhood,
+        related_name="neighborhood_stations",
+        on_delete=models.DO_NOTHING,
     )
     station = models.ForeignKey(Station, on_delete=models.DO_NOTHING)
 
@@ -1048,7 +1085,9 @@ class StationNeighborhood(BaseModel):
 
 
 class HydroMLPredictionStation(BaseModel):
-    prediction = models.ForeignKey(HydroMLPrediction, on_delete=models.DO_NOTHING)
+    prediction = models.ForeignKey(
+        HydroMLPrediction, on_delete=models.DO_NOTHING
+    )
     neighborhood = models.ForeignKey(Neighborhood, on_delete=models.DO_NOTHING)
     target_station = models.ForeignKey(Station, on_delete=models.DO_NOTHING)
     data_period_in_minutes = models.IntegerField()
