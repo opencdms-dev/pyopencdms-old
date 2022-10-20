@@ -76,3 +76,8 @@ class WxStation(BaseModel):
     network: Optional[constr(max_length=256)]
     reference_station_id: Optional[int]
     country_id: Optional[int]
+
+    class Config:
+        orm_mode = True
+        allow_population_by_field_name = True
+

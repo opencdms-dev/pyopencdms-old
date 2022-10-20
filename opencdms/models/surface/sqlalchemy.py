@@ -44,7 +44,7 @@ class RawData(Base):
     updated_at = Column(
         DateTime(True), nullable=False, server_default=text("now()")
     )
-    datetime_ = Column("datetime", DateTime(True), nullable=False, index=True)
+    datetime = Column(DateTime(True), nullable=False, index=True)
     measured = Column(Float(53), nullable=False)
     consisted = Column(Float(53))
     qc_range_description = Column(String(256))

@@ -1,0 +1,1716 @@
+components:
+  parameters:
+    f:
+      description: The optional f parameter indicates the output format which the
+        server shall provide as part of the response document.  The default format
+        is GeoJSON.
+      explode: false
+      in: query
+      name: f
+      required: false
+      schema:
+        default: json
+        enum:
+        - json
+        - html
+        - jsonld
+        type: string
+      style: form
+    lang:
+      description: The optional lang parameter instructs the server return a response
+        in a certain language, if supported.  If the language is not among the available
+        values, the Accept-Language header language will be used if it is supported.
+        If the header is missing, the default server language is used. Note that providers
+        may only support a single language (or often no language at all), that can
+        be different from the server language.  Language strings can be written in
+        a complex (e.g. "fr-CA,fr;q=0.9,en-US;q=0.8,en;q=0.7"), simple (e.g. "de")
+        or locale-like (e.g. "de-CH" or "fr_BE") fashion.
+      in: query
+      name: lang
+      required: false
+      schema:
+        default: en-US
+        enum:
+        - en-US
+        - fr-CA
+        type: string
+    offset:
+      description: The optional offset parameter indicates the index within the result
+        set from which the server shall begin presenting results in the response document.  The
+        first element has an index of 0 (default).
+      explode: false
+      in: query
+      name: offset
+      required: false
+      schema:
+        default: 0
+        minimum: 0
+        type: integer
+      style: form
+    properties:
+      description: The properties that should be included for each feature. The parameter
+        value is a comma-separated list of property names.
+      explode: false
+      in: query
+      name: properties
+      required: false
+      schema:
+        items:
+          type: string
+        type: array
+      style: form
+    skipGeometry:
+      description: This option can be used to skip response geometries for each feature.
+      explode: false
+      in: query
+      name: skipGeometry
+      required: false
+      schema:
+        default: false
+        type: boolean
+      style: form
+    vendorSpecificParameters:
+      description: Additional "free-form" parameters that are not explicitly defined
+      in: query
+      name: vendorSpecificParameters
+      schema:
+        additionalProperties: true
+        type: object
+      style: form
+  responses:
+    '200':
+      description: successful operation
+    Queryables:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/queryables'
+      description: successful queryables operation
+    default:
+      content:
+        application/json:
+          schema:
+            $ref: https://schemas.opengis.net/ogcapi/processes/part1/1.0/openapi/schemas/exception.yaml
+      description: Unexpected error
+  schemas:
+    queryable:
+      properties:
+        description:
+          description: a human-readable narrative describing the queryable
+          type: string
+        language:
+          default:
+          - en
+          description: the language used for the title and description
+          type: string
+        queryable:
+          description: the token that may be used in a CQL predicate
+          type: string
+        title:
+          description: a human readable title for the queryable
+          type: string
+        type:
+          description: the data type of the queryable
+          type: string
+        type-ref:
+          description: a reference to the formal definition of the type
+          format: url
+          type: string
+      required:
+      - queryable
+      - type
+      type: object
+    queryables:
+      properties:
+        queryables:
+          items:
+            $ref: '#/components/schemas/queryable'
+          type: array
+      required:
+      - queryables
+      type: object
+info:
+  contact:
+    email: info@opencdms.org
+    name: OpenCDMS
+    url: https://pygeoapi.io
+  description: pygeoapi provides an API to geospatial data
+  license:
+    name: CC-BY 4.0 license
+    url: https://creativecommons.org/licenses/by/4.0/
+  termsOfService: https://creativecommons.org/licenses/by/4.0/
+  title: pygeoapi default instance
+  version: 0.13.dev0
+  x-keywords:
+  - geospatial
+  - data
+  - api
+openapi: 3.0.2
+paths:
+  /:
+    get:
+      description: Landing page
+      operationId: getLandingPage
+      parameters:
+      - $ref: '#/components/parameters/f'
+      - $ref: '#/components/parameters/lang'
+      responses:
+        '200':
+          $ref: https://schemas.opengis.net/ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/LandingPage
+        '400':
+          $ref: https://schemas.opengis.net/ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/InvalidParameter
+        '500':
+          $ref: https://schemas.opengis.net/ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/ServerError
+      summary: Landing page
+      tags:
+      - server
+  /collections:
+    get:
+      description: Collections
+      operationId: getCollections
+      parameters:
+      - $ref: '#/components/parameters/f'
+      - $ref: '#/components/parameters/lang'
+      responses:
+        '200':
+          $ref: https://schemas.opengis.net/ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/Collections
+        '400':
+          $ref: https://schemas.opengis.net/ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/InvalidParameter
+        '500':
+          $ref: https://schemas.opengis.net/ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/ServerError
+      summary: Collections
+      tags:
+      - server
+  /collections/climsoft:
+    get:
+      description: Climsoft observations
+      operationId: describeClimsoftCollection
+      parameters:
+      - $ref: '#/components/parameters/f'
+      - $ref: '#/components/parameters/lang'
+      responses:
+        '200':
+          $ref: https://schemas.opengis.net/ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/Collection
+        '400':
+          $ref: https://schemas.opengis.net/ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/InvalidParameter
+        '404':
+          $ref: https://schemas.opengis.net/ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/NotFound
+        '500':
+          $ref: https://schemas.opengis.net/ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/ServerError
+      summary: Get Climsoft Observationfinal metadata
+      tags:
+      - climsoft
+  /collections/climsoft/items:
+    get:
+      description: Climsoft observations
+      operationId: getClimsoftFeatures
+      parameters:
+      - &id001
+        description: The optional f parameter indicates the output format which the
+          server shall provide as part of the response document.  The default format
+          is GeoJSON.
+        explode: false
+        in: query
+        name: f
+        required: false
+        schema:
+          default: json
+          enum:
+          - json
+          - html
+          - jsonld
+          - csv
+          type: string
+        style: form
+      - &id002
+        description: The optional lang parameter instructs the server return a response
+          in a certain language, if supported.  If the language is not among the available
+          values, the Accept-Language header language will be used if it is supported.
+          If the header is missing, the default server language is used. Note that
+          providers may only support a single language (or often no language at all),
+          that can be different from the server language.  Language strings can be
+          written in a complex (e.g. "fr-CA,fr;q=0.9,en-US;q=0.8,en;q=0.7"), simple
+          (e.g. "de") or locale-like (e.g. "de-CH" or "fr_BE") fashion.
+        in: query
+        name: lang
+        required: false
+        schema:
+          default: en-US
+          enum:
+          - en-US
+          - fr-CA
+          type: string
+      - $ref: https://schemas.opengis.net/ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/parameters/bbox
+      - $ref: https://schemas.opengis.net/ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/parameters/limit
+      - description: The properties that should be included for each feature. The
+          parameter value is a comma-separated list of property names.
+        explode: false
+        in: query
+        name: properties
+        required: false
+        schema:
+          items:
+            enum:
+            - recorded_from
+            - described_by
+            - obs_datetime
+            - obs_level
+            - obs_value
+            - flag
+            - period
+            - qc_status
+            - qc_type_log
+            - acquisition_type
+            - data_form
+            - captured_by
+            - mark
+            - temperature_units
+            - precipitation_units
+            - cloud_height_units
+            - vis_units
+            - data_source_timezone
+            type: string
+          type: array
+        style: form
+      - $ref: '#/components/parameters/vendorSpecificParameters'
+      - $ref: '#/components/parameters/skipGeometry'
+      - $ref: https://raw.githubusercontent.com/opengeospatial/ogcapi-records/master/core/openapi/parameters/sortby.yaml
+      - $ref: '#/components/parameters/offset'
+      - explode: false
+        in: query
+        name: recorded_from
+        required: false
+        schema:
+          maxLength: 255
+          type: string
+        style: form
+      - explode: false
+        in: query
+        name: described_by
+        required: false
+        schema:
+          type: string
+        style: form
+      - explode: false
+        in: query
+        name: obs_datetime
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - explode: false
+        in: query
+        name: obs_level
+        required: false
+        schema:
+          maxLength: 255
+          type: string
+        style: form
+      - explode: false
+        in: query
+        name: obs_value
+        required: false
+        schema:
+          type: integer
+        style: form
+      - explode: false
+        in: query
+        name: flag
+        required: false
+        schema:
+          maxLength: 255
+          type: string
+        style: form
+      - explode: false
+        in: query
+        name: period
+        required: false
+        schema:
+          type: integer
+        style: form
+      - explode: false
+        in: query
+        name: qc_status
+        required: false
+        schema:
+          type: integer
+        style: form
+      - explode: false
+        in: query
+        name: qc_type_log
+        required: false
+        schema:
+          type: string
+        style: form
+      - explode: false
+        in: query
+        name: acquisition_type
+        required: false
+        schema:
+          type: integer
+        style: form
+      - explode: false
+        in: query
+        name: data_form
+        required: false
+        schema:
+          maxLength: 255
+          type: string
+        style: form
+      - explode: false
+        in: query
+        name: captured_by
+        required: false
+        schema:
+          maxLength: 255
+          type: string
+        style: form
+      - explode: false
+        in: query
+        name: mark
+        required: false
+        schema:
+          type: integer
+        style: form
+      - explode: false
+        in: query
+        name: temperature_units
+        required: false
+        schema:
+          maxLength: 255
+          type: string
+        style: form
+      - explode: false
+        in: query
+        name: precipitation_units
+        required: false
+        schema:
+          maxLength: 255
+          type: string
+        style: form
+      - explode: false
+        in: query
+        name: cloud_height_units
+        required: false
+        schema:
+          maxLength: 255
+          type: string
+        style: form
+      - explode: false
+        in: query
+        name: vis_units
+        required: false
+        schema:
+          maxLength: 255
+          type: string
+        style: form
+      - explode: false
+        in: query
+        name: data_source_timezone
+        required: false
+        schema:
+          type: integer
+        style: form
+      responses:
+        '200':
+          $ref: https://schemas.opengis.net/ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/Features
+        '400':
+          $ref: https://schemas.opengis.net/ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/InvalidParameter
+        '404':
+          $ref: https://schemas.opengis.net/ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/NotFound
+        '500':
+          $ref: https://schemas.opengis.net/ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/ServerError
+      summary: Get Climsoft Observationfinal items
+      tags:
+      - climsoft
+    post:
+      description: Climsoft observations
+      operationId: addClimsoftFeatures
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                acquisition_type:
+                  title: Acquisition Type
+                  type: integer
+                captured_by:
+                  title: Captured By
+                  type: string
+                cloud_height_units:
+                  title: Cloud Height Units
+                  type: string
+                data_form:
+                  title: Data Form
+                  type: string
+                data_source_timezone:
+                  title: Data Source Timezone
+                  type: integer
+                described_by:
+                  title: Described By
+                  type: integer
+                flag:
+                  title: Flag
+                  type: string
+                mark:
+                  title: Mark
+                  type: integer
+                obs_datetime:
+                  format: date-time
+                  title: Obs Datetime
+                  type: string
+                obs_level:
+                  title: Obs Level
+                  type: string
+                obs_value:
+                  title: Obs Value
+                  type: number
+                period:
+                  title: Period
+                  type: integer
+                precipitation_units:
+                  title: Precipitation Units
+                  type: string
+                qc_status:
+                  title: Qc Status
+                  type: integer
+                qc_type_log:
+                  title: Qc Type Log
+                  type: string
+                recorded_from:
+                  title: Recorded From
+                  type: string
+                temperature_units:
+                  title: Temperature Units
+                  type: string
+                vis_units:
+                  title: Vis Units
+                  type: string
+              required:
+              - recorded_from
+              - described_by
+              - obs_datetime
+              title: CreateObservationfinal
+              type: object
+        description: Adds item to collection
+        required: true
+      responses:
+        '201':
+          description: Successful creation
+        '400':
+          $ref: https://schemas.opengis.net/ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/InvalidParameter
+        '500':
+          $ref: https://schemas.opengis.net/ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/ServerError
+      summary: Add Climsoft Observationfinal items
+      tags:
+      - climsoft
+  /collections/climsoft/items/{featureId}:
+    delete:
+      description: Climsoft observations
+      operationId: deleteClimsoftFeatures
+      parameters:
+      - $ref: https://schemas.opengis.net/ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/parameters/featureId
+      responses:
+        '200':
+          description: Successful delete
+        '400':
+          $ref: https://schemas.opengis.net/ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/InvalidParameter
+        '500':
+          $ref: https://schemas.opengis.net/ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/ServerError
+      summary: Delete Climsoft Observationfinal items
+      tags:
+      - climsoft
+    get:
+      description: Climsoft observations
+      operationId: getClimsoftFeature
+      parameters:
+      - $ref: https://schemas.opengis.net/ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/parameters/featureId
+      - $ref: '#/components/parameters/f'
+      - $ref: '#/components/parameters/lang'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                definitions:
+                  GeometrySchema:
+                    properties:
+                      coordinates:
+                        items:
+                          type: number
+                        title: Coordinates
+                        type: array
+                      type:
+                        default: Point
+                        title: Type
+                        type: string
+                    required:
+                    - coordinates
+                    title: GeometrySchema
+                    type: object
+                  ObservationfinalWithStation:
+                    properties:
+                      acquisition_type:
+                        title: Acquisition Type
+                        type: integer
+                      captured_by:
+                        title: Captured By
+                        type: string
+                      cloud_height_units:
+                        title: Cloud Height Units
+                        type: string
+                      data_form:
+                        title: Data Form
+                        type: string
+                      data_source_timezone:
+                        title: Data Source Timezone
+                        type: integer
+                      described_by:
+                        title: Described By
+                        type: integer
+                      flag:
+                        title: Flag
+                        type: string
+                      mark:
+                        title: Mark
+                        type: integer
+                      obs_datetime:
+                        format: date-time
+                        title: Obs Datetime
+                        type: string
+                      obs_level:
+                        title: Obs Level
+                        type: string
+                      obs_value:
+                        title: Obs Value
+                        type: number
+                      period:
+                        title: Period
+                        type: integer
+                      precipitation_units:
+                        title: Precipitation Units
+                        type: string
+                      qc_status:
+                        title: Qc Status
+                        type: integer
+                      qc_type_log:
+                        title: Qc Type Log
+                        type: string
+                      recorded_from:
+                        title: Recorded From
+                        type: string
+                      station:
+                        $ref: '#/definitions/Station'
+                      temperature_units:
+                        title: Temperature Units
+                        type: string
+                      vis_units:
+                        title: Vis Units
+                        type: string
+                    required:
+                    - recorded_from
+                    title: ObservationfinalWithStation
+                    type: object
+                  Station:
+                    properties:
+                      country:
+                        title: Country
+                        type: string
+                      elevation:
+                        title: Elevation
+                        type: number
+                      end_datetime:
+                        title: End Datetime
+                        type: string
+                      latitude:
+                        title: Latitude
+                        type: number
+                      longitude:
+                        title: Longitude
+                        type: number
+                      name:
+                        title: Name
+                        type: string
+                      region:
+                        title: Region
+                        type: string
+                      start_datetime:
+                        title: Start Datetime
+                        type: string
+                      station_id:
+                        title: Station Id
+                        type: string
+                    title: Station
+                    type: object
+                properties:
+                  geometry:
+                    $ref: '#/definitions/GeometrySchema'
+                  id:
+                    title: Id
+                    type: string
+                  links:
+                    items:
+                      additionalProperties:
+                        type: string
+                      type: object
+                    title: Links
+                    type: array
+                  properties:
+                    $ref: '#/definitions/ObservationfinalWithStation'
+                  type:
+                    default: Feature
+                    title: Type
+                    type: string
+                required:
+                - geometry
+                - properties
+                - id
+                - links
+                title: ObservationfinalPygeoapiSchema
+                type: object
+        '400':
+          $ref: https://schemas.opengis.net/ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/InvalidParameter
+        '404':
+          $ref: https://schemas.opengis.net/ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/NotFound
+        '500':
+          $ref: https://schemas.opengis.net/ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/ServerError
+      summary: Get Climsoft Observationfinal item by id
+      tags:
+      - climsoft
+    put:
+      description: Climsoft observations
+      operationId: updateClimsoftFeatures
+      parameters:
+      - $ref: https://schemas.opengis.net/ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/parameters/featureId
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                acquisition_type:
+                  title: Acquisition Type
+                  type: integer
+                captured_by:
+                  title: Captured By
+                  type: string
+                cloud_height_units:
+                  title: Cloud Height Units
+                  type: string
+                data_form:
+                  title: Data Form
+                  type: string
+                data_source_timezone:
+                  title: Data Source Timezone
+                  type: integer
+                flag:
+                  title: Flag
+                  type: string
+                mark:
+                  title: Mark
+                  type: integer
+                obs_level:
+                  title: Obs Level
+                  type: string
+                obs_value:
+                  title: Obs Value
+                  type: number
+                period:
+                  title: Period
+                  type: integer
+                precipitation_units:
+                  title: Precipitation Units
+                  type: string
+                qc_status:
+                  title: Qc Status
+                  type: integer
+                qc_type_log:
+                  title: Qc Type Log
+                  type: string
+                temperature_units:
+                  title: Temperature Units
+                  type: string
+                vis_units:
+                  title: Vis Units
+                  type: string
+              title: UpdateObservationfinal
+              type: object
+        description: Updates item in collection
+        required: true
+      responses:
+        '204':
+          description: Successful update
+        '400':
+          $ref: https://schemas.opengis.net/ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/InvalidParameter
+        '500':
+          $ref: https://schemas.opengis.net/ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/ServerError
+      summary: Update Climsoft Observationfinal items
+      tags:
+      - climsoft
+  /collections/climsoft/queryables:
+    get:
+      description: Climsoft observations
+      operationId: getClimsoftQueryables
+      parameters:
+      - *id001
+      - *id002
+      responses:
+        '200':
+          $ref: '#/components/responses/Queryables'
+        '400':
+          $ref: https://schemas.opengis.net/ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/InvalidParameter
+        '404':
+          $ref: https://schemas.opengis.net/ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/NotFound
+        '500':
+          $ref: https://schemas.opengis.net/ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/ServerError
+      summary: Get Climsoft Observationfinal queryables
+      tags:
+      - climsoft
+  /collections/surface:
+    get:
+      description: Surface observation data from raw_data
+      operationId: describeSurfaceCollection
+      parameters:
+      - $ref: '#/components/parameters/f'
+      - $ref: '#/components/parameters/lang'
+      responses:
+        '200':
+          $ref: https://schemas.opengis.net/ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/Collection
+        '400':
+          $ref: https://schemas.opengis.net/ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/InvalidParameter
+        '404':
+          $ref: https://schemas.opengis.net/ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/NotFound
+        '500':
+          $ref: https://schemas.opengis.net/ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/ServerError
+      summary: Get Surface observation data metadata
+      tags:
+      - surface
+  /collections/surface/items:
+    get:
+      description: Surface observation data from raw_data
+      operationId: getSurfaceFeatures
+      parameters:
+      - *id001
+      - *id002
+      - $ref: https://schemas.opengis.net/ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/parameters/bbox
+      - $ref: https://schemas.opengis.net/ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/parameters/limit
+      - description: The properties that should be included for each feature. The
+          parameter value is a comma-separated list of property names.
+        explode: false
+        in: query
+        name: properties
+        required: false
+        schema:
+          items:
+            enum:
+            - created_at
+            - updated_at
+            - datetime
+            - measured
+            - consisted
+            - qc_range_description
+            - qc_step_description
+            - qc_persist_description
+            - manual_flag
+            - qc_persist_quality_flag
+            - qc_range_quality_flag
+            - qc_step_quality_flag
+            - quality_flag
+            - station_id
+            - variable_id
+            - observation_flag_id
+            - is_daily
+            - remarks
+            - observer
+            - code
+            - ml_flag
+            type: string
+          type: array
+        style: form
+      - $ref: '#/components/parameters/vendorSpecificParameters'
+      - $ref: '#/components/parameters/skipGeometry'
+      - $ref: https://raw.githubusercontent.com/opengeospatial/ogcapi-records/master/core/openapi/parameters/sortby.yaml
+      - $ref: '#/components/parameters/offset'
+      - explode: false
+        in: query
+        name: created_at
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - explode: false
+        in: query
+        name: updated_at
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - explode: false
+        in: query
+        name: datetime
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - explode: false
+        in: query
+        name: measured
+        required: false
+        schema:
+          type: number
+        style: form
+      - explode: false
+        in: query
+        name: consisted
+        required: false
+        schema:
+          type: number
+        style: form
+      - explode: false
+        in: query
+        name: qc_range_description
+        required: false
+        schema:
+          maxLength: 256
+          type: string
+        style: form
+      - explode: false
+        in: query
+        name: qc_step_description
+        required: false
+        schema:
+          maxLength: 256
+          type: string
+        style: form
+      - explode: false
+        in: query
+        name: qc_persist_description
+        required: false
+        schema:
+          maxLength: 256
+          type: string
+        style: form
+      - explode: false
+        in: query
+        name: manual_flag
+        required: false
+        schema:
+          type: integer
+        style: form
+      - explode: false
+        in: query
+        name: qc_persist_quality_flag
+        required: false
+        schema:
+          type: integer
+        style: form
+      - explode: false
+        in: query
+        name: qc_range_quality_flag
+        required: false
+        schema:
+          type: integer
+        style: form
+      - explode: false
+        in: query
+        name: qc_step_quality_flag
+        required: false
+        schema:
+          type: integer
+        style: form
+      - explode: false
+        in: query
+        name: quality_flag
+        required: false
+        schema:
+          type: integer
+        style: form
+      - explode: false
+        in: query
+        name: station_id
+        required: false
+        schema:
+          type: string
+        style: form
+      - explode: false
+        in: query
+        name: variable_id
+        required: false
+        schema:
+          type: integer
+        style: form
+      - explode: false
+        in: query
+        name: observation_flag_id
+        required: false
+        schema:
+          type: integer
+        style: form
+      - explode: false
+        in: query
+        name: is_daily
+        required: false
+        schema:
+          type: boolean
+        style: form
+      - explode: false
+        in: query
+        name: remarks
+        required: false
+        schema:
+          maxLength: 150
+          type: string
+        style: form
+      - explode: false
+        in: query
+        name: observer
+        required: false
+        schema:
+          maxLength: 150
+          type: string
+        style: form
+      - explode: false
+        in: query
+        name: code
+        required: false
+        schema:
+          maxLength: 60
+          type: string
+        style: form
+      - explode: false
+        in: query
+        name: ml_flag
+        required: false
+        schema:
+          type: integer
+        style: form
+      responses:
+        '200':
+          $ref: https://schemas.opengis.net/ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/Features
+        '400':
+          $ref: https://schemas.opengis.net/ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/InvalidParameter
+        '404':
+          $ref: https://schemas.opengis.net/ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/NotFound
+        '500':
+          $ref: https://schemas.opengis.net/ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/ServerError
+      summary: Get Surface observation data items
+      tags:
+      - surface
+    post:
+      description: Surface observation data from raw_data
+      operationId: addSurfaceFeatures
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                code:
+                  maxLength: 60
+                  title: Code
+                  type: string
+                consisted:
+                  title: Consisted
+                  type: number
+                created_at:
+                  format: date-time
+                  title: Created At
+                  type: string
+                datetime:
+                  format: date-time
+                  title: Datetime
+                  type: string
+                is_daily:
+                  title: Is Daily
+                  type: boolean
+                manual_flag:
+                  title: Manual Flag
+                  type: integer
+                measured:
+                  title: Measured
+                  type: number
+                ml_flag:
+                  title: Ml Flag
+                  type: integer
+                observation_flag_id:
+                  title: Observation Flag Id
+                  type: integer
+                observer:
+                  maxLength: 150
+                  title: Observer
+                  type: string
+                qc_persist_description:
+                  maxLength: 256
+                  title: Qc Persist Description
+                  type: string
+                qc_persist_quality_flag:
+                  title: Qc Persist Quality Flag
+                  type: integer
+                qc_range_description:
+                  maxLength: 256
+                  title: Qc Range Description
+                  type: string
+                qc_range_quality_flag:
+                  title: Qc Range Quality Flag
+                  type: integer
+                qc_step_description:
+                  maxLength: 256
+                  title: Qc Step Description
+                  type: string
+                qc_step_quality_flag:
+                  title: Qc Step Quality Flag
+                  type: integer
+                quality_flag:
+                  title: Quality Flag
+                  type: integer
+                remarks:
+                  maxLength: 150
+                  title: Remarks
+                  type: string
+                station_id:
+                  title: Station Id
+                  type: integer
+                updated_at:
+                  format: date-time
+                  title: Updated At
+                  type: string
+                variable_id:
+                  title: Variable Id
+                  type: integer
+              required:
+              - datetime
+              - measured
+              - quality_flag
+              - station_id
+              - variable_id
+              title: CreateRawData
+              type: object
+        description: Adds item to collection
+        required: true
+      responses:
+        '201':
+          description: Successful creation
+        '400':
+          $ref: https://schemas.opengis.net/ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/InvalidParameter
+        '500':
+          $ref: https://schemas.opengis.net/ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/ServerError
+      summary: Add Surface observation data items
+      tags:
+      - surface
+  /collections/surface/items/{featureId}:
+    delete:
+      description: Surface observation data from raw_data
+      operationId: deleteSurfaceFeatures
+      parameters:
+      - $ref: https://schemas.opengis.net/ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/parameters/featureId
+      responses:
+        '200':
+          description: Successful delete
+        '400':
+          $ref: https://schemas.opengis.net/ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/InvalidParameter
+        '500':
+          $ref: https://schemas.opengis.net/ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/ServerError
+      summary: Delete Surface observation data items
+      tags:
+      - surface
+    get:
+      description: Surface observation data from raw_data
+      operationId: getSurfaceFeature
+      parameters:
+      - $ref: https://schemas.opengis.net/ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/parameters/featureId
+      - $ref: '#/components/parameters/f'
+      - $ref: '#/components/parameters/lang'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                definitions:
+                  GeometrySchema:
+                    properties:
+                      coordinates:
+                        items:
+                          type: number
+                        title: Coordinates
+                        type: array
+                      type:
+                        default: Point
+                        title: Type
+                        type: string
+                    required:
+                    - coordinates
+                    title: GeometrySchema
+                    type: object
+                  RawDataWithStation:
+                    properties:
+                      code:
+                        maxLength: 60
+                        title: Code
+                        type: string
+                      consisted:
+                        title: Consisted
+                        type: number
+                      created_at:
+                        format: date-time
+                        title: Created At
+                        type: string
+                      datetime:
+                        format: date-time
+                        title: Datetime
+                        type: string
+                      is_daily:
+                        title: Is Daily
+                        type: boolean
+                      manual_flag:
+                        title: Manual Flag
+                        type: integer
+                      measured:
+                        title: Measured
+                        type: number
+                      ml_flag:
+                        title: Ml Flag
+                        type: integer
+                      observation_flag_id:
+                        title: Observation Flag Id
+                        type: integer
+                      observer:
+                        maxLength: 150
+                        title: Observer
+                        type: string
+                      qc_persist_description:
+                        maxLength: 256
+                        title: Qc Persist Description
+                        type: string
+                      qc_persist_quality_flag:
+                        title: Qc Persist Quality Flag
+                        type: integer
+                      qc_range_description:
+                        maxLength: 256
+                        title: Qc Range Description
+                        type: string
+                      qc_range_quality_flag:
+                        title: Qc Range Quality Flag
+                        type: integer
+                      qc_step_description:
+                        maxLength: 256
+                        title: Qc Step Description
+                        type: string
+                      qc_step_quality_flag:
+                        title: Qc Step Quality Flag
+                        type: integer
+                      quality_flag:
+                        title: Quality Flag
+                        type: integer
+                      remarks:
+                        maxLength: 150
+                        title: Remarks
+                        type: string
+                      station:
+                        $ref: '#/definitions/WxStation'
+                      station_id:
+                        title: Station Id
+                        type: integer
+                      updated_at:
+                        format: date-time
+                        title: Updated At
+                        type: string
+                      variable_id:
+                        title: Variable Id
+                        type: integer
+                    required:
+                    - datetime
+                    - measured
+                    - quality_flag
+                    - station_id
+                    - variable_id
+                    - station
+                    title: RawDataWithStation
+                    type: object
+                  WxStation:
+                    properties:
+                      access_point:
+                        maxLength: 256
+                        title: Access Point
+                        type: string
+                      alias_name:
+                        maxLength: 256
+                        title: Alias Name
+                        type: string
+                      alternative_names:
+                        maxLength: 256
+                        title: Alternative Names
+                        type: string
+                      bank_full_stage:
+                        maxLength: 256
+                        title: Bank Full Stage
+                        type: string
+                      begin_date:
+                        format: date-time
+                        title: Begin Date
+                        type: string
+                      bridge_level:
+                        maxLength: 256
+                        title: Bridge Level
+                        type: string
+                      casing_diameter:
+                        title: Casing Diameter
+                        type: number
+                      casing_type:
+                        maxLength: 256
+                        title: Casing Type
+                        type: string
+                      catchment_area_station:
+                        maxLength: 256
+                        title: Catchment Area Station
+                        type: string
+                      code:
+                        maxLength: 64
+                        title: Code
+                        type: string
+                      communication_type_id:
+                        title: Communication Type Id
+                        type: integer
+                      country_id:
+                        title: Country Id
+                        type: integer
+                      created_at:
+                        format: date-time
+                        title: Created At
+                        type: string
+                      data_source_id:
+                        title: Data Source Id
+                        type: integer
+                      data_type:
+                        maxLength: 256
+                        title: Data Type
+                        type: string
+                      datum:
+                        maxLength: 256
+                        title: Datum
+                        type: string
+                      depth_midpoint:
+                        title: Depth Midpoint
+                        type: number
+                      easting:
+                        title: Easting
+                        type: number
+                      elevation:
+                        title: Elevation
+                        type: number
+                      end_date:
+                        format: date-time
+                        title: End Date
+                        type: string
+                      existing_gauges:
+                        maxLength: 256
+                        title: Existing Gauges
+                        type: string
+                      flow_direction_above_station:
+                        maxLength: 256
+                        title: Flow Direction Above Station
+                        type: string
+                      flow_direction_at_station:
+                        maxLength: 256
+                        title: Flow Direction At Station
+                        type: string
+                      flow_direction_below_station:
+                        maxLength: 256
+                        title: Flow Direction Below Station
+                        type: string
+                      frequency_observation:
+                        maxLength: 256
+                        title: Frequency Observation
+                        type: string
+                      ground_water_province:
+                        maxLength: 256
+                        title: Ground Water Province
+                        type: string
+                      historic_events:
+                        maxLength: 256
+                        title: Historic Events
+                        type: string
+                      hydrology_station_type:
+                        maxLength: 64
+                        title: Hydrology Station Type
+                        type: string
+                      id:
+                        title: Id
+                        type: integer
+                      is_active:
+                        title: Is Active
+                        type: boolean
+                      is_automatic:
+                        title: Is Automatic
+                        type: boolean
+                      is_surface:
+                        title: Is Surface
+                        type: boolean
+                      land_surface_elevation:
+                        title: Land Surface Elevation
+                        type: number
+                      latitude:
+                        title: Latitude
+                        type: number
+                      local_land_use:
+                        maxLength: 256
+                        title: Local Land Use
+                        type: string
+                      longitude:
+                        title: Longitude
+                        type: number
+                      mean_sea_level:
+                        maxLength: 256
+                        title: Mean Sea Level
+                        type: string
+                      name:
+                        maxLength: 256
+                        title: Name
+                        type: string
+                      network:
+                        maxLength: 256
+                        title: Network
+                        type: string
+                      northing:
+                        title: Northing
+                        type: number
+                      observer:
+                        maxLength: 256
+                        title: Observer
+                        type: string
+                      operation_status:
+                        title: Operation Status
+                        type: boolean
+                      organization:
+                        maxLength: 256
+                        title: Organization
+                        type: string
+                      other_information:
+                        maxLength: 256
+                        title: Other Information
+                        type: string
+                      profile_id:
+                        title: Profile Id
+                        type: integer
+                      reference_station_id:
+                        title: Reference Station Id
+                        type: integer
+                      region:
+                        maxLength: 256
+                        title: Region
+                        type: string
+                      relocation_date:
+                        format: date-time
+                        title: Relocation Date
+                        type: string
+                      remarks:
+                        maxLength: 256
+                        title: Remarks
+                        type: string
+                      river_code:
+                        title: River Code
+                        type: integer
+                      river_course:
+                        maxLength: 64
+                        title: River Course
+                        type: string
+                      river_length:
+                        title: River Length
+                        type: integer
+                      river_origin:
+                        maxLength: 256
+                        title: River Origin
+                        type: string
+                      river_outlet:
+                        maxLength: 256
+                        title: River Outlet
+                        type: string
+                      screen_length:
+                        title: Screen Length
+                        type: number
+                      screen_size:
+                        title: Screen Size
+                        type: number
+                      site_description:
+                        maxLength: 256
+                        title: Site Description
+                        type: string
+                      soil_type:
+                        maxLength: 64
+                        title: Soil Type
+                        type: string
+                      station_details:
+                        maxLength: 256
+                        title: Station Details
+                        type: string
+                      temporary_benchmark:
+                        maxLength: 256
+                        title: Temporary Benchmark
+                        type: string
+                      top_casing_land_surface:
+                        title: Top Casing Land Surface
+                        type: number
+                      updated_at:
+                        format: date-time
+                        title: Updated At
+                        type: string
+                      utc_offset_minutes:
+                        title: Utc Offset Minutes
+                        type: integer
+                      watershed:
+                        maxLength: 256
+                        title: Watershed
+                        type: string
+                      wigos:
+                        maxLength: 64
+                        title: Wigos
+                        type: string
+                      wmo:
+                        title: Wmo
+                        type: integer
+                      wmo_program_id:
+                        title: Wmo Program Id
+                        type: integer
+                      wmo_region_id:
+                        title: Wmo Region Id
+                        type: integer
+                      wmo_station_plataform:
+                        maxLength: 256
+                        title: Wmo Station Plataform
+                        type: string
+                      wmo_station_type_id:
+                        title: Wmo Station Type Id
+                        type: integer
+                      z:
+                        title: Z
+                        type: number
+                      zone:
+                        maxLength: 256
+                        title: Zone
+                        type: string
+                    required:
+                    - id
+                    - name
+                    - longitude
+                    - latitude
+                    - code
+                    - is_active
+                    - is_automatic
+                    - is_surface
+                    - utc_offset_minutes
+                    - operation_status
+                    title: WxStation
+                    type: object
+                properties:
+                  geometry:
+                    $ref: '#/definitions/GeometrySchema'
+                  id:
+                    title: Id
+                    type: string
+                  links:
+                    items:
+                      additionalProperties:
+                        type: string
+                      type: object
+                    title: Links
+                    type: array
+                  properties:
+                    $ref: '#/definitions/RawDataWithStation'
+                  type:
+                    default: Feature
+                    title: Type
+                    type: string
+                required:
+                - geometry
+                - properties
+                - id
+                - links
+                title: RawDataPygeoapiSchema
+                type: object
+        '400':
+          $ref: https://schemas.opengis.net/ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/InvalidParameter
+        '404':
+          $ref: https://schemas.opengis.net/ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/NotFound
+        '500':
+          $ref: https://schemas.opengis.net/ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/ServerError
+      summary: Get Surface observation data item by id
+      tags:
+      - surface
+    put:
+      description: Surface observation data from raw_data
+      operationId: updateSurfaceFeatures
+      parameters:
+      - $ref: https://schemas.opengis.net/ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/parameters/featureId
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                code:
+                  maxLength: 60
+                  title: Code
+                  type: string
+                consisted:
+                  title: Consisted
+                  type: number
+                created_at:
+                  format: date-time
+                  title: Created At
+                  type: string
+                datetime:
+                  format: date-time
+                  title: Datetime
+                  type: string
+                is_daily:
+                  title: Is Daily
+                  type: boolean
+                manual_flag:
+                  title: Manual Flag
+                  type: integer
+                measured:
+                  title: Measured
+                  type: number
+                ml_flag:
+                  title: Ml Flag
+                  type: integer
+                observation_flag_id:
+                  title: Observation Flag Id
+                  type: integer
+                observer:
+                  maxLength: 150
+                  title: Observer
+                  type: string
+                qc_persist_description:
+                  maxLength: 256
+                  title: Qc Persist Description
+                  type: string
+                qc_persist_quality_flag:
+                  title: Qc Persist Quality Flag
+                  type: integer
+                qc_range_description:
+                  maxLength: 256
+                  title: Qc Range Description
+                  type: string
+                qc_range_quality_flag:
+                  title: Qc Range Quality Flag
+                  type: integer
+                qc_step_description:
+                  maxLength: 256
+                  title: Qc Step Description
+                  type: string
+                qc_step_quality_flag:
+                  title: Qc Step Quality Flag
+                  type: integer
+                quality_flag:
+                  title: Quality Flag
+                  type: integer
+                remarks:
+                  maxLength: 150
+                  title: Remarks
+                  type: string
+                station_id:
+                  title: Station Id
+                  type: integer
+                updated_at:
+                  format: date-time
+                  title: Updated At
+                  type: string
+                variable_id:
+                  title: Variable Id
+                  type: integer
+              title: UpdateRawData
+              type: object
+        description: Updates item in collection
+        required: true
+      responses:
+        '204':
+          description: Successful update
+        '400':
+          $ref: https://schemas.opengis.net/ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/InvalidParameter
+        '500':
+          $ref: https://schemas.opengis.net/ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/ServerError
+      summary: Update Surface observation data items
+      tags:
+      - surface
+  /collections/surface/queryables:
+    get:
+      description: Surface observation data from raw_data
+      operationId: getSurfaceQueryables
+      parameters:
+      - *id001
+      - *id002
+      responses:
+        '200':
+          $ref: '#/components/responses/Queryables'
+        '400':
+          $ref: https://schemas.opengis.net/ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/InvalidParameter
+        '404':
+          $ref: https://schemas.opengis.net/ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/NotFound
+        '500':
+          $ref: https://schemas.opengis.net/ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/ServerError
+      summary: Get Surface observation data queryables
+      tags:
+      - surface
+  /conformance:
+    get:
+      description: API conformance definition
+      operationId: getConformanceDeclaration
+      parameters:
+      - $ref: '#/components/parameters/f'
+      - $ref: '#/components/parameters/lang'
+      responses:
+        '200':
+          $ref: https://schemas.opengis.net/ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/ConformanceDeclaration
+        '400':
+          $ref: https://schemas.opengis.net/ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/InvalidParameter
+        '500':
+          $ref: https://schemas.opengis.net/ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/ServerError
+      summary: API conformance definition
+      tags:
+      - server
+  /openapi:
+    get:
+      description: This document
+      operationId: getOpenapi
+      parameters:
+      - $ref: '#/components/parameters/f'
+      - $ref: '#/components/parameters/lang'
+      - description: UI to render the OpenAPI document
+        explode: false
+        in: query
+        name: ui
+        required: false
+        schema:
+          default: swagger
+          enum:
+          - swagger
+          - redoc
+          type: string
+        style: form
+      responses:
+        '200':
+          $ref: '#/components/responses/200'
+        '400':
+          $ref: https://schemas.opengis.net/ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/InvalidParameter
+        default:
+          $ref: '#/components/responses/default'
+      summary: This document
+      tags:
+      - server
+servers:
+- description: pygeoapi provides an API to geospatial data
+  url: http://localhost:5000
+tags:
+- description: pygeoapi provides an API to geospatial data
+  externalDocs:
+    description: information
+    url: https://api.opencdms.org
+  name: server
+- description: SpatioTemporal Asset Catalog
+  name: stac
+- description: Climsoft observations
+  name: climsoft
+- description: Surface observation data from raw_data
+  name: surface
+

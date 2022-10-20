@@ -179,7 +179,7 @@ class SurfaceProvider(BaseProvider):
         limit: int = 0,
         resulttype: str = "results",
         bbox: List = None,
-        datetime_=None,
+        datetime=None,
         properties: List = None,
         sortby: List = None,
         select_properties: List = None,
@@ -237,7 +237,7 @@ class SurfaceProvider(BaseProvider):
 
                 obs_finals = query.offset(startindex).limit(limit).all()
 
-                include_props = {"code", "measured", "datetime_"}
+                include_props = {"code", "measured", "datetime"}
 
                 for p in select_properties:
                     include_props.add(raw_data_field_mapping.get(p, p))
@@ -266,7 +266,7 @@ class SurfaceProvider(BaseProvider):
         :param identifier: feature id
         :returns: dict of single GeoJSON feature
         """
-        station_id, variable_id, datetime_ = identifier.split("*")
+        station_id, variable_id, datetime = identifier.split("*")
 
         with DatabaseConnection(
             conn_dic=self.conn_dic, properties=self.properties
@@ -276,7 +276,7 @@ class SurfaceProvider(BaseProvider):
                 .filter_by(
                     station_id=station_id,
                     variable_id=variable_id,
-                    datetime_=datetime_,
+                    datetime=datetime,
                 )
                 .options(joinedload(models.RawData.station))
                 .first()
@@ -299,7 +299,7 @@ class SurfaceProvider(BaseProvider):
         return (
             f"{obs_final_data.station_id}"
             f"*{obs_final_data.variable_id}*"
-            f"{obs_final_data.datetime_}"
+            f"{obs_final_data.datetime}"
         )
 
     def update(self, identifier, data):
@@ -309,7 +309,7 @@ class SurfaceProvider(BaseProvider):
         :param data: new GeoJSON feature dictionary
         """
 
-        station_id, variable_id, datetime_ = identifier.split("*")
+        station_id, variable_id, datetime = identifier.split("*")
         updates = remove_nulls_from_dict(
             UpdateRawData.parse_raw(data).dict()
         )
@@ -319,7 +319,7 @@ class SurfaceProvider(BaseProvider):
             db.session.query(models.RawData).filter_by(
                 station_id=station_id,
                 variable_id=variable_id,
-                datetime_=datetime_,
+                datetime=datetime,
             ).update(updates)
             db.session.commit()
         return True
@@ -347,14 +347,14 @@ class SurfaceProvider(BaseProvider):
 
         :param identifier: feature id
         """
-        station_id, variable_id, datetime_ = identifier.split("*")
+        station_id, variable_id, datetime = identifier.split("*")
         with DatabaseConnection(
             conn_dic=self.conn_dic, properties=self.properties
         ) as db:
             db.session.query(models.RawData).filter_by(
                 station_id=station_id,
                 variable_id=variable_id,
-                datetime_=datetime_,
+                datetime=datetime,
             ).delete()
             db.session.commit()
         return True
@@ -370,6 +370,9 @@ class SurfaceProvider(BaseProvider):
 
         :returns: `dict` of GeoJSON Feature
         """
+        LOGGER.error(obs_final.code)
+        LOGGER.error(obs_final.station_id)
+        LOGGER.error(obs_final.station)
         obsfinal = RawDataWithStation.from_orm(obs_final)
 
         feature = {
@@ -388,7 +391,7 @@ class SurfaceProvider(BaseProvider):
             else obsfinal.dict(include=include, by_alias=True),
             "id": f"{obsfinal.station_id}"
             f"*{obsfinal.variable_id}"
-            f"*{obsfinal.datetime_}",
+            f"*{obsfinal.datetime}",
         }
 
         return feature

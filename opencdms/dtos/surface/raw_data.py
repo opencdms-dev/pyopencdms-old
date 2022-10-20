@@ -1,16 +1,16 @@
-import datetime
+import datetime as dt
 from typing import Optional, List, Dict
 from pydantic import BaseModel, constr
 from opencdms.dtos.surface.wx_station import WxStation
 
 
-field_mapping = {"datetime_": "datetime"}
+field_mapping = {"datetime": "datetime"}
 
 
 class CreateRawData(BaseModel):
-    created_at: Optional[datetime.datetime]
-    updated_at: Optional[datetime.datetime]
-    datetime_: datetime.datetime
+    created_at: Optional[dt.datetime]
+    updated_at: Optional[dt.datetime]
+    datetime: dt.datetime
     measured: float
     consisted: Optional[float]
     qc_range_description: Optional[constr(max_length=256)]
@@ -27,14 +27,14 @@ class CreateRawData(BaseModel):
     is_daily: Optional[bool]
     remarks: Optional[constr(max_length=150)]
     observer: Optional[constr(max_length=150)]
-    code: constr(max_length=60)
+    code: Optional[constr(max_length=60)]
     ml_flag: Optional[int]
 
 
 class UpdateRawData(BaseModel):
-    created_at: Optional[datetime.datetime]
-    updated_at: Optional[datetime.datetime]
-    datetime_: Optional[datetime.datetime]
+    created_at: Optional[dt.datetime]
+    updated_at: Optional[dt.datetime]
+    datetime: Optional[dt.datetime]
     measured: Optional[float]
     consisted: Optional[float]
     qc_range_description: Optional[constr(max_length=256)]
