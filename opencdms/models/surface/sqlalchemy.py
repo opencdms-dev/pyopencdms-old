@@ -12,6 +12,7 @@ from sqlalchemy import (
     Table,
     UniqueConstraint,
     text,
+    PrimaryKeyConstraint
 )
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
@@ -23,6 +24,11 @@ metadata = Base.metadata
 class RawData(Base):
     __tablename__ = "raw_data"
     __table_args__ = (
+        PrimaryKeyConstraint(
+            "datetime",
+            "station_id",
+            "variable_id",
+        ),
         Index(
             "raw_data_datetime_station_id_variable_id_uidx",
             "datetime",

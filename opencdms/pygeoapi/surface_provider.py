@@ -4,30 +4,27 @@ from pygeoapi.provider.base import (
     ProviderQueryError,
     ProviderItemNotFoundError,
 )
-import os
-import django
-from django.conf import settings
-from opencdms.models.surface import Station
+from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, Query, joinedload, Session
 from sqlalchemy.sql import asc, desc
 from typing import Dict, List
 from alchemyjsonschema import SchemaFactory
 from alchemyjsonschema import ForeignKeyWalker
 from opencdms.utils.db import get_connection_string, get_count
-from opencdms.models.climsoft import v4_1_1_core as models
-from opencdms.dtos.climsoft.observationfinal import (
-    ObservationfinalWithStation,
-    ObservationfinalPygeoapiSchema,
-    CreateObservationfinal,
-    UpdateObservationfinal,
-    field_mapping as obs_final_field_mapping,
+from opencdms.models.surface import sqlalchemy as models
+from opencdms.dtos.surface.raw_data import (
+    RawDataWithStation,
+    RawDataPygeoapiSchema,
+    CreateRawData,
+    UpdateRawData,
+    field_mapping as raw_data_field_mapping,
 )
 from opencdms.utils.misc import remove_nulls_from_dict
 from pygeoapi.api import LOGGER
 from pygeoapi.provider.base import SchemaType
 from collections import OrderedDict
 
-obs_reverse_field_mapping = {v: k for k, v in obs_final_field_mapping.items()}
+raw_data_reverse_field_mapping = {v: k for k, v in raw_data_field_mapping.items()}
 
 
 class DatabaseConnection:
@@ -71,38 +68,28 @@ class DatabaseConnection:
         self.context = context
         self.columns = None
         self.fields = {}
+        self.session: Session = None
+        self.uri = get_connection_string(
+            "postgresql",
+            "psycopg2",
+            self.conn_dic["user"],
+            self.conn_dic["password"],
+            self.conn_dic["host"],
+            self.conn_dic["port"],
+            self.conn_dic["dbname"],
+        )
 
     def __enter__(self):
         try:
-            settings.configure(
-                DATABASES={
-                    "default": {
-                        "ENGINE": "django.db.backends.postgresql",
-                        "HOST": self.conn_dic["host"],
-                        "USER": self.conn_dic["user"],
-                        "NAME": self.conn_dic["dbname"],
-                        "PORT": self.conn_dic["port"],
-                        "PASSWORD": self.conn_dic["password"],
-                    }
-                },
-                DEFAULT_AUTO_FIELD="django.db.models.AutoField",
-                INSTALLED_APPS=(
-                    "opencdms.models.surface",
-                    "django.contrib.auth",
-                    "django.contrib.contenttypes",
-                ),
-            )
-        except RuntimeError:
-            pass
+            self.engine = create_engine(url=self.uri)
+            self.session = sessionmaker(bind=self.engine)()
         except Exception as e:
             LOGGER.error(e)
             raise ProviderConnectionError()
 
-        django.setup()
-
         if self.context == "query":
             factory = SchemaFactory(ForeignKeyWalker)
-            self.fields = factory(model=models.Observationfinal).get(
+            self.fields = factory(model=models.RawData).get(
                 "properties"
             )
         return self
@@ -111,7 +98,7 @@ class DatabaseConnection:
         self.session.close()
 
 
-class ClimsoftProvider(BaseProvider):
+class SurfaceProvider(BaseProvider):
     def __init__(self, provider_def):
         super().__init__(provider_def=provider_def)
         self.conn_dic = provider_def["data"]
@@ -129,8 +116,8 @@ class ClimsoftProvider(BaseProvider):
         for k, v in properties:
             query = query.filter(
                 getattr(
-                    models.Observationfinal,
-                    obs_reverse_field_mapping.get(k, k),
+                    models.RawData,
+                    raw_data_reverse_field_mapping.get(k, k),
                 )
                 == v
             )
@@ -139,27 +126,27 @@ class ClimsoftProvider(BaseProvider):
             min_lng, min_lat, max_lng, max_lat = bbox
             query = (
                 query.join(
-                    models.Station,
-                    models.Observationfinal.recordedFrom
-                    == models.Station.stationId,
+                    models.WxStation,
+                    models.RawData.station_id
+                    == models.WxStation.id,
                 )
-                .filter(models.Station.longitude >= min_lng)
-                .filter(models.Station.longitude <= max_lng)
-                .filter(models.Station.latitude >= min_lat)
-                .filter(models.Station.latitude <= max_lat)
+                .filter(models.WxStation.longitude >= min_lng)
+                .filter(models.WxStation.longitude <= max_lng)
+                .filter(models.WxStation.latitude >= min_lat)
+                .filter(models.WxStation.latitude <= max_lat)
             )
 
         return query
 
     def _apply_sorting(self, query: Query, sortby: List[Dict]):
         for item in sortby:
-            sort_attr = obs_reverse_field_mapping.get(
+            sort_attr = raw_data_reverse_field_mapping.get(
                 item["property"], item["property"]
             )
             query = query.order_by(
-                asc(getattr(models.Observationfinal, sort_attr))
+                asc(getattr(models.RawData, sort_attr))
                 if item["order"] == "+"
-                else desc(getattr(models.Observationfinal, sort_attr))
+                else desc(getattr(models.RawData, sort_attr))
             )
         return query
 
@@ -175,16 +162,16 @@ class ClimsoftProvider(BaseProvider):
             ) as db:
                 self.fields = OrderedDict()
                 for k, v in db.fields.items():
-                    self.fields[obs_final_field_mapping.get(k, k)] = v
+                    self.fields[raw_data_field_mapping.get(k, k)] = v
         return self.fields
 
     def get_schema(self, schema_type: SchemaType = SchemaType.item):
         if schema_type in {SchemaType.update, SchemaType.replace}:
-            return "application/json", UpdateObservationfinal.schema()
+            return "application/json", UpdateRawData.schema()
         elif schema_type == SchemaType.create:
-            return "application/json", CreateObservationfinal.schema()
+            return "application/json", CreateRawData.schema()
         else:
-            return "application/json", ObservationfinalPygeoapiSchema.schema()
+            return "application/json", RawDataPygeoapiSchema.schema()
 
     def query(
         self,
@@ -221,7 +208,7 @@ class ClimsoftProvider(BaseProvider):
                 properties=self.properties,
                 context="hits",
             ) as db:
-                query = db.session.query(models.Observationfinal)
+                query = db.session.query(models.RawData)
 
                 query = self.__apply_filters(
                     query=query, properties=properties, bbox=bbox
@@ -235,7 +222,7 @@ class ClimsoftProvider(BaseProvider):
             conn_dic=self.conn_dic, properties=self.properties
         ) as db:
             try:
-                query = db.session.query(models.Observationfinal)
+                query = db.session.query(models.RawData)
 
                 query = self.__apply_filters(
                     query=query, properties=properties, bbox=bbox
@@ -245,15 +232,15 @@ class ClimsoftProvider(BaseProvider):
 
                 if not skip_geometry:
                     query = query.options(
-                        joinedload(models.Observationfinal.station)
+                        joinedload(models.RawData.station)
                     )
 
                 obs_finals = query.offset(startindex).limit(limit).all()
 
-                include_props = {"obsValue", "obsLevel", "obsDatetime"}
+                include_props = {"code", "measured", "datetime_"}
 
                 for p in select_properties:
-                    include_props.add(obs_final_field_mapping.get(p, p))
+                    include_props.add(raw_data_field_mapping.get(p, p))
 
                 feature_collection = {
                     "type": "FeatureCollection",
@@ -279,19 +266,19 @@ class ClimsoftProvider(BaseProvider):
         :param identifier: feature id
         :returns: dict of single GeoJSON feature
         """
-        recordedFrom, describedBy, obsDatetime = identifier.split("*")
+        station_id, variable_id, datetime_ = identifier.split("*")
 
         with DatabaseConnection(
             conn_dic=self.conn_dic, properties=self.properties
         ) as db:
             obs_final = (
-                db.session.query(models.Observationfinal)
+                db.session.query(models.RawData)
                 .filter_by(
-                    recordedFrom=recordedFrom,
-                    describedBy=describedBy,
-                    obsDatetime=obsDatetime,
+                    station_id=station_id,
+                    variable_id=variable_id,
+                    datetime_=datetime_,
                 )
-                .options(joinedload(models.Observationfinal.station))
+                .options(joinedload(models.RawData.station))
                 .first()
             )
 
@@ -302,17 +289,17 @@ class ClimsoftProvider(BaseProvider):
 
     def create(self, data):
         """Create a new feature"""
-        obs_final_data = CreateObservationfinal.parse_raw(data)
+        obs_final_data = CreateRawData.parse_raw(data)
         with DatabaseConnection(
             conn_dic=self.conn_dic, properties=self.properties
         ) as db:
-            obs_final = models.Observationfinal(**obs_final_data.dict())
+            obs_final = models.RawData(**obs_final_data.dict())
             db.session.add(obs_final)
             db.session.commit()
         return (
-            f"{obs_final_data.recordedFrom}"
-            f"*{obs_final_data.describedBy}*"
-            f"{obs_final_data.obsDatetime}"
+            f"{obs_final_data.station_id}"
+            f"*{obs_final_data.variable_id}*"
+            f"{obs_final_data.datetime_}"
         )
 
     def update(self, identifier, data):
@@ -322,17 +309,17 @@ class ClimsoftProvider(BaseProvider):
         :param data: new GeoJSON feature dictionary
         """
 
-        recorded_from, described_by, obs_datetime = identifier.split("*")
+        station_id, variable_id, datetime_ = identifier.split("*")
         updates = remove_nulls_from_dict(
-            UpdateObservationfinal.parse_raw(data).dict()
+            UpdateRawData.parse_raw(data).dict()
         )
         with DatabaseConnection(
             conn_dic=self.conn_dic, properties=self.properties
         ) as db:
-            db.session.query(models.Observationfinal).filter_by(
-                recordedFrom=recorded_from,
-                describedBy=described_by,
-                obsDatetime=obs_datetime,
+            db.session.query(models.RawData).filter_by(
+                station_id=station_id,
+                variable_id=variable_id,
+                datetime_=datetime_,
             ).update(updates)
             db.session.commit()
         return True
@@ -360,14 +347,14 @@ class ClimsoftProvider(BaseProvider):
 
         :param identifier: feature id
         """
-        recorded_from, described_by, obs_datetime = identifier.split("*")
+        station_id, variable_id, datetime_ = identifier.split("*")
         with DatabaseConnection(
             conn_dic=self.conn_dic, properties=self.properties
         ) as db:
-            db.session.query(models.Observationfinal).filter_by(
-                recordedFrom=recorded_from,
-                describedBy=described_by,
-                obsDatetime=obs_datetime,
+            db.session.query(models.RawData).filter_by(
+                station_id=station_id,
+                variable_id=variable_id,
+                datetime_=datetime_,
             ).delete()
             db.session.commit()
         return True
@@ -383,7 +370,7 @@ class ClimsoftProvider(BaseProvider):
 
         :returns: `dict` of GeoJSON Feature
         """
-        obsfinal = ObservationfinalWithStation.from_orm(obs_final)
+        obsfinal = RawDataWithStation.from_orm(obs_final)
 
         feature = {
             "type": "Feature",
@@ -399,9 +386,9 @@ class ClimsoftProvider(BaseProvider):
             "properties": obsfinal.dict(by_alias=True)
             if include is None
             else obsfinal.dict(include=include, by_alias=True),
-            "id": f"{obsfinal.recordedFrom}"
-            f"*{obsfinal.describedBy}"
-            f"*{obsfinal.obsDatetime}",
+            "id": f"{obsfinal.station_id}"
+            f"*{obsfinal.variable_id}"
+            f"*{obsfinal.datetime_}",
         }
 
         return feature

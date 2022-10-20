@@ -1,5 +1,5 @@
 import datetime
-from typing import Optional
+from typing import Optional, List, Dict
 from pydantic import BaseModel, constr
 from opencdms.dtos.surface.wx_station import WxStation
 
@@ -56,9 +56,30 @@ class UpdateRawData(BaseModel):
 
 
 class RawData(CreateRawData):
+    class Config:
+        orm_mode = True
+        allow_population_by_field_name = True
+        fields = field_mapping
+
+
+class RawDataWithStation(CreateRawData):
     station: WxStation
 
     class Config:
         orm_mode = True
         allow_population_by_field_name = True
         fields = field_mapping
+
+
+class GeometrySchema(BaseModel):
+    type: str = "Point"
+    coordinates: List[float]
+
+
+class RawDataPygeoapiSchema(BaseModel):
+    type: str = "Feature"
+    geometry: GeometrySchema
+    properties: RawDataWithStation
+    id: str
+    links: List[Dict[str, str]]
+
