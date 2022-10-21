@@ -3,9 +3,7 @@ Running these tests requires pygeoapi server
 (configured with surface pygeoapi provider) running
 """
 import requests
-import random
 import datetime
-import uuid
 import faker
 
 fake = faker.Faker()

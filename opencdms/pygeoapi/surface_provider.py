@@ -24,7 +24,9 @@ from pygeoapi.api import LOGGER
 from pygeoapi.provider.base import SchemaType
 from collections import OrderedDict
 
-raw_data_reverse_field_mapping = {v: k for k, v in raw_data_field_mapping.items()}
+raw_data_reverse_field_mapping = {
+    v: k for k, v in raw_data_field_mapping.items()
+}
 
 
 class DatabaseConnection:
