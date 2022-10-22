@@ -11,7 +11,7 @@ from typing import Dict, List
 from alchemyjsonschema import SchemaFactory
 from alchemyjsonschema import ForeignKeyWalker
 from opencdms.utils.db import get_connection_string, get_count
-from opencdms.models.surface import sqlalchemy as models
+from opencdms.models import surface as models
 from opencdms.dtos.surface.raw_data import (
     RawDataWithStation,
     RawDataPygeoapiSchema,
@@ -372,9 +372,6 @@ class SurfaceProvider(BaseProvider):
 
         :returns: `dict` of GeoJSON Feature
         """
-        LOGGER.error(obs_final.code)
-        LOGGER.error(obs_final.station_id)
-        LOGGER.error(obs_final.station)
         obsfinal = RawDataWithStation.from_orm(obs_final)
 
         feature = {
