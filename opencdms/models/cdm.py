@@ -34,8 +34,6 @@ class Feature_type(Base):
     name = Column(String, comment="Short name for feature type", index=False)  # noqa
     description = Column(String, comment="Description of feature type", index=False)  # noqa
     link = Column(String, comment="Link to definition of feature type", index=False)  # noqa
-    location = Column(Geography, comment="Location of station", index=False)  # noqa
-    elevation = Column(Numeric, comment="Elevation of station above mean sea level", index=False)  # noqa
 
 
 class Observed_property(Base):
@@ -66,20 +64,20 @@ class Record_status(Base):
     description = Column(String, comment="Description of the status", index=False)  # noqa
 
 
-class Stations(Base):
-    __tablename__ = "stations"
+class Hosts(Base):
+    __tablename__ = "hosts"
     __table_args__ = {'schema': 'cdm'}
     id = Column(String, comment="ID / primary key", primary_key=True, index=False)  # noqa
-    name = Column(String, comment="Preferred name of station", index=False)
-    description = Column(String, comment="Station description", index=False)
-    link = Column(String, comment="URI to station, e.g. to OSCAR/Surface", index=False)  # noqa
+    name = Column(String, comment="Preferred name of host", index=False)
+    description = Column(String, comment="Description of host", index=False)
+    link = Column(String, comment="URI to host, e.g. to OSCAR/Surface", index=False)  # noqa
     location = Column(Geography, comment="Location of station", index=False)
     elevation = Column(Numeric, comment="Elevation of station above mean sea level", index=False)  # noqa
     wigos_station_identifier = Column(String, comment="WIGOS station identifier", index=False)  # noqa
     facility_type = Column(String, comment="Type of observing facility, fixed land, mobile sea, etc", index=False)  # noqa
-    date_established = Column(String, comment="Date station was first established", index=False)  # noqa
-    wmo_region = Column(String, comment="WMO region in which the station is located", index=False)  # noqa
-    territory = Column(String, comment="Territory the station is located in", index=False)  # noqa
+    date_established = Column(String, comment="Date host was first established", index=False)  # noqa
+    wmo_region = Column(String, comment="WMO region in which the host is located", index=False)  # noqa
+    territory = Column(String, comment="Territory the host is located in", index=False)  # noqa
     valid_from = Column(DateTime(timezone=True), comment="Date from which the details for this record are valid", index=False)  # noqa
     valid_to = Column(DateTime(timezone=True), comment="Date after which the details for this record are no longer valid", index=False)  # noqa
     version = Column(Integer, comment="Version number of this record", index=False)  # noqa
@@ -89,23 +87,23 @@ class Stations(Base):
     comments = Column(String, comment="Free text comments on this record, for example description of changes made etc", index=False)  # noqa
 
 
-class Sensors(Base):
-    __tablename__ = "sensors"
+class Observers(Base):
+    __tablename__ = "observers"
     __table_args__ = {'schema': 'cdm'}
     id = Column(String, comment="ID / primary key", primary_key=True, index=False)  # noqa
     name = Column(String, comment="Name of sensor", index=False)
     description = Column(String, comment="Description of sensor", index=False)  # noqa
-    link = Column(String, comment="Link to further information", index=False)
-    location = Column(Geography, comment="Location of station", index=False)
-    elevation = Column(Numeric, comment="Elevation of station above mean sea level", index=False)  # noqa
+    link = Column(String, comment="Link to further information", index=False)  # noqa
+    location = Column(Geography, comment="Location of observer", index=False)  # noqa
+    elevation = Column(Numeric, comment="Elevation of observer above mean sea level", index=False)  # noqa
 
 
 class Observations(Base):
     __tablename__ = "observations"
     __table_args__ = {'schema': 'cdm'}
     id = Column(String, comment="ID / primary key", primary_key=True, index=False)  # noqa
-    location = Column(Geography, comment="location of observation", index=True)  # noqa
-    elevation = Column(Numeric, comment="Elevation of station above mean sea level", index=False)  # noqa
+    location = Column(Geography, comment="Location of observation", index=True)  # noqa
+    elevation = Column(Numeric, comment="Elevation of observation above mean sea level", index=False)  # noqa
     observation_type = Column(ForeignKey("cdm.observation_type.id"), comment="Type of observation", index=True)  # noqa
     phenomenon_start = Column(DateTime(timezone=True), comment="Start time of the phenomenon being observed or observing period, if missing assumed instantaneous with time given by phenomenon_end", index=False)  # noqa
     phenomenon_end = Column(DateTime(timezone=True), comment="End time of the phenomenon being observed or observing period", index=True)  # noqa
@@ -116,8 +114,8 @@ class Observations(Base):
     result_time = Column(DateTime(timezone=True), comment="Time that the result became available", index=False)  # noqa
     valid_from = Column(DateTime(timezone=True), comment="Time that the result starts to be valid", index=False)  # noqa
     valid_to = Column(DateTime(timezone=True), comment="Time after which the result is no longer valid", index=False)  # noqa
-    station = Column(ForeignKey("cdm.stations.id"), comment="Station associated with making the observation, equivalent to OGC OMS 'host'", index=False)  # noqa
-    sensor = Column(ForeignKey("cdm.sensors.id"), comment="Sensor associated with making the observation, equivalent to OGC OMS 'observer'", index=False)  # noqa
+    host = Column(ForeignKey("cdm.hosts.id"), comment="Host associated with making the observation, equivalent to OGC OMS 'host'", index=False)  # noqa
+    observer = Column(ForeignKey("cdm.observers.id"), comment="Observer associated with making the observation, equivalent to OGC OMS 'observer'", index=False)  # noqa
     observed_property = Column(ForeignKey("cdm.observed_property.id"), comment="The phenomenon, or thing, being observed", index=True)  # noqa
     observing_procedure = Column(ForeignKey("cdm.observing_procedure.id"), comment="Procedure used to make the observation", index=False)  # noqa
     report_id = Column(String, comment="Parent report ID, used to link coincident observations together", index=False)  # noqa
@@ -146,6 +144,7 @@ class Features(Base):
     id = Column(String, comment="ID / primary key", primary_key=True, index=False)  # noqa
     type = Column(ForeignKey("cdm.feature_type.id"), comment="enumerated feature type", index=False)  # noqa
     geometry = Column(Geography, comment="", index=False)
+    elevation = Column(Numeric, comment="Elevation of feature above mean sea level", index=False)  # noqa
     parent = Column(ForeignKey("cdm.features.id"), comment="Parent feature for this feature if nested", index=False)  # noqa
     name = Column(String, comment="Name of feature", index=False)
     description = Column(String, comment="Description of feature", index=False)  # noqa
