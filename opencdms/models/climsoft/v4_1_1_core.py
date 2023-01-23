@@ -14,8 +14,7 @@ from sqlalchemy import (
     text,
 )
 from sqlalchemy.dialects.mysql import TINYINT, DOUBLE, BIGINT, INTEGER
-from sqlalchemy.orm import relationship
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import relationship, declarative_base
 
 Base = declarative_base()
 metadata = Base.metadata

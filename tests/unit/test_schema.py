@@ -1,6 +1,6 @@
 import pytest
 from sqlalchemy import Column, Integer, String, create_engine, inspect
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import declarative_base
 
 from opencdms.models import get_schema_diff
 
