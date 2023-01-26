@@ -3,7 +3,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
 from opencdms.dtos.mch import station as mch_station_schema
-from opencdms.models.mch import english as mch_english
+from opencdms.provider.mch.models import english as mch_english
 from opencdms.provider.mch import MCHProvider
 from opencdms.utils.db import get_mch_english_connection_string
 from tests.unit.dtos.data import station_data

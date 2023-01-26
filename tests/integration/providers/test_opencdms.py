@@ -5,8 +5,8 @@ from opencdms.dtos.clide import station as clide_station
 from opencdms.dtos.clide import stationstatu as clide_station_status
 from opencdms.dtos.clide import stationtimezone as clide_station_timezone
 from opencdms.dtos.mch import station as mch_station
-from opencdms.models import clide
-from opencdms.models.mch import english as mch
+import opencdms.provider.clide.models as clide
+from opencdms.provider.mch.models import english as mch
 from opencdms.provider.opencdms import OpenCDMSProvider, ProviderConfig
 from opencdms.utils.db import (
     get_clide_connection_string,
