@@ -29,8 +29,8 @@
 
 import logging
 from types import ModuleType
-from .base import CDMSProvider
-from opencdms.models.climsoft import v4_1_1_core as climsoft_models
+from opencdms.provider.base import CDMSProvider
+from opencdms.provider.climsoft.models import v4_1_1_core as climsoft_models
 from opencdms.dtos import climsoft as climsoft_schemas
 
 LOGGER = logging.getLogger(__name__)
