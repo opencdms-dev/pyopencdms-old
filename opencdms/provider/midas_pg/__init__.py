@@ -33,11 +33,11 @@
 import os
 import logging
 from types import ModuleType
-from opencdms.models.midas_pg import core as midas_models
+from opencdms.provider.midas_pg.models import core as midas_models
 from opencdms.dtos import midas as midas_schemas
 
-from .base import CDMSProvider
-from ..fileformats.text import read_badc
+from opencdms.provider.base import CDMSProvider
+from opencdms.fileformats.text import read_badc
 
 LOGGER = logging.getLogger(__name__)
 

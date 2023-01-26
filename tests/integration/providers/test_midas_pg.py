@@ -5,7 +5,7 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.sql import text as sa_text
 
 from opencdms.dtos.midas import source as midas_source_schema
-from opencdms.models.midas_pg import core as midas_models
+from opencdms.provider.midas_pg.models import core as midas_models
 from opencdms.provider.midas_pg import MidasPgProvider
 from opencdms.utils.db import get_midas_pg_connection_string
 
