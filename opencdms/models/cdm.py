@@ -12,17 +12,24 @@ class ObservingProcedure():
 
 class RecordStatus():
     pass
-class Stations():
+
+class Station():
     pass
 
-class Sensors():
+class Sensor():
     pass
 
-class Observations():
+class Observation():
     pass
 
-class Collections():
+class Collection():
     pass
 
-class Features():
+class Feature():
+    pass
+
+class User():
+    pass
+
+class  StationRole():
     pass
