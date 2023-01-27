@@ -2,7 +2,7 @@ import pytest
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-from opencdms.dtos.climsoft import station as climsoft_station_schema
+from opencdms.provider.climsoft.dtos import station as climsoft_station_schema
 from opencdms.provider.climsoft.models import v4_1_1_core as climsoft
 from opencdms.provider.climsoft import Climsoft4Provider
 from opencdms.utils.db import get_climsoft_4_1_1_connection_string

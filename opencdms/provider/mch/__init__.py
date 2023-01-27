@@ -31,7 +31,7 @@ import logging
 from types import ModuleType
 from opencdms.provider.base import CDMSProvider
 from opencdms.provider.mch.models import english as mch_models
-from opencdms.dtos import mch as mch_schemas
+from opencdms.provider.mch import dtos as mch_schemas
 
 LOGGER = logging.getLogger(__name__)
 

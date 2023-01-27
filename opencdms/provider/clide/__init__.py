@@ -31,7 +31,7 @@ import logging
 from types import ModuleType
 from opencdms.provider.base import CDMSProvider
 import opencdms.provider.clide.models  as clide_models
-from opencdms.dtos import clide as clide_schemas
+from opencdms.provider.clide import dtos as clide_schemas
 
 LOGGER = logging.getLogger(__name__)
 
