@@ -1,17 +1,57 @@
 class ObservationType():
-    pass
+    def __init__(self,
+                 name: str = None,
+                 description: str = None,
+                 link: str =None
+                 ) -> None:
+        self.name = name
+        self.description = description
+        self.link = link
 
 class FeatureType():
-    pass
+    def __init__(self,
+                 name: str = None,
+                 description: str = None,
+                 link: str =None
+                 ) -> None:
+        self.name = name
+        self.description = description
+        self.link = link
 
 class ObservedProperty():
-    pass
+    def __init__(self,
+                 name: str = None,
+                 short_name: str = None,
+                 standard_name: str = None,
+                 units: str = None,
+                 description: str = None,
+                 link: str =None
+                 ) -> None:
+        self.name = name
+        self.description = description
+        self.short_name = short_name
+        self.standard_name = standard_name
+        self.units = units 
+        self.link = link
 
 class ObservingProcedure():
-    pass
+    def __init__(self,
+                 name: str = None,
+                 description: str = None,
+                 link: str =None
+                 ) -> None:
+        self.name = name
+        self.description = description
+        self.link = link
+
 
 class RecordStatus():
-    pass
+    def __init__(self,
+                 name: str = None,
+                 description: str = None
+                 ) -> None:
+        self.name = name
+        self.description = description
 
 class Station():
     pass
