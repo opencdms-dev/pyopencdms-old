@@ -21,9 +21,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 # =============================================================================
-
 from geoalchemy2 import Geography
-
 from sqlalchemy import (
     Column,
     DateTime,
@@ -35,11 +33,13 @@ from sqlalchemy import (
     Table
 )
 from sqlalchemy.dialects.postgresql import JSONB
-from sqlalchemy.orm import registry
+from sqlalchemy.orm import registry, relationship
 
 from opencdms.models import cdm
 
+
 mapper_registry = registry()
+
 
 observation_type = Table(
     "observation_type",
@@ -51,7 +51,7 @@ observation_type = Table(
     schema="cdm"
 )
 
-mapper_registry.map_imperatively(ObservationType, observation_type)
+
 feature_type = Table(
     "feature_type",
     mapper_registry.metadata,
@@ -62,7 +62,7 @@ feature_type = Table(
     schema="cdm"
 )
 
-mapper_registry.map_imperatively(FeatureType, feature_type)
+
 users = Table(
     "users",
     mapper_registry.metadata,
@@ -71,7 +71,7 @@ users = Table(
     schema="cdm"
 )
 
-mapper_registry.map_imperatively(User, users)
+
 observed_property = Table(
     "observed_property",
     mapper_registry.metadata,
@@ -84,7 +84,7 @@ observed_property = Table(
     schema="cdm"
 )
 
-mapper_registry.map_imperatively(ObservedProperty, observed_property)
+
 observing_procedure = Table(
     "observing_procedure",
     mapper_registry.metadata,
@@ -95,7 +95,7 @@ observing_procedure = Table(
     schema="cdm"
 )
 
-mapper_registry.map_imperatively(ObservingProcedure, observing_procedure)
+
 record_status = Table(
     "record_status",
     mapper_registry.metadata,
@@ -105,7 +105,7 @@ record_status = Table(
     schema="cdm"
 )
 
-mapper_registry.map_imperatively(RecordStatu, record_status)
+
 hosts = Table(
     "hosts",
     mapper_registry.metadata,
@@ -130,13 +130,7 @@ hosts = Table(
     schema="cdm"
 )
 
-mapper_registry.map_imperatively(
-    Host,
-    hosts,
-    properties = {
-        "users_": relationship("Users",back_populates="users"),
-        "record_status_": relationship("RecordStatus",back_populates="record_status"),
-    })
+
 observers = Table(
     "observers",
     mapper_registry.metadata,
@@ -149,7 +143,7 @@ observers = Table(
     schema="cdm"
 )
 
-mapper_registry.map_imperatively(Observer, observers)
+
 collections = Table(
     "collections",
     mapper_registry.metadata,
@@ -159,7 +153,7 @@ collections = Table(
     schema="cdm"
 )
 
-mapper_registry.map_imperatively(Collection, collections)
+
 features = Table(
     "features",
     mapper_registry.metadata,
@@ -174,13 +168,7 @@ features = Table(
     schema="cdm"
 )
 
-mapper_registry.map_imperatively(
-    Feature,
-    features,
-    properties = {
-        "feature_type_": relationship("FeatureType",back_populates="feature_type"),
-        "features_": relationship("Features",back_populates="features"),
-    })
+
 source = Table(
     "source",
     mapper_registry.metadata,
@@ -190,7 +178,7 @@ source = Table(
     schema="cdm"
 )
 
-mapper_registry.map_imperatively(Source, source)
+
 observations = Table(
     "observations",
     mapper_registry.metadata,
@@ -224,10 +212,26 @@ observations = Table(
     schema="cdm"
 )
 
-mapper_registry.map_imperatively(
-    Observation,
-    observations,
-    properties = {
+
+def start_mappers():
+    mapper_registry.map_imperatively(cdm.ObservationType, observation_type)
+    mapper_registry.map_imperatively(cdm.FeatureType, feature_type)
+    mapper_registry.map_imperatively(cdm.User, users)
+    mapper_registry.map_imperatively(cdm.ObservedProperty, observed_property)
+    mapper_registry.map_imperatively(cdm.ObservingProcedure, observing_procedure)
+    mapper_registry.map_imperatively(cdm.RecordStatus, record_status)
+    mapper_registry.map_imperatively(cdm.Host, hosts, properties = {
+        "users_": relationship("Users",back_populates="users"),
+        "record_status_": relationship("RecordStatus",back_populates="record_status"),
+    })
+    mapper_registry.map_imperatively(cdm.Observer, observers)
+    mapper_registry.map_imperatively(cdm.Collection, collections)
+    mapper_registry.map_imperatively(cdm.Feature, features, properties = {
+        "feature_type_": relationship("FeatureType",back_populates="feature_type"),
+        "features_": relationship("Features",back_populates="features"),
+    })
+    mapper_registry.map_imperatively(cdm.Source, source)
+    mapper_registry.map_imperatively(cdm.Observation, observations, properties = {
         "observation_type_": relationship("ObservationType",back_populates="observation_type"),
         "hosts_": relationship("Hosts",back_populates="hosts"),
         "observers_": relationship("Observers",back_populates="observers"),
@@ -239,4 +243,3 @@ mapper_registry.map_imperatively(
         "record_status_": relationship("RecordStatus",back_populates="record_status"),
         "source_": relationship("Source",back_populates="source"),
     })
-
