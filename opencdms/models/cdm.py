@@ -134,14 +134,13 @@ class RecordStatus(OpenCDMSBase):
 
 @dataclass(kw_only=True)
 class Host(OpenCDMSBase):
-    id: str
     name: str
     version: int
     change_date: datetime
     user_id: int
     status_id: int
     comments: str
-    id: int = field(default=None)
+    id: str = field(default=None)
     description: str = field(default=None)
     link: str = field(default=None)
     location: Geography  = field(default=None)
@@ -183,7 +182,7 @@ class Observer(OpenCDMSBase):
     link: str = field(default=None)
     location: Geography = field(default=None)
     elevation: float = field(default=None)
-    id: int = field(default=None)
+    id: str = field(default=None)
     _comments = {
         "id": "ID / primary key",
         "name": "Name of sensor",
@@ -199,7 +198,7 @@ class Observer(OpenCDMSBase):
 class Collection(OpenCDMSBase):
     name: str
     link: str = field(default=True)
-    id: int = field(default=None)
+    id: str = field(default=None)
     _comments = {
         "id": "ID / primary key",
         "name": "Name of collection",
@@ -217,7 +216,7 @@ class Feature(OpenCDMSBase):
     name: str = field(default=None)
     description: str = field(default=None)
     link: str = field(default=None)
-    id: int = field(default=None)
+    id: str = field(default=None)
     _comments = {
         "id": "ID / primary key",
         "type_id": "enumerated feature type",
@@ -235,7 +234,7 @@ class Feature(OpenCDMSBase):
 class Source(OpenCDMSBase):
     name: str
     link: str = field(default=None)
-    id: int = field(default=None)
+    id: str = field(default=None)
     _comments = {
         "id": "ID / primary key",
         "name": "Name of source",
@@ -257,7 +256,7 @@ class Observation(OpenCDMSBase):
     result_value: float
     observed_property_id: int
     parameter: dict = field(default=None)
-    id: int = field(default=None)
+    id: str = field(default=None)
     elevation: float = field(default=None)
     observation_type_id: int = field(default=None)
     phenomenon_start: datetime = field(default=None)
@@ -273,7 +272,6 @@ class Observation(OpenCDMSBase):
     report_id: str = field(default=None)
     collection_id: str = field(default=None)
     feature_of_interest_id: str = field(default=None)
-    
     _comments = {
         "id": "ID / primary key",
         "location": "Location of observation",
