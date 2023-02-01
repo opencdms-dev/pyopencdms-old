@@ -29,17 +29,17 @@
 
 import logging
 from types import ModuleType
-from .base import CDMSProvider
-from opencdms.models import clide as clide_models
-from opencdms.dtos import clide as clide_schemas
+from opencdms.provider.base import CDMSProvider
+from opencdms.provider.mch.models import english as mch_models
+from opencdms.provider.mch import dtos as mch_schemas
 
 LOGGER = logging.getLogger(__name__)
 
 
-class ClideProvider(CDMSProvider):
+class MCHProvider(CDMSProvider):
     def __init__(
         self,
-        models: ModuleType = clide_models,
-        schemas: ModuleType = clide_schemas,
+        models: ModuleType = mch_models,
+        schemas: ModuleType = mch_schemas,
     ):
         super().__init__(models, schemas)
