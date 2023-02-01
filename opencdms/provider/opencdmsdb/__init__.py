@@ -214,32 +214,54 @@ observations = Table(
 
 
 def start_mappers():
-    mapper_registry.map_imperatively(cdm.ObservationType, observation_type)
-    mapper_registry.map_imperatively(cdm.FeatureType, feature_type)
-    mapper_registry.map_imperatively(cdm.User, users)
-    mapper_registry.map_imperatively(cdm.ObservedProperty, observed_property)
-    mapper_registry.map_imperatively(cdm.ObservingProcedure, observing_procedure)
-    mapper_registry.map_imperatively(cdm.RecordStatus, record_status)
+    mapper_registry.map_imperatively(cdm.ObservationType, observation_type,properties = {
+        "observations_": relationship("Observation",back_populates="observation_type_")
+    })
+    mapper_registry.map_imperatively(cdm.FeatureType, feature_type, properties = {
+        "features_": relationship("Feature",back_populates="feature_type_")
+    })
+    mapper_registry.map_imperatively(cdm.User, users, properties = {
+        "hosts_": relationship("Host",back_populates="users_"),
+        "observations_": relationship("Observation", back_populates="user_")
+    })
+    mapper_registry.map_imperatively(cdm.ObservedProperty, observed_property, properties = {
+        "observations_": relationship("Observation", back_populates="observed_property_")
+    })
+    mapper_registry.map_imperatively(cdm.ObservingProcedure, observing_procedure, properties={
+        "observations_": relationship("Observation",back_populates="observing_procedure_")
+    })
+    mapper_registry.map_imperatively(cdm.RecordStatus, record_status, properties= {
+        "hosts_": relationship("Host", back_populates="record_statuses_"),
+        "observations_": relationship("Observation", back_populates="record_status_")
+    })
     mapper_registry.map_imperatively(cdm.Host, hosts, properties = {
-        "users_": relationship("Users",back_populates="users"),
-        "record_status_": relationship("RecordStatus",back_populates="record_status"),
+        "users_": relationship("User",back_populates="hosts_"),
+        "record_statuses_": relationship("RecordStatus",back_populates="hosts_"),
+        "observations_": relationship("Observation", back_populates="host_")
     })
-    mapper_registry.map_imperatively(cdm.Observer, observers)
-    mapper_registry.map_imperatively(cdm.Collection, collections)
+    mapper_registry.map_imperatively(cdm.Observer, observers, properties = {
+        "observations_": relationship("Observation", back_populates="observer_")
+    })
+    mapper_registry.map_imperatively(cdm.Collection, collections,properties={
+        "observations_": relationship("Observation",back_populates="collection_")
+    })
     mapper_registry.map_imperatively(cdm.Feature, features, properties = {
-        "feature_type_": relationship("FeatureType",back_populates="feature_type"),
-        "features_": relationship("Features",back_populates="features"),
+        "feature_type_": relationship("FeatureType",back_populates="features_", uselist=False),
+        "parent_feature_": relationship("Feature",foreign_keys="Feature.parent_id" ),
+        "observations_": relationship("Observation", back_populates="feature_")
     })
-    mapper_registry.map_imperatively(cdm.Source, source)
+    mapper_registry.map_imperatively(cdm.Source, source, properties = {
+        "observations_": relationship("Observation", back_populates="source_")
+    })
     mapper_registry.map_imperatively(cdm.Observation, observations, properties = {
-        "observation_type_": relationship("ObservationType",back_populates="observation_type"),
-        "hosts_": relationship("Hosts",back_populates="hosts"),
-        "observers_": relationship("Observers",back_populates="observers"),
-        "observed_property_": relationship("ObservedProperty",back_populates="observed_property"),
-        "observing_procedure_": relationship("ObservingProcedure",back_populates="observing_procedure"),
-        "collections_": relationship("Collections",back_populates="collections"),
-        "features_": relationship("Features",back_populates="features"),
-        "users_": relationship("Users",back_populates="users"),
-        "record_status_": relationship("RecordStatus",back_populates="record_status"),
-        "source_": relationship("Source",back_populates="source"),
+        "observation_type_": relationship("ObservationType",back_populates="observations_", uselist=False),
+        "host_": relationship("Host",back_populates="observations_", uselist=False),
+        "observer_": relationship("Observer",back_populates="observations_", uselist=False),
+        "observed_property_": relationship("ObservedProperty",back_populates="observations_", uselist=False),
+        "observing_procedure_": relationship("ObservingProcedure",back_populates="observations_", uselist=False),
+        "collection_": relationship("Collection",back_populates="observations_", uselist=False),
+        "feature_": relationship("Feature",back_populates="observations_", uselist=False),
+        "user_": relationship("User",back_populates="observations_", uselist=False),
+        "record_status_": relationship("RecordStatus",back_populates="observations_", uselist=False),
+        "source_": relationship("Source",back_populates="observations_", uselist=False),
     })
