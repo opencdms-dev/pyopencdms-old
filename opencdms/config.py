@@ -30,6 +30,13 @@ class OpenCDMSConfig:
     MIDAS_PG_DB_NAME = os.getenv("MIDAS_PG_DB_NAME", "postgres")
     MIDAS_PG_DB_ENGINE = os.getenv("MIDAS_PG_DB_ENGINE", "postgresql")
     MIDAS_PG_DB_DRIVER = os.getenv("MIDAS_PG_DB_DRIVER", "psycopg2")
+    CDM_DB_HOST = os.getenv("CDM_DB_HOST", "127.0.0.1")
+    CDM_DB_PORT = os.getenv("CDM_DB_PORT", 9432)
+    CDM_DB_USER = os.getenv("CDM_DB_USER", "postgres")
+    CDM_DB_PASS = os.getenv("CDM_DB_PASSWORD", "password")
+    CDM_DB_NAME = os.getenv("CDM_DB_NAME", "postgres")
+    CDM_DB_ENGINE = os.getenv("CDM_DB_ENGINE", "postgresql")
+    CDM_DB_DRIVER = os.getenv("CDM_DB_DRIVER", "psycopg2")
 
 
 config = OpenCDMSConfig()
