@@ -87,6 +87,7 @@ def test_should_create_relationships(db_session):
     db_session.add(observation)
     db_session.commit()
 
+    observation = db_session.query(cdm.Observation).filter(cdm.Observation.id == 1).one()
     assert observation.record_status_ == status
     assert observation.user_ == user
     assert observation.source_ == source
