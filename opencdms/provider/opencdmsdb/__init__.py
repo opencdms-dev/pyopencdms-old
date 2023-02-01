@@ -66,7 +66,7 @@ feature_type = Table(
 users = Table(
     "users",
     mapper_registry.metadata,
-    Column("id", String, comment="ID / primary key", primary_key=True, index=False),
+    Column("id", Integer, comment="ID / primary key", primary_key=True, index=False),
     Column("name", String, comment="Name of user", index=False),
     schema="cdm"
 )
@@ -109,7 +109,7 @@ record_status = Table(
 hosts = Table(
     "hosts",
     mapper_registry.metadata,
-    Column("id", String, comment="ID / primary key", primary_key=True, index=False),
+    Column("id", Integer, comment="ID / primary key", primary_key=True, index=False),
     Column("name", String, comment="Preferred name of host", index=False),
     Column("description", String, comment="Description of host", index=False),
     Column("link", String, comment="URI to host, e.g. to OSCAR/Surface", index=False),
@@ -134,7 +134,7 @@ hosts = Table(
 observers = Table(
     "observers",
     mapper_registry.metadata,
-    Column("id", String, comment="ID / primary key", primary_key=True, index=False),
+    Column("id", Integer, comment="ID / primary key", primary_key=True, index=False),
     Column("name", String, comment="Name of sensor", index=False),
     Column("description", String, comment="Description of sensor", index=False),
     Column("link", String, comment="Link to further information", index=False),
@@ -147,7 +147,7 @@ observers = Table(
 collections = Table(
     "collections",
     mapper_registry.metadata,
-    Column("id", String, comment="ID / primary key", primary_key=True, index=False),
+    Column("id", Integer, comment="ID / primary key", primary_key=True, index=False),
     Column("name", String, comment="Name of collection", index=False),
     Column("link", String, comment="Link to further information on collection", index=False),
     schema="cdm"
@@ -157,7 +157,7 @@ collections = Table(
 features = Table(
     "features",
     mapper_registry.metadata,
-    Column("id", String, comment="ID / primary key", primary_key=True, index=False),
+    Column("id", Integer, comment="ID / primary key", primary_key=True, index=False),
     Column("type_id",ForeignKey("cdm.feature_type.id"), comment="enumerated feature type", index=False),
     Column("geometry", Geography, comment="", index=False),
     Column("elevation", Numeric, comment="Elevation of feature above mean sea level", index=False),
@@ -172,7 +172,7 @@ features = Table(
 source = Table(
     "source",
     mapper_registry.metadata,
-    Column("id", String, comment="ID / primary key", primary_key=True, index=False),
+    Column("id", Integer, comment="ID / primary key", primary_key=True, autoincrement=True),
     Column("name", String, comment="Name of source", index=False),
     Column("link", String, comment="Link to further information on source", index=False),
     schema="cdm"
@@ -182,7 +182,7 @@ source = Table(
 observations = Table(
     "observations",
     mapper_registry.metadata,
-    Column("id", String, comment="ID / primary key", primary_key=True, index=False),
+    Column("id", Integer, comment="ID / primary key", primary_key=True, index=False),
     Column("location", Geography, comment="Location of observation", index=True),
     Column("elevation", Numeric, comment="Elevation of observation above mean sea level", index=False),
     Column("observation_type_id",ForeignKey("cdm.observation_type.id"), comment="Type of observation", index=True),
