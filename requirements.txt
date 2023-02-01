@@ -4,6 +4,7 @@ psycopg2~=2.9.1
 sqlacodegen~=2.3.0
 geoalchemy2>=0.13.0
 mysqlclient~=2.0.3
+sqlalchemy~=1.4.22
 python-dotenv
 faker~=12.1.0
 pydantic~=1.9.0
