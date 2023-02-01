@@ -7,8 +7,8 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.session import Session
 from sqlalchemy.sql import text as sa_text
 
-from opencdms.dtos.clide import station as clide_station_schema
-from opencdms.models import clide
+from opencdms.provider.clide.dtos import station as clide_station_schema
+import opencdms.provider.clide.models as clide
 from opencdms.provider.clide import ClideProvider
 from opencdms.utils.db import get_clide_connection_string
 

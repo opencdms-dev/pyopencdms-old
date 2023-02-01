@@ -7,9 +7,7 @@ mysqlclient~=2.0.3
 python-dotenv
 faker~=12.1.0
 pydantic~=1.9.0
-pygeoapi@git+https://github.com/geopython/pygeoapi@master
 alchemyjsonschema~=0.7.1
-Flask-CORS
 click~=7.1.2
 requests~=2.27.1
 PyYAML

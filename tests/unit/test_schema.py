@@ -1,6 +1,6 @@
 import pytest
-from sqlalchemy import Column, Integer, String, create_engine, inspect
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import Column, Integer, String, create_engine, inspect, text
+from sqlalchemy.orm import declarative_base
 
 from opencdms.models import get_schema_diff
 
@@ -14,7 +14,7 @@ base = declarative_base()
 def get_column_names(engine, tablename):
     inspector = inspect(engine)
     table_columns = inspector.get_columns(tablename)
-    return [x["name"] for x in table_columns]
+    return [x["name"] for x in table_columns ]
 
 
 def setup_module(module):
@@ -53,7 +53,8 @@ def test_schema_diff_should_be_zero():
 
 @pytest.mark.order(4)
 def test_schema_diff_should_be_one():
-    db_engine.execute(f"ALTER TABLE {TABLE_NAME} ADD COLUMN new integer")
-    assert "new" in get_column_names(db_engine, TABLE_NAME)
-    schema_diff = get_schema_diff(base.metadata, DB_URL)
-    assert len(schema_diff) == 1
+    with db_engine.connect() as con:
+        con.execute(text(f"ALTER TABLE {TABLE_NAME} ADD COLUMN new integer"))
+        assert "new" in get_column_names(con, TABLE_NAME)
+        schema_diff = get_schema_diff(base.metadata, DB_URL)
+        assert len(schema_diff) == 1

@@ -1,5 +1,5 @@
-from opencdms.dtos.midas import source as midas_station
-from opencdms.dtos.opencdms import station_schema as opencdms_station
+from opencdms.provider.midas_pg.dtos import source as midas_station
+from opencdms.dtos import station_schema as opencdms_station
 from tests.unit.dtos import data
 import json
 from decimal import Decimal
