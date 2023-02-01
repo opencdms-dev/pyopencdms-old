@@ -73,7 +73,7 @@ def test_should_create_relationships(db_session):
         description="Valid record"
         )
     observation = cdm.Observation(
-        location=(2.323243434,4.24243434344234),
+        location="POINT(-71.060316 48.432044)",
         version=1,
         change_date=datetime.utcnow(),
         comments="A simple observation",
