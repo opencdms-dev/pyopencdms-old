@@ -1,5 +1,5 @@
-from opencdms.dtos.climsoft import station as climsoft_station
-from opencdms.dtos.opencdms import station_schema as opencdms_station
+from opencdms.provider.climsoft.dtos import station as climsoft_station
+from opencdms.dtos import station_schema as opencdms_station
 from tests.unit.dtos import data
 import json
 

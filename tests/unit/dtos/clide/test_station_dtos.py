@@ -1,7 +1,7 @@
 import json
 
-from opencdms.dtos.clide import station as clide_station
-from opencdms.dtos.opencdms import station_schema as opencdms_station
+from opencdms.provider.clide.dtos import station as clide_station
+from opencdms.dtos import station_schema as opencdms_station
 from tests.unit.dtos import data
 
 field_mapping = {v: k for k, v in clide_station.field_mapping.items()}
