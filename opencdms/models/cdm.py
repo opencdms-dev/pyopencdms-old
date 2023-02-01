@@ -249,13 +249,13 @@ class Observation(OpenCDMSBase):
     location: Geography
     version: int
     change_date: datetime
-    user_id: int
-    status_id: int
-    comments: str
-    source_id: int
     phenomenon_end: datetime
     result_value: float
-    observed_property_id: int
+    comments: str
+    user_id: int = field(default=None)
+    status_id: int = field(default=None)
+    source_id: int = field(default=None)
+    observed_property_id: int = field(default=None)
     parameter: dict = field(default=None)
     id: int = field(default=None)
     elevation: float = field(default=None)
@@ -263,7 +263,7 @@ class Observation(OpenCDMSBase):
     phenomenon_start: datetime = field(default=None)
     result_uom: str = field(default=None)
     result_description: str = field(default=None)
-    result_quality: Optional[dict]
+    result_quality: dict = field(default=None)
     result_time: datetime = field(default=None)
     valid_from: datetime = field(default=None)
     valid_to: datetime = field(default=None)
