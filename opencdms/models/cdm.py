@@ -77,7 +77,7 @@ class FeatureType(OpenCDMSBase):
 @dataclass(kw_only=True)
 class User(OpenCDMSBase):
     name: str
-    id: Optional[str] = field(default="")
+    id: Optional[int] = field(default=None)
     _comments = {
         "id": "ID / primary key",
         "name": "Name of user",
@@ -263,16 +263,16 @@ class Observation(OpenCDMSBase):
     phenomenon_start: Optional[datetime] = field(default=None)
     result_uom: Optional[str] = field(default="")
     result_description: Optional[str] = field(default="")
-    result_quality: Optional[dict] = field(default=None)
+    result_quality: Optional[str] = field(default=None)
     result_time: Optional[datetime] = field(default=None)
     valid_from: Optional[datetime] = field(default=None)
     valid_to: Optional[datetime] = field(default=None)
-    host_id: Optional[str] = field(default="")
-    observer_id: Optional[str] = field(default="")
+    host_id: Optional[int] = field(default=None)
+    observer_id: Optional[int] = field(default=None)
     observing_procedure_id: Optional[int] = field(default=None)
-    report_id: Optional[str] = field(default="")
-    collection_id: Optional[str] = field(default="")
-    feature_of_interest_id: Optional[str] = field(default="")
+    report_id: Optional[int] = field(default=None)
+    collection_id: Optional[int] = field(default=None)
+    feature_of_interest_id: Optional[int] = field(default=None)
     
     _comments = {
         "id": "ID / primary key",
