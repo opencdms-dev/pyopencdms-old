@@ -57,9 +57,9 @@ test-prepare: ## Step up db containers needed for tests
 test: test-prepare ## run tests quickly with the default Python
 	pytest
 
-test-close: ## Bring down docker containers after test
+test-done: ## Bring down docker containers after test
 	opencdms-test-data stopdb
-	
+
 test-all: ## run tests on every Python version with tox
 	tox
 

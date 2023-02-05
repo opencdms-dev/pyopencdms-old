@@ -6,6 +6,7 @@ from opencdms.utils.db import get_cdm_connection_string
 from opencdms.provider.opencdmsdb import mapper_registry, start_mappers
 from opencdms.models import cdm
 from datetime import datetime,timedelta
+from uuid import uuid4
 
 DB_URL = get_cdm_connection_string()
 db_engine = create_engine(DB_URL)
@@ -61,6 +62,60 @@ def test_should_create_observation_type(db_session):
 
 
 def test_should_create_relationships(db_session):
+    feature_type = cdm.FeatureType( \
+        name="Feature1", \
+            description="A type of feature", \
+                link="https://links.features.com/1"
+            )
+    user = cdm.User(
+        name="John Doe"
+    )
+    status = cdm.RecordStatus(
+        name="ACCEPTED",
+        description="Valid record"
+        )
+    db_session.add(feature_type)
+    db_session.add(user)
+    db_session.add(status)
+    db_session.commit()
+
+
+    feature = cdm.Feature(
+        id=str(uuid4()),
+        type_id=feature_type.id,
+        elevation=2.9,
+        name="FEATURE2",
+        geometry="POINT(-71.060316 48.432044)",
+        description="A description"
+    )
+    collection = cdm.Collection(
+        id=str(uuid4()),
+        name="Collection 1",
+        link=" A link"
+    )
+    observer = cdm.Observer(
+        id=str(uuid4()),
+        description="A good observer",
+        link="A link",
+        location="POINT(-71.060316 48.432044)"
+    )
+    host = cdm.Host(
+        id=str(uuid4()),
+        name="Host Zone",
+        version=1,
+        change_date=datetime.utcnow(),
+        user_id=user.id,
+        comments="A comment",
+        status_id=status.id
+    )
+    db_session.add(host)
+    db_session.add(feature)
+    db_session.add(collection)
+    db_session.add(observer)
+    db_session.commit()
+
+    
+
     user = cdm.User(
         name="John Doe"
     )
@@ -68,17 +123,22 @@ def test_should_create_relationships(db_session):
         name="Source 1",
         link="A link",
     )
-    status = cdm.RecordStatus(
-        name="ACCEPTED",
-        description="Valid record"
-        )
+
+    observation_id = str(uuid4())
     observation = cdm.Observation(
+        id=observation_id,
         location="POINT(-71.060316 48.432044)",
         version=1,
         change_date=datetime.utcnow(),
         comments="A simple observation",
         phenomenon_end=(datetime.utcnow()+ timedelta(days=1)),
         result_value=5.920399,
+        feature_of_interest_id=feature.id,
+        collection_id=collection.id,
+        elevation=5.9,
+        observer_id=observer.id,
+        host_id=host.id
+
     )
 
     observation.record_status_ =status
@@ -87,7 +147,7 @@ def test_should_create_relationships(db_session):
     db_session.add(observation)
     db_session.commit()
 
-    observation = db_session.query(cdm.Observation).filter(cdm.Observation.id == 1).one()
+    observation = db_session.query(cdm.Observation).filter(cdm.Observation.id == observation_id).one()
     assert observation.record_status_ == status
     assert observation.user_ == user
     assert observation.source_ == source

@@ -141,7 +141,6 @@ class Host(OpenCDMSBase):
     user_id: int
     status_id: int
     comments: str
-    id: Optional[int] = field(default=None)
     description: Optional[str] = field(default="")
     link: Optional[str] = field(default="")
     location: Geography  = field(default=None)
@@ -178,12 +177,12 @@ class Host(OpenCDMSBase):
 
 @dataclass(kw_only=True)
 class Observer(OpenCDMSBase):
-    name: str
+    id: str
     description: str
     link: Optional[str] = field(default="")
     location: Geography = field(default=None)
     elevation: float = field(default=None)
-    id: Optional[int] = field(default=None)
+
     _comments = {
         "id": "ID / primary key",
         "name": "Name of sensor",
@@ -197,9 +196,9 @@ class Observer(OpenCDMSBase):
 
 @dataclass(kw_only=True)
 class Collection(OpenCDMSBase):
+    id: str
     name: str
     link: str = field(default=True)
-    id: Optional[int] = field(default=None)
     _comments = {
         "id": "ID / primary key",
         "name": "Name of collection",
@@ -210,6 +209,7 @@ class Collection(OpenCDMSBase):
 
 @dataclass(kw_only=True)
 class Feature(OpenCDMSBase):
+    id: str
     type_id: int
     geometry: Geography
     elevation: float = field(default=None)
@@ -217,7 +217,6 @@ class Feature(OpenCDMSBase):
     name: Optional[str] = field(default="")
     description: Optional[str] = field(default="")
     link: Optional[str] = field(default="")
-    id: Optional[int] = field(default=None)
     _comments = {
         "id": "ID / primary key",
         "type_id": "enumerated feature type",
@@ -246,34 +245,33 @@ class Source(OpenCDMSBase):
 
 @dataclass(kw_only=True)
 class Observation(OpenCDMSBase):
+    id: str
     location: Geography
     version: int
     change_date: datetime
     phenomenon_end: datetime
     result_value: float
     comments: str
+    host_id: str
+    observer_id: str
+    collection_id: str
+    feature_of_interest_id: str
+    report_id: Optional[str] = field(default="")
     user_id: Optional[int] = field(default=None)
     status_id: Optional[int] = field(default=None)
     source_id: Optional[int] = field(default=None)
     observed_property_id: Optional[int] = field(default=None)
     parameter: Optional[dict] = field(default=None)
-    id: Optional[int] = field(default=None)
     elevation: float = field(default=None)
     observation_type_id: Optional[int] = field(default=None)
     phenomenon_start: Optional[datetime] = field(default=None)
     result_uom: Optional[str] = field(default="")
     result_description: Optional[str] = field(default="")
-    result_quality: Optional[str] = field(default=None)
+    result_quality: Optional[dict] = field(default=None)
     result_time: Optional[datetime] = field(default=None)
     valid_from: Optional[datetime] = field(default=None)
     valid_to: Optional[datetime] = field(default=None)
-    host_id: Optional[int] = field(default=None)
-    observer_id: Optional[int] = field(default=None)
     observing_procedure_id: Optional[int] = field(default=None)
-    report_id: Optional[int] = field(default=None)
-    collection_id: Optional[int] = field(default=None)
-    feature_of_interest_id: Optional[int] = field(default=None)
-    
     _comments = {
         "id": "ID / primary key",
         "location": "Location of observation",
