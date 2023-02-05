@@ -10,9 +10,18 @@ with open("README.rst") as readme_file:
 with open("HISTORY.rst") as history_file:
     history = history_file.read()
 
-with open("requirements.txt") as requirements_file:
-    requirements = requirements_file.readlines()
 
+with open("requirements/base.txt") as f:
+    base_requirements = f.readlines()
+
+with open("requirements/dev.txt") as f:
+    dev_requirements = f.readlines()
+
+with open("requirements/provider/climsoft.txt") as f:
+    climsoft_requirements = f.readlines()
+
+with open("requirements/provider/opencdmsdb.txt") as f:
+    opencdmsdb_requirements = f.readlines()
 
 setup_requirements = [
     "pytest-runner",
@@ -21,6 +30,12 @@ setup_requirements = [
 test_requirements = [
     "pytest>=3",
 ]
+
+extra_requirements = {
+    "DEV": [*dev_requirements,*climsoft_requirements,*opencdmsdb_requirements],
+    "CLIMSOFT": climsoft_requirements,
+    "OPENCDMSDB": opencdmsdb_requirements
+}
 
 setup(
     author="OpenCDMS",
@@ -43,7 +58,7 @@ setup(
             "opencdms=opencdms.cli:main",
         ],
     },
-    install_requires=requirements,
+    install_requires=base_requirements,
     license="MIT license",
     long_description=readme + "\n\n" + history,
     include_package_data=True,
@@ -51,6 +66,7 @@ setup(
     name="opencdms",
     packages=find_packages(),
     setup_requires=setup_requirements,
+    extras_require=extra_requirements,
     test_suite="tests",
     tests_require=test_requirements,
     url="https://github.com/opencdms/opencdms",
