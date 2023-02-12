@@ -13,4 +13,3 @@ click~=7.1.2
 requests~=2.27.1
 PyYAML
 django
-
