@@ -17,3 +17,4 @@ python-dotenv
 pytest-order
 pydantic
 flake8
+git+https://github.com/opencdms/opencdms-test-data.git@main

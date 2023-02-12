@@ -48,8 +48,8 @@ class OpenCDMSBase(abc.ABC):
 class ObservationType(OpenCDMSBase):
     name: str
     description: str
-    link: str = field(default=None)
-    id: int = field(default=None)
+    link: Optional[str] = field(default="")
+    id: Optional[int] = field(default=None)
     _comments = {
         "id": "ID / primary key",
         "name": "Short name for observation type",
@@ -62,8 +62,8 @@ class ObservationType(OpenCDMSBase):
 class FeatureType(OpenCDMSBase):
     name: str
     description: str
-    link: str = field(default=None)
-    id: int = field(default=None)
+    link: Optional[str] = field(default="")
+    id: Optional[int] = field(default=None)
     _comments = {
         "id": "ID / primary key",
         "name": "Short name for feature type",
@@ -77,7 +77,7 @@ class FeatureType(OpenCDMSBase):
 @dataclass(kw_only=True)
 class User(OpenCDMSBase):
     name: str
-    id: str = field(default=None)
+    id: Optional[int] = field(default=None)
     _comments = {
         "id": "ID / primary key",
         "name": "Name of user",
@@ -90,9 +90,9 @@ class ObservedProperty(OpenCDMSBase):
     short_name: str
     units: str
     description: str
-    standard_name: str = field(default=None)
-    link: str = field(default=None)
-    id: int = field(default=None)
+    standard_name: Optional[str] = field(default="")
+    link: Optional[str] = field(default="")
+    id: Optional[int] = field(default=None)
     _comments = {
         "id": "ID / primary key",
         "short_name": "Short name representation of observed property, e.g. 'at'",
@@ -108,8 +108,8 @@ class ObservedProperty(OpenCDMSBase):
 class ObservingProcedure(OpenCDMSBase):
     name: str
     description: str
-    id: int = field(default=None)
-    link: str = field(default=None)
+    id: Optional[int] = field(default=None)
+    link: Optional[str] = field(default="")
     _comments = {
         "id": "ID / primary key",
         "name": "Name of observing procedure",
@@ -123,7 +123,7 @@ class ObservingProcedure(OpenCDMSBase):
 class RecordStatus(OpenCDMSBase):
     name: str
     description: str
-    id: int = field(default=None)
+    id: Optional[int] = field(default=None)
     _comments = {
         "id": "ID / primary key",
         "name": "Short name for status",
@@ -145,13 +145,13 @@ class Host(OpenCDMSBase):
     link: str = field(default=None)
     location: Geography  = field(default=None)
     elevation: float = field(default=None)
-    wigos_station_identifier: str = field(default=None)
-    facility_type: str = field(default=None)
-    date_established: str = field(default=None)
-    wmo_region: str = field(default=None)
-    territory: str = field(default=None)
-    valid_from: datetime = field(default=None)
-    valid_to: datetime = field(default=None)
+    wigos_station_identifier: Optional[str] = field(default="")
+    facility_type: Optional[str] = field(default="")
+    date_established: Optional[str] = field(default="")
+    wmo_region: Optional[str] = field(default="")
+    territory: Optional[str] = field(default="")
+    valid_from: Optional[datetime] = field(default=None)
+    valid_to: Optional[datetime] = field(default=None)
     _comments = {
         "id": "ID / primary key",
         "name": "Preferred name of host",
@@ -177,12 +177,11 @@ class Host(OpenCDMSBase):
 
 @dataclass(kw_only=True)
 class Observer(OpenCDMSBase):
-    name: str
+    id: str
     description: str
-    link: str = field(default=None)
+    link: Optional[str] = field(default="")
     location: Geography = field(default=None)
     elevation: float = field(default=None)
-    id: str = field(default=None)
     _comments = {
         "id": "ID / primary key",
         "name": "Name of sensor",
@@ -196,9 +195,9 @@ class Observer(OpenCDMSBase):
 
 @dataclass(kw_only=True)
 class Collection(OpenCDMSBase):
+    id: str
     name: str
     link: str = field(default=True)
-    id: str = field(default=None)
     _comments = {
         "id": "ID / primary key",
         "name": "Name of collection",
@@ -209,6 +208,7 @@ class Collection(OpenCDMSBase):
 
 @dataclass(kw_only=True)
 class Feature(OpenCDMSBase):
+    id: str
     type_id: int
     geometry: Geography
     elevation: float = field(default=None)
@@ -245,6 +245,7 @@ class Source(OpenCDMSBase):
 
 @dataclass(kw_only=True)
 class Observation(OpenCDMSBase):
+    id: str
     location: Geography
     version: int
     change_date: datetime

@@ -50,8 +50,15 @@ clean-test: ## remove test and coverage artifacts
 lint: ## check style with flake8
 	flake8 opencdms tests
 
-test: ## run tests quickly with the default Python
-	pytest 
+test-prepare: ## Step up db containers needed for tests
+	opencdms-test-data startdb
+	sleep 20
+
+test: test-prepare ## run tests quickly with the default Python
+	pytest
+
+test-done: ## Bring down docker containers after test
+	opencdms-test-data stopdb
 
 test-all: ## run tests on every Python version with tox
 	tox
