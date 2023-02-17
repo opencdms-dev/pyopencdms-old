@@ -27,7 +27,7 @@ class CreateStation(BaseModel):
     end_date: str
 
 
-class UpdateStudent(BaseModel):
+class UpdateStation(BaseModel):
     name: Optional[str]
     secondary_name: Optional[str]
     latitude: Optional[Decimal]
