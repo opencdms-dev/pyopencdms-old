@@ -123,7 +123,7 @@ class CDMSProvider(BaseProvider):
         if type(bbox) == list and len(bbox) == 4:
             min_lng, min_lat, max_lng, max_lat = bbox
             box_polygon = from_shape(box(min_lng, min_lat, max_lng, max_lat),srid=4326)
-            query = query.filter(func.ST_Intersects(models.Observation.location, box_polygon))
+            query = query.filter(models.Observation.location.ST_Intersects(box_polygon))
 
         return query
 
