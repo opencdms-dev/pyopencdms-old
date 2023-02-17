@@ -29,9 +29,8 @@ from shapely.geometry import Point
 from geoalchemy2.shape import from_shape, to_shape
 from collections import namedtuple
 
-Geography = NewType("Geography", str)
+from opencdms.types import Geography, Coordinates
 
-Coordinate = namedtuple("Coordinate",["longitude", "latitude"])
 
 class OpenCDMSBase(abc.ABC):
     """
@@ -279,11 +278,12 @@ class Observation(OpenCDMSBase):
     def set_location(cls,longitude: float, latitude: float):
         """ Converts Point object to wkb srid 4326"""
         return from_shape(Point(longitude,latitude),srid=4326)
-
-    def get_coords(self):
+    
+    @property
+    def coordinates(self):
         """  derives  longitude and latitude from location in srid 4326"""
         point = to_shape(self.location)
-        return Coordinate(longitude=point.x,latitude=point.y) 
+        return Coordinates(longitude=point.x,latitude=point.y) 
 
     _comments = {
         "id": "ID / primary key",
