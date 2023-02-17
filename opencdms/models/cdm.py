@@ -25,7 +25,8 @@ import abc
 from dataclasses import dataclass, field
 from datetime import datetime
 from typing import NewType, Optional
-
+from shapely.geometry import Point
+from geoalchemy2.shape import from_shape
 
 Geography = NewType("Geography", str)
 
@@ -272,6 +273,10 @@ class Observation(OpenCDMSBase):
     valid_from: Optional[datetime] = field(default=None)
     valid_to: Optional[datetime] = field(default=None)
     observing_procedure_id: Optional[int] = field(default=None)
+
+    def set_location(cls,longitude: float, latitude: float):
+        return from_shape(Point(longitude,latitude),srid=4326)
+
     _comments = {
         "id": "ID / primary key",
         "location": "Location of observation",
