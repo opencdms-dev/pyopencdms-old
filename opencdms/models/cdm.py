@@ -26,10 +26,12 @@ from dataclasses import dataclass, field
 from datetime import datetime
 from typing import NewType, Optional
 from shapely.geometry import Point
-from geoalchemy2.shape import from_shape
+from geoalchemy2.shape import from_shape, to_shape
+from collections import namedtuple
 
 Geography = NewType("Geography", str)
 
+Coordinate = namedtuple("Coordinate",["longitude", "latitude"])
 
 class OpenCDMSBase(abc.ABC):
     """
@@ -275,7 +277,13 @@ class Observation(OpenCDMSBase):
     observing_procedure_id: Optional[int] = field(default=None)
 
     def set_location(cls,longitude: float, latitude: float):
+        """ Converts Point object to wkb srid 4326"""
         return from_shape(Point(longitude,latitude),srid=4326)
+
+    def get_coords(self):
+        """  derives  longitude and latitude from location in srid 4326"""
+        point = to_shape(self.location)
+        return Coordinate(longitude=point.x,latitude=point.y) 
 
     _comments = {
         "id": "ID / primary key",
