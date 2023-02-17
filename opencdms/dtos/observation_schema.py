@@ -2,8 +2,8 @@ from decimal import Decimal
 from pydantic import BaseModel,UUID4
 from typing import NewType, Optional, List, Dict
 from datetime import datetime
-Geography = NewType("Geography", str)
 
+from opencdms.types import Geography, Coordinates
 
 class CreateObservationSchema(BaseModel):
     location: Geography
@@ -64,6 +64,7 @@ class UpdateObservationSchema(BaseModel):
 
 class ObservationSchema(CreateObservationSchema):
     id : UUID4
+    coordinates: Coordinates
     class Config:
         orm_mode = True
 
