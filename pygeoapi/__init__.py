@@ -4,7 +4,7 @@ from pygeoapi.provider.base import (
     ProviderQueryError,
     ProviderItemNotFoundError,
 )
-from sqlalchemy import create_engine, func
+from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, Query, Session
 from sqlalchemy.sql import asc, desc
 from opencdms.models import cdm as models
@@ -288,8 +288,6 @@ class CDMSProvider(BaseProvider):
         :param identifier: feature id
         :param data: new GeoJSON feature dictionary
         """
-
-        station_id, variable_id, datetime = identifier.split("*")
         updates = UpdateObservationSchema.parse_raw(data).dict(exclude_unset=True)
         with DatabaseConnection(
             conn_dic=self.conn_dic, properties=self.properties
@@ -350,8 +348,8 @@ class CDMSProvider(BaseProvider):
             "geometry": {
                 "type": "Point",
                 "coordinates": [
-                    obs.longitude,
-                    obs.latitude,
+                    obs.coordinates.longitude,
+                    obs.coordinates.latitude,
                 ],
             } if not skip_geometry else None,
             "properties": obs.dict(by_alias=True) if include is None \
