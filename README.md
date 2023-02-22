@@ -1,3 +1,17 @@
+---
+
+## Depreciated
+
+This repository contains an early version of `pyopencdms` that was created before the WMO Climate Data Model Standard existed.
+
+This package has now been replaced by https://github.com/opencdms/pyopencdms/
+
+This old version remains here because it is currently being used by https://github.com/climsoft/climsoft-api
+
+---
+
+
+
 OpenCDMS Python library: `pyopencdms`
 ====================================
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![License: CC BY-SA 4.0](https://img.shields.io/badge/License-CC%20BY--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-sa/4.0/)
