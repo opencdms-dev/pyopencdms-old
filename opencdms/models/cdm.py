@@ -25,9 +25,11 @@ import abc
 from dataclasses import dataclass, field
 from datetime import datetime
 from typing import NewType, Optional
+from shapely.geometry import Point
+from geoalchemy2.shape import from_shape, to_shape
+from collections import namedtuple
 
-
-Geography = NewType("Geography", str)
+from opencdms.types import Geography, Coordinates
 
 
 class OpenCDMSBase(abc.ABC):
@@ -259,20 +261,26 @@ class Observation(OpenCDMSBase):
     parameter: dict = field(default=None)
     id: str = field(default=None)
     elevation: float = field(default=None)
-    observation_type_id: int = field(default=None)
-    phenomenon_start: datetime = field(default=None)
-    result_uom: str = field(default=None)
-    result_description: str = field(default=None)
-    result_quality: dict = field(default=None)
-    result_time: datetime = field(default=None)
-    valid_from: datetime = field(default=None)
-    valid_to: datetime = field(default=None)
-    host_id: str = field(default=None)
-    observer_id: str = field(default=None)
-    observing_procedure_id: int = field(default=None)
-    report_id: str = field(default=None)
-    collection_id: str = field(default=None)
-    feature_of_interest_id: str = field(default=None)
+    observation_type_id: Optional[int] = field(default=None)
+    phenomenon_start: Optional[datetime] = field(default=None)
+    result_uom: Optional[str] = field(default="")
+    result_description: Optional[str] = field(default="")
+    result_quality: Optional[dict] = field(default=None)
+    result_time: Optional[datetime] = field(default=None)
+    valid_from: Optional[datetime] = field(default=None)
+    valid_to: Optional[datetime] = field(default=None)
+    observing_procedure_id: Optional[int] = field(default=None)
+
+    def set_location(cls,longitude: float, latitude: float):
+        """ Converts Point object to wkb srid 4326"""
+        return from_shape(Point(longitude,latitude),srid=4326)
+    
+    @property
+    def coordinates(self):
+        """  derives  longitude and latitude from location in srid 4326"""
+        point = to_shape(self.location)
+        return Coordinates(longitude=point.x,latitude=point.y) 
+
     _comments = {
         "id": "ID / primary key",
         "location": "Location of observation",

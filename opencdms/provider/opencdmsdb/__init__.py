@@ -183,7 +183,7 @@ observations = Table(
     "observations",
     mapper_registry.metadata,
     Column("id", String, comment="ID / primary key", primary_key=True, index=False),
-    Column("location", Geography, comment="Location of observation", index=True),
+    Column("location", Geography(geometry_type="POINT",srid=4326, spatial_index=True), comment="Location of observation", index=True),
     Column("elevation", Numeric, comment="Elevation of observation above mean sea level", index=False),
     Column("observation_type_id",ForeignKey("cdm.observation_type.id"), comment="Type of observation", index=True),
     Column("phenomenon_start", DateTime(timezone=True), comment="Start time of the phenomenon being observed or observing period, if missing assumed instantaneous with time given by phenomenon_end", index=False),
