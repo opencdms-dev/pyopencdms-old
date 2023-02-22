@@ -1,5 +1,5 @@
-from opencdms.provider.mch.dtos import station as mch_station
-from opencdms.dtos import station_schema as opencdms_station
+from opencdms.dtos.mch import station as mch_station
+from opencdms.dtos.opencdms import station_schema as opencdms_station
 from tests.unit.dtos import data
 import json
 from decimal import Decimal

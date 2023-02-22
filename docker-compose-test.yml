@@ -11,12 +11,6 @@ services:
         environment:
             - POSTGRES_PASSWORD=password
 
-    opencdms-database:
-        image: postgis/postgis:13-3.3 #postgres:13
-        environment:
-            - POSTGRES_PASSWORD=password
-        ports:
-            - "9432:5432"
 
     # A MariaDB instance containing schemas from CDMSs that use MySQL/MariaDB (currently climsoft-4.1.1 and mch-english)
     mariadb:

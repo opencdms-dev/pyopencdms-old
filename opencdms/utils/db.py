@@ -62,16 +62,6 @@ def get_mch_english_connection_string() -> str:
         db_name=config.MCH_DB_NAME,
     )
 
-def get_cdm_connection_string() -> str:
-    return get_connection_string(
-        engine=config.CDM_DB_ENGINE,
-        driver=config.CDM_DB_DRIVER,
-        user=config.CDM_DB_USER,
-        password=config.CDM_DB_PASS,
-        host=config.CDM_DB_HOST,
-        port=config.CDM_DB_PORT,
-        db_name=config.CDM_DB_NAME,
-    )
 
 def clide_session():
     DB_URL = get_clide_connection_string()
@@ -99,13 +89,6 @@ def climsoft_session():
 
 def mch_session():
     DB_URL = get_mch_english_connection_string()
-    db_engine = create_engine(DB_URL)
-    SessionLocal = sessionmaker(bind=db_engine)
-    session = SessionLocal()
-    return session
-
-def cdm_session():
-    DB_URL = get_cdm_connection_string()
     db_engine = create_engine(DB_URL)
     SessionLocal = sessionmaker(bind=db_engine)
     session = SessionLocal()

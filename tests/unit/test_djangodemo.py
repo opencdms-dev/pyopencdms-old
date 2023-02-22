@@ -4,7 +4,6 @@ import django
 from django.conf import settings
 from django.core.management import execute_from_command_line
 
-
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
@@ -20,7 +19,7 @@ def setup_module(module):
             DEFAULT_AUTO_FIELD="django.db.models.AutoField",
             BASE_DIR=BASE_DIR,
             INSTALLED_APPS=(
-                "opencdms.provider.djangodemo",
+                "opencdms.models.djangodemo",
                 "django.contrib.auth",
                 "django.contrib.contenttypes",
             ),
@@ -41,7 +40,8 @@ def teardown_module(module):
 
 
 def test_should_return_same_station_ids():
-    from opencdms.provider.djangodemo.metadata import Station
+    from opencdms.models.djangodemo.metadata import Station
+
     station_ids = ["838", "675"]
 
     for st_id in station_ids:

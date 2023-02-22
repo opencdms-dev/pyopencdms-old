@@ -3,7 +3,7 @@ from faker import Faker
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.sql import text as sa_text
-from opencdms.provider.midas_pg.models import core as midas_models
+from opencdms.models.midas_pg import core as midas_models
 from opencdms.utils.db import get_midas_pg_connection_string
 
 DB_URL = get_midas_pg_connection_string()
