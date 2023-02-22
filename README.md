@@ -2,7 +2,7 @@
 
 ## Depreciated
 
-This repository contains an early version of `pyopencdms` that was created before the WMO Climate Data Model Standard existed.
+This repository contains an early version of `pyopencdms` that was created before the WMO Climate Data Model Standard existed (`pyopencdms-old`).
 
 This package has now been replaced by https://github.com/opencdms/pyopencdms/
 
