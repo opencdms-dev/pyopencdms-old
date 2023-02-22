@@ -136,15 +136,15 @@ class RecordStatus(OpenCDMSBase):
 
 @dataclass(kw_only=True)
 class Host(OpenCDMSBase):
-    id: str
     name: str
     version: int
     change_date: datetime
     user_id: int
     status_id: int
     comments: str
-    description: Optional[str] = field(default="")
-    link: Optional[str] = field(default="")
+    id: str = field(default=None)
+    description: str = field(default=None)
+    link: str = field(default=None)
     location: Geography  = field(default=None)
     elevation: float = field(default=None)
     wigos_station_identifier: Optional[str] = field(default="")
@@ -184,7 +184,6 @@ class Observer(OpenCDMSBase):
     link: Optional[str] = field(default="")
     location: Geography = field(default=None)
     elevation: float = field(default=None)
-
     _comments = {
         "id": "ID / primary key",
         "name": "Name of sensor",
@@ -215,10 +214,11 @@ class Feature(OpenCDMSBase):
     type_id: int
     geometry: Geography
     elevation: float = field(default=None)
-    parent_id: Optional[int] = field(default=None)
-    name: Optional[str] = field(default="")
-    description: Optional[str] = field(default="")
-    link: Optional[str] = field(default="")
+    parent_id: int = field(default=None)
+    name: str = field(default=None)
+    description: str = field(default=None)
+    link: str = field(default=None)
+    id: str = field(default=None)
     _comments = {
         "id": "ID / primary key",
         "type_id": "enumerated feature type",
@@ -235,8 +235,8 @@ class Feature(OpenCDMSBase):
 @dataclass(kw_only=True)
 class Source(OpenCDMSBase):
     name: str
-    link: Optional[str] = field(default="")
-    id: Optional[int] = field(default=None)
+    link: str = field(default=None)
+    id: str = field(default=None)
     _comments = {
         "id": "ID / primary key",
         "name": "Name of source",
@@ -254,16 +254,12 @@ class Observation(OpenCDMSBase):
     phenomenon_end: datetime
     result_value: float
     comments: str
-    host_id: str
-    observer_id: str
-    collection_id: str
-    feature_of_interest_id: str
-    report_id: Optional[str] = field(default="")
-    user_id: Optional[int] = field(default=None)
-    status_id: Optional[int] = field(default=None)
-    source_id: Optional[int] = field(default=None)
-    observed_property_id: Optional[int] = field(default=None)
-    parameter: Optional[dict] = field(default=None)
+    user_id: int = field(default=None)
+    status_id: int = field(default=None)
+    source_id: int = field(default=None)
+    observed_property_id: int = field(default=None)
+    parameter: dict = field(default=None)
+    id: str = field(default=None)
     elevation: float = field(default=None)
     observation_type_id: Optional[int] = field(default=None)
     phenomenon_start: Optional[datetime] = field(default=None)
